@@ -6,13 +6,18 @@
     "lint": "nx format:check --all",
     "lint:write": "nx format:write --all",
     "test": "nx run-many -t test --passWithNoTests",
+    "test:coverage": "npm run test -- --coverage",
+    "prisma:generate:general": "prisma generate --schema=./prisma/general/schema.prisma",
+    "prisma:migrate:general": "npx prisma migrate dev --schema=./prisma/general/schema.prisma",
     "docker": "docker-compose up",
     "docker:postgres": "docker-compose -f docker-compose-postgres.yaml up",
-    "build:server-pure-general": "nx build server-pure-general"
+    "build:server-pure-general": "nx build server-pure-general",
+    "start:server-pure-general": "nx run server-pure-general:serve"
   },
   "private": true,
   "devDependencies": {
     "@eslint/js": "^9.8.0",
+    "@faker-js/faker": "^9.6.0",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nx/eslint": "19.8.14",
