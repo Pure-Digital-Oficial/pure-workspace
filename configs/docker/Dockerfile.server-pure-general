@@ -17,8 +17,8 @@ WORKDIR /app
 RUN apk add --no-cache openssl
 
 COPY --from=builder /app/dist/apps/server/server-pure-general ./dist
-#COPY --from=builder /app/dist/libs/domain ./dist
-#COPY --from=builder /app/dist/libs/data-access ./dist
+COPY --from=builder /app/dist/libs/domain ./dist
+COPY --from=builder /app/dist/libs/data-access ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
 
