@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  server-general:
+    build:
+      context: .
+      dockerfile: ./configs/docker/Dockerfile.server-pure-general
+    ports:
+      - '${SERVER_PURE_GENERAL}:${SERVER_PURE_GENERAL}'
+    environment:
+      - NODE_ENV=production
+    networks:
+      - shared_network
+    env_file:
+      - .env
+
+networks:
+  shared_network:
+    external: true

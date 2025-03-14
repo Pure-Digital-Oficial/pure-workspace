@@ -1,0 +1,26 @@
+{
+  "name": "server-pure-general",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/server/server-pure-general/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "server-pure-general:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "server-pure-general:build:development"
+        },
+        "production": {
+          "buildTarget": "server-pure-general:build:production"
+        }
+      }
+    }
+  }
+}
