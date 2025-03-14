@@ -1,0 +1,146 @@
+generator client {
+    provider        = "prisma-client-js"
+    output          = "../generated/general"
+    previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_GENERAL_URL")
+    schemas  = ["pure_general"]
+}
+
+model application {
+    id         String    @id @default(uuid())
+    name       String
+    status     Status    @default(ACTIVE)
+    created_at DateTime  @default(now())
+    updated_at DateTime  @default(now())
+    deleted_at DateTime?
+
+    users application_x_user[]
+
+    @@schema("pure_general")
+}
+
+model application_x_user {
+    app_id     String
+    user_id    String
+    created_at DateTime @default(now())
+    updated_at DateTime @default(now())
+
+    user user        @relation(fields: [user_id], references: [id])
+    app  application @relation(fields: [app_id], references: [id])
+
+    @@id([user_id, app_id])
+    @@schema("pure_general")
+}
+
+model auth {
+    id           String   @id @default(uuid())
+    user_id      String   @unique
+    email        String
+    password     String?
+    access_token String?
+    type         AuthType @default(DEFAULT)
+    created_at   DateTime @default(now())
+    updated_at   DateTime @default(now())
+    users        user     @relation(fields: [user_id], references: [id])
+
+    @@schema("pure_general")
+}
+
+model user {
+    id         String    @id @default(uuid())
+    name       String
+    nickname  String
+    status     Status    @default(PENDING)
+    type       UserType  @default(DEFAULT)
+    picture    String?
+    created_at DateTime  @default(now())
+    updated_at DateTime  @default(now())
+    deleted_at DateTime?
+
+    auth         auth[]
+    applications application_x_user[]
+    deleted      confirm_delete_user[]
+    data         user_data[]
+    contacts     contact_x_user[]
+
+    @@schema("pure_general")
+}
+
+model confirm_delete_user {
+    id               String   @id @default(uuid())
+    responsibly_user String
+    user_id          String
+    description      String
+    created_at       DateTime @default(now())
+    user             user     @relation(fields: [user_id], references: [id])
+
+    @@schema("pure_general")
+}
+
+model user_data {
+    id         String    @id @default(uuid())
+    user_id    String    @unique
+    document   String
+    birth_date DateTime?
+    created_at DateTime  @default(now())
+    updated_at DateTime  @default(now())
+    user       user      @relation(fields: [user_id], references: [id])
+
+    @@schema("pure_general")
+}
+
+model contact_x_user {
+    contact_id String
+    user_id    String
+    created_at DateTime @default(now())
+    updated_at DateTime @default(now())
+
+    user    user    @relation(fields: [user_id], references: [id])
+    contact contact @relation(fields: [contact_id], references: [id])
+
+    @@id([user_id, contact_id])
+    @@schema("pure_general")
+}
+
+model contact {
+    id        String @id @default(uuid())
+    area_code String
+    number    String
+
+    status     Status    @default(ACTIVE)
+    created_at DateTime  @default(now())
+    updated_at DateTime  @default(now())
+    deleted_at DateTime?
+
+    users contact_x_user[]
+
+    @@schema("pure_general")
+}
+
+enum Status {
+    ACTIVE
+    INACTIVE
+    BLOCKED
+    PENDING
+
+    @@schema("pure_general")
+}
+
+enum AuthType {
+    GOOGLE
+    DEFAULT
+
+    @@schema("pure_general")
+}
+
+enum UserType {
+    DEFAULT
+    DEFAULT_ADMIN
+    ADMIN
+
+    @@schema("pure_general")
+}
