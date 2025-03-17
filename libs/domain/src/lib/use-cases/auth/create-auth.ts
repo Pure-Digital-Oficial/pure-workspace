@@ -76,12 +76,16 @@ export class CreateAuth
 
     const hashedPassword = await this.hashGeneratorRepository.hash(password);
 
+    if (Object.keys(hashedPassword).length < 1) {
+      return left(new EntityNotCreated('password'));
+    }
+
     const createdAuth = await this.createAuthRepository.create({
       ...input,
       password: hashedPassword,
     });
 
-    if (Object.keys(createdAuth).length < 0) {
+    if (Object.keys(createdAuth).length < 1) {
       return left(new EntityNotCreated('auth'));
     }
 
