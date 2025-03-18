@@ -12,11 +12,7 @@ export class FindUserByIdRepositoryImpl implements FindUserByIdRepository {
   async find(id: string): Promise<UserResponseDto> {
     const filteredUser = await this.prismaService['user'].findFirst({
       where: {
-        auth: {
-          some: {
-            id,
-          },
-        },
+        id,
       },
       select: {
         id: true,
@@ -45,7 +41,7 @@ export class FindUserByIdRepositoryImpl implements FindUserByIdRepository {
       id: filteredUser?.id ?? '',
       name: filteredUser?.name ?? '',
       nickname: filteredUser?.nickname ?? '',
-      birthDate: filteredUser?.data[0].birth_date ?? new Date(),
+      birthDate: filteredUser?.data[0]?.birth_date ?? new Date(),
       type: filteredUser?.type ?? '',
       auth: filteredUser?.auth ?? [],
     };

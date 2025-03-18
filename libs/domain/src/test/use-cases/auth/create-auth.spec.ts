@@ -8,6 +8,7 @@ import {
 } from '@/errors';
 import {
   CreateAuthRepository,
+  FindAuthByUserIdRepository,
   FindUserByEmailRepository,
   FindUserByIdRepository,
   HashGeneratorRepository,
@@ -15,6 +16,7 @@ import {
 import { AuthMock, UserMock } from '@/test/entities';
 import {
   CreateAuthRepositoryMock,
+  FindAuthByUserIdRepositoryMock,
   FindUserByEmailRepositoryMock,
   FindUserByIdRepositoryMock,
   HashGeneratorRepositoryMock,
@@ -26,6 +28,7 @@ interface SutTypes {
   createAuthDto: CreateAuthDto;
   findUserByEmailRepository: FindUserByEmailRepository;
   findUserByIdRepository: FindUserByIdRepository;
+  findAuthByUserIdRepository: FindAuthByUserIdRepository;
   hashGeneratorRepository: HashGeneratorRepository;
   createAuthRepository: CreateAuthRepository;
 }
@@ -33,6 +36,7 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   const findUserByEmailRepository = new FindUserByEmailRepositoryMock();
   const findUserByIdRepository = new FindUserByIdRepositoryMock();
+  const findAuthByUserIdRepository = new FindAuthByUserIdRepositoryMock();
   const hashGeneratorRepository = new HashGeneratorRepositoryMock();
   const createAuthRepository = new CreateAuthRepositoryMock();
 
@@ -45,6 +49,7 @@ const makeSut = (): SutTypes => {
   const sut = new CreateAuth(
     findUserByEmailRepository,
     findUserByIdRepository,
+    findAuthByUserIdRepository,
     hashGeneratorRepository,
     createAuthRepository
   );
@@ -52,6 +57,7 @@ const makeSut = (): SutTypes => {
   return {
     findUserByEmailRepository,
     findUserByIdRepository,
+    findAuthByUserIdRepository,
     hashGeneratorRepository,
     createAuthRepository,
     createAuthDto,
@@ -127,6 +133,19 @@ describe('CreateAuth', () => {
     expect(result.isLeft()).toBeTruthy();
     expect(result.isRight()).toBeFalsy();
     expect(result.value).toBeInstanceOf(EntityNotExists);
+  });
+
+  it('should return EntityAlreadyExists when return auth ID from findAuthByUserIdRepository', async () => {
+    const { createAuthDto, sut } = makeSut();
+    jest
+      .spyOn(sut['findAuthByUserIdRepository'], 'find')
+      .mockResolvedValueOnce(UserMock.id);
+
+    const result = await sut.execute(createAuthDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityAlreadyExists);
   });
 
   it('should return EntityNotCreated when return user object from hashGeneratorRepository', async () => {

@@ -9,6 +9,7 @@ import {
 } from '../../errors';
 import {
   CreateAuthRepository,
+  FindAuthByUserIdRepository,
   FindUserByEmailRepository,
   FindUserByIdRepository,
   HashGeneratorRepository,
@@ -33,6 +34,8 @@ export class CreateAuth
     private findUserByEmailRepository: FindUserByEmailRepository,
     @Inject('FindUserByIdRepository')
     private findUserByIdRepository: FindUserByIdRepository,
+    @Inject('FindAuthByUserIdRepository')
+    private findAuthByUserIdRepository: FindAuthByUserIdRepository,
     @Inject('HashGeneratorRepository')
     private hashGeneratorRepository: HashGeneratorRepository,
     @Inject('CreateAuthRepository')
@@ -72,6 +75,12 @@ export class CreateAuth
 
     if (userVerification.isLeft()) {
       return left(userVerification.value);
+    }
+
+    const filteredAuth = await this.findAuthByUserIdRepository.find(userId);
+
+    if (Object.keys(filteredAuth).length > 0) {
+      return left(new EntityAlreadyExists('User AUthentication'));
     }
 
     const hashedPassword = await this.hashGeneratorRepository.hash(password);
