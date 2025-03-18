@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   PipeTransform,
   Injectable,
@@ -11,9 +10,8 @@ import { z, ZodError } from 'zod';
 export class ZodValidationPipe implements PipeTransform {
   constructor(private readonly schemas: Record<string, z.ZodTypeAny>) {}
 
-  transform(value: any, metadata: ArgumentMetadata) {
-    // Handle the case where metadata.data might be undefined
-    const key = metadata.data || metadata.type;
+  transform(value: unknown, metadata: ArgumentMetadata) {
+    const key = metadata.type; // 'body', 'query', etc.
     const schema = this.schemas[key];
 
     if (!schema) {
