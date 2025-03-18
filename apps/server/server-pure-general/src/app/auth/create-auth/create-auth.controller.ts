@@ -1,9 +1,10 @@
 import { Body, Controller, Post, Query, UsePipes } from '@nestjs/common';
 import { CreateAuthService } from './create-auth.service';
 import {
+  bodyCreateAuthSchema,
   CreateAuthDto,
-  createAuthSchema,
   ErrorMessageResult,
+  queryCreateAuthSchema,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes';
 
@@ -12,14 +13,19 @@ export class CreateAuthController {
   constructor(private createAuthService: CreateAuthService) {}
 
   @Post()
-  @UsePipes(new ZodValidationPipe(createAuthSchema))
+  @UsePipes(
+    new ZodValidationPipe({
+      query: queryCreateAuthSchema,
+      body: bodyCreateAuthSchema,
+    })
+  )
   async create(
-    @Query('userId') userId: string,
+    @Query() query: { userId: string },
     @Body() input: Omit<CreateAuthDto, 'userId'>
   ) {
     const result = await this.createAuthService.create({
       ...input,
-      userId,
+      userId: query?.userId ?? '',
     });
 
     if (result.isRight()) return { auth_id: result.value };

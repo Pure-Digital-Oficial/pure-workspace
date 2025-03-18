@@ -12,7 +12,7 @@ export class CreateUserController {
   constructor(private createUserService: CreateUserService) {}
 
   @Post()
-  @UsePipes(new ZodValidationPipe(createUserSchema))
+  @UsePipes(new ZodValidationPipe({ body: createUserSchema }))
   async create(@Body() input: CreateUserDto) {
     const result = await this.createUserService.create(input);
     if (result.isRight()) return { user_id: result.value };
