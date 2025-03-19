@@ -32,6 +32,7 @@ export class FindUserByIdRepositoryImpl implements FindUserByIdRepository {
           select: {
             id: true,
             email: true,
+            password: true,
           },
         },
       },
@@ -43,7 +44,11 @@ export class FindUserByIdRepositoryImpl implements FindUserByIdRepository {
       nickname: filteredUser?.nickname ?? '',
       birthDate: filteredUser?.data[0]?.birth_date ?? new Date(),
       type: filteredUser?.type ?? '',
-      auth: filteredUser?.auth ?? [],
+      auth: {
+        email: filteredUser?.auth[0]?.email ?? '',
+        id: filteredUser?.auth[0]?.id ?? '',
+        password: filteredUser?.auth[0]?.password ?? '',
+      },
     };
   }
 }
