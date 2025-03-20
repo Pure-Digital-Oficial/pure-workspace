@@ -12,11 +12,11 @@ import {
   FindAppByIdRepository,
   FindUserByEmailRepository,
   FindUserInAppRepository,
-  SignIdRepository,
+  SignInRepository,
   ValidatePasswordRepository,
 } from '../../repositories';
 
-export class AUth
+export class Auth
   implements
     UseCase<
       AuthDto,
@@ -36,7 +36,7 @@ export class AUth
     @Inject('ValidatePasswordRepository')
     private validatePasswordRepository: ValidatePasswordRepository,
     @Inject('SignIdRepository')
-    private signInRepository: SignIdRepository
+    private signInRepository: SignInRepository
   ) {}
 
   async execute(
@@ -65,8 +65,8 @@ export class AUth
 
     const userId = filteredUser?.id ?? '';
 
-    if (Object.keys(userId || filteredUser).length < 1) {
-      return left(new EntityIsInvalid('user or passsword'));
+    if (Object.keys(userId).length < 1) {
+      return left(new EntityIsInvalid('email or passsword'));
     }
 
     const filteredApp = await this.findAppByIdRepository.find(appId);
@@ -84,17 +84,13 @@ export class AUth
       return left(new EntityNotAccess('user'));
     }
 
-    if (Object.keys(filteredApp?.id || filteredApp).length < 1) {
-      return left(new EntityNotExists('app'));
-    }
-
     const passwordCompared = await this.validatePasswordRepository.validate({
       passwordEntered: password,
       userPassword: filteredUser?.auth?.password ?? '',
     });
 
     if (!passwordCompared) {
-      return left(new EntityIsInvalid('user or password'));
+      return left(new EntityIsInvalid('email or password'));
     }
 
     const loggedUserToken = await this.signInRepository.sign({
@@ -102,7 +98,7 @@ export class AUth
       userId,
     });
 
-    if (Object.keys(loggedUserToken?.token).length < 1) {
+    if (Object.keys(loggedUserToken?.token || loggedUserToken).length < 1) {
       return left(new EntityNotCreated('token'));
     }
 

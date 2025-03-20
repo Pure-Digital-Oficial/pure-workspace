@@ -1,5 +1,5 @@
 import { AccessTokenResponseDto, SignInDto } from '../../dtos';
 
-export interface SignIdRepository {
+export interface SignInRepository {
   sign(input: SignInDto): Promise<AccessTokenResponseDto>;
 }
