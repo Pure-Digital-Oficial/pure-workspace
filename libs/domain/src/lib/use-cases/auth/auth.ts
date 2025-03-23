@@ -35,7 +35,7 @@ export class Auth
     private findUserInAppRepository: FindUserInAppRepository,
     @Inject('ValidatePasswordRepository')
     private validatePasswordRepository: ValidatePasswordRepository,
-    @Inject('SignIdRepository')
+    @Inject('SignInRepository')
     private signInRepository: SignInRepository
   ) {}
 

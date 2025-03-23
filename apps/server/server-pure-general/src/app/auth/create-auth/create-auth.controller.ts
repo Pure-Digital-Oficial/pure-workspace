@@ -1,10 +1,10 @@
 import { Body, Controller, Post, Query, UsePipes } from '@nestjs/common';
 import { CreateAuthService } from './create-auth.service';
 import {
-  bodyCreateAuthSchema,
+  CreateAuthQuerySchema,
   CreateAuthDto,
   ErrorMessageResult,
-  queryCreateAuthSchema,
+  AuthBodySchema,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes';
 
@@ -15,8 +15,8 @@ export class CreateAuthController {
   @Post()
   @UsePipes(
     new ZodValidationPipe({
-      query: queryCreateAuthSchema,
-      body: bodyCreateAuthSchema,
+      query: CreateAuthQuerySchema,
+      body: AuthBodySchema,
     })
   )
   async create(
