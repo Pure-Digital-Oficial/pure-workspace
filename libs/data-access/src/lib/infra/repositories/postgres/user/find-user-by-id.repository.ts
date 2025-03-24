@@ -1,14 +1,12 @@
 import { Inject } from '@nestjs/common';
+import { PrismaService } from 'nestjs-prisma';
 import {
   FindUserByIdRepository,
   UserResponseDto,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../application';
 
 export class FindUserByIdRepositoryImpl implements FindUserByIdRepository {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async find(id: string): Promise<UserResponseDto> {
     const filteredUser = await this.prismaService['user'].findFirst({
       where: {
@@ -32,6 +30,7 @@ export class FindUserByIdRepositoryImpl implements FindUserByIdRepository {
           select: {
             id: true,
             email: true,
+            password: true,
           },
         },
       },
@@ -43,7 +42,11 @@ export class FindUserByIdRepositoryImpl implements FindUserByIdRepository {
       nickname: filteredUser?.nickname ?? '',
       birthDate: filteredUser?.data[0]?.birth_date ?? new Date(),
       type: filteredUser?.type ?? '',
-      auth: filteredUser?.auth ?? [],
+      auth: {
+        email: filteredUser?.auth[0]?.email ?? '',
+        id: filteredUser?.auth[0]?.id ?? '',
+        password: filteredUser?.auth[0]?.password ?? '',
+      },
     };
   }
 }

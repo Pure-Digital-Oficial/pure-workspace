@@ -8,5 +8,5 @@ export const UserMock: UserResponseDto = {
   nickname: faker.string.alpha(3),
   birthDate: faker.date.birthdate(),
   type: 'ADMIN',
-  auth: [AuthMock],
+  auth: AuthMock,
 };
