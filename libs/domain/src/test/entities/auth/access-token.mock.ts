@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker/.';
-import { AccessTokenResponseDto } from '../../../../src';
+import { TokenResponseDto } from '../../../../src';
 
-export const AccessTokenMock: AccessTokenResponseDto = {
+export const AccessTokenMock: TokenResponseDto = {
   token: faker.string.uuid(),
 };

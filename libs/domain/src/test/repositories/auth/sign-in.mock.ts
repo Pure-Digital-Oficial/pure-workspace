@@ -1,13 +1,13 @@
 import {
-  AccessTokenResponseDto,
-  SignInRepository,
-  SignInDto,
+  TokenResponseDto,
+  GenerateTokenRepository,
+  GenerateTokenDto,
 } from '../../../../src';
 import { AccessTokenMock } from '../../entities';
 
-export class SignIdRepositoryMock implements SignInRepository {
-  inputMock = {} as SignInDto;
-  async sign(input: SignInDto): Promise<AccessTokenResponseDto> {
+export class SignIdRepositoryMock implements GenerateTokenRepository {
+  inputMock = {} as GenerateTokenDto;
+  async sign(input: GenerateTokenDto): Promise<TokenResponseDto> {
     this.inputMock = input;
     return AccessTokenMock;
   }

@@ -1,1 +1,1 @@
-export * from './sign-in.repository';
+export * from './generate-token.repository';

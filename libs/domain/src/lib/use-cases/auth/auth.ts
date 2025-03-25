@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../bases';
-import { AccessTokenResponseDto, AuthDto } from '../../dtos';
+import { TokenResponseDto, AuthDto } from '../../dtos';
 import {
   EntityIsInvalid,
   EntityNotAccess,
@@ -12,7 +12,7 @@ import {
   FindAppByIdRepository,
   FindUserByEmailRepository,
   FindUserInAppRepository,
-  SignInRepository,
+  GenerateTokenRepository,
   ValidatePasswordRepository,
 } from '../../repositories';
 
@@ -22,7 +22,7 @@ export class Auth
       AuthDto,
       Either<
         EntityNotEmpty | EntityIsInvalid | EntityNotExists | EntityNotCreated,
-        AccessTokenResponseDto
+        TokenResponseDto
       >
     >
 {
@@ -36,7 +36,7 @@ export class Auth
     @Inject('ValidatePasswordRepository')
     private validatePasswordRepository: ValidatePasswordRepository,
     @Inject('SignInRepository')
-    private signInRepository: SignInRepository
+    private generateTokenRespository: GenerateTokenRepository
   ) {}
 
   async execute(
@@ -44,7 +44,7 @@ export class Auth
   ): Promise<
     Either<
       EntityNotEmpty | EntityIsInvalid | EntityNotExists | EntityNotCreated,
-      AccessTokenResponseDto
+      TokenResponseDto
     >
   > {
     const { email, password, appId } = input;
@@ -93,15 +93,31 @@ export class Auth
       return left(new EntityIsInvalid('email or password'));
     }
 
-    const loggedUserToken = await this.signInRepository.sign({
+    const generatedAccessToken = await this.generateTokenRespository.generate({
       email,
       userId,
+      secret: process.env['JWT_ACCESS_SECRET'] ?? '',
+      expiresIn: process.env['JWT_ACCESS_EXPIRATION_IN'] ?? '',
     });
 
-    if (Object.keys(loggedUserToken?.token || loggedUserToken).length < 1) {
+    if (Object.keys(generatedAccessToken).length < 1) {
       return left(new EntityNotCreated('token'));
     }
 
-    return right(loggedUserToken);
+    const generatedRefreshToken = await this.generateTokenRespository.generate({
+      email,
+      userId,
+      secret: process.env['JWT_REFRESH_SECRET'] ?? '',
+      expiresIn: process.env['JWT_REFRESH_EXPIRATION_IN'] ?? '',
+    });
+
+    if (Object.keys(generatedRefreshToken).length < 1) {
+      return left(new EntityNotCreated('token'));
+    }
+
+    return right({
+      accessToken: generatedAccessToken,
+      refreshToken: generatedRefreshToken,
+    });
   }
 }
