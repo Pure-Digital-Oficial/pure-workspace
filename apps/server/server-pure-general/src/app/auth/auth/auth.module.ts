@@ -6,7 +6,7 @@ import {
   FindAppByIdRepositoryImpl,
   FindUserInAppRepositoryImpl,
   ValidatePasswordRepositoryImpl,
-  SignInRepositoryImpl,
+  GenerateTokenRepositoryImpl,
 } from '@pure-workspace/data-access';
 import { Auth } from '@pure-workspace/domain';
 import { AuthService } from './auth.service';
@@ -40,8 +40,8 @@ import { JwtService } from '@nestjs/jwt';
       useClass: ValidatePasswordRepositoryImpl,
     },
     {
-      provide: 'SignInRepository',
-      useClass: SignInRepositoryImpl,
+      provide: 'GenerateTokenRepository',
+      useClass: GenerateTokenRepositoryImpl,
     },
     {
       provide: 'JwtService',
