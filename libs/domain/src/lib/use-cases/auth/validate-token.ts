@@ -53,7 +53,7 @@ export class ValidateToken
       Object.keys(validatedUserToken).length < 1 ||
       userId !== validatedUserToken
     ) {
-      return left(new EntityIsInvalid('user'));
+      return left(new EntityIsInvalid('user or token'));
     }
 
     return right(true);

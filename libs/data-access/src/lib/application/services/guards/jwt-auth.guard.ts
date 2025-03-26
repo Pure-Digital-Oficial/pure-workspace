@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Request } from 'express';
-import { ValidateToken } from '@pure-workspace/domain';
+import { ErrorMessageResult, ValidateToken } from '@pure-workspace/domain';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -19,6 +19,7 @@ export class JwtAuthGuard implements CanActivate {
     if (result.isRight()) {
       return true;
     } else {
+      await ErrorMessageResult(result.value.name, result.value.message);
       return false;
     }
   }
