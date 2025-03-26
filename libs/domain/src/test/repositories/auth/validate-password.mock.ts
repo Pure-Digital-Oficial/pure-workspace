@@ -3,7 +3,9 @@ import {
   ValidatePasswordRepository,
 } from '../../../../src';
 
-export class ValidatePasswordMock implements ValidatePasswordRepository {
+export class ValidatePasswordRepositoryMock
+  implements ValidatePasswordRepository
+{
   inputMock = {} as ValidatePasswordDto;
   async validate(input: ValidatePasswordDto): Promise<boolean> {
     this.inputMock = input;

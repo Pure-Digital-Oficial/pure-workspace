@@ -17,7 +17,7 @@ import { AppMock, AuthMock, TokenMock, UserMock } from '@/test/entities';
 import {
   FindAppByIdRepositoryMock,
   FindUserInAppRepositoryMock,
-  ValidatePasswordMock,
+  ValidatePasswordRepositoryMock,
 } from '@/test/repositories';
 import { Auth } from '@/use-cases';
 
@@ -42,7 +42,7 @@ const makeSut = (): SutTypes => {
   const findUserByEmailRepository = mockEmailRepository;
   const findAppByIdRepository = new FindAppByIdRepositoryMock();
   const findUserInAppRepository = new FindUserInAppRepositoryMock();
-  const validatePasswordRepository = new ValidatePasswordMock();
+  const validatePasswordRepository = new ValidatePasswordRepositoryMock();
   const generateTokenRepository = mockGenerateTokenRepository;
 
   const authDto: AuthDto = {
