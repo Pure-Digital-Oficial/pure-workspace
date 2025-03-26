@@ -13,7 +13,7 @@ export class JwtAuthGuard implements CanActivate {
 
     const result = await this.useCase.execute({
       token: token ?? '',
-      userId: user,
+      userId: user ?? '',
     });
 
     if (result.isRight()) {
@@ -29,6 +29,6 @@ export class JwtAuthGuard implements CanActivate {
   }
 
   private getUserIdFromRequest(request: Request): string {
-    return request.params['userId'];
+    return request.query['userId'] as string;
   }
 }

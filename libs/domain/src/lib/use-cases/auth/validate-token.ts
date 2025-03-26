@@ -44,9 +44,10 @@ export class ValidateToken
       return left(userVerification.value);
     }
 
-    const validatedUserToken = await this.validateTokenRepository.validate(
-      token
-    );
+    const validatedUserToken = await this.validateTokenRepository.validate({
+      token,
+      secret: process.env['JWT_ACCESS_SECRET'] ?? '',
+    });
 
     if (
       Object.keys(validatedUserToken).length < 1 ||
