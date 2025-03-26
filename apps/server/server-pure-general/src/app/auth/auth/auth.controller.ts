@@ -1,4 +1,5 @@
-import { Body, Controller, Post, Query, UsePipes } from '@nestjs/common';
+import { Body, Controller, Post, Query, Res, UsePipes } from '@nestjs/common';
+import { Response } from 'express';
 import {
   AuthBodySchema,
   AuthDto,
@@ -19,6 +20,7 @@ export class AuthController {
     })
   )
   async auth(
+    @Res() response: Response,
     @Query() query: { appId: string },
     @Body() input: Omit<AuthDto, 'appId'>
   ) {
@@ -26,8 +28,16 @@ export class AuthController {
       ...input,
       appId: query?.appId ?? '',
     });
-    if (result.isRight()) return result.value;
-    else
+    if (result.isRight()) {
+      response.cookie('refreshToken', result.value.refreshToken, {
+        httpOnly: true,
+        secure: process.env['NODE_ENV'] === 'production',
+        sameSite: 'strict',
+        path: '/auth/refresh',
+      });
+
+      return response.json({ accessToken: result.value.accessToken });
+    } else
       return await ErrorMessageResult(result.value.name, result.value.message);
   }
 }
