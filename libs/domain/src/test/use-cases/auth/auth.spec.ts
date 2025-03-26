@@ -1,9 +1,4 @@
-import {
-  AccessTokenResponseDto,
-  AppResponseDto,
-  AuthDto,
-  UserResponseDto,
-} from '@/dtos';
+import { AppResponseDto, AuthDto, UserResponseDto } from '@/dtos';
 import {
   EntityIsInvalid,
   EntityNotAccess,
@@ -16,14 +11,13 @@ import {
   FindUserByEmailRepository,
   FindUserInAppRepository,
   ValidatePasswordRepository,
-  SignInRepository,
+  GenerateTokenRepository,
 } from '@/repositories';
-import { AccessTokenMock, AppMock, AuthMock, UserMock } from '@/test/entities';
+import { AppMock, AuthMock, TokenMock, UserMock } from '@/test/entities';
 import {
   FindAppByIdRepositoryMock,
   FindUserInAppRepositoryMock,
-  SignIdRepositoryMock,
-  ValidatePasswordMock,
+  ValidatePasswordRepositoryMock,
 } from '@/test/repositories';
 import { Auth } from '@/use-cases';
 
@@ -34,18 +28,22 @@ interface SutTypes {
   findAppByIdRepository: FindAppByIdRepository;
   findUserInAppRepository: FindUserInAppRepository;
   validatePasswordRepository: ValidatePasswordRepository;
-  signInRepository: SignInRepository;
+  generateTokenRepository: GenerateTokenRepository;
 }
 
 const makeSut = (): SutTypes => {
   const mockEmailRepository: FindUserByEmailRepository = {
     find: jest.fn(async () => UserMock),
   };
+
+  const mockGenerateTokenRepository: GenerateTokenRepository = {
+    generate: jest.fn(async () => TokenMock.accessToken),
+  };
   const findUserByEmailRepository = mockEmailRepository;
   const findAppByIdRepository = new FindAppByIdRepositoryMock();
   const findUserInAppRepository = new FindUserInAppRepositoryMock();
-  const validatePasswordRepository = new ValidatePasswordMock();
-  const signInRepository = new SignIdRepositoryMock();
+  const validatePasswordRepository = new ValidatePasswordRepositoryMock();
+  const generateTokenRepository = mockGenerateTokenRepository;
 
   const authDto: AuthDto = {
     appId: AppMock.id,
@@ -58,7 +56,7 @@ const makeSut = (): SutTypes => {
     findAppByIdRepository,
     findUserInAppRepository,
     validatePasswordRepository,
-    signInRepository
+    generateTokenRepository
   );
 
   return {
@@ -68,19 +66,25 @@ const makeSut = (): SutTypes => {
     findAppByIdRepository,
     findUserInAppRepository,
     validatePasswordRepository,
-    signInRepository,
+    generateTokenRepository,
   };
 };
 
 describe('Auth', () => {
   it('Should return Access Token when pass correct authDto object', async () => {
     const { authDto, sut } = makeSut();
+    jest
+      .spyOn(sut['generateTokenRespository'], 'generate')
+      .mockResolvedValueOnce(TokenMock.accessToken);
+    jest
+      .spyOn(sut['generateTokenRespository'], 'generate')
+      .mockResolvedValueOnce(TokenMock.refreshToken);
 
     const result = await sut.execute(authDto);
 
     expect(result.isLeft()).toBeFalsy();
     expect(result.isRight()).toBeTruthy();
-    expect(result.value).toStrictEqual(AccessTokenMock);
+    expect(result.value).toStrictEqual(TokenMock);
   });
 
   it('Should return EntityNotEmpty when pass incorrect email in authDto object', async () => {
@@ -168,11 +172,27 @@ describe('Auth', () => {
     expect(result.value).toBeInstanceOf(EntityIsInvalid);
   });
 
-  it('should return EntityNotCreated when return empty Access Token from signInRepository', async () => {
+  it('should return EntityNotCreated when return empty Access Token from generateTokenRespository', async () => {
     const { authDto, sut } = makeSut();
     jest
-      .spyOn(sut['signInRepository'], 'sign')
-      .mockResolvedValueOnce({} as AccessTokenResponseDto);
+      .spyOn(sut['generateTokenRespository'], 'generate')
+      .mockResolvedValueOnce('');
+
+    const result = await sut.execute(authDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityNotCreated);
+  });
+
+  it('should return EntityNotCreated when return empty Refresh Token from generateTokenRespository', async () => {
+    const { authDto, sut } = makeSut();
+    jest
+      .spyOn(sut['generateTokenRespository'], 'generate')
+      .mockResolvedValueOnce(TokenMock.accessToken);
+    jest
+      .spyOn(sut['generateTokenRespository'], 'generate')
+      .mockResolvedValueOnce('');
 
     const result = await sut.execute(authDto);
 
