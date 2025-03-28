@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import {
   ValidateTokenRepository,
-  ValidateTokenRepositoryDto,
+  ValidateTokenDto,
 } from '@pure-workspace/domain';
 
 export class ValidateTokenRepositoryImpl implements ValidateTokenRepository {
@@ -10,7 +10,7 @@ export class ValidateTokenRepositoryImpl implements ValidateTokenRepository {
     @Inject('JwtService')
     private jwtService: JwtService
   ) {}
-  async validate(input: ValidateTokenRepositoryDto): Promise<string> {
+  async validate(input: ValidateTokenDto): Promise<string> {
     try {
       const payload = await this.jwtService.verifyAsync<{
         sub: string;

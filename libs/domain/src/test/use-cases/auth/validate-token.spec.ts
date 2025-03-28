@@ -1,4 +1,4 @@
-import { UserResponseDto, ValidateTokenDto } from '@/dtos';
+import { TokenDto, UserResponseDto } from '@/dtos';
 import { EntityIsInvalid, EntityNotEmpty, EntityNotExists } from '@/errors';
 import {
   FindUserByIdRepository,
@@ -13,7 +13,7 @@ import { ValidateToken } from '@/use-cases';
 
 interface SutTypes {
   sut: ValidateToken;
-  validateTokenDto: ValidateTokenDto;
+  validateTokenDto: TokenDto;
   findUserIdRepository: FindUserByIdRepository;
   validateTokenRepository: ValidateTokenRepository;
 }
@@ -22,7 +22,7 @@ const makeSut = (): SutTypes => {
   const findUserIdRepository = new FindUserByIdRepositoryMock();
   const validateTokenRepository = new ValidateTokenRepositoryMock();
 
-  const validateTokenDto: ValidateTokenDto = {
+  const validateTokenDto: TokenDto = {
     token: TokenMock.accessToken,
     userId: UserMock.id,
   };

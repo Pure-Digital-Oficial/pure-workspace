@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../bases';
-import { ValidateTokenDto } from '../../dtos';
+import { TokenDto } from '../../dtos';
 import { EntityIsInvalid, EntityNotEmpty, EntityNotExists } from '../../errors';
 import {
   FindUserByIdRepository,
@@ -11,7 +11,7 @@ import { UserVerificationId } from '../../utils';
 export class ValidateToken
   implements
     UseCase<
-      ValidateTokenDto,
+      TokenDto,
       Either<EntityNotEmpty | EntityNotExists | EntityIsInvalid, boolean>
     >
 {
@@ -22,7 +22,7 @@ export class ValidateToken
     private validateTokenRepository: ValidateTokenRepository
   ) {}
   async execute(
-    input: ValidateTokenDto
+    input: TokenDto
   ): Promise<
     Either<EntityNotEmpty | EntityNotExists | EntityIsInvalid, boolean>
   > {
