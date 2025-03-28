@@ -7,8 +7,8 @@ import { RefreshTokenService } from './refresh-token.service';
 export class RefreshTokenController {
   constructor(private refreshTokenService: RefreshTokenService) {}
   @Post()
-  async auth(@Req() req: Request, @Query() query: { userId: string }) {
-    const refreshToken = req.cookies['refresh_token'];
+  async refresh(@Req() req: Request, @Query() query: { userId: string }) {
+    const refreshToken = req.cookies['refreshToken'];
 
     const result = await this.refreshTokenService.refresh({
       token: refreshToken ?? '',
