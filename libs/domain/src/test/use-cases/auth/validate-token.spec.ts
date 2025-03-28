@@ -1,4 +1,4 @@
-import { TokenDto, UserResponseDto } from '@/dtos';
+import { TokenDto, UserResponseDto, ValidateTokenResponseDto } from '@/dtos';
 import { EntityIsInvalid, EntityNotEmpty, EntityNotExists } from '@/errors';
 import {
   FindUserByIdRepository,
@@ -87,7 +87,7 @@ describe('ValidateToken', () => {
     const { validateTokenDto, sut } = makeSut();
     jest
       .spyOn(sut['validateTokenRepository'], 'validate')
-      .mockResolvedValueOnce('');
+      .mockResolvedValueOnce({} as ValidateTokenResponseDto);
 
     const result = await sut.execute(validateTokenDto);
 
@@ -100,7 +100,7 @@ describe('ValidateToken', () => {
     const { validateTokenDto, sut } = makeSut();
     jest
       .spyOn(sut['validateTokenRepository'], 'validate')
-      .mockResolvedValueOnce('5');
+      .mockResolvedValueOnce({ email: '', userId: '5' });
 
     const result = await sut.execute(validateTokenDto);
 
