@@ -17,7 +17,6 @@ import { AppMock, AuthMock, TokenMock, UserMock } from '@/test/entities';
 import {
   FindAppByIdRepositoryMock,
   FindUserInAppRepositoryMock,
-  GenerateTokenRepositoryMock,
   ValidatePasswordRepositoryMock,
 } from '@/test/repositories';
 import { Auth } from '@/use-cases';
@@ -36,11 +35,14 @@ const makeSut = (): SutTypes => {
   const mockEmailRepository: FindUserByEmailRepository = {
     find: jest.fn(async () => UserMock),
   };
+  const mockGenerateTokenRepository: GenerateTokenRepository = {
+    generate: jest.fn(async () => TokenMock.accessToken),
+  };
   const findUserByEmailRepository = mockEmailRepository;
   const findAppByIdRepository = new FindAppByIdRepositoryMock();
   const findUserInAppRepository = new FindUserInAppRepositoryMock();
   const validatePasswordRepository = new ValidatePasswordRepositoryMock();
-  const generateTokenRepository = new GenerateTokenRepositoryMock();
+  const generateTokenRepository = mockGenerateTokenRepository;
 
   const authDto: AuthDto = {
     appId: AppMock.id,

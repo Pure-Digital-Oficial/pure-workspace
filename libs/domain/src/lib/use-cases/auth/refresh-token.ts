@@ -19,7 +19,7 @@ export class RefreshToken
       TokenDto,
       Either<
         EntityNotEmpty | EntityIsInvalid | EntityNotCreated,
-        Omit<TokenResponseDto, 'refreshToken'>
+        TokenResponseDto
       >
     >
 {
@@ -36,7 +36,7 @@ export class RefreshToken
   ): Promise<
     Either<
       EntityNotEmpty | EntityIsInvalid | EntityNotCreated,
-      Omit<TokenResponseDto, 'refreshToken'>
+      TokenResponseDto
     >
   > {
     const { token, userId } = input;
@@ -81,6 +81,20 @@ export class RefreshToken
       return left(new EntityNotCreated('token'));
     }
 
-    return right({ accessToken: generatedAccessToken });
+    const generatedRefreshToken = await this.generateTokenRespository.generate({
+      email: validatedUserToken.email,
+      userId,
+      secret: process.env['JWT_REFRESH_SECRET'] ?? '',
+      expiresIn: process.env['JWT_REFRESH_EXPIRATION_IN'] ?? '',
+    });
+
+    if (Object.keys(generatedRefreshToken).length < 1) {
+      return left(new EntityNotCreated('token'));
+    }
+
+    return right({
+      accessToken: generatedAccessToken,
+      refreshToken: generatedRefreshToken,
+    });
   }
 }
