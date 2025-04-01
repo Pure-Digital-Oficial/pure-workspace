@@ -35,7 +35,11 @@ export class AuthController {
     if (result.isRight()) {
       const { refreshToken, accessToken } = result.value;
 
-      await this.redisService.set('refreshToken', refreshToken, 604800);
+      await this.redisService.set(
+        'refreshToken',
+        refreshToken,
+        parseInt(process.env['REDIS_EXPIRATION'] ?? '') ?? 3600
+      );
 
       response.cookie('refreshToken', refreshToken, {
         httpOnly: true,

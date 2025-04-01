@@ -5,13 +5,14 @@ import {
   GenerateTokenRepositoryImpl,
   FindUserByIdRepositoryImpl,
   ValidateTokenRepositoryImpl,
+  RedisModule,
 } from '@pure-workspace/data-access';
 import { RefreshToken } from '@pure-workspace/domain';
 import { RefreshTokenService } from './refresh-token.service';
 import { RefreshTokenController } from './refresh-token.controller';
 
 @Module({
-  imports: [],
+  imports: [RedisModule],
   controllers: [RefreshTokenController],
   providers: [
     RefreshToken,
