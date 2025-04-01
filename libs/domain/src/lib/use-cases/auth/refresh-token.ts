@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../bases';
-import { TokenDto, TokenResponseDto } from '../../dtos';
+import { RefreshTokenDto, TokenResponseDto } from '../../dtos';
 import {
   EntityIsInvalid,
   EntityNotCreated,
@@ -16,7 +16,7 @@ import { UserVerificationId } from '../../utils';
 export class RefreshToken
   implements
     UseCase<
-      TokenDto,
+      RefreshTokenDto,
       Either<
         EntityNotEmpty | EntityIsInvalid | EntityNotCreated,
         TokenResponseDto
@@ -32,17 +32,21 @@ export class RefreshToken
     private generateTokenRespository: GenerateTokenRepository
   ) {}
   async execute(
-    input: TokenDto
+    input: RefreshTokenDto
   ): Promise<
     Either<
       EntityNotEmpty | EntityIsInvalid | EntityNotCreated,
       TokenResponseDto
     >
   > {
-    const { token, userId } = input;
+    const { token, userId, refreshToken } = input;
 
     if (Object.keys(token).length < 1) {
       return left(new EntityNotEmpty('token'));
+    }
+
+    if (token !== refreshToken) {
+      return left(new EntityIsInvalid('token'));
     }
 
     if (Object.keys(userId).length < 1) {
