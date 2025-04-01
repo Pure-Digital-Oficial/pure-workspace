@@ -16,11 +16,27 @@ services:
     networks:
       - shared_network
 
+  redis:
+    image: 'redis:alpine'
+    container_name: redis
+    ports:
+      - '${REDIS_PORT:-6379}:6379'
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    networks:
+      - shared_network
+
 networks:
   shared_network:
     driver: bridge
     name: shared_network
 
 volumes:
-  general_data: {}
-  marketing_data: {}
+  general_data:
+  redis_data:

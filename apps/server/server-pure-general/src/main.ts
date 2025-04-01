@@ -10,6 +10,7 @@ async function bootstrap() {
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: '*',
+    credentials: true,
   });
 
   const globalPrefix = 'pure-general-api';

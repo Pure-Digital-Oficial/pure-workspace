@@ -1,13 +1,17 @@
 import {
   ValidateTokenRepository,
-  ValidateTokenRepositoryDto,
+  ValidateTokenDto,
+  ValidateTokenResponseDto,
 } from '../../../../src';
-import { UserMock } from '../../entities';
+import { AuthMock, UserMock } from '../../entities';
 
 export class ValidateTokenRepositoryMock implements ValidateTokenRepository {
-  inputToken = {} as ValidateTokenRepositoryDto;
-  async validate(input: ValidateTokenRepositoryDto): Promise<string> {
+  inputToken = {} as ValidateTokenDto;
+  async validate(input: ValidateTokenDto): Promise<ValidateTokenResponseDto> {
     this.inputToken = input;
-    return UserMock.id;
+    return {
+      userId: UserMock.id,
+      email: AuthMock.email,
+    };
   }
 }

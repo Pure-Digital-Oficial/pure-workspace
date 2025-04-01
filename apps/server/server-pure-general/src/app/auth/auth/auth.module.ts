@@ -7,6 +7,7 @@ import {
   FindUserInAppRepositoryImpl,
   ValidatePasswordRepositoryImpl,
   GenerateTokenRepositoryImpl,
+  RedisModule,
 } from '@pure-workspace/data-access';
 import { Auth } from '@pure-workspace/domain';
 import { AuthService } from './auth.service';
@@ -14,7 +15,7 @@ import { AuthController } from './auth.controller';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  imports: [],
+  imports: [RedisModule],
   controllers: [AuthController],
   providers: [
     Auth,

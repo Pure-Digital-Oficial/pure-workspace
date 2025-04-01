@@ -35,7 +35,6 @@ const makeSut = (): SutTypes => {
   const mockEmailRepository: FindUserByEmailRepository = {
     find: jest.fn(async () => UserMock),
   };
-
   const mockGenerateTokenRepository: GenerateTokenRepository = {
     generate: jest.fn(async () => TokenMock.accessToken),
   };

@@ -2,7 +2,8 @@ import { Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import {
   ValidateTokenRepository,
-  ValidateTokenRepositoryDto,
+  ValidateTokenDto,
+  ValidateTokenResponseDto,
 } from '@pure-workspace/domain';
 
 export class ValidateTokenRepositoryImpl implements ValidateTokenRepository {
@@ -10,16 +11,19 @@ export class ValidateTokenRepositoryImpl implements ValidateTokenRepository {
     @Inject('JwtService')
     private jwtService: JwtService
   ) {}
-  async validate(input: ValidateTokenRepositoryDto): Promise<string> {
+  async validate(input: ValidateTokenDto): Promise<ValidateTokenResponseDto> {
     try {
       const payload = await this.jwtService.verifyAsync<{
         sub: string;
         email: string;
       }>(input.token, { secret: input.secret });
 
-      return payload.sub;
+      return {
+        userId: payload.sub ?? '',
+        email: payload.email ?? '',
+      };
     } catch {
-      return '';
+      return {} as ValidateTokenResponseDto;
     }
   }
 }

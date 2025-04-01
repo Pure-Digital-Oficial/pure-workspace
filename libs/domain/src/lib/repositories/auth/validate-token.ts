@@ -1,5 +1,5 @@
-import { ValidateTokenRepositoryDto } from '../../dtos';
+import { ValidateTokenDto, ValidateTokenResponseDto } from '../../dtos';
 
 export interface ValidateTokenRepository {
-  validate(input: ValidateTokenRepositoryDto): Promise<string>;
+  validate(input: ValidateTokenDto): Promise<ValidateTokenResponseDto>;
 }
