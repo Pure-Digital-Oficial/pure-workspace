@@ -8,10 +8,14 @@ import {
 } from '@pure-workspace/domain';
 import { AuthService } from './auth.service';
 import { ZodValidationPipe } from '../../pipes';
+import { RedisService } from '@pure-workspace/data-access';
 
 @Controller('auth/login')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private redisService: RedisService
+  ) {}
   @Post()
   @UsePipes(
     new ZodValidationPipe({
@@ -29,14 +33,18 @@ export class AuthController {
       appId: query?.appId ?? '',
     });
     if (result.isRight()) {
-      response.cookie('refreshToken', result.value.refreshToken, {
+      const { refreshToken, accessToken } = result.value;
+
+      await this.redisService.set('refreshToken', refreshToken, 604800);
+
+      response.cookie('refreshToken', refreshToken, {
         httpOnly: true,
         secure: process.env['NODE_ENV'] === 'production',
         sameSite: 'strict',
         path: '/auth/refresh',
       });
 
-      return response.json({ accessToken: result.value.accessToken });
+      return response.json({ accessToken });
     } else
       return await ErrorMessageResult(result.value.name, result.value.message);
   }
