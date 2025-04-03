@@ -13,6 +13,12 @@
 - npx nx g @nx/react:application --name=web-pure-institutional --directory=apps/web/web-pure-institutional --globalCss=true --projectNameAndRootFormat=as-provided --routing=true --style=scss --tags=application
 - nx g @nx/react:library --name=feature --unitTestRunner=jest --directory=libs/feature --projectNameAndRootFormat=as-provided
 
+## Next
+
+- npm add @nx/next
+- npx nx g @nx/next:app apps/web/web-pure-digital
+- npx nx g @nx/next:lib libs/feature
+
 ## Comandos Back
 
 ### NestJs
