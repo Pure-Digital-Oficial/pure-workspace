@@ -75,6 +75,9 @@
         "style": "none",
         "linter": "eslint"
       }
+    },
+    "@nx/react": {
+      "library": {}
     }
   }
 }
