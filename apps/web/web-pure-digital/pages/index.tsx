@@ -1,11 +1,9 @@
-import { Feature } from '@pure-workspace/feature'
+import { LoginContainer } from '@pure-workspace/feature'
 
-export function Index() {
+export const Index = () => {
   return (
-    <div>
-      <Feature />
-    </div>
-  );
+    <LoginContainer />
+  )
 }
 
 export default Index;
