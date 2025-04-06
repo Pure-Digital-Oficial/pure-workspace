@@ -13,7 +13,8 @@
     "docker:postgres": "docker-compose -f docker-compose-postgres.yaml up",
     "build:server-pure-general": "nx build server-pure-general",
     "start:server-pure-general": "nx run server-pure-general:serve",
-    "start:web-pure-digital": "nx dev web-pure-digital"
+    "start:web-pure-digital": "nx dev web-pure-digital",
+    "start:pure-digital": "npm run start:web-pure-digital -- npm run start:server-pure-general"
   },
   "private": true,
   "devDependencies": {
@@ -85,6 +86,7 @@
     "ioredis": "^5.6.0",
     "nestjs-prisma": "^0.25.0",
     "next": "14.2.3",
+    "nookies": "^2.5.2",
     "prisma": "^6.5.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",

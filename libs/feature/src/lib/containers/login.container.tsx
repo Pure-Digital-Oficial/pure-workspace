@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { authService } from '../services';
 
 export const LoginContainer = () => {
   const router = useRouter();
@@ -8,8 +9,21 @@ export const LoginContainer = () => {
     password: '',
   });
 
-  const redirect = () => {
-    router.push('/home');
+  const redirect = (event: FormEvent) => {
+    event.preventDefault()
+    authService
+      .login({
+        email: values.email,
+        password: values.password,
+        appId: '1',
+      })
+      .then(() => {
+        router.push('/home');
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Usuário ou a senha estão inválidos')
+      })
   };
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -26,7 +40,7 @@ export const LoginContainer = () => {
   return (
     <div>
       <h1>Login</h1>
-      <form>
+      <form onSubmit={redirect}>
         <input
           placeholder="Email"
           name="email"
@@ -40,7 +54,7 @@ export const LoginContainer = () => {
           value={values.password}
           onChange={handleChange}
         />
-        <button onClick={redirect}>Ir para Home</button>
+        <button type="submit">Ir para Home</button>
       </form>
     </div>
   );
