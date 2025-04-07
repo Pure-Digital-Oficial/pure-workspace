@@ -14,7 +14,7 @@
     "build:server-pure-general": "nx build server-pure-general",
     "start:server-pure-general": "nx run server-pure-general:serve",
     "start:web-pure-digital": "nx dev web-pure-digital",
-    "start:pure-digital": "npm run start:web-pure-digital -- npm run start:server-pure-general"
+    "start:pure-digital": "npm run start:web-pure-digital & npm run start:server-pure-general"
   },
   "private": true,
   "devDependencies": {

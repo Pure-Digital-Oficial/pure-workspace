@@ -1,1 +1,1 @@
-export * from './pure-general-api'
+export * from './pure-general-api';

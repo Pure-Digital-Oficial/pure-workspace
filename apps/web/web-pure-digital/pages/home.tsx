@@ -1,9 +1,7 @@
-import { HomeContainer } from "@pure-workspace/feature"
+import { HomeContainer } from '@pure-workspace/feature';
 
 export const Home = () => {
-    return (
-        <HomeContainer />
-    )
-}
+  return <HomeContainer />;
+};
 
 export default Home;

@@ -8,7 +8,7 @@ const { composePlugins, withNx } = require('@nx/next');
  **/
 const nextConfig = {
   env: {
-    PORT: process.env['WEB_PURE_DIGITAL_PORT'] ?? '3000'
+    PORT: process.env['WEB_PURE_DIGITAL_PORT'] ?? '3000',
   },
   nx: {
     // Set this to true if you would like to to use SVGR

@@ -10,7 +10,7 @@ export const LoginContainer = () => {
   });
 
   const redirect = (event: FormEvent) => {
-    event.preventDefault()
+    event.preventDefault();
     authService
       .login({
         email: values.email,
@@ -22,8 +22,8 @@ export const LoginContainer = () => {
       })
       .catch((err) => {
         console.log(err);
-        alert('Usuário ou a senha estão inválidos')
-      })
+        alert('Usuário ou a senha estão inválidos');
+      });
   };
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {

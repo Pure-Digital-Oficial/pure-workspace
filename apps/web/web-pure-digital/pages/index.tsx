@@ -1,9 +1,7 @@
-import { LoginContainer } from '@pure-workspace/feature'
+import { LoginContainer } from '@pure-workspace/feature';
 
 export const Index = () => {
-  return (
-    <LoginContainer />
-  )
-}
+  return <LoginContainer />;
+};
 
 export default Index;
