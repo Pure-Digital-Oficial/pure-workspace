@@ -6,7 +6,7 @@ export const tokenService = {
     globalThis?.localStorage?.setItem(ACCESS_TOKEN_KEY, accessToken);
     globalThis?.sessionStorage?.setItem(ACCESS_TOKEN_KEY, accessToken);
     nookies.set(ctx, ACCESS_TOKEN_KEY, accessToken, {
-      maxAge: process.env['NEXT_PUBLIC_JWT_ACCESS_EXPIRATION_IN'],
+      maxAge: process.env['NEXT_PUBLIC_NEXT_PUBLIC_JWT_ACCESS_EXPIRATION_IN'],
       path: '/',
     });
   },
