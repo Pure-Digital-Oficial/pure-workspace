@@ -3,3 +3,4 @@ export * from './find-user-by-email';
 export * from './find-user-by-id';
 export * from './find-user-by-nickname';
 export * from './find-user-in-app';
+export * from './create-system-user';
