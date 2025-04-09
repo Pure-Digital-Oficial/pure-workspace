@@ -1,3 +1,4 @@
+import { GetServerSidePropsContext } from 'next';
 import nookies from 'nookies';
 const ACCESS_TOKEN_KEY = process.env['NEXT_PUBLIC_ACCESS_TOKEN_KEY'] ?? '';
 
@@ -10,7 +11,7 @@ export const tokenService = {
       path: '/',
     });
   },
-  get(ctx = null) {
+  get(ctx: GetServerSidePropsContext) {
     const cookies = nookies.get(ctx);
     return cookies[ACCESS_TOKEN_KEY] || '';
   },

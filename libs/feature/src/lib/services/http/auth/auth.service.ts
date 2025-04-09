@@ -3,8 +3,10 @@ import {
   AuthDto,
   TokenResponseDto,
   HttpClientResponse,
+  SessionResponseDto,
 } from '@pure-workspace/domain';
 import { tokenService } from './token.service';
+import { GetServerSidePropsContext } from 'next';
 
 export const authService = {
   async login(authDto: AuthDto) {
@@ -23,5 +25,24 @@ export const authService = {
         tokenService.save(result.data.accessToken);
       }
     );
+  },
+  async getSession(ctx: GetServerSidePropsContext, appId: string) {
+    const token = tokenService.get(ctx);
+    const response = await HttpClient<SessionResponseDto>(pureGeneralApi, {
+      method: 'GET',
+      url: 'auth/session',
+      params: {
+        appId,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error('Não autorizado');
+    }
+
+    return response.data;
   },
 };
