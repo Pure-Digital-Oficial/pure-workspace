@@ -1,7 +1,7 @@
 import { Inject } from "@nestjs/common";
 import { Either, left, right, UseCase } from "../../bases";
 import { CreateSystemUserDto } from "../../dtos";
-import { EntityAlreadyExists, EntityNotCreated, InsufficientCharacters } from "../../errors";
+import { EntityAlreadyExists, EntityNotAccess, EntityNotCreated, EntityNotExists, InsufficientCharacters } from "../../errors";
 import { CreateSystemUserRepository, FindAppByIdRepository, FindUserByIdRepository, FindUserByNicknameRepository } from "../../repositories";
 
 export class CreateSystemUser
@@ -41,30 +41,26 @@ export class CreateSystemUser
       Object.keys(filteredAppId).length < 1 ||
       Object.keys(filteredAppId?.id).length < 1
     ) {
-      return left(new InsufficientCharacters("app ID"));
+      return left(new EntityNotExists("app ID"));
+    }
+
+    if (Object.keys(loggedUserId).length < 1) {
+      return left(new InsufficientCharacters("logged user ID"));
     }
 
     const filteredLoggedUserId = await this.FindUserByIdRepository.find(loggedUserId);
 
     if (Object.keys(filteredLoggedUserId).length < 1 || filteredLoggedUserId?.id.length < 1) {
-      return left(new InsufficientCharacters("logged user ID"));
+      return left(new EntityNotExists("logged user ID"));
     }
 
-    if (filteredLoggedUserId?.type !== "admin") {
-      return left(new InsufficientCharacters("logged user type"));
+    if (filteredLoggedUserId?.type !== "ADMIN") {
+      return left(new EntityNotAccess("user"));
     }
 
-    if (
-      Object.keys(filteredLoggedUserId).length < 1 ||
-      Object.keys(filteredLoggedUserId?.id).length < 1
-    ) {
-      return left(new InsufficientCharacters("logged user ID"));
-    }
-    if (filteredLoggedUserId.type !== "admin") {
-      return left(new InsufficientCharacters("logged user type"));
-    }
 
     const filteredUser = await this.findUserByNicknameRepository.find(nickname);
+
     if (Object.keys(filteredUser?.id ?? filteredUser).length > 0) {
       return left(new EntityAlreadyExists(nickname));
     }
