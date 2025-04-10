@@ -3,6 +3,7 @@ import { authService } from './auth.service';
 import { SessionResponseDto } from '@pure-workspace/domain';
 
 export function withSession<P = unknown>(
+  appId: string,
   handler: (
     ctx: GetServerSidePropsContext & {
       req: GetServerSidePropsContext['req'] & { session: SessionResponseDto };
@@ -13,7 +14,7 @@ export function withSession<P = unknown>(
     ctx: GetServerSidePropsContext
   ): Promise<GetServerSidePropsResult<P>> => {
     try {
-      const session = await authService.getSession(ctx, '1');
+      const session = await authService.getSession(ctx, appId);
 
       const reqWithSession = Object.assign(ctx.req, {
         session,

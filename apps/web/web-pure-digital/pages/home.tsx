@@ -13,7 +13,7 @@ export const Home = ({ session }: HomeContainerPropsDto) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps<HomeContainerPropsDto> =
-  withSession(async (ctx) => {
+  withSession('1', async (ctx) => {
     return {
       props: {
         session: ctx.req.session,
