@@ -44,7 +44,7 @@ export class CreateSystemUser
       return left(new InsufficientCharacters("app ID"));
     }
 
-    const filteredLoggedUserId = await this.FindUserByIdRepository.find(input.loggedUserId);
+    const filteredLoggedUserId = await this.FindUserByIdRepository.find(loggedUserId);
 
     if (Object.keys(filteredLoggedUserId).length < 1 || filteredLoggedUserId?.id.length < 1) {
       return left(new InsufficientCharacters("logged user ID"));
@@ -62,6 +62,7 @@ export class CreateSystemUser
     }
     if (filteredLoggedUserId.type !== "admin") {
       return left(new InsufficientCharacters("logged user type"));
+    }
 
     const filteredUser = await this.findUserByNicknameRepository.find(nickname);
     if (Object.keys(filteredUser?.id ?? filteredUser).length > 0) {
