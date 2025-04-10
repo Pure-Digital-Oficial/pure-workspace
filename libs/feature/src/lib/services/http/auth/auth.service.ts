@@ -28,16 +28,20 @@ export const authService = {
   },
   async getSession(ctx: GetServerSidePropsContext, appId: string) {
     const token = tokenService.get(ctx);
-    const response = await HttpClient<SessionResponseDto>(pureGeneralApi, {
-      method: 'GET',
-      url: 'auth/session',
-      params: {
-        appId,
+    const response = await HttpClient<SessionResponseDto>(
+      pureGeneralApi,
+      {
+        method: 'GET',
+        url: 'auth/session',
+        params: {
+          appId,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      true
+    );
 
     if (response.status !== 200) {
       throw new Error('Não autorizado');
