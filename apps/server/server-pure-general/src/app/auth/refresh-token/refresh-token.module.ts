@@ -3,7 +3,6 @@ import { JwtService } from '@nestjs/jwt';
 import {
   PrismaGeneralService,
   GenerateTokenRepositoryImpl,
-  FindUserByIdRepositoryImpl,
   ValidateTokenRepositoryImpl,
   RedisModule,
 } from '@pure-workspace/data-access';
@@ -17,10 +16,6 @@ import { RefreshTokenController } from './refresh-token.controller';
   providers: [
     RefreshToken,
     RefreshTokenService,
-    {
-      provide: 'FindUserByIdRepository',
-      useClass: FindUserByIdRepositoryImpl,
-    },
     {
       provide: 'ValidateTokenRepository',
       useClass: ValidateTokenRepositoryImpl,
