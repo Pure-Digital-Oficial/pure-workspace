@@ -1,30 +1,16 @@
+import { ValidateTokenResponseDto, RefreshTokenDto } from '@/dtos';
+import { EntityIsInvalid, EntityNotCreated, EntityNotEmpty } from '@/errors';
 import {
-  UserResponseDto,
-  ValidateTokenResponseDto,
-  RefreshTokenDto,
-} from '@/dtos';
-import {
-  EntityIsInvalid,
-  EntityNotCreated,
-  EntityNotEmpty,
-  EntityNotExists,
-} from '@/errors';
-import {
-  FindUserByIdRepository,
   GenerateTokenRepository,
   ValidateTokenRepository,
 } from '@/repositories';
-import { TokenMock, UserMock } from '@/test/entities';
-import {
-  FindUserByIdRepositoryMock,
-  ValidateTokenRepositoryMock,
-} from '@/test/repositories';
+import { TokenMock } from '@/test/entities';
+import { ValidateTokenRepositoryMock } from '@/test/repositories';
 import { RefreshToken } from '@/use-cases';
 
 interface SutTypes {
   sut: RefreshToken;
   refreshTokenDto: RefreshTokenDto;
-  findUserByIdRepository: FindUserByIdRepository;
   validateTokenRepository: ValidateTokenRepository;
   generateTokenRespository: GenerateTokenRepository;
 }
@@ -33,18 +19,15 @@ const makeSut = (): SutTypes => {
   const mockGenerateTokenRepository: GenerateTokenRepository = {
     generate: jest.fn(async () => TokenMock.accessToken),
   };
-  const findUserByIdRepository = new FindUserByIdRepositoryMock();
   const validateTokenRepository = new ValidateTokenRepositoryMock();
   const generateTokenRespository = mockGenerateTokenRepository;
 
   const refreshTokenDto: RefreshTokenDto = {
     token: TokenMock.refreshToken,
-    userId: UserMock.id,
     refreshToken: TokenMock.refreshToken,
   };
 
   const sut = new RefreshToken(
-    findUserByIdRepository,
     validateTokenRepository,
     generateTokenRespository
   );
@@ -52,7 +35,6 @@ const makeSut = (): SutTypes => {
   return {
     sut,
     refreshTokenDto,
-    findUserByIdRepository,
     validateTokenRepository,
     generateTokenRespository,
   };
@@ -93,29 +75,6 @@ describe('RefreshToken', () => {
     expect(result.isLeft()).toBeTruthy();
     expect(result.isRight()).toBeFalsy();
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
-  });
-
-  it('Should return EntityNotEmpty when pass empty userId in refreshTokenDto object', async () => {
-    const { sut, refreshTokenDto } = makeSut();
-    refreshTokenDto.userId = '';
-    const result = await sut.execute(refreshTokenDto);
-
-    expect(result.isLeft()).toBeTruthy();
-    expect(result.isRight()).toBeFalsy();
-    expect(result.value).toBeInstanceOf(EntityNotEmpty);
-  });
-
-  it('should return EntityNotExists when return user object from findUserByIdRepository', async () => {
-    const { refreshTokenDto, sut } = makeSut();
-    jest
-      .spyOn(sut['findUserByIdRepository'], 'find')
-      .mockResolvedValueOnce({} as UserResponseDto);
-
-    const result = await sut.execute(refreshTokenDto);
-
-    expect(result.isLeft()).toBeTruthy();
-    expect(result.isRight()).toBeFalsy();
-    expect(result.value).toBeInstanceOf(EntityNotExists);
   });
 
   it('should return EntityIsInvalid when return empty user ID from validateTokenRepository', async () => {

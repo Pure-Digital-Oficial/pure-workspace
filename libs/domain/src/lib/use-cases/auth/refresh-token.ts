@@ -50,6 +50,10 @@ export class RefreshToken
       secret: process.env['JWT_REFRESH_SECRET'] ?? '',
     });
 
+    if (Object.keys(validatedUserToken).length < 1) {
+      return left(new EntityIsInvalid('user or token'));
+    }
+
     const generatedAccessToken = await this.generateTokenRespository.generate({
       email: validatedUserToken.email,
       userId: validatedUserToken.userId,
