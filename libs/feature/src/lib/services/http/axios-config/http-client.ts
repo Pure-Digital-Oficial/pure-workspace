@@ -1,31 +1,73 @@
-import { HttpClientResponse } from '@pure-workspace/domain';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { GetServerSidePropsContext } from 'next';
+import { pureGeneralApi } from '.';
 import {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from 'axios';
+  HttpClientResponse,
+  SessionResponseDto,
+  TokenResponseDto,
+} from '@pure-workspace/domain';
+import { tokenService } from '../auth';
+
+interface options {
+  refresh?: boolean;
+  ctx: GetServerSidePropsContext | null;
+}
 
 export async function HttpClient<T = unknown>(
   instance: AxiosInstance,
   config: AxiosRequestConfig,
-  refresh?: boolean
+  options?: options
 ): Promise<HttpClientResponse<T>> {
-  try {
-    const response: AxiosResponse<T> = await instance.request(config);
+  return await instance
+    .request(config)
+    .then(async (response) => {
+      return {
+        data: response.data,
+        status: response.status,
+      };
+    })
+    .catch(async (error) => {
+      console.log('Passando');
+      if (!options?.refresh) return error.response;
+      if (error.response.status !== 400) return error.response;
 
-    return {
-      data: response.data,
-      status: response.status,
-    };
-  } catch (error) {
-    const axiosError = error as AxiosError<T>;
+      const currentRefreshToken =
+        options?.ctx?.req?.cookies[
+          process.env['NEXT_PUBLIC_REFRESH_TOKEN_KEY'] ?? ''
+        ];
 
-    //Verificar o retorno
-    if (axiosError.response?.status === 400 && refresh) {
-      console.log('Olá');
-    }
+      return await HttpClient<TokenResponseDto>(pureGeneralApi, {
+        method: 'POST',
+        url: 'auth/refresh-token',
+        headers: {
+          Cookie: `refreshToken=${currentRefreshToken}`,
+        },
+        withCredentials: true,
+      }).then(async (response) => {
+        const { accessToken, refreshToken } = response.data;
 
-    throw axiosError;
-  }
+        if (accessToken && refreshToken) {
+          tokenService.save({ accessToken, refreshToken }, options?.ctx);
+
+          const newSession = await HttpClient<SessionResponseDto>(
+            pureGeneralApi,
+            {
+              method: 'GET',
+              url: 'auth/session',
+              params: {
+                appId: '1',
+              },
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+
+          return {
+            data: newSession.data,
+            status: newSession.status,
+          };
+        }
+      });
+    });
 }

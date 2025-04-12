@@ -10,7 +10,7 @@ import { GetServerSidePropsContext } from 'next';
 
 export const authService = {
   async login(authDto: AuthDto) {
-    return HttpClient<Omit<TokenResponseDto, 'refreshToken'>>(pureGeneralApi, {
+    return HttpClient<TokenResponseDto>(pureGeneralApi, {
       method: 'POST',
       url: 'auth/login',
       data: {
@@ -20,11 +20,12 @@ export const authService = {
       params: {
         appId: authDto.appId,
       },
-    }).then(
-      (result: HttpClientResponse<Omit<TokenResponseDto, 'refreshToken'>>) => {
-        tokenService.save(result.data.accessToken);
-      }
-    );
+    }).then((result: HttpClientResponse<TokenResponseDto>) => {
+      tokenService.save({
+        accessToken: result.data.accessToken,
+        refreshToken: result.data.refreshToken,
+      });
+    });
   },
   async getSession(ctx: GetServerSidePropsContext, appId: string) {
     const token = tokenService.get(ctx);
@@ -40,7 +41,10 @@ export const authService = {
           Authorization: `Bearer ${token}`,
         },
       },
-      true
+      {
+        refresh: true,
+        ctx: ctx,
+      }
     );
 
     if (response.status !== 200) {

@@ -1,8 +1,7 @@
-import { Controller, Post, Req, Res, UsePipes } from '@nestjs/common';
+import { Controller, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { ErrorMessageResult, UserIdQuerySchema } from '@pure-workspace/domain';
+import { ErrorMessageResult } from '@pure-workspace/domain';
 import { RefreshTokenService } from './refresh-token.service';
-import { ZodValidationPipe } from '../../pipes';
 import { RedisService } from '@pure-workspace/data-access';
 
 @Controller('auth/refresh-token')
@@ -12,11 +11,6 @@ export class RefreshTokenController {
     private redisService: RedisService
   ) {}
   @Post()
-  @UsePipes(
-    new ZodValidationPipe({
-      query: UserIdQuerySchema,
-    })
-  )
   async refresh(@Req() req: Request, @Res() response: Response) {
     const refreshToken = req.cookies['refreshToken'];
 
