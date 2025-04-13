@@ -1,7 +1,7 @@
-import { HomeContainerPropsDto } from '@pure-workspace/domain';
-import { FC } from 'react';
+import { useSession } from '../contexts';
 
-export const HomeContainer: FC<HomeContainerPropsDto> = ({ session }) => {
+export const HomeContainer = () => {
+  const { session } = useSession();
   return (
     <div>
       <div>Hello home!</div>
