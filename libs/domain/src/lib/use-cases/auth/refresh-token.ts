@@ -58,7 +58,7 @@ export class RefreshToken
       email: validatedUserToken.email,
       userId: validatedUserToken.userId,
       secret: process.env['JWT_ACCESS_SECRET'] ?? '',
-      expiresIn: process.env['NEXT_PUBLIC_JWT_ACCESS_EXPIRATION_IN'] ?? '',
+      expiresIn: process.env['JWT_ACCESS_EXPIRATION_IN'] ?? '',
     });
 
     if (Object.keys(generatedAccessToken).length < 1) {
