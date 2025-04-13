@@ -7,6 +7,7 @@ import {
 } from '@pure-workspace/domain';
 import { tokenService } from './token.service';
 import { GetServerSidePropsContext } from 'next';
+import { entityUnauthorizedMessage } from '../../../utils';
 
 export const authService = {
   async login(authDto: AuthDto) {
@@ -44,11 +45,13 @@ export const authService = {
       {
         refresh: true,
         ctx: ctx,
+        appId,
+        tokenKey: process.env['NEXT_PUBLIC_REFRESH_TOKEN_KEY'],
       }
     );
 
     if (response.status !== 200) {
-      throw new Error('Não autorizado');
+      throw new Error(entityUnauthorizedMessage('usuário', 'PT-BR'));
     }
 
     return response.data;
