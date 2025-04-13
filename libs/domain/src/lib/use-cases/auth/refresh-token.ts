@@ -7,11 +7,9 @@ import {
   EntityNotEmpty,
 } from '../../errors';
 import {
-  FindUserByIdRepository,
   GenerateTokenRepository,
   ValidateTokenRepository,
 } from '../../repositories';
-import { UserVerificationId } from '../../utils';
 
 export class RefreshToken
   implements
@@ -24,8 +22,6 @@ export class RefreshToken
     >
 {
   constructor(
-    @Inject('FindUserByIdRepository')
-    private findUserByIdRepository: FindUserByIdRepository,
     @Inject('ValidateTokenRepository')
     private validateTokenRepository: ValidateTokenRepository,
     @Inject('GenerateTokenRepository')
@@ -39,7 +35,7 @@ export class RefreshToken
       TokenResponseDto
     >
   > {
-    const { token, userId, refreshToken } = input;
+    const { token, refreshToken } = input;
 
     if (Object.keys(token).length < 1) {
       return left(new EntityNotEmpty('token'));
@@ -49,34 +45,18 @@ export class RefreshToken
       return left(new EntityIsInvalid('token'));
     }
 
-    if (Object.keys(userId).length < 1) {
-      return left(new EntityNotEmpty('user ID'));
-    }
-
-    const userVerification = await UserVerificationId(
-      userId,
-      this.findUserByIdRepository
-    );
-
-    if (userVerification.isLeft()) {
-      return left(userVerification.value);
-    }
-
     const validatedUserToken = await this.validateTokenRepository.validate({
       token,
       secret: process.env['JWT_REFRESH_SECRET'] ?? '',
     });
 
-    if (
-      Object.keys(validatedUserToken).length < 1 ||
-      userId !== validatedUserToken.userId
-    ) {
+    if (Object.keys(validatedUserToken).length < 1) {
       return left(new EntityIsInvalid('user or token'));
     }
 
     const generatedAccessToken = await this.generateTokenRespository.generate({
       email: validatedUserToken.email,
-      userId,
+      userId: validatedUserToken.userId,
       secret: process.env['JWT_ACCESS_SECRET'] ?? '',
       expiresIn: process.env['JWT_ACCESS_EXPIRATION_IN'] ?? '',
     });
@@ -87,7 +67,7 @@ export class RefreshToken
 
     const generatedRefreshToken = await this.generateTokenRespository.generate({
       email: validatedUserToken.email,
-      userId,
+      userId: validatedUserToken.userId,
       secret: process.env['JWT_REFRESH_SECRET'] ?? '',
       expiresIn: process.env['JWT_REFRESH_EXPIRATION_IN'] ?? '',
     });

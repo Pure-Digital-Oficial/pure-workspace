@@ -33,7 +33,7 @@ export class AuthController {
       appId: query?.appId ?? '',
     });
     if (result.isRight()) {
-      const { refreshToken, accessToken } = result.value;
+      const { refreshToken } = result.value;
 
       await this.redisService.set(
         'refreshToken',
@@ -41,14 +41,7 @@ export class AuthController {
         parseInt(process.env['REDIS_EXPIRATION'] ?? '') ?? 3600
       );
 
-      response.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
-        secure: process.env['NODE_ENV'] === 'production',
-        sameSite: 'strict',
-        path: '/auth/refresh',
-      });
-
-      return response.json({ accessToken });
+      return response.json(result.value);
     } else
       return await ErrorMessageResult(result.value.name, result.value.message);
   }
