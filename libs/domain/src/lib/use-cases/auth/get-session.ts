@@ -59,6 +59,9 @@ export class GetSession
       return left(new EntityNotExists('User'));
     }
 
-    return right(session);
+    return right({
+      ...session,
+      loggedAppId: appId,
+    });
   }
 }

@@ -7,7 +7,7 @@ import {
 
 export class GetSessionRepositoryImpl implements GetSessionRepository {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
-  async get(userId: string): Promise<SessionResponseDto> {
+  async get(userId: string): Promise<Omit<SessionResponseDto, 'loggedAppId'>> {
     const sessionResult = await this.prismaService['user'].findUnique({
       where: {
         id: userId,

@@ -4,4 +4,5 @@ export interface SessionResponseDto {
   status: string;
   type: string;
   picture: string;
+  loggedAppId: string;
 }
