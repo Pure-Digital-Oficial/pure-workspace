@@ -20,7 +20,7 @@ export const ThemeControls: FC<ThemeControlsProps> = ({
   const { base, setBase, toggleMode } = useThemeContext();
 
   return (
-    <Stack direction="row" spacing={2} p={2}>
+    <Stack direction="row" alignItems="center" spacing={2} p={2}>
       <Select
         value={base}
         onChange={(e) => setBase(e.target.value as ThemeBase)}
