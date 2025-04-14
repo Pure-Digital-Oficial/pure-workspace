@@ -1,12 +1,18 @@
 import { SessionType } from '@pure-workspace/domain';
-import { HomeContainer, SessionProvider } from '@pure-workspace/feature';
+import {
+  CustomThemeProvider,
+  HomeContainer,
+  SessionProvider,
+} from '@pure-workspace/feature';
 import { withSession } from 'libs/feature/src/lib/services';
 import { GetServerSideProps } from 'next';
 
 export const Home = ({ session }: SessionType) => {
   return (
     <SessionProvider session={session}>
-      <HomeContainer />
+      <CustomThemeProvider>
+        <HomeContainer />
+      </CustomThemeProvider>
     </SessionProvider>
   );
 };
