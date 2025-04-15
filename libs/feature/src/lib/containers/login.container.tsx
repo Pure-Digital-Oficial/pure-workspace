@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { authService } from '../services';
+import { Box } from '@mui/material';
 
 export const LoginContainer = () => {
   const router = useRouter();
@@ -38,6 +39,34 @@ export const LoginContainer = () => {
   }
 
   return (
+    <Box
+      sx={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background:
+          'linear-gradient(to bottom, #C91517 0%, #AA1214 50%, #751011 100%)',
+      }}
+    >
+      <Box
+        sx={{
+          width: '1093px',
+          height: '625px',
+          borderTopLeftRadius: '16px',
+          borderBottomLeftRadius: '16px',
+          background: 'white',
+          boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
+        }}
+      >
+        asassa
+      </Box>
+    </Box>
+  );
+};
+
+/*
+
     <div>
       <h1>Login</h1>
       <form onSubmit={redirect}>
@@ -56,6 +85,5 @@ export const LoginContainer = () => {
         />
         <button type="submit">Ir para Home</button>
       </form>
-    </div>
-  );
-};
+    </div> 
+*/
