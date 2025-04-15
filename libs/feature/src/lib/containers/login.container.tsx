@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { authService } from '../services';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { FormWithImageLayout } from '../components';
 
 export const LoginContainer = () => {
   const router = useRouter();
@@ -39,51 +40,65 @@ export const LoginContainer = () => {
   }
 
   return (
-    <Box
-      sx={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background:
-          'linear-gradient(to bottom, #C91517 0%, #AA1214 50%, #751011 100%)',
-      }}
-    >
+    <FormWithImageLayout>
       <Box
         sx={{
-          width: '1093px',
-          height: '625px',
-          borderTopLeftRadius: '16px',
-          borderBottomLeftRadius: '16px',
-          background: 'white',
-          boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
+          display: 'flex',
+          flexDirection: 'row',
+          height: '100%',
         }}
       >
-        asassa
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '367px',
+            height: '100%',
+            background: '#171718',
+            borderTopLeftRadius: '16px',
+            borderBottomLeftRadius: '16px',
+            color: 'white',
+          }}
+        >
+          <Box
+            sx={{
+              height: '280px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexDirection: 'column',
+            }}
+          >
+            <Box
+              component="img"
+              src="/Pure_Logo_Vermelha.svg"
+              sx={{ width: '164px', height: '163px', marginBottom: '16px' }}
+            />
+            <Typography fontSize="17px">Bem-vindo à Pure Digital</Typography>
+          </Box>
+        </Box>
+        <Box>
+          {' '}
+          <h1>Login</h1>
+          <form onSubmit={redirect}>
+            <input
+              placeholder="Email"
+              name="email"
+              value={values.email}
+              onChange={handleChange}
+            />
+            <input
+              placeholder="Senha"
+              name="password"
+              type="password"
+              value={values.password}
+              onChange={handleChange}
+            />
+            <button type="submit">Ir para Home</button>
+          </form>
+        </Box>
       </Box>
-    </Box>
+    </FormWithImageLayout>
   );
 };
-
-/*
-
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={redirect}>
-        <input
-          placeholder="Email"
-          name="email"
-          value={values.email}
-          onChange={handleChange}
-        />
-        <input
-          placeholder="Senha"
-          name="password"
-          type="password"
-          value={values.password}
-          onChange={handleChange}
-        />
-        <button type="submit">Ir para Home</button>
-      </form>
-    </div> 
-*/

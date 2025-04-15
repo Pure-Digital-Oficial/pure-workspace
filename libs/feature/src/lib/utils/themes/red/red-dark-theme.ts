@@ -23,6 +23,7 @@ export const redDarkTheme = createTheme({
   typography: {
     allVariants: {
       color: 'white',
+      fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
     },
   },
 });

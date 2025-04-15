@@ -19,4 +19,9 @@ export const redLightTheme = createTheme({
       paper: '#ffffff',
     },
   },
+  typography: {
+    allVariants: {
+      fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
+    },
+  },
 });
