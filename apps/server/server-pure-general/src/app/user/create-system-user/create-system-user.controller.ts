@@ -4,7 +4,7 @@ import { CreateSystemUserDto, createSystemUserSchema, ErrorMessageResult } from 
 import { ZodValidationPipe } from "../../pipes";
 import { JwtAuthGuard } from "@pure-workspace/data-access";
 
-@Controller()
+@Controller('create-system-user')
 export class CreateSystemUserController {
   constructor(private createSystemUserService: CreateSystemUserService) {}
 
