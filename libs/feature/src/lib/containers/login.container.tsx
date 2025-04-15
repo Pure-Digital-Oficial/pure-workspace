@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { authService } from '../services';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { FormWithImageLayout } from '../components';
 
 export const LoginContainer = () => {
@@ -10,6 +10,19 @@ export const LoginContainer = () => {
     email: '',
     password: '',
   });
+
+  const inputStyle = {
+    borderRadius: '4px',
+    background: '#202024',
+    '& .MuiInputBase-input': {
+      color: '#FFF',
+    },
+    '& .MuiInputBase-input::placeholder': {
+      color: '#7C7C8A',
+    },
+    width: '412px',
+    marginBottom: '10px',
+  };
 
   const redirect = (event: FormEvent) => {
     event.preventDefault();
@@ -78,25 +91,73 @@ export const LoginContainer = () => {
             <Typography fontSize="17px">Bem-vindo à Pure Digital</Typography>
           </Box>
         </Box>
-        <Box>
-          {' '}
-          <h1>Login</h1>
-          <form onSubmit={redirect}>
-            <input
-              placeholder="Email"
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            width: '66.5%',
+          }}
+        >
+          <Typography
+            marginBottom="20px"
+            fontSize="42px"
+            variant="h1"
+            fontWeight="800"
+            color="#C91517"
+          >
+            Login
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={redirect}
+            sx={{ display: 'flex', flexDirection: 'column' }}
+          >
+            <label
+              style={{ color: '#B1B1B1', marginBottom: '3px' }}
+              htmlFor="email"
+            >
+              Endereço de e-mail
+            </label>
+            <TextField
+              id="email"
               name="email"
+              variant="outlined"
+              placeholder="exemplo@puredigital.com"
               value={values.email}
               onChange={handleChange}
+              sx={inputStyle}
             />
-            <input
-              placeholder="Senha"
+            <label
+              style={{ color: '#B1B1B1', marginBottom: '3px' }}
+              htmlFor="password"
+            >
+              Sua Senha
+            </label>
+            <TextField
+              id="password"
               name="password"
               type="password"
+              placeholder="********"
               value={values.password}
               onChange={handleChange}
+              sx={inputStyle}
             />
-            <button type="submit">Ir para Home</button>
-          </form>
+
+            <Button
+              sx={{
+                marginTop: '20px',
+                height: '65px',
+                textTransform: 'none',
+                fontSize: '24px',
+              }}
+              variant="contained"
+              type="submit"
+            >
+              Entrar na plataforma
+            </Button>
+          </Box>
         </Box>
       </Box>
     </FormWithImageLayout>
