@@ -1,7 +1,7 @@
 import { LoginContainer } from '@pure-workspace/feature';
 
 export const Index = () => {
-  return <LoginContainer />;
+  return <LoginContainer image="/Pure_Logo_Vermelha.svg" />;
 };
 
 export default Index;
