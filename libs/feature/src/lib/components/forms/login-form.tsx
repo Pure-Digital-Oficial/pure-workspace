@@ -1,18 +1,19 @@
 import { useRouter } from 'next/router';
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from '@mui/material';
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useState,
+  useMemo,
+  useCallback,
+} from 'react';
+import { Box, Button, IconButton, Typography } from '@mui/material';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { authService } from '../../services';
+import { InputField } from '../inputs';
 
 interface LoginFormProps {
   inputBackground?: string;
@@ -72,23 +73,29 @@ export const LoginForm: FC<LoginFormProps> = ({
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const inputStyle = {
-    borderRadius: '4px',
-    background: inputBackground,
-    '& .MuiInputBase-input': {
-      color: inputColor,
-    },
-    '& .MuiInputBase-input::placeholder': {
-      color: inputPlaceholderColor,
-    },
-    width: '412px',
-    marginBottom: '10px',
-  };
+  const inputStyle = useMemo(
+    () => ({
+      borderRadius: '4px',
+      background: inputBackground,
+      '& .MuiInputBase-input': {
+        color: inputColor,
+      },
+      '& .MuiInputBase-input::placeholder': {
+        color: inputPlaceholderColor,
+      },
+      width: '412px',
+      marginBottom: '10px',
+    }),
+    [inputBackground, inputColor, inputPlaceholderColor]
+  );
 
-  const labelStyle = {
-    color: label.labelColor,
-    marginBottom: '3px',
-  };
+  const labelStyle = useMemo(
+    () => ({
+      color: label.labelColor,
+      marginBottom: '3px',
+    }),
+    [label.labelColor]
+  );
 
   const redirect = (event: FormEvent) => {
     event.preventDefault();
@@ -107,16 +114,11 @@ export const LoginForm: FC<LoginFormProps> = ({
       });
   };
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    const fieldValue = event.target.value;
-    const fieldName = event.target.name;
-    setValues((currentValues) => {
-      return {
-        ...currentValues,
-        [fieldName]: fieldValue,
-      };
-    });
-  }
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setValues((prev) => ({ ...prev, [name]: value }));
+  }, []);
+
   return (
     <Box
       sx={{
@@ -141,65 +143,39 @@ export const LoginForm: FC<LoginFormProps> = ({
         onSubmit={redirect}
         sx={{ display: 'flex', flexDirection: 'column' }}
       >
-        <label style={labelStyle} htmlFor="email">
-          {label.emailText}
-        </label>
-        <TextField
+        <InputField
           id="email"
           name="email"
-          variant="outlined"
+          label={label.emailText}
           placeholder={placeholder.email}
           value={values.email}
           onChange={handleChange}
-          sx={inputStyle}
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <MailOutlineIcon sx={{ color: iconsColor }} />
-                </InputAdornment>
-              ),
-            },
-          }}
+          inputStyle={inputStyle}
+          labelStyle={labelStyle}
+          startIcon={<MailOutlineIcon sx={{ color: iconsColor }} />}
         />
-        <label style={labelStyle} htmlFor="password">
-          {label.passwordText}
-        </label>
-        <TextField
+
+        <InputField
           id="password"
           name="password"
-          type={showPassword ? 'text' : 'password'}
+          label={label.passwordText}
           placeholder={placeholder.password}
           value={values.password}
           onChange={handleChange}
-          sx={inputStyle}
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockOutlinedIcon sx={{ color: iconsColor }} />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={handleClickShowPassword}
-                    aria-label={
-                      showPassword ? 'Esconder a Senha' : 'Mostrar a Senha'
-                    }
-                  >
-                    {showPassword ? (
-                      <VisibilityOff sx={{ color: iconPasswordColor }} />
-                    ) : (
-                      <Visibility sx={{ color: iconPasswordColor }} />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            },
-          }}
+          type={showPassword ? 'text' : 'password'}
+          inputStyle={inputStyle}
+          labelStyle={labelStyle}
+          startIcon={<LockOutlinedIcon sx={{ color: iconsColor }} />}
+          endIcon={
+            <IconButton onClick={handleClickShowPassword}>
+              {showPassword ? (
+                <VisibilityOff sx={{ color: iconPasswordColor }} />
+              ) : (
+                <Visibility sx={{ color: iconPasswordColor }} />
+              )}
+            </IconButton>
+          }
         />
-
         <Button
           sx={{
             marginTop: '20px',
