@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import { FC } from 'react';
 
 interface AuthImageProps {
@@ -14,23 +14,25 @@ export const AuthImage: FC<AuthImageProps> = ({
   title = 'Bem-vindo à Pure Digital',
   image,
 }) => {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '367px',
+        width: theme.spacing(46),
         height: '100%',
         background: background,
-        borderTopLeftRadius: '16px',
-        borderBottomLeftRadius: '16px',
+        borderTopLeftRadius: '1rem',
+        borderBottomLeftRadius: '1rem',
         color: color,
       }}
     >
       <Box
         sx={{
-          height: '280px',
+          height: theme.spacing(35),
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -40,7 +42,11 @@ export const AuthImage: FC<AuthImageProps> = ({
         <Box
           component="img"
           src={image}
-          sx={{ width: '164px', height: '163px', marginBottom: '16px' }}
+          sx={{
+            width: '164px',
+            height: '163px',
+            marginBottom: theme.spacing(2),
+          }}
         />
         <Typography fontSize="17px">{title}</Typography>
       </Box>

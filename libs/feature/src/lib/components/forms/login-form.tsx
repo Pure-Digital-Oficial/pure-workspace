@@ -7,7 +7,7 @@ import {
   useMemo,
   useCallback,
 } from 'react';
-import { Box, Button, IconButton, Typography } from '@mui/material';
+import { Box, Button, IconButton, Typography, useTheme } from '@mui/material';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Visibility from '@mui/icons-material/Visibility';
@@ -71,11 +71,13 @@ export const LoginForm: FC<LoginFormProps> = ({
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const theme = useTheme();
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const inputStyle = useMemo(
     () => ({
-      borderRadius: '4px',
+      borderRadius: theme.spacing(0.5),
       background: inputBackground,
       '& .MuiInputBase-input': {
         color: inputColor,
@@ -83,18 +85,18 @@ export const LoginForm: FC<LoginFormProps> = ({
       '& .MuiInputBase-input::placeholder': {
         color: inputPlaceholderColor,
       },
-      width: '412px',
-      marginBottom: '10px',
+      width: theme.spacing(51.5),
+      marginBottom: theme.spacing(1.25),
     }),
-    [inputBackground, inputColor, inputPlaceholderColor]
+    [inputBackground, inputColor, inputPlaceholderColor, theme]
   );
 
   const labelStyle = useMemo(
     () => ({
       color: label.labelColor,
-      marginBottom: '3px',
+      marginBottom: theme.spacing(0.75),
     }),
-    [label.labelColor]
+    [label.labelColor, theme]
   );
 
   const redirect = (event: FormEvent) => {
@@ -130,8 +132,8 @@ export const LoginForm: FC<LoginFormProps> = ({
       }}
     >
       <Typography
-        marginBottom="20px"
-        fontSize="42px"
+        marginBottom={theme.spacing(2.5)}
+        fontSize="2.65rem"
         variant="h1"
         fontWeight="800"
         color={title.color}
@@ -178,10 +180,10 @@ export const LoginForm: FC<LoginFormProps> = ({
         />
         <Button
           sx={{
-            marginTop: '20px',
-            height: '65px',
+            marginTop: theme.spacing(2.5),
+            height: theme.spacing(8),
             textTransform: 'none',
-            fontSize: '24px',
+            fontSize: '1.5rem',
           }}
           variant="contained"
           type="submit"
