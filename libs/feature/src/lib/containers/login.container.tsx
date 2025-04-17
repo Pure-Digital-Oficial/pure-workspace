@@ -1,5 +1,5 @@
-import { Box } from '@mui/material';
-import { FormWithImageLayout, LoginForm, AuthImage } from '../components';
+import { useMediaQuery, useTheme } from '@mui/material';
+import { LoginForm, LoginDesktopContainer } from '../components';
 import { FC } from 'react';
 
 interface LoginContainerProps {
@@ -7,18 +7,13 @@ interface LoginContainerProps {
 }
 
 export const LoginContainer: FC<LoginContainerProps> = ({ image }) => {
+  const theme = useTheme();
+  const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
+
   return (
-    <FormWithImageLayout>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          height: '100%',
-        }}
-      >
-        <AuthImage image={image} />
-        <LoginForm />
-      </Box>
-    </FormWithImageLayout>
+    <>
+      {!lgDown && <LoginDesktopContainer image={image} />}
+      <LoginForm />
+    </>
   );
 };
