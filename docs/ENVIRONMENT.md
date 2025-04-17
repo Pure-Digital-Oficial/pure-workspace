@@ -76,7 +76,7 @@ Este documento descreve as variáveis de ambiente utilizadas no projeto, seu pro
 
 - **`JWT_REFRESH_EXPIRATION_IN`**  
   - **Propósito**: Define o tempo de expiração dos tokens de atualização.  
-  - **Como preencher**: Insira o tempo de expiração no formato aceito (ex.: `7d` para 7 dias, `10m` para 10 munutos, `60s` para 60 segundos).  
+  - **Como preencher**: Insira o tempo de expiração no formato aceito (ex.: `7d` para 7 dias, `10m` para 10 minutos, `60s` para 60 segundos).  
   - **Exemplo**:  
     ```
     JWT_REFRESH_EXPIRATION_IN=7d
