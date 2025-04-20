@@ -71,7 +71,7 @@ export const LoginForm: FC<LoginFormProps> = ({
   },
 }) => {
   const router = useRouter();
-  const { company } = useApp();
+  const { appId } = useApp();
 
   const [values, setValues] = useState({
     email: '',
@@ -115,7 +115,7 @@ export const LoginForm: FC<LoginFormProps> = ({
       .login({
         email: values.email,
         password: values.password,
-        appId: company?.loggedAppId ?? '',
+        appId: appId ?? '',
       })
       .then(() => {
         router.push('/home');
