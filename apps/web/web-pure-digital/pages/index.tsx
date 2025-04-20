@@ -1,7 +1,16 @@
-import { LoginContainer } from '@pure-workspace/feature';
+import { CompanyProvider, LoginContainer } from '@pure-workspace/feature';
 
 export const Index = () => {
-  return <LoginContainer image="/Pure_Logo_Vermelha.svg" />;
+  return (
+    <CompanyProvider
+      companyResponse={{
+        logo: '/Red_Pure_Digital_Logo.svg',
+        balckLogo: '/Black_Pure_Digital_Logo.svg',
+      }}
+    >
+      <LoginContainer />
+    </CompanyProvider>
+  );
 };
 
 export default Index;

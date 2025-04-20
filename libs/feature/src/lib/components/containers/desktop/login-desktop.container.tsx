@@ -2,15 +2,8 @@ import { Box } from '@mui/material';
 import { FormWithImageLayout } from '../../layouts';
 import { AuthImage } from '../../images';
 import { LoginForm } from '../../forms';
-import { FC } from 'react';
 
-interface LoginDesktopContainerProps {
-  image: string;
-}
-
-export const LoginDesktopContainer: FC<LoginDesktopContainerProps> = ({
-  image,
-}) => {
+export const LoginDesktopContainer = () => {
   return (
     <FormWithImageLayout>
       <Box
@@ -20,7 +13,7 @@ export const LoginDesktopContainer: FC<LoginDesktopContainerProps> = ({
           height: '100%',
         }}
       >
-        <AuthImage image={image} />
+        <AuthImage />
 
         <LoginForm />
       </Box>

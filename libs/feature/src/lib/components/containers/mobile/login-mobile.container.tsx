@@ -1,15 +1,8 @@
 import { Box } from '@mui/material';
-import { FC } from 'react';
 import { LoginForm } from '../../forms';
 import { AuthImage } from '../../images';
 
-interface LoginMobileContainerProps {
-  image: string;
-}
-
-export const LoginMobileContainer: FC<LoginMobileContainerProps> = ({
-  image,
-}) => {
+export const LoginMobileContainer = () => {
   return (
     <Box
       sx={{
@@ -20,7 +13,7 @@ export const LoginMobileContainer: FC<LoginMobileContainerProps> = ({
         height: '100vh',
       }}
     >
-      <AuthImage background="" color="#C91517" image={image} />
+      <AuthImage background="" color="#C91517" />
       <LoginForm title={{}} />
     </Box>
   );

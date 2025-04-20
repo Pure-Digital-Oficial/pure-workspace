@@ -1,21 +1,22 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { FC } from 'react';
+import { useCompany } from '../../contexts';
 
 interface AuthImageProps {
   background?: string;
   color?: string;
   title?: string;
-  image: string;
 }
 
 export const AuthImage: FC<AuthImageProps> = ({
   background = '#171718',
   color = 'white',
   title = 'Bem-vindo à Pure Digital',
-  image,
 }) => {
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+
+  const { company } = useCompany();
 
   return (
     <Box
@@ -24,7 +25,7 @@ export const AuthImage: FC<AuthImageProps> = ({
         alignItems: 'center',
         justifyContent: 'center',
         width: theme.spacing(46),
-        height: mdDown ? '40%' : '100%',
+        height: mdDown ? '30%' : '100%',
         background: background,
         borderTopLeftRadius: '1rem',
         borderBottomLeftRadius: '1rem',
@@ -42,7 +43,9 @@ export const AuthImage: FC<AuthImageProps> = ({
       >
         <Box
           component="img"
-          src={image}
+          src={
+            mdDown && company?.balckLogo ? company?.balckLogo : company?.logo
+          }
           sx={{
             width: '164px',
             height: '163px',
