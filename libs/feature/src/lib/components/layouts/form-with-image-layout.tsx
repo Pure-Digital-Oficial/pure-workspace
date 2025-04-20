@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { FC, ReactNode } from 'react';
 
 interface FormWithImageLayoutProps {
@@ -10,6 +10,8 @@ export const FormWithImageLayout: FC<FormWithImageLayoutProps> = ({
   children,
   background = 'linear-gradient(to bottom, #C91517 0%, #AA1214 50%, #751011 100%)',
 }) => {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
@@ -22,8 +24,8 @@ export const FormWithImageLayout: FC<FormWithImageLayoutProps> = ({
     >
       <Box
         sx={{
-          width: '1093px',
-          height: '625px',
+          width: theme.spacing(133),
+          height: theme.spacing(67),
           background: 'white',
           borderTopLeftRadius: '18px',
           borderBottomLeftRadius: '18px',

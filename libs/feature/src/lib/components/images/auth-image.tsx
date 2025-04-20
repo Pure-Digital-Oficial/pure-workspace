@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { FC } from 'react';
 
 interface AuthImageProps {
@@ -15,6 +15,7 @@ export const AuthImage: FC<AuthImageProps> = ({
   image,
 }) => {
   const theme = useTheme();
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box
@@ -23,7 +24,7 @@ export const AuthImage: FC<AuthImageProps> = ({
         alignItems: 'center',
         justifyContent: 'center',
         width: theme.spacing(46),
-        height: '100%',
+        height: mdDown ? '40%' : '100%',
         background: background,
         borderTopLeftRadius: '1rem',
         borderBottomLeftRadius: '1rem',
@@ -32,7 +33,7 @@ export const AuthImage: FC<AuthImageProps> = ({
     >
       <Box
         sx={{
-          height: theme.spacing(35),
+          height: mdDown ? theme.spacing(25) : theme.spacing(35),
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -48,6 +49,7 @@ export const AuthImage: FC<AuthImageProps> = ({
             marginBottom: theme.spacing(2),
           }}
         />
+
         <Typography fontSize="17px">{title}</Typography>
       </Box>
     </Box>

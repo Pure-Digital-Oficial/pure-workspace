@@ -7,7 +7,14 @@ import {
   useMemo,
   useCallback,
 } from 'react';
-import { Box, Button, IconButton, Typography, useTheme } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Visibility from '@mui/icons-material/Visibility';
@@ -72,6 +79,7 @@ export const LoginForm: FC<LoginFormProps> = ({
   const [showPassword, setShowPassword] = useState(false);
 
   const theme = useTheme();
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -85,10 +93,10 @@ export const LoginForm: FC<LoginFormProps> = ({
       '& .MuiInputBase-input::placeholder': {
         color: inputPlaceholderColor,
       },
-      width: theme.spacing(51.5),
+      width: mdDown ? '100%' : theme.spacing(51.5),
       marginBottom: theme.spacing(1.25),
     }),
-    [inputBackground, inputColor, inputPlaceholderColor, theme]
+    [inputBackground, inputColor, inputPlaceholderColor, theme, mdDown]
   );
 
   const labelStyle = useMemo(
@@ -128,18 +136,20 @@ export const LoginForm: FC<LoginFormProps> = ({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        width: '66.5%',
+        width: mdDown ? '100%' : '66.5%',
       }}
     >
-      <Typography
-        marginBottom={theme.spacing(2.5)}
-        fontSize="2.65rem"
-        variant="h1"
-        fontWeight="800"
-        color={title.color}
-      >
-        {title.text}
-      </Typography>
+      {title && (
+        <Typography
+          marginBottom={theme.spacing(2.5)}
+          fontSize="2.65rem"
+          variant="h1"
+          fontWeight="800"
+          color={title.color}
+        >
+          {title.text}
+        </Typography>
+      )}
       <Box
         component="form"
         onSubmit={redirect}
