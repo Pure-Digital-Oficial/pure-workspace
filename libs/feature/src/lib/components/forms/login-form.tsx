@@ -153,6 +153,7 @@ export const LoginForm: FC<LoginFormProps> = ({
       <Box
         component="form"
         onSubmit={redirect}
+        width="95%"
         sx={{ display: 'flex', flexDirection: 'column' }}
       >
         <InputField
@@ -191,9 +192,9 @@ export const LoginForm: FC<LoginFormProps> = ({
         <Button
           sx={{
             marginTop: theme.spacing(2.5),
-            height: theme.spacing(8),
+            height: mdDown ? theme.spacing(6) : theme.spacing(8),
             textTransform: 'none',
-            fontSize: '1.5rem',
+            fontSize: mdDown ? '1rem' : '1.5rem',
           }}
           variant="contained"
           type="submit"
