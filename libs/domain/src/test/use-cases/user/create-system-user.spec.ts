@@ -22,7 +22,6 @@ const makeSut = (): SutTypes => {
 
   const createSystemUserDto: CreateSystemUserDto = {
     appId: AppMock.id,
-    loggedUserId: UserMock.id,
     body: {
       name: UserMock.name,
       nickname: UserMock.nickname,
@@ -101,43 +100,6 @@ describe('CreateSystemUser', () => {
     expect(result.isLeft()).toBeTruthy();
     expect(result.isRight()).toBeFalsy();
     expect(result.value).toBeInstanceOf(EntityNotExists);
-  });
-
-  it('should return InsufficientCharacters when pass invalid loggedUserId', async () => {
-    const { createSystemUserDto, sut } = makeSut();
-    createSystemUserDto.loggedUserId = '';
-
-    const result = await sut.execute(createSystemUserDto);
-
-    expect(result.isLeft()).toBeTruthy();
-    expect(result.isRight()).toBeFalsy();
-    expect(result.value).toBeInstanceOf(InsufficientCharacters);
-  });
-
-  it('should return EntityNotExists when pass invalid loggedUserId', async () => {
-    const { createSystemUserDto, sut } = makeSut();
-    jest
-      .spyOn(sut['FindUserByIdRepository'], 'find')
-      .mockResolvedValueOnce({} as UserResponseDto);
-
-    const result = await sut.execute(createSystemUserDto);
-
-    expect(result.isLeft()).toBeTruthy();
-    expect(result.isRight()).toBeFalsy();
-    expect(result.value).toBeInstanceOf(EntityNotExists);
-  });
-
-  it('should return EntityNotAccess when pass loggedUserId is not a ADMIN', async () => {
-    const { createSystemUserDto, sut } = makeSut();
-    jest
-      .spyOn(sut['FindUserByIdRepository'], 'find')
-      .mockResolvedValueOnce({ ...UserMock, type: 'USER' } as UserResponseDto);
-
-    const result = await sut.execute(createSystemUserDto);
-
-    expect(result.isLeft()).toBeTruthy();
-    expect(result.isRight()).toBeFalsy();
-    expect(result.value).toBeInstanceOf(EntityNotAccess);
   });
 
   it('should return EntityAlreadyExists when pass already exists nickname', async () => {

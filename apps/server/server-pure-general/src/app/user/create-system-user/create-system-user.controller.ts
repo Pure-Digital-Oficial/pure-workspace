@@ -2,14 +2,14 @@ import { Body, Controller, Post, UseGuards, UsePipes } from "@nestjs/common";
 import { CreateSystemUserService } from "./create-system-user.service";
 import { CreateSystemUserDto, createSystemUserSchema, ErrorMessageResult } from "@pure-workspace/domain";
 import { ZodValidationPipe } from "../../pipes";
-import { JwtAuthGuard } from "@pure-workspace/data-access";
+import { JwtAdminGuard } from "@pure-workspace/data-access";
 
 @Controller('create-system-user')
 export class CreateSystemUserController {
   constructor(private createSystemUserService: CreateSystemUserService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAdminGuard)
   @UsePipes(new ZodValidationPipe({ body: createSystemUserSchema }))
   async create(@Body() input: CreateSystemUserDto){
     const result = await this.createSystemUserService.create(input);

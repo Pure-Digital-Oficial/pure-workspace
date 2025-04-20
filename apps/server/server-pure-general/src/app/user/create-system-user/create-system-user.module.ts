@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { CreateSystemUserController } from "./create-system-user.controller";
 import { CreateSystemUser, ValidateToken } from "@pure-workspace/domain";
 import { CreateSystemUserService } from "./create-system-user.service";
-import { CreateSystemUserRepositoryImpl, FindAppByIdRepositoryImpl, FindUserByIdRepositoryImpl, FindUserByNicknameRepositoryImpl, PrismaGeneralService, ValidateTokenRepositoryImpl } from "@pure-workspace/data-access";
+import { CreateSystemUserRepositoryImpl, FindAppByIdRepositoryImpl, FindUserByIdRepositoryImpl, FindUserByNicknameRepositoryImpl, JwtAdminGuard, PrismaGeneralService, ValidateTokenRepositoryImpl } from "@pure-workspace/data-access";
 import { JwtService } from "@nestjs/jwt";
 
 @Module({
@@ -11,6 +11,14 @@ import { JwtService } from "@nestjs/jwt";
     CreateSystemUser,
     ValidateToken,
     CreateSystemUserService,
+    {
+      provide: JwtAdminGuard,
+      useFactory: (
+        findUserByIdRepository: FindUserByIdRepositoryImpl,
+        validateToken: ValidateToken,
+      ) => new JwtAdminGuard(findUserByIdRepository, validateToken),
+      inject: ['FindUserByIdRepository', ValidateToken],
+    },
     {
       provide: 'CreateSystemUserRepository',
       useClass: CreateSystemUserRepositoryImpl,

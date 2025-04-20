@@ -1,8 +1,8 @@
 import { Inject } from "@nestjs/common";
 import { Either, left, right, UseCase } from "../../bases";
 import { CreateSystemUserDto } from "../../dtos";
-import { EntityAlreadyExists, EntityNotAccess, EntityNotCreated, EntityNotExists, InsufficientCharacters } from "../../errors";
-import { CreateSystemUserRepository, FindAppByIdRepository, FindUserByIdRepository, FindUserByNicknameRepository } from "../../repositories";
+import { EntityAlreadyExists, EntityNotCreated, EntityNotExists, InsufficientCharacters } from "../../errors";
+import { CreateSystemUserRepository, FindAppByIdRepository, FindUserByNicknameRepository } from "../../repositories";
 
 export class CreateSystemUser
   implements UseCase<CreateSystemUserDto, Either<InsufficientCharacters, string>>
@@ -10,8 +10,6 @@ export class CreateSystemUser
   constructor(
     @Inject("FindAppByIdRepository")
     private findAppByIdRepository: FindAppByIdRepository,
-    @Inject("FindUserByIdRepository")
-    private FindUserByIdRepository: FindUserByIdRepository,
     @Inject("FindUserByNicknameRepository")
     private findUserByNicknameRepository: FindUserByNicknameRepository,
     @Inject('CreateSystemUserRepository')
@@ -22,7 +20,6 @@ export class CreateSystemUser
   ): Promise<Either<InsufficientCharacters, string>> {
     const {
       appId,
-      loggedUserId,
       body: { name, nickname },
     } = input;
     if (Object.keys(name).length < 1 || name.length < 3) {
@@ -43,21 +40,6 @@ export class CreateSystemUser
     ) {
       return left(new EntityNotExists("app ID"));
     }
-
-    if (Object.keys(loggedUserId).length < 1) {
-      return left(new InsufficientCharacters("logged user ID"));
-    }
-
-    const filteredLoggedUserId = await this.FindUserByIdRepository.find(loggedUserId);
-
-    if (Object.keys(filteredLoggedUserId).length < 1 || filteredLoggedUserId?.id.length < 1) {
-      return left(new EntityNotExists("logged user ID"));
-    }
-
-    if (filteredLoggedUserId?.type !== "ADMIN") {
-      return left(new EntityNotAccess("user"));
-    }
-
 
     const filteredUser = await this.findUserByNicknameRepository.find(nickname);
 
