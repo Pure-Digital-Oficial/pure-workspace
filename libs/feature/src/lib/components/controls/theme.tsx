@@ -27,7 +27,9 @@ export const ThemeControls: FC<ThemeControlsProps> = ({
       >
         {themesList &&
           themesList.map((theme) => (
-            <MenuItem value={theme.value}>{theme.label}</MenuItem>
+            <MenuItem key={theme.label} value={theme.value}>
+              {theme.label}
+            </MenuItem>
           ))}
       </Select>
       <ThemeSwitch onChange={toggleMode} defaultChecked />

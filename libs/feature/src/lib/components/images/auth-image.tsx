@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { FC } from 'react';
-import { useCompany } from '../../contexts';
+import { useApp } from '../../contexts';
 
 interface AuthImageProps {
   background?: string;
@@ -16,7 +16,7 @@ export const AuthImage: FC<AuthImageProps> = ({
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { company } = useCompany();
+  const { company } = useApp();
 
   return (
     <Box

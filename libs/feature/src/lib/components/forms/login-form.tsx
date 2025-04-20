@@ -21,6 +21,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { authService } from '../../services';
 import { InputField } from '../inputs';
+import { useApp } from '../../contexts';
 
 interface LoginFormProps {
   inputBackground?: string;
@@ -70,6 +71,7 @@ export const LoginForm: FC<LoginFormProps> = ({
   },
 }) => {
   const router = useRouter();
+  const { company } = useApp();
 
   const [values, setValues] = useState({
     email: '',
@@ -113,7 +115,7 @@ export const LoginForm: FC<LoginFormProps> = ({
       .login({
         email: values.email,
         password: values.password,
-        appId: '1',
+        appId: company?.loggedAppId ?? '',
       })
       .then(() => {
         router.push('/home');
@@ -153,7 +155,7 @@ export const LoginForm: FC<LoginFormProps> = ({
       <Box
         component="form"
         onSubmit={redirect}
-        width="95%"
+        width={mdDown ? '95%' : 'auto'}
         sx={{ display: 'flex', flexDirection: 'column' }}
       >
         <InputField

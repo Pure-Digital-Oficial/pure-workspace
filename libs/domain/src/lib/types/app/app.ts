@@ -1,5 +1,6 @@
 import { CompanyResponseDto } from '../../dtos';
 
-export type CompanyType = {
+export type AppType = {
   company: CompanyResponseDto | null;
+  appId: string | null;
 };
