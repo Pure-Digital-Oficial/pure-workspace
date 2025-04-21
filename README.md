@@ -6,15 +6,15 @@
 
 # Índice
 
-* [Descrição do Projeto](#descrição-do-projeto)
-* [Status do Projeto](#status-do-projeto)
-* [Funcionalidades e Demonstração da Aplicação](#funcionalidades-e-demonstração-da-aplicação)
-* [Acesso ao Projeto](#acesso-ao-projeto)
-* [Configuração de Ambiente](#configuração-de-ambiente)
-* [Tecnologias Utilizadas](#tecnologias-utilizadas)
-* [Pessoas Contribuidoras](#pessoas-contribuidoras)
-* [Pessoas Desenvolvedoras do Projeto](#pessoas-desenvolvedoras)
-* [Licença](#licença)
+- [Descrição do Projeto](#descrição-do-projeto)
+- [Status do Projeto](#status-do-projeto)
+- [Funcionalidades e Demonstração da Aplicação](#funcionalidades-e-demonstração-da-aplicação)
+- [Acesso ao Projeto](#acesso-ao-projeto)
+- [Configuração de Ambiente](#configuração-de-ambiente)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Pessoas Contribuidoras](#pessoas-contribuidoras)
+- [Pessoas Desenvolvedoras do Projeto](#pessoas-desenvolvedoras)
+- [Licença](#licença)
 
 ## Descrição do Projeto
 
@@ -23,6 +23,7 @@ O **PureWorkspace** é um mono repositório desenvolvido com o objetivo de centr
 Este projeto é gerenciado com o **NX**, permitindo uma organização eficiente e escalável baseada em uma arquitetura de bibliotecas e seguindo os princípios da **Clean Architecture**. Além disso, adotamos os fundamentos do **SOLID** para garantir um código modular, sustentável e de fácil manutenção.
 
 Com o **PureWorkspace**, centralizamos o desenvolvimento do site **Pure Digital**, que apresenta nosso portfólio de produtos e serviços, além de um sistema interno para cadastro e gerenciamento de vendas, e da **API General**, nossa principal API com rotas reutilizáveis entre aplicações. Atualmente, o site conta com a tela de login pronta e a home page em desenvolvimento, enquanto a API já possui funcionalidades de login, cadastro de usuários e está expandindo com a API de disparo de e-mails.
+
 ## Status do Projeto
 
     :construction: Projeto em desenvolvimento :construction:
@@ -38,6 +39,7 @@ Com o **PureWorkspace**, centralizamos o desenvolvimento do site **Pure Digital*
 - `Login Funcional`: Sistema de autenticação com tela de login pronta.
 - `Home Page`: Página inicial em desenvolvimento.
 - `Disparo de E-mails`: API para envio de e-mails em desenvolvimento.
+
 ## Acesso ao Projeto
 
 Para acessar o projeto, clone o repositório e siga as instruções de configuração abaixo.
@@ -56,6 +58,7 @@ Este projeto utiliza variáveis de ambiente para configurar diferentes aspectos 
 8. Execute as migrações do banco de dados com o comando: `prisma:migrate:general`.
 9. Para iniciar o back-end, utilize o comando: `start:server-pure-general`.
 10. Para iniciar o front-end, utilize o comando: `start:web-pure-digital`.
+
 ## Tecnologias Utilizadas
 
 - Node.js
@@ -63,9 +66,10 @@ Este projeto utiliza variáveis de ambiente para configurar diferentes aspectos 
 - Redis
 - JWT (JSON Web Token)
 - Docker (opcional, para ambiente de desenvolvimento)
-- NX 
+- NX
 - Next.js
-- Nest.js 
+- Nest.js
+
 ## Pessoas Contribuidoras
 
 - [Erick da Silva Celestino](https://github.com/ErickCelestino)
