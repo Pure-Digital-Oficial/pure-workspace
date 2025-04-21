@@ -1,11 +1,10 @@
-import { useSession } from '../contexts';
+import { Box } from '@mui/material';
+import { ThemeControls } from '../components';
 
 export const HomeContainer = () => {
-  const { session } = useSession();
   return (
-    <div>
-      <div>Hello home!</div>
-      <pre>{JSON.stringify(session, null, 2)}</pre>
-    </div>
+    <Box>
+      <ThemeControls />
+    </Box>
   );
 };
