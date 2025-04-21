@@ -1,12 +1,5 @@
 import { useRouter } from 'next/router';
-import {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useState,
-  useMemo,
-  useCallback,
-} from 'react';
+import { FC, useState, useMemo } from 'react';
 import {
   Box,
   Button,
@@ -19,9 +12,13 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { AuthDto } from '@pure-workspace/domain';
 import { authService } from '../../services';
 import { InputField } from '../inputs';
 import { useApp } from '../../contexts';
+import { LoginSchema } from '../../utils';
 
 interface LoginFormProps {
   inputBackground?: string;
@@ -73,9 +70,18 @@ export const LoginForm: FC<LoginFormProps> = ({
   const router = useRouter();
   const { appId } = useApp();
 
-  const [values, setValues] = useState({
-    email: '',
-    password: '',
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<Omit<AuthDto, 'appId'>>({
+    mode: 'all',
+    criteriaMode: 'all',
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -109,12 +115,11 @@ export const LoginForm: FC<LoginFormProps> = ({
     [label.labelColor, theme]
   );
 
-  const redirect = (event: FormEvent) => {
-    event.preventDefault();
+  const redirect = (data: Omit<AuthDto, 'appId'>) => {
     authService
       .login({
-        email: values.email,
-        password: values.password,
+        email: data.email,
+        password: data.password,
         appId: appId ?? '',
       })
       .then(() => {
@@ -125,11 +130,6 @@ export const LoginForm: FC<LoginFormProps> = ({
         alert('Usuário ou a senha estão inválidos');
       });
   };
-
-  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setValues((prev) => ({ ...prev, [name]: value }));
-  }, []);
 
   return (
     <Box
@@ -154,29 +154,31 @@ export const LoginForm: FC<LoginFormProps> = ({
       )}
       <Box
         component="form"
-        onSubmit={redirect}
+        onSubmit={handleSubmit(redirect)}
         width={mdDown ? '95%' : 'auto'}
         sx={{ display: 'flex', flexDirection: 'column' }}
       >
-        <InputField
+        <InputField<Omit<AuthDto, 'appId'>>
           id="email"
           name="email"
           label={label.emailText}
           placeholder={placeholder.email}
-          value={values.email}
-          onChange={handleChange}
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          register={register}
           inputStyle={inputStyle}
           labelStyle={labelStyle}
           startIcon={<MailOutlineIcon sx={{ color: iconsColor }} />}
         />
 
-        <InputField
+        <InputField<Omit<AuthDto, 'appId'>>
           id="password"
           name="password"
           label={label.passwordText}
           placeholder={placeholder.password}
-          value={values.password}
-          onChange={handleChange}
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          register={register}
           type={showPassword ? 'text' : 'password'}
           inputStyle={inputStyle}
           labelStyle={labelStyle}

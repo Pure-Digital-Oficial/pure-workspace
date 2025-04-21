@@ -1,59 +1,62 @@
-import { ChangeEvent, ReactNode, CSSProperties, memo } from 'react';
-import { TextField, InputAdornment } from '@mui/material';
+import { TextField, InputAdornment, Typography } from '@mui/material';
+import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
-interface InputFieldProps {
-  id: string;
-  name: string;
+interface InputFieldProps<T extends FieldValues> {
+  name: Path<T>;
+  register: UseFormRegister<T>;
   label?: string;
-  value: string;
-  placeholder: string | undefined;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  error?: boolean;
+  helperText?: string;
+  inputStyle?: object;
+  labelStyle?: object;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
   type?: string;
-  startIcon?: ReactNode;
-  endIcon?: ReactNode;
-  inputStyle: CSSProperties;
-  labelStyle: CSSProperties;
+  id?: string;
 }
 
-export const InputField = memo(
-  ({
-    id,
-    name,
-    label,
-    value,
-    placeholder,
-    onChange,
-    type = 'text',
-    startIcon,
-    endIcon,
-    inputStyle,
-    labelStyle,
-  }: InputFieldProps) => {
-    return (
-      <>
-        <label style={labelStyle} htmlFor={id}>
+export const InputField = <T extends FieldValues>({
+  name,
+  register,
+  label,
+  placeholder,
+  error,
+  helperText,
+  inputStyle,
+  labelStyle,
+  startIcon,
+  endIcon,
+  type = 'text',
+  id,
+}: InputFieldProps<T>) => {
+  return (
+    <>
+      {label && (
+        <Typography component="label" htmlFor={id} sx={labelStyle}>
           {label}
-        </label>
-        <TextField
-          id={id}
-          name={name}
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          sx={inputStyle}
-          slotProps={{
-            input: {
-              startAdornment: startIcon && (
-                <InputAdornment position="start">{startIcon}</InputAdornment>
-              ),
-              endAdornment: endIcon && (
-                <InputAdornment position="end">{endIcon}</InputAdornment>
-              ),
-            },
-          }}
-        />
-      </>
-    );
-  }
-);
+        </Typography>
+      )}
+      <TextField
+        fullWidth
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        error={error}
+        helperText={helperText}
+        {...register(name)}
+        sx={inputStyle}
+        slotProps={{
+          input: {
+            startAdornment: startIcon ? (
+              <InputAdornment position="start">{startIcon}</InputAdornment>
+            ) : undefined,
+            endAdornment: endIcon ? (
+              <InputAdornment position="end">{endIcon}</InputAdornment>
+            ) : undefined,
+          },
+        }}
+      />
+    </>
+  );
+};
