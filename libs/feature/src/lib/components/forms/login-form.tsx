@@ -17,7 +17,7 @@ import { useForm } from 'react-hook-form';
 import { AuthDto } from '@pure-workspace/domain';
 import { authService } from '../../services';
 import { InputField } from '../inputs';
-import { useApp } from '../../contexts';
+import { useAlert, useApp } from '../../contexts';
 import { LoginSchema } from '../../utils';
 
 interface LoginFormProps {
@@ -86,6 +86,8 @@ export const LoginForm: FC<LoginFormProps> = ({
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const { showAlert } = useAlert();
+
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -127,7 +129,7 @@ export const LoginForm: FC<LoginFormProps> = ({
       })
       .catch((err) => {
         console.log(err);
-        alert('Usuário ou a senha estão inválidos');
+        showAlert('Usuário ou a senha estão inválidos', 'error');
       });
   };
 

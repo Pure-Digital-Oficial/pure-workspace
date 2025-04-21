@@ -1,4 +1,8 @@
-import { AppProvider, LoginContainer } from '@pure-workspace/feature';
+import {
+  AlertProvider,
+  AppProvider,
+  LoginContainer,
+} from '@pure-workspace/feature';
 
 export const Index = () => {
   return (
@@ -9,7 +13,9 @@ export const Index = () => {
       }}
       appId={process.env['NEXT_PUBLIC_PURE_DIGITAL_APP_ID'] ?? ''}
     >
-      <LoginContainer />
+      <AlertProvider>
+        <LoginContainer />
+      </AlertProvider>
     </AppProvider>
   );
 };
