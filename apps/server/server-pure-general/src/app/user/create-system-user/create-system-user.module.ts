@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CreateSystemUserController } from './create-system-user.controller';
-import { CreateSystemUser, ValidateToken } from '@pure-workspace/domain';
+import { CreateSystemUser, ValidateAdmin, ValidateToken } from '@pure-workspace/domain';
 import { CreateSystemUserService } from './create-system-user.service';
 import {
   CreateSystemUserRepositoryImpl,
@@ -19,13 +19,14 @@ import { JwtService } from '@nestjs/jwt';
     CreateSystemUser,
     ValidateToken,
     CreateSystemUserService,
+    ValidateAdmin,
     {
       provide: JwtAdminGuard,
       useFactory: (
-        findUserByIdRepository: FindUserByIdRepositoryImpl,
+        validateAdmin: ValidateAdmin,
         validateToken: ValidateToken
-      ) => new JwtAdminGuard(findUserByIdRepository, validateToken),
-      inject: ['FindUserByIdRepository', ValidateToken],
+      ) => new JwtAdminGuard(validateAdmin, validateToken),
+      inject: [ValidateAdmin, ValidateToken],
     },
     {
       provide: 'CreateSystemUserRepository',

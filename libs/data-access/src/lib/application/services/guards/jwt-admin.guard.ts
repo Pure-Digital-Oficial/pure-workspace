@@ -1,18 +1,16 @@
-import { Injectable, ExecutionContext, Inject } from '@nestjs/common';
+import { Injectable, ExecutionContext } from '@nestjs/common';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { Request } from 'express';
 import {
   ErrorMessageResult,
-  FindUserByIdRepository,
+  ValidateAdmin,
   ValidateToken,
 } from '@pure-workspace/domain';
-import { EntityNotAccess } from '@pure-workspace/domain';
 
 @Injectable()
 export class JwtAdminGuard extends JwtAuthGuard {
   constructor(
-    @Inject('FindUserByIdRepository')
-    private readonly findUserByIdRepository: FindUserByIdRepository,
+    private readonly validateAdmin: ValidateAdmin,
     private readonly validateToken: ValidateToken
   ) {
     super(validateToken);
@@ -27,13 +25,12 @@ export class JwtAdminGuard extends JwtAuthGuard {
     const request = context.switchToHttp().getRequest<Request>();
     const userId = super.getUserIdFromRequest(request);
 
-    const user = await this.findUserByIdRepository.find(userId);
+    const result = await this.validateAdmin.execute(userId);
 
-    if (user.type === 'ADMIN') {
+    if (result.isRight()) {
       return true;
     } else {
-      const error = new EntityNotAccess('User');
-      await ErrorMessageResult(error.name, error.message);
+      await ErrorMessageResult(result.value.name, result.value.message);
       return false;
     }
   }
