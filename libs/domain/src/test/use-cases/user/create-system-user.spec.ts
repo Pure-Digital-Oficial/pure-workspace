@@ -1,5 +1,5 @@
-import { AppResponseDto, CreateSystemUserDto, UserResponseDto } from "@/dtos";
-import { EntityAlreadyExists, EntityNotAccess, EntityNotCreated, EntityNotExists, InsufficientCharacters } from "@/errors";
+import { AppResponseDto, CreateSystemUserDto } from "@/dtos";
+import { EntityAlreadyExists, EntityNotCreated, EntityNotExists, InsufficientCharacters } from "@/errors";
 import { CreateSystemUserRepository, FindAppByIdRepository, FindUserByIdRepository, FindUserByNicknameRepository } from "@/repositories";
 import { AppMock, UserMock } from "@/test/entities";
 import { CreateSystemUserRepositoryMock, FindAppByIdRepositoryMock, FindUserByIdRepositoryMock, FindUserByNickNameRepositoryMock } from "@/test/repositories";
@@ -30,7 +30,6 @@ const makeSut = (): SutTypes => {
 
   const sut = new CreateSystemUser(
     findAppByIdRepository,
-    findUserByIdRepository,
     findUserByNicknameRepository,
     createSystemUserRepository
   );
