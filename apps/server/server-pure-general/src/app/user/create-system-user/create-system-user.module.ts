@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
 import { CreateSystemUserController } from './create-system-user.controller';
-import { CreateSystemUser, ValidateAdmin, ValidateToken } from '@pure-workspace/domain';
+import {
+  CreateSystemUser,
+  ValidateAdmin,
+  ValidateToken,
+} from '@pure-workspace/domain';
 import { CreateSystemUserService } from './create-system-user.service';
 import {
   CreateSystemUserRepositoryImpl,

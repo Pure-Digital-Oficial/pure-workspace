@@ -2,7 +2,7 @@ import {
   ValidateTokenRepository,
   ValidateTokenDto,
   ValidateTokenResponseDto,
-} from '../../../../src';
+} from '../../..';
 import { AuthMock, UserMock } from '../../entities';
 
 export class ValidateTokenRepositoryMock implements ValidateTokenRepository {

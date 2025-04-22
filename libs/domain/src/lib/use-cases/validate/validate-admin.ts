@@ -4,7 +4,8 @@ import { EntityNotAccess, EntityNotExists } from '../../errors';
 import { FindUserByIdRepository } from '../../repositories';
 
 export class ValidateAdmin
-  implements UseCase<string, Either<EntityNotExists | EntityNotAccess, boolean>>
+  implements
+    UseCase<string, Either<EntityNotExists | EntityNotAccess, boolean>>
 {
   constructor(
     @Inject('FindUserByIdRepository')
@@ -16,7 +17,7 @@ export class ValidateAdmin
   ): Promise<Either<EntityNotExists | EntityNotAccess, boolean>> {
     const user = await this.findUserByIdRepository.find(userId);
 
-    if (!user) {
+    if (Object.keys(user).length < 1) {
       return left(new EntityNotExists('User'));
     }
 
