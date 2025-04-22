@@ -1,9 +1,24 @@
-import { AppResponseDto, CreateSystemUserDto } from "@/dtos";
-import { EntityAlreadyExists, EntityNotCreated, EntityNotExists, InsufficientCharacters } from "@/errors";
-import { CreateSystemUserRepository, FindAppByIdRepository, FindUserByIdRepository, FindUserByNicknameRepository } from "@/repositories";
-import { AppMock, UserMock } from "@/test/entities";
-import { CreateSystemUserRepositoryMock, FindAppByIdRepositoryMock, FindUserByIdRepositoryMock, FindUserByNickNameRepositoryMock } from "@/test/repositories";
-import { CreateSystemUser } from "@/use-cases";
+import { AppResponseDto, CreateSystemUserDto } from '@/dtos';
+import {
+  EntityAlreadyExists,
+  EntityNotCreated,
+  EntityNotExists,
+  InsufficientCharacters,
+} from '@/errors';
+import {
+  CreateSystemUserRepository,
+  FindAppByIdRepository,
+  FindUserByIdRepository,
+  FindUserByNicknameRepository,
+} from '@/repositories';
+import { AppMock, UserMock } from '@/test/entities';
+import {
+  CreateSystemUserRepositoryMock,
+  FindAppByIdRepositoryMock,
+  FindUserByIdRepositoryMock,
+  FindUserByNickNameRepositoryMock,
+} from '@/test/repositories';
+import { CreateSystemUser } from '@/use-cases';
 
 interface SutTypes {
   sut: CreateSystemUser;

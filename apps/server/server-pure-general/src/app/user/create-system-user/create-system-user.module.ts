@@ -1,9 +1,17 @@
-import { Module } from "@nestjs/common";
-import { CreateSystemUserController } from "./create-system-user.controller";
-import { CreateSystemUser, ValidateToken } from "@pure-workspace/domain";
-import { CreateSystemUserService } from "./create-system-user.service";
-import { CreateSystemUserRepositoryImpl, FindAppByIdRepositoryImpl, FindUserByIdRepositoryImpl, FindUserByNicknameRepositoryImpl, JwtAdminGuard, PrismaGeneralService, ValidateTokenRepositoryImpl } from "@pure-workspace/data-access";
-import { JwtService } from "@nestjs/jwt";
+import { Module } from '@nestjs/common';
+import { CreateSystemUserController } from './create-system-user.controller';
+import { CreateSystemUser, ValidateToken } from '@pure-workspace/domain';
+import { CreateSystemUserService } from './create-system-user.service';
+import {
+  CreateSystemUserRepositoryImpl,
+  FindAppByIdRepositoryImpl,
+  FindUserByIdRepositoryImpl,
+  FindUserByNicknameRepositoryImpl,
+  JwtAdminGuard,
+  PrismaGeneralService,
+  ValidateTokenRepositoryImpl,
+} from '@pure-workspace/data-access';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   controllers: [CreateSystemUserController],
@@ -15,7 +23,7 @@ import { JwtService } from "@nestjs/jwt";
       provide: JwtAdminGuard,
       useFactory: (
         findUserByIdRepository: FindUserByIdRepositoryImpl,
-        validateToken: ValidateToken,
+        validateToken: ValidateToken
       ) => new JwtAdminGuard(findUserByIdRepository, validateToken),
       inject: ['FindUserByIdRepository', ValidateToken],
     },
@@ -25,7 +33,7 @@ import { JwtService } from "@nestjs/jwt";
     },
     {
       provide: 'FindUserByIdRepository',
-      useClass: FindUserByIdRepositoryImpl
+      useClass: FindUserByIdRepositoryImpl,
     },
     {
       provide: 'FindUserByNicknameRepository',
@@ -33,7 +41,7 @@ import { JwtService } from "@nestjs/jwt";
     },
     {
       provide: 'FindAppByIdRepository',
-      useClass: FindAppByIdRepositoryImpl
+      useClass: FindAppByIdRepositoryImpl,
     },
     {
       provide: 'ValidateTokenRepository',
@@ -46,7 +54,7 @@ import { JwtService } from "@nestjs/jwt";
     {
       provide: 'PrismaService',
       useClass: PrismaGeneralService,
-    }
+    },
   ],
 })
 export class CreateSystemUserModule {}

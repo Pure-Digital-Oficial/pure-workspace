@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { CreateSystemUser, CreateSystemUserDto } from "@pure-workspace/domain";
+import { Injectable } from '@nestjs/common';
+import { CreateSystemUser, CreateSystemUserDto } from '@pure-workspace/domain';
 
 @Injectable()
 export class CreateSystemUserService {

@@ -1,16 +1,26 @@
-import { Inject } from "@nestjs/common";
-import { Either, left, right, UseCase } from "../../bases";
-import { CreateSystemUserDto } from "../../dtos";
-import { EntityAlreadyExists, EntityNotCreated, EntityNotExists, InsufficientCharacters } from "../../errors";
-import { CreateSystemUserRepository, FindAppByIdRepository, FindUserByNicknameRepository } from "../../repositories";
+import { Inject } from '@nestjs/common';
+import { Either, left, right, UseCase } from '../../bases';
+import { CreateSystemUserDto } from '../../dtos';
+import {
+  EntityAlreadyExists,
+  EntityNotCreated,
+  EntityNotExists,
+  InsufficientCharacters,
+} from '../../errors';
+import {
+  CreateSystemUserRepository,
+  FindAppByIdRepository,
+  FindUserByNicknameRepository,
+} from '../../repositories';
 
 export class CreateSystemUser
-  implements UseCase<CreateSystemUserDto, Either<InsufficientCharacters, string>>
+  implements
+    UseCase<CreateSystemUserDto, Either<InsufficientCharacters, string>>
 {
   constructor(
-    @Inject("FindAppByIdRepository")
+    @Inject('FindAppByIdRepository')
     private findAppByIdRepository: FindAppByIdRepository,
-    @Inject("FindUserByNicknameRepository")
+    @Inject('FindUserByNicknameRepository')
     private findUserByNicknameRepository: FindUserByNicknameRepository,
     @Inject('CreateSystemUserRepository')
     private createSystemUserRepository: CreateSystemUserRepository
@@ -23,14 +33,14 @@ export class CreateSystemUser
       body: { name, nickname },
     } = input;
     if (Object.keys(name).length < 1 || name.length < 3) {
-      return left(new InsufficientCharacters("name"));
+      return left(new InsufficientCharacters('name'));
     }
     if (Object.keys(nickname).length < 1 || nickname.length < 3) {
-      return left(new InsufficientCharacters("nickName"));
+      return left(new InsufficientCharacters('nickName'));
     }
 
     if (Object.keys(appId).length < 1) {
-      return left(new InsufficientCharacters("app id"));
+      return left(new InsufficientCharacters('app id'));
     }
 
     const filteredAppId = await this.findAppByIdRepository.find(appId);
@@ -38,7 +48,7 @@ export class CreateSystemUser
       Object.keys(filteredAppId).length < 1 ||
       Object.keys(filteredAppId?.id).length < 1
     ) {
-      return left(new EntityNotExists("app ID"));
+      return left(new EntityNotExists('app ID'));
     }
 
     const filteredUser = await this.findUserByNicknameRepository.find(nickname);
@@ -47,10 +57,12 @@ export class CreateSystemUser
       return left(new EntityAlreadyExists(nickname));
     }
 
-    const createdSystemUser = await this.createSystemUserRepository.create(input);
+    const createdSystemUser = await this.createSystemUserRepository.create(
+      input
+    );
 
     if (!createdSystemUser) {
-      return left(new EntityNotCreated("system user"));
+      return left(new EntityNotCreated('system user'));
     }
 
     return right(createdSystemUser);
