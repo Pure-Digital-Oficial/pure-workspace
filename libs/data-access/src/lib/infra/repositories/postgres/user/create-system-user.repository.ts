@@ -13,7 +13,7 @@ export class CreateSystemUserRepositoryImpl implements CreateSystemUserRepositor
         name,
         nickname,
         picture: null,
-        type: "SYSTEM",
+        type: 'SYSTEM',
       },
     });
 

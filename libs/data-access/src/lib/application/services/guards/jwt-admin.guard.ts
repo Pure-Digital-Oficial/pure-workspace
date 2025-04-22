@@ -1,7 +1,8 @@
 import { Injectable, ExecutionContext, Inject } from '@nestjs/common';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { Request } from 'express';
-import { FindUserByIdRepository, ValidateToken } from '@pure-workspace/domain';
+import { ErrorMessageResult, FindUserByIdRepository, ValidateToken } from '@pure-workspace/domain';
+import { EntityNotAccess } from '@pure-workspace/domain';
 
 @Injectable()
 export class JwtAdminGuard extends JwtAuthGuard {
@@ -27,6 +28,8 @@ export class JwtAdminGuard extends JwtAuthGuard {
     if (user.type === 'ADMIN') {
       return true;
     } else {
+      const error = new EntityNotAccess('User');
+      await ErrorMessageResult(error.name, error.message);
       return false;
     }
   }
