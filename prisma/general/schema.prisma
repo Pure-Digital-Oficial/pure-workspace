@@ -141,6 +141,7 @@ enum UserType {
     DEFAULT
     DEFAULT_ADMIN
     ADMIN
+    SYSTEM
 
     @@schema("pure_general")
 }

@@ -28,7 +28,7 @@ export class JwtAuthGuard implements CanActivate {
     }
   }
 
-  private getUserIdFromRequest(request: Request): string {
+  protected getUserIdFromRequest(request: Request): string {
     return request.query['userId'] as string;
   }
 }
