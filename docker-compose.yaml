@@ -12,6 +12,18 @@ services:
       - shared_network
     env_file:
       - .env
+  web-pure-digital:
+    build:
+      context: .
+      dockerfile: ./configs/docker/Dockerfile.web-pure-digital
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+    networks:
+      - shared_network
+    env_file:
+      - .env
 
 networks:
   shared_network:
