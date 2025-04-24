@@ -1,1 +1,1 @@
-export type GeneralStatus = 'ACTIVE' | 'BLOCKED' | 'INACTIVE';
+export type GeneralStatus = 'ACTIVE' | 'BLOCKED' | 'INACTIVE' | 'PENDING';

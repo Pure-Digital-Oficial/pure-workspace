@@ -2,7 +2,11 @@ import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CreateSystemUserModule, CreateUserModule } from './user';
+import {
+  CreateSystemUserModule,
+  CreateUserModule,
+  ListUsersModule,
+} from './user';
 import {
   AuthModule,
   CreateAuthModule,
@@ -18,6 +22,7 @@ import {
     AuthModule,
     RefreshTokenModule,
     GetSessionModule,
+    ListUsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
