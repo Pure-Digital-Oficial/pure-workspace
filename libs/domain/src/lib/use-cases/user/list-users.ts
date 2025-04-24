@@ -14,7 +14,7 @@ export class ListUsers
   constructor(
     @Inject('FindAppByIdRepository')
     private findAppByIdRepository: FindAppByIdRepository,
-    @Inject('ListUserRepository')
+    @Inject('ListUsersRepository')
     private listUsersRepository: ListUsersRepository
   ) {}
 

@@ -44,6 +44,7 @@ export class FindUserByNicknameRepositoryImpl
       nickname: filteredUser?.nickname ?? '',
       birthDate: filteredUser?.data[0]?.birth_date ?? new Date(),
       type: filteredUser?.type ?? '',
+      picture: filteredUser?.picture ?? '',
       auth: {
         email: filteredUser?.auth[0]?.email ?? '',
         id: filteredUser?.auth[0]?.id ?? '',

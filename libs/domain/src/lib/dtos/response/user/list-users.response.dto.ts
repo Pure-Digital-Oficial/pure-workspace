@@ -1,8 +1,8 @@
-import { UserResponseDto } from '.';
+import { UserListItem } from '../../../types';
 
 export interface ListUsersResponseDto {
   total: number;
   filteredTotal: number;
   totalPages: number;
-  users: UserResponseDto[];
+  users: UserListItem[];
 }

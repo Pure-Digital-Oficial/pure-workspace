@@ -3,10 +3,10 @@ import {
   ListUsersDto,
   ListUsersRepository,
   ListUsersResponseDto,
-  UserResponseDto,
+  GeneralStatus,
+  UserListItem,
 } from '@pure-workspace/domain';
 import { PrismaGeneralService } from '../../../../application';
-import { Prisma } from '@pure-workspace/prisma/general';
 
 export class ListUsersRepositoryImpl implements ListUsersRepository {
   constructor(
@@ -26,13 +26,16 @@ export class ListUsersRepositoryImpl implements ListUsersRepository {
             },
           }
         : {}),
-
       ...(input.filters?.status != null
         ? {
-            status: input.filters.status as Prisma.EnumStatusFilter<'user'>,
+            status: {
+              equals: input.filters.status as GeneralStatus,
+            },
           }
         : {
-            status: 'ACTIVE' as Prisma.EnumStatusFilter<'user'>,
+            status: {
+              equals: 'ACTIVE' as GeneralStatus,
+            },
           }),
     };
 
@@ -48,6 +51,7 @@ export class ListUsersRepositoryImpl implements ListUsersRepository {
             name: true,
             nickname: true,
             type: true,
+            picture: true,
             data: {
               select: {
                 birth_date: true,
@@ -73,17 +77,17 @@ export class ListUsersRepositoryImpl implements ListUsersRepository {
 
     const totalPages = Math.ceil(filteredTotal / take);
 
-    const mappedUsers: UserResponseDto[] = users.map((user) => {
+    const mappedUsers: UserListItem[] = users.map((user) => {
       return {
         name: user.name ?? '',
         nickname: user.nickname ?? '',
-        birthDate: user.data[0].birth_date ?? new Date(),
+        birthDate: user?.data[0]?.birth_date ?? new Date(),
         type: user?.type ?? '',
         id: user.id ?? '',
+        picture: user.picture ?? '',
         auth: {
           email: user?.auth[0]?.email ?? '',
           id: user?.auth[0]?.id ?? '',
-          password: user?.auth[0]?.password ?? '',
         },
       };
     });
