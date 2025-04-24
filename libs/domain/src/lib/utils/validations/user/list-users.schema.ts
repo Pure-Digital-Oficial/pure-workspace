@@ -1,5 +1,12 @@
 import { z } from 'zod';
 
+export const listUserQuerySchema = z
+  .object({
+    appId: z.string(),
+    userId: z.string(),
+  })
+  .strict();
+
 export const listUsersBodySchema = z
   .object({
     filters: z

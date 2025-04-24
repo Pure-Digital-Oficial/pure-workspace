@@ -1,12 +1,20 @@
-import { Controller, Get, Query, UsePipes, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  UsePipes,
+  Body,
+  UseGuards,
+} from '@nestjs/common';
 import { ListUsersService } from './list-users.service';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import {
   ErrorMessageResult,
   listUsersBodySchema,
   ListUsersDto,
-  AppIdQuerySchema,
+  listUserQuerySchema,
 } from '@pure-workspace/domain';
+import { JwtAdminGuard } from '@pure-workspace/data-access';
 
 @Controller('list-users')
 export class ListUsersController {
@@ -14,10 +22,11 @@ export class ListUsersController {
 
   @UsePipes(
     new ZodValidationPipe({
-      query: AppIdQuerySchema,
+      query: listUserQuerySchema,
       body: listUsersBodySchema,
     })
   )
+  @UseGuards(JwtAdminGuard)
   @Get()
   async list(
     @Query() query: { appId: string },
