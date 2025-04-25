@@ -6,6 +6,7 @@ import {
   CreateSystemUserModule,
   CreateUserModule,
   ListUsersModule,
+  DeleteUserByIdModule,
 } from './user';
 import {
   AuthModule,
@@ -23,6 +24,7 @@ import {
     RefreshTokenModule,
     GetSessionModule,
     ListUsersModule,
+    DeleteUserByIdModule,
   ],
   controllers: [AppController],
   providers: [AppService],

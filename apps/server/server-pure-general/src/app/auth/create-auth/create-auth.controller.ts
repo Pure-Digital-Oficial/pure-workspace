@@ -4,7 +4,7 @@ import {
   CreateAuthDto,
   ErrorMessageResult,
   AuthBodySchema,
-  UserIdQuerySchema,
+  userIdQuerySchema,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes';
 
@@ -15,7 +15,7 @@ export class CreateAuthController {
   @Post()
   @UsePipes(
     new ZodValidationPipe({
-      query: UserIdQuerySchema,
+      query: userIdQuerySchema,
       body: AuthBodySchema,
     })
   )
