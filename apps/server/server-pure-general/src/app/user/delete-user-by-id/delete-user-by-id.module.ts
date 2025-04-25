@@ -4,15 +4,44 @@ import { DeleteUserByIdController } from './delete-user-by-id.controller';
 import {
   DeleteUserByIdRepositoryImpl,
   FindUserByIdRepositoryImpl,
+  JwtAdminGuard,
   PrismaGeneralService,
+  ValidateTokenRepositoryImpl,
 } from '@pure-workspace/data-access';
-import { DeleteUserById } from '@pure-workspace/domain';
+import {
+  DeleteUserById,
+  ValidateAdmin,
+  ValidateToken,
+} from '@pure-workspace/domain';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   controllers: [DeleteUserByIdController],
   providers: [
     DeleteUserById,
     DeleteUserByIdService,
+    ValidateToken,
+    ValidateAdmin,
+    {
+      provide: JwtAdminGuard,
+      useFactory: (
+        validateAdmin: ValidateAdmin,
+        validateToken: ValidateToken
+      ) => new JwtAdminGuard(validateAdmin, validateToken),
+      inject: [ValidateAdmin, ValidateToken],
+    },
+    {
+      provide: 'FindUserByIdRepository',
+      useClass: FindUserByIdRepositoryImpl,
+    },
+    {
+      provide: 'ValidateTokenRepository',
+      useClass: ValidateTokenRepositoryImpl,
+    },
+    {
+      provide: 'JwtService',
+      useClass: JwtService,
+    },
     {
       provide: 'PrismaService',
       useClass: PrismaGeneralService,

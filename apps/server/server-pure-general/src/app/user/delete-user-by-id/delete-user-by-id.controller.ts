@@ -4,6 +4,7 @@ import {
   Delete,
   Param,
   Query,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { DeleteUserByIdService } from './delete-user-by-id.service';
@@ -14,6 +15,7 @@ import {
   idInParamSchema,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
+import { JwtAdminGuard } from '@pure-workspace/data-access';
 
 @Controller('delete-user-by-id')
 export class DeleteUserByIdController {
@@ -26,6 +28,7 @@ export class DeleteUserByIdController {
       body: deleteUserByIdBodySchema,
     })
   )
+  @UseGuards(JwtAdminGuard)
   @Delete(':id')
   async delete(
     @Body() input: { description: string },

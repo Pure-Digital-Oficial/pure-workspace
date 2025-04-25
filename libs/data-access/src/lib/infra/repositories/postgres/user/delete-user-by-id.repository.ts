@@ -1,14 +1,12 @@
 import { Inject } from '@nestjs/common';
+import { PrismaService } from 'nestjs-prisma';
 import {
   DeleteUserByIdDto,
   DeleteUserByIdRepository,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../application';
 
 export class DeleteUserByIdRepositoryImpl implements DeleteUserByIdRepository {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async delete(input: DeleteUserByIdDto): Promise<string> {
     await this.prismaService['confirm_delete_user'].create({
       data: {
