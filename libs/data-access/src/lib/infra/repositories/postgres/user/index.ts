@@ -1,6 +1,7 @@
 export * from './create-system-user.repository';
 export * from './create-user.repository';
 export * from './delete-user-by-id.repository';
+export * from './edit-user.repository';
 export * from './find-user-by-email.repository';
 export * from './find-user-by-id.repository';
 export * from './find-user-by-nickname.repository';

@@ -25,7 +25,6 @@ const makeSut = (): SutTypes => {
       id: UserMock.id,
       name: UserMock.name,
       status: 'ACTIVE',
-      nickname: UserMock.nickname,
     },
   };
 
@@ -75,17 +74,6 @@ describe('EditUser', () => {
   it('should return EntityNotEmpty when pass incorrect id in editUserDto', async () => {
     const { sut, editUserDto } = makeSut();
     editUserDto.body.id = '';
-
-    const result = await sut.execute(editUserDto);
-
-    expect(result.isLeft()).toBeTruthy();
-    expect(result.isRight()).toBeFalsy();
-    expect(result.value).toBeInstanceOf(EntityNotEmpty);
-  });
-
-  it('should return EntityNotEmpty when pass incorrect nickname in editUserDto', async () => {
-    const { sut, editUserDto } = makeSut();
-    editUserDto.body.nickname = '';
 
     const result = await sut.execute(editUserDto);
 

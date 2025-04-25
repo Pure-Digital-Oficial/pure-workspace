@@ -17,7 +17,7 @@ export class EditUser
 
   async execute(input: EditUserDto): Promise<Either<EntityNotEmpty, string>> {
     const {
-      body: { id, name, status, nickname },
+      body: { id, name, status },
     } = input;
 
     if (Object.keys(name).length < 1) {
@@ -26,10 +26,6 @@ export class EditUser
 
     if (Object.keys(status).length < 1) {
       return left(new EntityNotEmpty('status'));
-    }
-
-    if (Object.keys(nickname).length < 1) {
-      return left(new EntityNotEmpty('nickname'));
     }
 
     if (Object.keys(id).length < 1) {
