@@ -1,4 +1,4 @@
-import { Body, Controller, Put, UsePipes } from '@nestjs/common';
+import { Body, Controller, Put, UseGuards, UsePipes } from '@nestjs/common';
 import { EditUserService } from './edit-user.service';
 import {
   UserBodyDto,
@@ -6,6 +6,7 @@ import {
   ErrorMessageResult,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
+import { JwtAdminGuard } from '@pure-workspace/data-access';
 
 @Controller('edit-user')
 export class EditUserController {
@@ -13,6 +14,7 @@ export class EditUserController {
 
   @Put()
   @UsePipes(new ZodValidationPipe({ body: editUserBodySchema }))
+  @UseGuards(JwtAdminGuard)
   async edit(@Body() input: Omit<UserBodyDto, 'type' | 'nickname'>) {
     const result = await this.editUserService.edit({
       body: input,

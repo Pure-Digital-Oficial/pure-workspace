@@ -4,15 +4,40 @@ import { EditUserController } from './edit-user.controller';
 import {
   EditUserRepositoryImpl,
   FindUserByIdRepositoryImpl,
+  JwtAdminGuard,
   PrismaGeneralService,
+  ValidateTokenRepositoryImpl,
 } from '@pure-workspace/data-access';
-import { EditUser } from '@pure-workspace/domain';
+import { EditUser, ValidateAdmin, ValidateToken } from '@pure-workspace/domain';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   controllers: [EditUserController],
   providers: [
     EditUserService,
     EditUser,
+    ValidateToken,
+    ValidateAdmin,
+    {
+      provide: JwtAdminGuard,
+      useFactory: (
+        validateAdmin: ValidateAdmin,
+        validateToken: ValidateToken
+      ) => new JwtAdminGuard(validateAdmin, validateToken),
+      inject: [ValidateAdmin, ValidateToken],
+    },
+    {
+      provide: 'FindUserByIdRepository',
+      useClass: FindUserByIdRepositoryImpl,
+    },
+    {
+      provide: 'ValidateTokenRepository',
+      useClass: ValidateTokenRepositoryImpl,
+    },
+    {
+      provide: 'JwtService',
+      useClass: JwtService,
+    },
     {
       provide: 'PrismaService',
       useClass: PrismaGeneralService,
