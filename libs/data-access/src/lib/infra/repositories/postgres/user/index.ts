@@ -1,3 +1,4 @@
+export * from './change-user-type.repository';
 export * from './create-system-user.repository';
 export * from './create-user.repository';
 export * from './delete-user-by-id.repository';

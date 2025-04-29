@@ -8,6 +8,7 @@ import {
   ListUsersModule,
   DeleteUserByIdModule,
   EditUserModule,
+  ChangeUserTypeModule,
 } from './user';
 import {
   AuthModule,
@@ -27,6 +28,7 @@ import {
     ListUsersModule,
     DeleteUserByIdModule,
     EditUserModule,
+    ChangeUserTypeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
