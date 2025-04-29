@@ -1,3 +1,4 @@
+export * from './change-user-type.dto';
 export * from './create-system-user.dto';
 export * from './create-user.dto';
 export * from './delete-user-by-id.dto';
