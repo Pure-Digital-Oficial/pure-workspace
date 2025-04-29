@@ -11,6 +11,7 @@ export class FindUserByIdRepositoryImpl implements FindUserByIdRepository {
     const filteredUser = await this.prismaService['user'].findFirst({
       where: {
         id,
+        status: 'ACTIVE',
       },
       select: {
         id: true,
