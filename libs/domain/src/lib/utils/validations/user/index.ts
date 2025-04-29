@@ -1,3 +1,4 @@
+export * from './change-user-type.schema';
 export * from './create-system0user.schema';
 export * from './create-user.schema';
 export * from './delete-user-by-id.schema';
