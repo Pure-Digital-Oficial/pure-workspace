@@ -1,4 +1,11 @@
-import { Body, Controller, Param, Put, UsePipes } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Param,
+  Put,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common';
 import {
   changeUserTypeBodySchema,
   ErrorMessageResult,
@@ -6,6 +13,7 @@ import {
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import { ChangeUserTypeService } from './change-user-type.service';
+import { JwtAdminGuard } from '@pure-workspace/data-access';
 
 @Controller('change-user-type')
 export class ChangeUserTypeController {
@@ -18,7 +26,7 @@ export class ChangeUserTypeController {
       body: changeUserTypeBodySchema,
     })
   )
-  //@UseGuards(JwtAdminGuard)
+  @UseGuards(JwtAdminGuard)
   async change(
     @Body() input: { type: string },
     @Param() param: { id: string }
