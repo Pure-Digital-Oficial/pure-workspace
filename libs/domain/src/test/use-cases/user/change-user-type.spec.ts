@@ -71,6 +71,16 @@ describe('ChangeUserType', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
+  it('should return EntityNotExists when pass incorrect user type in changeUserTypeDto', async () => {
+    const { changeUserTypeDto, sut } = makeSut();
+    changeUserTypeDto.type = 'ADM';
+    const result = await sut.execute(changeUserTypeDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityNotExists);
+  });
+
   it('should return EntityNotExists when pass incorrect ID in deleteUserByIdDto object', async () => {
     const { changeUserTypeDto, sut } = makeSut();
     jest

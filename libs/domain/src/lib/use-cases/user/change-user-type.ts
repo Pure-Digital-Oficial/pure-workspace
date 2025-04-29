@@ -6,7 +6,8 @@ import {
   ChangeUserTypeRepository,
   FindUserByIdRepository,
 } from '../../repositories';
-import { UserVerificationId } from '../../utils';
+import { UserVerificationId, UserVerificationType } from '../../utils';
+import { UserType } from '../../types';
 
 export class ChangeUserType
   implements
@@ -34,6 +35,10 @@ export class ChangeUserType
 
     if (Object.keys(userId).length < 1) {
       return left(new EntityNotEmpty('user ID'));
+    }
+
+    if (!UserVerificationType(type as UserType)) {
+      return left(new EntityNotExists('type'));
     }
 
     const userVerification = await UserVerificationId(
