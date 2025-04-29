@@ -13,6 +13,7 @@ export class FindUserByNicknameRepositoryImpl
     const filteredUser = await this.prismaService['user'].findFirst({
       where: {
         nickname,
+        status: 'ACTIVE',
       },
       select: {
         id: true,

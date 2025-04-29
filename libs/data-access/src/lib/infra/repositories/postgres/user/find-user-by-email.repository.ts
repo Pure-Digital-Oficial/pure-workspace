@@ -17,6 +17,7 @@ export class FindUserByEmailRepositoryImpl
             email,
           },
         },
+        status: 'ACTIVE',
       },
       select: {
         id: true,
