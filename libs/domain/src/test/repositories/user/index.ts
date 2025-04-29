@@ -1,3 +1,4 @@
+export * from './change-user-type.mock';
 export * from './create-system-user.mock';
 export * from './create-user.mock';
 export * from './delete-user-by-id.mock';

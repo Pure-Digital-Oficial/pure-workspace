@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../bases';
 import { ChangeUserTypeDto } from '../../dtos';
-import { EntityNotEdited, EntityNotEmpty } from '../../errors';
+import { EntityNotEdited, EntityNotEmpty, EntityNotExists } from '../../errors';
 import {
   ChangeUserTypeRepository,
   FindUserByIdRepository,
@@ -9,7 +9,11 @@ import {
 import { UserVerificationId } from '../../utils';
 
 export class ChangeUserType
-  implements UseCase<ChangeUserTypeDto, Either<EntityNotEmpty, string>>
+  implements
+    UseCase<
+      ChangeUserTypeDto,
+      Either<EntityNotEmpty | EntityNotExists | EntityNotEdited, string>
+    >
 {
   constructor(
     @Inject('FindUserByIdRepository')
@@ -19,7 +23,9 @@ export class ChangeUserType
   ) {}
   async execute(
     input: ChangeUserTypeDto
-  ): Promise<Either<EntityNotEmpty, string>> {
+  ): Promise<
+    Either<EntityNotEmpty | EntityNotExists | EntityNotEdited, string>
+  > {
     const { type, userId } = input;
 
     if (Object.keys(type).length < 1) {
