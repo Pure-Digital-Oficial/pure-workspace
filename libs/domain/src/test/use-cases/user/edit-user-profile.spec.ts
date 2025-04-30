@@ -1,5 +1,6 @@
 import { EditUserProfileDto, UserResponseDto } from '@/dtos';
 import {
+  EntityAlreadyExists,
   EntityIsInvalid,
   EntityNotEdited,
   EntityNotEmpty,
@@ -7,11 +8,13 @@ import {
 } from '@/errors';
 import {
   EditUserProfileRepository,
+  FindUserByEmailRepository,
   FindUserByIdRepository,
 } from '@/repositories';
 import { AuthMock, UserMock } from '@/test/entities';
 import {
   EditUserProfileRepositoryMock,
+  FindUserByEmailRepositoryMock,
   FindUserByIdRepositoryMock,
 } from '@/test/repositories';
 import { EditUserProfile } from '@/use-cases';
@@ -20,11 +23,13 @@ interface SutTypes {
   sut: EditUserProfile;
   editUserProfileDto: EditUserProfileDto;
   findUserByIdRepository: FindUserByIdRepository;
+  findUserByEmailRepository: FindUserByEmailRepository;
   editUserProfileRepository: EditUserProfileRepository;
 }
 
 const makeSut = (): SutTypes => {
   const findUserByIdRepository = new FindUserByIdRepositoryMock();
+  const findUserByEmailRepository = new FindUserByEmailRepositoryMock();
   const editUserProfileRepository = new EditUserProfileRepositoryMock();
 
   const editUserProfileDto: EditUserProfileDto = {
@@ -36,6 +41,7 @@ const makeSut = (): SutTypes => {
 
   const sut = new EditUserProfile(
     findUserByIdRepository,
+    findUserByEmailRepository,
     editUserProfileRepository
   );
 
@@ -43,6 +49,7 @@ const makeSut = (): SutTypes => {
     sut,
     editUserProfileDto,
     findUserByIdRepository,
+    findUserByEmailRepository,
     editUserProfileRepository,
   };
 };
@@ -118,6 +125,20 @@ describe('EditUserProfile', () => {
     expect(result.isLeft()).toBeTruthy();
     expect(result.isRight()).toBeFalsy();
     expect(result.value).toBeInstanceOf(EntityIsInvalid);
+  });
+
+  it('should return EntityAlreadyExists when return other user id in from findUserByEmailRepository', async () => {
+    const { editUserProfileDto, sut } = makeSut();
+    jest.spyOn(sut['findUserByEmailRepository'], 'find').mockResolvedValueOnce({
+      ...UserMock,
+      id: 'any_id',
+    });
+
+    const result = await sut.execute(editUserProfileDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityAlreadyExists);
   });
 
   it('should return EntityNotEdited when a not edited user', async () => {

@@ -1,9 +1,15 @@
 import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../bases';
 import { EditUserProfileDto } from '../../dtos';
-import { EntityIsInvalid, EntityNotEdited, EntityNotEmpty } from '../../errors';
+import {
+  EntityAlreadyExists,
+  EntityIsInvalid,
+  EntityNotEdited,
+  EntityNotEmpty,
+} from '../../errors';
 import {
   EditUserProfileRepository,
+  FindUserByEmailRepository,
   FindUserByIdRepository,
 } from '../../repositories';
 import { UserVerificationId } from '../../utils';
@@ -14,6 +20,8 @@ export class EditUserProfile
   constructor(
     @Inject('FindUserByIdRepository')
     private findUserByIdRepository: FindUserByIdRepository,
+    @Inject('FindUserByEmailRepository')
+    private findUserByEmailRepository: FindUserByEmailRepository,
     @Inject('EditUserProfileRepository')
     private editUserProfileRepository: EditUserProfileRepository
   ) {}
@@ -49,6 +57,15 @@ export class EditUserProfile
 
     if (loggedUserId !== id) {
       return left(new EntityIsInvalid('user'));
+    }
+
+    const filteredUserEmail = await this.findUserByEmailRepository.find(email);
+
+    if (
+      Object.keys(filteredUserEmail?.id ?? filteredUserEmail).length > 0 &&
+      filteredUserEmail?.id !== id
+    ) {
+      return left(new EntityAlreadyExists(email));
     }
 
     const editedUserProfile = await this.editUserProfileRepository.edit(input);

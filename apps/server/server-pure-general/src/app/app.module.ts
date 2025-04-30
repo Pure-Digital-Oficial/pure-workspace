@@ -9,6 +9,7 @@ import {
   DeleteUserByIdModule,
   EditUserModule,
   ChangeUserTypeModule,
+  EditUserProfileModule,
 } from './user';
 import {
   AuthModule,
@@ -29,6 +30,7 @@ import {
     DeleteUserByIdModule,
     EditUserModule,
     ChangeUserTypeModule,
+    EditUserProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
