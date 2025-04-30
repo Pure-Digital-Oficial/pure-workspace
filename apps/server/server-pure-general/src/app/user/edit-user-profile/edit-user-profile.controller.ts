@@ -1,6 +1,20 @@
-import { Body, Controller, Put, Query } from '@nestjs/common';
-import { EditUserProfileDto, ErrorMessageResult } from '@pure-workspace/domain';
+import {
+  Body,
+  Controller,
+  Put,
+  Query,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common';
+import {
+  editUserProfileBodySchema,
+  EditUserProfileDto,
+  ErrorMessageResult,
+  userIdQuerySchema,
+} from '@pure-workspace/domain';
 import { EditUserProfileService } from './edit-user-profile.service';
+import { ZodValidationPipe } from '../../pipes';
+import { JwtAuthGuard } from '@pure-workspace/data-access';
 
 @Controller('edit-user-profile')
 export class EditUserProfileController {
@@ -9,8 +23,13 @@ export class EditUserProfileController {
   ) {}
 
   @Put()
-  //@UsePipes(new ZodValidationPipe({ body: editUserBodySchema }))
-  //@UseGuards(JwtAdminGuard)
+  @UsePipes(
+    new ZodValidationPipe({
+      query: userIdQuerySchema,
+      body: editUserProfileBodySchema,
+    })
+  )
+  @UseGuards(JwtAuthGuard)
   async edit(
     @Query() query: { userId: string },
     @Body() input: Omit<EditUserProfileDto, 'loggedUserId'>
