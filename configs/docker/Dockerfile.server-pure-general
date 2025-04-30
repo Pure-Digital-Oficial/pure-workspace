@@ -1,4 +1,4 @@
-FROM node:20-alpine AS builder
+FROM node:20.19-slim AS builder
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ COPY . .
 RUN npm run prisma:generate:general
 RUN npm run build:server-pure-general
 
-FROM node:20-alpine
+FROM node:20.19-slim
 
 WORKDIR /app
 

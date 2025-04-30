@@ -10,6 +10,7 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "emitDecoratorMetadata": false,
     "incremental": true,
     "plugins": [
       {
