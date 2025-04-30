@@ -6,5 +6,6 @@ export interface UserResponseDto {
   nickname: string;
   type: string;
   birthDate: Date | null;
+  picture: string;
   auth: Omit<AuthResponseDto, 'userId'>;
 }

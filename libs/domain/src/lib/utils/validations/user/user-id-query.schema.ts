@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const UserIdQuerySchema = z
+export const userIdQuerySchema = z
   .object({
     userId: z.string().min(1),
   })
