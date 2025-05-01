@@ -2,7 +2,7 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { authService } from './auth.service';
 import { SessionResponseDto } from '@pure-workspace/domain';
 
-export function withSession<P = unknown>(
+export function withSessionService<P = unknown>(
   appId: string,
   handler: (
     ctx: GetServerSidePropsContext & {
