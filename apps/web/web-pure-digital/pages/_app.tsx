@@ -1,7 +1,12 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import './styles.css';
-import { CustomThemeProvider, SessionProvider } from '@pure-workspace/feature';
+import {
+  AlertProvider,
+  AppProvider,
+  CustomThemeProvider,
+  SessionProvider,
+} from '@pure-workspace/feature';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
@@ -11,9 +16,19 @@ function CustomApp({ Component, pageProps }: AppProps) {
       </Head>
       <main className="app">
         <SessionProvider session={pageProps.session}>
-          <CustomThemeProvider>
-            <Component {...pageProps} />
-          </CustomThemeProvider>
+          <AppProvider
+            company={{
+              logo: '/Red_Pure_Digital_Logo.svg',
+              balckLogo: '/Black_Pure_Digital_Logo.svg',
+            }}
+            appId={process.env['NEXT_PUBLIC_PURE_DIGITAL_APP_ID'] ?? ''}
+          >
+            <AlertProvider>
+              <CustomThemeProvider>
+                <Component {...pageProps} />
+              </CustomThemeProvider>
+            </AlertProvider>
+          </AppProvider>
         </SessionProvider>
       </main>
     </>
