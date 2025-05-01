@@ -1,5 +1,5 @@
-import { Box } from '@mui/material';
+import { LandingPageHeader } from '../../components';
 
 export const PureDigitalLPContainer = () => {
-  return <Box>Oi LP</Box>;
+  return <LandingPageHeader />;
 };

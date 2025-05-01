@@ -20,6 +20,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
             company={{
               logo: '/Red_Pure_Digital_Logo.svg',
               balckLogo: '/Black_Pure_Digital_Logo.svg',
+              logoAndText: '/Pure_Digital_Logo_and_Text.svg',
             }}
             appId={process.env['NEXT_PUBLIC_PURE_DIGITAL_APP_ID'] ?? ''}
           >
