@@ -1,13 +1,13 @@
 import { SessionType } from '@pure-workspace/domain';
-import { HomeContainer } from '@pure-workspace/feature';
-import { withSession } from '@pure-workspace/feature';
+import { UserContainer } from '@pure-workspace/feature';
+import { withSession } from 'libs/feature/src/lib/services';
 import { GetServerSideProps } from 'next';
 
-export const Home = () => {
-  return <HomeContainer />;
+export const User = () => {
+  return <UserContainer />;
 };
 
-export default Home;
+export default User;
 
 export const getServerSideProps: GetServerSideProps<SessionType> = withSession(
   process.env['NEXT_PUBLIC_PURE_DIGITAL_APP_ID'] ?? '',

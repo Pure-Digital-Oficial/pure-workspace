@@ -1,18 +1,20 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import './styles.css';
-import { CustomThemeProvider } from '@pure-workspace/feature';
+import { CustomThemeProvider, SessionProvider } from '@pure-workspace/feature';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Bem Vindo(a)</title>
+        <title>Pure Digital</title>
       </Head>
       <main className="app">
-        <CustomThemeProvider>
-          <Component {...pageProps} />
-        </CustomThemeProvider>
+        <SessionProvider session={pageProps.session}>
+          <CustomThemeProvider>
+            <Component {...pageProps} />
+          </CustomThemeProvider>
+        </SessionProvider>
       </main>
     </>
   );
