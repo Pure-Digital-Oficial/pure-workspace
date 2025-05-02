@@ -1,18 +1,29 @@
 import { Box, Button, Stack } from '@mui/material';
+import { FC } from 'react';
 import { useApp } from '../../contexts';
+import { scrollToService } from '../../services';
+import { ButtonNavigation } from '../../utils';
 
-export const LandingPageHeader = () => {
+interface LandingPageHeaderProps {
+  backgroundColor?: string;
+  buttonTextColor?: string;
+  listOfSinkerTexts: ButtonNavigation[];
+}
+
+export const LandingPageHeader: FC<LandingPageHeaderProps> = ({
+  backgroundColor = '#181818',
+  buttonTextColor = '#F8F9FF',
+  listOfSinkerTexts,
+}) => {
   const { company } = useApp();
-
-  const listOfSinkerTexts = ['Home', 'Serviços', 'Contato', 'Blog', 'Login'];
 
   return (
     <Box
       sx={{
-        backgroundColor: '#181818',
+        backgroundColor: backgroundColor,
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'end',
         height: '4rem',
       }}
     >
@@ -20,19 +31,26 @@ export const LandingPageHeader = () => {
         component="img"
         height="37px"
         width="163px"
+        marginRight="2rem"
         src={company?.logoAndText}
       />
       <Stack spacing={2} direction="row">
-        {listOfSinkerTexts.map((buttons) => (
+        {listOfSinkerTexts.map((button) => (
           <Button
+            onClick={() => scrollToService(button.to)}
             sx={{
-              color: '#F8F9FF',
+              color: buttonTextColor,
               textTransform: 'none',
               textAlign: 'end',
               height: '25px',
+              whiteSpace: 'nowrap',
+              fontWeight: 600,
+              '&:hover': {
+                opacity: 0.8,
+              },
             }}
           >
-            {buttons}
+            {button.title}
           </Button>
         ))}
       </Stack>
