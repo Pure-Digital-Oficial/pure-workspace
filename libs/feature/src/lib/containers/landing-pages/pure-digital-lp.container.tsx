@@ -1,29 +1,34 @@
+import { useRouter } from 'next/router';
 import { LadingPageHeroSection, LandingPageHeader } from '../../components';
+import { scrollToService } from '../../services';
 
 export const PureDigitalLPContainer = () => {
+  const router = useRouter();
   return (
     <>
       <LandingPageHeader
         listOfSinkerTexts={[
           {
             title: 'Home',
-            to: 'home',
+            to: () => scrollToService('home'),
           },
           {
             title: 'Serviços',
-            to: 'servico',
+            to: () => scrollToService('servico'),
           },
           {
             title: 'Contato',
-            to: 'contato',
+            to: () => scrollToService('contato'),
           },
           {
             title: 'Blog',
-            to: 'blog',
+            to: () => scrollToService('blog'),
           },
           {
             title: 'Login',
-            to: 'login',
+            to: () => {
+              router.push('/login');
+            },
           },
         ]}
       />

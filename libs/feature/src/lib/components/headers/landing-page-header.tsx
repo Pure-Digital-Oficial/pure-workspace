@@ -1,7 +1,6 @@
 import { Box, Button, Stack } from '@mui/material';
 import { FC } from 'react';
 import { useApp } from '../../contexts';
-import { scrollToService } from '../../services';
 import { ButtonNavigation } from '../../utils';
 
 interface LandingPageHeaderProps {
@@ -35,9 +34,10 @@ export const LandingPageHeader: FC<LandingPageHeaderProps> = ({
         src={company?.logoAndText}
       />
       <Stack spacing={2} direction="row">
-        {listOfSinkerTexts.map((button) => (
+        {listOfSinkerTexts.map((button, index) => (
           <Button
-            onClick={() => scrollToService(button.to)}
+            key={`${button.title}-${index}`}
+            onClick={button.to}
             sx={{
               color: buttonTextColor,
               textTransform: 'none',

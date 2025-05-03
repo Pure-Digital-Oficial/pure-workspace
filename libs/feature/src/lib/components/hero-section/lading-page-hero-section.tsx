@@ -6,19 +6,23 @@ interface LadingPageHeroSectionProps {
   title: ReactNode;
   subTitle: ReactNode;
   image: string;
+  backgroundColor?: string;
+  textColor?: string;
 }
 
 export const LadingPageHeroSection: FC<LadingPageHeroSectionProps> = ({
   subTitle,
   title,
   image,
+  backgroundColor = '#181818',
+  textColor = '#FFFFFF',
 }) => {
   return (
     <Stack
       direction="row"
       spacing={15}
       sx={{
-        backgroundColor: '#181818',
+        backgroundColor: backgroundColor,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -30,7 +34,7 @@ export const LadingPageHeroSection: FC<LadingPageHeroSectionProps> = ({
         direction="column"
         sx={{
           maxWidth: '498px',
-          color: '#FFFFFF',
+          color: textColor,
         }}
       >
         <Typography

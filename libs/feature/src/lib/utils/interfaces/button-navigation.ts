@@ -1,4 +1,4 @@
 export interface ButtonNavigation {
   title: string;
-  to: string;
+  to: () => void;
 }
