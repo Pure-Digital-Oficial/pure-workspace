@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, useMediaQuery, useTheme } from '@mui/material';
 import { FC } from 'react';
 import { navigateToWathsService } from '../../services';
 
@@ -13,6 +13,9 @@ export const CtaButton: FC<CtaButtonProps> = ({
   phone = '11965004102',
   phoneMessage = 'Olá estou interessado em saber mais sobre os planos da Pure Digital, Poderia me ajudar?',
 }) => {
+  const theme = useTheme();
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+
   const redirect = () => {
     navigateToWathsService(phone, phoneMessage);
   };
@@ -22,9 +25,12 @@ export const CtaButton: FC<CtaButtonProps> = ({
       onClick={redirect}
       variant="contained"
       sx={{
+        width: mdDown ? '194px' : 'auto',
         maxWidth: '376px',
-        borderRadius: '20px',
+        borderRadius: mdDown ? '9px' : '14px',
         textTransform: 'none',
+        fontSize: mdDown ? '16px' : '24px',
+        padding: mdDown ? '0.75rem' : '1.3rem',
       }}
     >
       {title}

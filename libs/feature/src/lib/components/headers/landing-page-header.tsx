@@ -33,7 +33,9 @@ export const LandingPageHeader: FC<LandingPageHeaderProps> = ({
         display: 'flex',
         justifyContent: mdDown ? 'space-between' : 'center',
         padding: '1rem',
-        alignItems: 'end',
+        paddingTop: mdDown ? '3rem' : 'auto',
+        paddingBottom: mdDown ? '3rem' : 'auto',
+        alignItems: mdDown ? 'center' : 'end',
         height: '4rem',
       }}
     >
@@ -69,7 +71,10 @@ export const LandingPageHeader: FC<LandingPageHeaderProps> = ({
       )}
       {mdDown && (
         <IconButton>
-          <MenuIcon fontSize="large" sx={{ color: 'white' }} />
+          <MenuIcon
+            fontSize="small"
+            sx={{ color: 'white', height: '40px', width: '40px' }}
+          />
         </IconButton>
       )}
     </Box>
