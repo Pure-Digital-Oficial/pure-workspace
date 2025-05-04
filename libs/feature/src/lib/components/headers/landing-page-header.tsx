@@ -1,4 +1,12 @@
-import { Box, Button, Stack } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import { FC } from 'react';
 import { useApp } from '../../contexts';
 import { ButtonNavigation } from '../../utils';
@@ -15,13 +23,16 @@ export const LandingPageHeader: FC<LandingPageHeaderProps> = ({
   listOfSinkerTexts,
 }) => {
   const { company } = useApp();
+  const theme = useTheme();
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box
       sx={{
         backgroundColor: backgroundColor,
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: mdDown ? 'space-between' : 'center',
+        padding: '1rem',
         alignItems: 'end',
         height: '4rem',
       }}
@@ -33,27 +44,34 @@ export const LandingPageHeader: FC<LandingPageHeaderProps> = ({
         marginRight="2rem"
         src={company?.logoAndText}
       />
-      <Stack spacing={2} direction="row">
-        {listOfSinkerTexts.map((button, index) => (
-          <Button
-            key={`${button.title}-${index}`}
-            onClick={button.to}
-            sx={{
-              color: buttonTextColor,
-              textTransform: 'none',
-              textAlign: 'end',
-              height: '25px',
-              whiteSpace: 'nowrap',
-              fontWeight: 600,
-              '&:hover': {
-                opacity: 0.8,
-              },
-            }}
-          >
-            {button.title}
-          </Button>
-        ))}
-      </Stack>
+      {!mdDown && (
+        <Stack spacing={2} direction="row">
+          {listOfSinkerTexts.map((button, index) => (
+            <Button
+              key={`${button.title}-${index}`}
+              onClick={button.to}
+              sx={{
+                color: buttonTextColor,
+                textTransform: 'none',
+                textAlign: 'end',
+                height: '25px',
+                whiteSpace: 'nowrap',
+                fontWeight: 600,
+                '&:hover': {
+                  opacity: 0.8,
+                },
+              }}
+            >
+              {button.title}
+            </Button>
+          ))}
+        </Stack>
+      )}
+      {mdDown && (
+        <IconButton>
+          <MenuIcon fontSize="large" sx={{ color: 'white' }} />
+        </IconButton>
+      )}
     </Box>
   );
 };

@@ -18,39 +18,41 @@ export const LadingPageHeroSection: FC<LadingPageHeroSectionProps> = ({
   textColor = '#FFFFFF',
 }) => {
   return (
-    <Stack
-      direction="row"
-      spacing={15}
-      sx={{
-        backgroundColor: backgroundColor,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '6rem',
-      }}
-    >
+    <Box component="section" id="home">
       <Stack
-        spacing={5}
-        direction="column"
+        direction="row"
+        spacing={15}
         sx={{
-          maxWidth: '498px',
-          color: textColor,
+          backgroundColor: backgroundColor,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '6rem',
         }}
       >
-        <Typography
-          fontStyle="italic"
-          fontSize="50px"
-          fontWeight={500}
-          lineHeight="55px"
+        <Stack
+          spacing={5}
+          direction="column"
+          sx={{
+            maxWidth: '498px',
+            color: textColor,
+          }}
         >
-          {title}
-        </Typography>
-        <Typography fontSize="24px" fontWeight={400}>
-          {subTitle}
-        </Typography>
-        <CtaButton />
+          <Typography
+            fontStyle="italic"
+            fontSize="50px"
+            fontWeight={500}
+            lineHeight="55px"
+          >
+            {title}
+          </Typography>
+          <Typography fontSize="24px" fontWeight={400}>
+            {subTitle}
+          </Typography>
+          <CtaButton />
+        </Stack>
+        <Box component="img" src={image} />
       </Stack>
-      <Box component="img" src={image} />
-    </Stack>
+    </Box>
   );
 };
