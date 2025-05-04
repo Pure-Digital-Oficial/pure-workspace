@@ -1,6 +1,6 @@
 import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { FC, ReactNode } from 'react';
-import { CtaButton } from '../buttons';
+import { CtaButton } from '../../buttons';
 
 interface LadingPageHeroSectionProps {
   title: ReactNode;
@@ -10,7 +10,7 @@ interface LadingPageHeroSectionProps {
   textColor?: string;
 }
 
-export const LadingPageHeroSection: FC<LadingPageHeroSectionProps> = ({
+export const LandingPageHeroSection: FC<LadingPageHeroSectionProps> = ({
   subTitle,
   title,
   image,

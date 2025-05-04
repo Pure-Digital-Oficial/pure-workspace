@@ -1,5 +1,9 @@
 import { useRouter } from 'next/router';
-import { LadingPageHeroSection, LandingPageHeader } from '../../components';
+import {
+  LandingPageHeroSection,
+  LandingPageServicesSection,
+  LandingPageHeader,
+} from '../../components';
 import { scrollToService } from '../../services';
 
 export const PureDigitalLPContainer = () => {
@@ -14,7 +18,7 @@ export const PureDigitalLPContainer = () => {
           },
           {
             title: 'Serviços',
-            to: () => scrollToService('servico'),
+            to: () => scrollToService('services'),
           },
           {
             title: 'Contato',
@@ -32,7 +36,7 @@ export const PureDigitalLPContainer = () => {
           },
         ]}
       />
-      <LadingPageHeroSection
+      <LandingPageHeroSection
         subTitle={
           <>
             <span style={{ color: '#C91517' }}>
@@ -48,6 +52,7 @@ export const PureDigitalLPContainer = () => {
         }
         image="/Pure_Digital_Hero_Section.svg"
       />
+      <LandingPageServicesSection />
     </>
   );
 };
