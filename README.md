@@ -1,7 +1,7 @@
 <h1 align="center">PureWorkspace</h1>
 
 <p align="center">
-  <img loading="lazy" src="https://s3-alpha-sig.figma.com/img/1578/7ca1/d64ba9aae7afc94792a77d5a20fe0c05?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=lE~rBKMKkKFRq3AJAHkc~Lz6xfpPwChq~xFKhNrgZbmP84LL2lYeRXUQUWIgMkd4olPikH3re4W9ZP6y60lj4N4yqTggKN7r4TJKcR7nv3h9HCuB-62Bz3E6s4pKakBrtLmkaxg~8hcQEBvER0AuZl1lRXXIniUMHiDU2MNrLQAwJhIFw7zaQX856QBoGGU89JQgVTE4d7NSXgfobzv0aMQO5Kj17j0khR4xfZxI-0HXTQhm0fMte~IjWivAcmxE8l8SlbFAEPImSNjK8XfRYcd6-1yKaoMGb4gux9flIeHk~2-9N09qw8GsjVbZy5iGakn5IC0mE1CHaxAZWbpo9A__"/>
+  <img loading="lazy" src="docs\img\logo.png"/>
 </p>
 
 # Índice
@@ -26,7 +26,7 @@ Com o **PureWorkspace**, centralizamos o desenvolvimento do site **Pure Digital*
 
 ## Status do Projeto
 
-    :construction: Projeto em desenvolvimento :construction:
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
 ## Funcionalidades e Demonstração da Aplicação
 
