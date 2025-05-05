@@ -7,7 +7,7 @@ generator client {
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_GENERAL_URL")
-    schemas  = ["pure_general"]
+    schemas  = ["pure_general", "email_sender"]
 }
 
 model application {
@@ -66,6 +66,9 @@ model user {
     deleted      confirm_delete_user[]
     data         user_data[]
     contacts     contact_x_user[]
+    email_templates email_template[] @relation("CreatedByRelation")
+    sent_emails     email_template[] @relation("SenderRelation")
+    created_shots   shot[]           @relation("CreatedByRelation")
 
     @@schema("pure_general")
 }
@@ -144,4 +147,103 @@ enum UserType {
     SYSTEM
 
     @@schema("pure_general")
+}
+
+model email_template {
+    id          String   @id @default(uuid())
+    created_by_id String
+    sender_id String
+    created_at DateTime @default(now())
+    updated_at DateTime @default(now())
+    title      String
+    subject    String
+    body       String
+    status     Status   @default(ACTIVE)
+    attachments String
+
+    created_by user @relation("CreatedByRelation", fields: [created_by_id], references: [id])
+    sender     user @relation("SenderRelation", fields: [sender_id], references: [id])
+    sent_emails shot[] @relation("EmailTemplateRelation")
+
+    @@schema("email_sender")
+}
+
+// sugestion name: shot ou email_blast
+model shot {
+    id          String   @id @default(uuid())
+    created_by_id String
+    email_template_id String
+    title       String
+    description String
+    scheduled Boolean
+    scheduled_at DateTime?
+    created_at  DateTime @default(now())
+    updated_at  DateTime @default(now())
+    status      Status   @default(ACTIVE)
+
+    created_by  user     @relation("CreatedByRelation",fields: [created_by_id], references: [id])
+    email_template email_template @relation("EmailTemplateRelation",fields: [email_template_id], references: [id])
+    email_lots_x_shots email_lot_x_shot[]
+    shot_fired shot_fired[]
+
+    @@schema("email_sender")
+}
+
+model email_lot {
+  id          String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  status     Status   @default(ACTIVE)
+  name       String
+  description String
+
+  email_lots_x_shots email_lot_x_shot[]
+  target_emails target_email[]
+
+  @@schema("email_sender")
+}
+
+model email_lot_x_shot {
+  email_lot_id String
+  shot_id      String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  email_lot email_lot @relation(fields: [email_lot_id], references: [id])
+  shot      shot      @relation(fields: [shot_id], references: [id])
+
+  @@id([email_lot_id, shot_id])
+  @@schema("email_sender")
+}
+
+model target_email {
+  id          String   @id @default(uuid())
+  email       String
+  status      Status   @default(ACTIVE)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+  lot_id     String
+
+  email_lot   email_lot @relation(fields: [lot_id], references: [id])
+  shot_fired  shot_fired[]
+
+  @@schema("email_sender")
+}
+
+model shot_fired {
+  id          String   @id @default(uuid())
+  shot_id     String
+  target_email_id String
+  status      Status   @default(ACTIVE)
+  error       String?
+  sent_at     DateTime?
+  opened_at   DateTime?
+  clicked_at  DateTime?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+
+  shot        shot      @relation(fields: [shot_id], references: [id])
+  target_email target_email @relation(fields: [target_email_id], references: [id])
+
+  @@schema("email_sender")
 }
