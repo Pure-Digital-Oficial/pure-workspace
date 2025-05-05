@@ -1,7 +1,7 @@
 <h1 align="center">PureWorkspace</h1>
 
 <p align="center">
-  <img loading="lazy" src="docs\img\logo.png"/>
+  <img loading="lazy" src="docs\img\logo.png" alt="PureWorkspace Logo"/>
 </p>
 
 # Índice
