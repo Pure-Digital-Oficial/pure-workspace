@@ -30,7 +30,7 @@ export const CtaButton: FC<CtaButtonProps> = ({
         borderRadius: mdDown ? '9px' : '14px',
         textTransform: 'none',
         fontSize: mdDown ? '16px' : '24px',
-        padding: mdDown ? '0.75rem' : '1.3rem',
+        padding: '0.85rem',
       }}
     >
       {title}

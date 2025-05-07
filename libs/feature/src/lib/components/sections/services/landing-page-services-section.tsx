@@ -1,4 +1,5 @@
 import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { ServicesCard } from '../../cards';
 
 export const LandingPageServicesSection = () => {
   const theme = useTheme();
@@ -13,9 +14,25 @@ export const LandingPageServicesSection = () => {
           background: 'linear-gradient(to bottom, #181818, #C91517)',
           display: 'flex',
           justifyContent: 'center',
+          height: '100vh',
         }}
       >
-        <Typography>Nossos Serviços</Typography>
+        <Stack direction="column">
+          <Typography
+            sx={{
+              position: 'relative',
+              backgroundColor: '#C91517',
+              padding: '0.5rem 2rem',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '48px',
+              //transform: 'rotate(-4deg)',
+            }}
+          >
+            Nossos Serviços
+          </Typography>
+          <ServicesCard />
+        </Stack>
       </Stack>
     </Box>
   );
