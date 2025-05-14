@@ -1,7 +1,15 @@
 import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { ServicesCard } from '../../cards';
+import { ServicesResponseDto } from '@pure-workspace/domain';
+import { FC } from 'react';
 
-export const LandingPageServicesSection = () => {
+interface LandingPageServicesSectionProps {
+  servicesList: ServicesResponseDto[];
+}
+
+export const LandingPageServicesSection: FC<
+  LandingPageServicesSectionProps
+> = ({ servicesList }) => {
   const theme = useTheme();
   //const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
@@ -14,10 +22,13 @@ export const LandingPageServicesSection = () => {
           background: 'linear-gradient(to bottom, #181818, #C91517)',
           display: 'flex',
           justifyContent: 'center',
-          height: '100vh',
         }}
       >
-        <Stack direction="column">
+        <Stack
+          sx={{ display: 'flex', alignItems: 'center' }}
+          gap={6}
+          direction="column"
+        >
           <Typography
             sx={{
               position: 'relative',
@@ -26,12 +37,24 @@ export const LandingPageServicesSection = () => {
               color: '#fff',
               fontWeight: 600,
               fontSize: '48px',
+              maxWidth: '465px',
               //transform: 'rotate(-4deg)',
             }}
           >
             Nossos Serviços
           </Typography>
-          <ServicesCard />
+          <Stack direction="row" spacing={2}>
+            {servicesList.map((service) => (
+              <ServicesCard
+                key={service.id}
+                buttonAction={() => {
+                  console.log('Clicou');
+                }}
+                title={service.title}
+                image={service.image}
+              />
+            ))}
+          </Stack>
         </Stack>
       </Stack>
     </Box>

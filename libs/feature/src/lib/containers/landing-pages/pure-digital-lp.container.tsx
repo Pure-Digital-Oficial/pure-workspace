@@ -52,7 +52,30 @@ export const PureDigitalLPContainer = () => {
         }
         image="/Pure_Digital_Hero_Section.svg"
       />
-      <LandingPageServicesSection />
+      <LandingPageServicesSection
+        servicesList={[
+          {
+            id: '1',
+            image: '/Pure_Digital_Icone_Power_BI.svg',
+            title: 'Power BI e Dashboards',
+          },
+          {
+            id: '2',
+            image: '/Pure_Digital_Icone_Power_BI.svg',
+            title: 'Power BI e Dashboards',
+          },
+          {
+            id: '3',
+            image: '/Pure_Digital_Icone_Power_BI.svg',
+            title: 'Power BI e Dashboards',
+          },
+          {
+            id: '4',
+            image: '/Pure_Digital_Icone_Power_BI.svg',
+            title: 'Power BI e Dashboards',
+          },
+        ]}
+      />
     </>
   );
 };
