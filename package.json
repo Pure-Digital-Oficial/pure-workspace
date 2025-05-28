@@ -9,6 +9,8 @@
     "test:coverage": "npm run test -- --coverage",
     "prisma:generate:general": "prisma generate --schema=./prisma/general/schema.prisma",
     "prisma:migrate:general": "npx prisma migrate dev --schema=./prisma/general/schema.prisma",
+    "prisma:generate:marketing": "prisma generate --schema=./prisma/marketing/schema.prisma",
+    "prisma:migrate:marketing": "npx prisma migrate dev --schema=./prisma/marketing/schema.prisma",
     "docker": "docker-compose up",
     "docker:postgres": "docker-compose -f docker-compose-postgres.yaml up",
     "build:server-pure-general": "nx build server-pure-general",
