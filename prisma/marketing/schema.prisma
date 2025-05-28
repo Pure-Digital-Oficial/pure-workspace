@@ -1,0 +1,23 @@
+generator client {
+    provider        = "prisma-client-js"
+    output          = "../generated/marketing"
+    previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_MAKETING_URL")
+    schemas  = ["pure_marketing"]
+}
+
+model target {
+    id         String    @id @default(uuid())
+
+    @@schema("pure_marketing")
+}
+
+model lot {
+    id         String    @id @default(uuid())
+    
+    @@schema("pure_marketing")
+}
