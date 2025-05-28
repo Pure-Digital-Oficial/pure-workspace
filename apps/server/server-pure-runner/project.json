@@ -1,0 +1,26 @@
+{
+  "name": "server-pure-runner",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/server/server-pure-runner/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "server-pure-runner:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "server-pure-runner:build:development"
+        },
+        "production": {
+          "buildTarget": "server-pure-runner:build:production"
+        }
+      }
+    }
+  }
+}
