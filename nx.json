@@ -38,7 +38,10 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/server/server-pure-general-e2e/**/*"]
+      "exclude": [
+        "apps/server/server-pure-general-e2e/**/*",
+        "apps/server/server-pure-runner-e2e/**/*"
+      ]
     },
     {
       "plugin": "@nx/next/plugin",

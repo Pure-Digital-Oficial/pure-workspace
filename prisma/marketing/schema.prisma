@@ -1,0 +1,175 @@
+generator client {
+    provider        = "prisma-client-js"
+    output          = "../generated/marketing"
+    previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_MARKETING_URL")
+    schemas  = ["pure_marketing"]
+}
+
+model client {
+    id               String    @id @default(uuid())
+    responsible_name String?
+    type             user_type @default(NO_DOCUMENT)
+    origin           String?
+    document         String?
+    our_code         String?
+    status           status    @default(ACTIVE)
+    created_at       DateTime  @default(now())
+    updated_at       DateTime?
+
+    data     client_data[]
+    emails   email[]
+    contacts contact[]
+    targets  target[]
+
+    @@index([responsible_name])
+    @@schema("pure_marketing")
+}
+
+model client_data {
+    id           String    @id @default(uuid())
+    client_id    String    @unique
+    neighborhood String?
+    city         String?
+    acronym      String?
+    street       String?
+    number       String?
+    post_code    String?
+    created_at   DateTime  @default(now())
+    updated_at   DateTime?
+
+    client client @relation(fields: [client_id], references: [id])
+
+    @@index([post_code, city, neighborhood, street])
+    @@schema("pure_marketing")
+}
+
+model email {
+    id         String    @id @default(uuid())
+    client_id  String
+    email      String
+    variant    String
+    domain     String
+    status     status    @default(ACTIVE)
+    created_at DateTime  @default(now())
+    updated_at DateTime?
+
+    client client @relation(fields: [client_id], references: [id])
+
+    @@index([email])
+    @@schema("pure_marketing")
+}
+
+model contact {
+    id         String       @id @default(uuid())
+    client_id  String
+    variant    String
+    type       contact_type
+    area_code  String?
+    phone      String
+    status     status       @default(ACTIVE)
+    created_at DateTime     @default(now())
+    updated_at DateTime?
+
+    client client @relation(fields: [client_id], references: [id])
+
+    @@index([area_code, phone])
+    @@schema("pure_marketing")
+}
+
+model target {
+    client_id  String
+    lot_id     String
+    created_at DateTime  @default(now())
+    updated_at DateTime?
+
+    client client @relation(fields: [client_id], references: [id])
+    lot    lot    @relation(fields: [lot_id], references: [id])
+
+
+    @@id([client_id, lot_id])
+    @@schema("pure_marketing")
+}
+
+model shot {
+    id            String    @id @default(uuid())
+    model_id      String
+    title         String
+    scheduled     Boolean
+    schedule_date DateTime?
+    status        status    @default(ACTIVE)
+    created_at    DateTime  @default(now())
+    updated_at    DateTime?
+
+    model shot_model @relation(fields: [model_id], references: [id])
+
+    @@schema("pure_marketing")
+}
+
+model shot_model {
+    id         String    @id @default(uuid())
+    created_by String
+    sender     String
+    title      String
+    subject    String
+    body       String
+    image      String
+    status     status    @default(ACTIVE)
+    created_at DateTime  @default(now())
+    updated_at DateTime?
+
+    shots shot[]
+
+    @@schema("pure_marketing")
+}
+
+model lot {
+    id          String @id @default(uuid())
+    name        String
+    content     String
+    description String
+
+    targets target[]
+
+    @@schema("pure_marketing")
+}
+
+model shot_x_lot {
+    lot_id String
+    shot_id String
+    created_at DateTime  @default(now())
+    updated_at DateTime?
+
+    @@id([shot_id, lot_id])
+    @@schema("pure_marketing")
+}
+
+enum status {
+    ACTIVE
+    INACTIVE
+    BLOCKED
+    UNDER_ANALYSIS
+
+    @@schema("pure_marketing")
+}
+
+enum contact_type {
+    PHONE
+    FIXED
+    SOCIAL_MEDIA
+    FIXED_NO_DDD
+    PHONE_NO_DDD
+
+    @@schema("pure_marketing")
+}
+
+enum user_type {
+    NO_DOCUMENT
+    DOCUMENT
+
+    @@schema("pure_marketing")
+}
