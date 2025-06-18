@@ -1,15 +1,20 @@
 import { CreateTriggerDto, UserResponseDto } from '@/dtos';
 import {
   CreateTriggerRepository,
+  FindTriggerByContentRepository,
+  FindTriggerByNameRepository,
   FindUserByIdRepository,
 } from '@/repositories';
 import {
   CreateTriggerRepositoryMock,
+  FindTriggerByContentRepositoryMock,
+  FindTriggerByNameRepositoryMock,
   FindUserByIdRepositoryMock,
 } from '@/test/repositories';
 import { CreateTrigger } from '@/use-cases';
 import { TriggerMock } from '@/test/entities';
 import {
+  EntityAlreadyExists,
   EntityNotCreated,
   EntityNotEmpty,
   EntityNotExists,
@@ -20,11 +25,16 @@ interface SutTypes {
   sut: CreateTrigger;
   createTriggerDto: CreateTriggerDto;
   findUserByIdRepository: FindUserByIdRepository;
+  findTriggerByNameRepository: FindTriggerByNameRepository;
+  findTriggerByContentRepository: FindTriggerByContentRepository;
   createTriggerRepository: CreateTriggerRepository;
 }
 
 const makeSut = (): SutTypes => {
   const findUserByIdRepository = new FindUserByIdRepositoryMock();
+  const findTriggerByNameRepository = new FindTriggerByNameRepositoryMock();
+  const findTriggerByContentRepository =
+    new FindTriggerByContentRepositoryMock();
   const createTriggerRepository = new CreateTriggerRepositoryMock();
 
   const createTriggerDto: CreateTriggerDto = {
@@ -37,6 +47,8 @@ const makeSut = (): SutTypes => {
 
   const sut = new CreateTrigger(
     findUserByIdRepository,
+    findTriggerByNameRepository,
+    findTriggerByContentRepository,
     createTriggerRepository
   );
 
@@ -44,6 +56,8 @@ const makeSut = (): SutTypes => {
     sut,
     createTriggerDto,
     findUserByIdRepository,
+    findTriggerByNameRepository,
+    findTriggerByContentRepository,
     createTriggerRepository,
   };
 };
@@ -103,6 +117,30 @@ describe('CreateTrigger', () => {
     expect(result.isLeft()).toBeTruthy();
     expect(result.isRight()).toBeFalsy();
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
+  });
+
+  it('should return EntityAlreadyExists when trigger name exists in system', async () => {
+    const { createTriggerDto, sut } = makeSut();
+    jest
+      .spyOn(sut['findTriggerByNameRepository'], 'find')
+      .mockResolvedValueOnce(TriggerMock);
+    const result = await sut.execute(createTriggerDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityAlreadyExists);
+  });
+
+  it('should return EntityAlreadyExists when trigger content exists in system', async () => {
+    const { createTriggerDto, sut } = makeSut();
+    jest
+      .spyOn(sut['findTriggerByContentRepository'], 'find')
+      .mockResolvedValueOnce(TriggerMock);
+    const result = await sut.execute(createTriggerDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityAlreadyExists);
   });
 
   it('should return EntityNotExists when pass incorrect loggedId in createTriggerDto object', async () => {

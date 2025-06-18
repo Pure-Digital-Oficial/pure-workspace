@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../../bases';
 import { CreateTriggerDto } from '../../../dtos';
 import {
+  EntityAlreadyExists,
   EntityNotCreated,
   EntityNotEmpty,
   InsufficientCharacters,
@@ -9,6 +10,8 @@ import {
 import { UserVerificationId } from '../../../utils';
 import {
   CreateTriggerRepository,
+  FindTriggerByContentRepository,
+  FindTriggerByNameRepository,
   FindUserByIdRepository,
 } from '../../../repositories';
 
@@ -22,6 +25,10 @@ export class CreateTrigger
   constructor(
     @Inject('FindUserByIdRepository')
     private findUserByIdRepository: FindUserByIdRepository,
+    @Inject('FindTriggerByNameRepository')
+    private findTriggerByNameRepository: FindTriggerByNameRepository,
+    @Inject('FindTriggerByNameRepository')
+    private findTriggerByContentRepository: FindTriggerByContentRepository,
     @Inject('CreateTriggerRepository')
     private createTriggerRepository: CreateTriggerRepository
   ) {}
@@ -54,6 +61,26 @@ export class CreateTrigger
 
     if (userVerification.isLeft()) {
       return left(userVerification.value);
+    }
+
+    const findedTriggerByName = await this.findTriggerByNameRepository.find(
+      name
+    );
+
+    if (
+      Object.keys(findedTriggerByName?.id ?? findedTriggerByName).length > 0
+    ) {
+      return left(new EntityAlreadyExists('name'));
+    }
+
+    const findedTriggerByContent =
+      await this.findTriggerByContentRepository.find(content);
+
+    if (
+      Object.keys(findedTriggerByContent?.id ?? findedTriggerByContent).length >
+      0
+    ) {
+      return left(new EntityAlreadyExists('content'));
     }
 
     const createdTrigger = await this.createTriggerRepository.create(input);

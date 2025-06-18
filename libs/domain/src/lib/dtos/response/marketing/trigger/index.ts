@@ -1,1 +1,1 @@
-export * from './create-trigger.response';
+export * from './trigger.response';
