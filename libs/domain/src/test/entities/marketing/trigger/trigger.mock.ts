@@ -7,5 +7,7 @@ export const TriggerMock: TriggerResponseDto = {
   content: faker.string.alpha(3),
   description: faker.string.alpha(3),
   createBy: faker.string.alpha(3),
+  createdAt: faker.date.anytime(),
+  updatedAt: faker.date.anytime(),
   type: 'PHONE',
 };

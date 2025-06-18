@@ -4,6 +4,8 @@ import {
   CreateTriggerRepositoryImpl,
   FindUserByIdRepositoryImpl,
   ValidateTokenRepositoryImpl,
+  FindTriggerByContentRepositoryImpl,
+  FindTriggerByNameRepositoryImpl,
 } from '@pure-workspace/data-access';
 import { CreateTrigger, ValidateToken } from '@pure-workspace/domain';
 import { CreateTriggerService } from './create-trigger.service';
@@ -19,6 +21,14 @@ import { JwtService } from '@nestjs/jwt';
     {
       provide: 'FindUserByIdRepository',
       useClass: FindUserByIdRepositoryImpl,
+    },
+    {
+      provide: 'FindTriggerByNameRepository',
+      useClass: FindTriggerByNameRepositoryImpl,
+    },
+    {
+      provide: 'FindTriggerByContentRepository',
+      useClass: FindTriggerByContentRepositoryImpl,
     },
     {
       provide: 'CreateTriggerRepository',

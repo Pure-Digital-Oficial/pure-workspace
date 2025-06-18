@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
-// import { PrismaService } from 'nestjs-prisma';
-import { PrismaGeneralService } from '../../../../../application';
+import { PrismaService } from 'nestjs-prisma';
 import {
   CreateTriggerDto,
   CreateTriggerRepository,
@@ -8,9 +7,7 @@ import {
 } from '@pure-workspace/domain';
 
 export class CreateTriggerRepositoryImpl implements CreateTriggerRepository {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async create({
     name,
     content,

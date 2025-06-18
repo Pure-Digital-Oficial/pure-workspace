@@ -27,7 +27,7 @@ export class CreateTrigger
     private findUserByIdRepository: FindUserByIdRepository,
     @Inject('FindTriggerByNameRepository')
     private findTriggerByNameRepository: FindTriggerByNameRepository,
-    @Inject('FindTriggerByNameRepository')
+    @Inject('FindTriggerByContentRepository')
     private findTriggerByContentRepository: FindTriggerByContentRepository,
     @Inject('CreateTriggerRepository')
     private createTriggerRepository: CreateTriggerRepository

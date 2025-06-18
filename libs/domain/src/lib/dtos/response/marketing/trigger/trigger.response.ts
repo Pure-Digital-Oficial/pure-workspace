@@ -4,5 +4,7 @@ export interface TriggerResponseDto {
   content: string;
   description: string;
   createBy: string;
+  createdAt: Date;
+  updatedAt: Date;
   type: string;
 }
