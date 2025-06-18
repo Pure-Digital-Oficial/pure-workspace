@@ -7,7 +7,7 @@ generator client {
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_GENERAL_URL")
-    schemas  = ["pure_general"]
+    schemas  = ["pure_general", "pure_marketing"]
 }
 
 model application {
@@ -53,7 +53,7 @@ model auth {
 model user {
     id         String    @id @default(uuid())
     name       String
-    nickname  String
+    nickname   String
     status     Status    @default(PENDING)
     type       UserType  @default(DEFAULT)
     picture    String?
@@ -66,6 +66,8 @@ model user {
     deleted      confirm_delete_user[]
     data         user_data[]
     contacts     contact_x_user[]
+    triggers     trigger[]
+    shots_models shot_model[]
 
     @@schema("pure_general")
 }
@@ -121,6 +123,72 @@ model contact {
     @@schema("pure_general")
 }
 
+model trigger {
+    id          String @id @default(uuid())
+    name        String
+    content     String
+    description String
+
+    user_id    String
+    type       TriggerType
+    status     Status      @default(ACTIVE)
+    created_at DateTime    @default(now())
+    updated_at DateTime    @default(now())
+
+    user               user               @relation(fields: [user_id], references: [id])
+    targets_references target_reference[]
+
+    @@schema("pure_marketing")
+}
+
+model target_reference {
+    id      String @id @default(uuid())
+    content String
+
+    trigger_id String
+    local_id   String
+    status     Status @default(ACTIVE)
+
+    trigger trigger @relation(fields: [trigger_id], references: [id])
+
+    @@schema("pure_marketing")
+}
+
+model shot {
+    id            String    @id @default(uuid())
+    model_id      String
+    title         String
+    scheduled     Boolean
+    schedule_date DateTime?
+    status        Status    @default(ACTIVE)
+    created_at    DateTime  @default(now())
+    updated_at    DateTime?
+
+    model shot_model @relation(fields: [model_id], references: [id])
+
+    @@schema("pure_marketing")
+}
+
+model shot_model {
+    id         String @id @default(uuid())
+    created_by String
+    sender     String
+    title      String
+    subject    String
+    body       String
+    image      String
+
+    user_id    String
+    status     Status    @default(ACTIVE)
+    created_at DateTime  @default(now())
+    updated_at DateTime?
+
+    user  user   @relation(fields: [user_id], references: [id])
+    shots shot[]
+
+    @@schema("pure_marketing")
+}
+
 enum Status {
     ACTIVE
     INACTIVE
@@ -144,4 +212,11 @@ enum UserType {
     SYSTEM
 
     @@schema("pure_general")
+}
+
+enum TriggerType {
+    EMAIL
+    PHONE
+
+    @@schema("pure_marketing")
 }
