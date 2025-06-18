@@ -1,4 +1,11 @@
-import { Body, Controller, Post, Query, UsePipes } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Query,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common';
 import { CreateTriggerService } from './create-trigger.service';
 import {
   ErrorMessageResult,
@@ -7,13 +14,14 @@ import {
   userIdQuerySchema,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes';
+import { JwtAuthGuard } from '@pure-workspace/data-access';
 
 @Controller('create-trigger')
 export class CreateTriggerController {
   constructor(private createTriggerService: CreateTriggerService) {}
 
   @Post()
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @UsePipes(
     new ZodValidationPipe({
       query: userIdQuerySchema,
@@ -28,7 +36,7 @@ export class CreateTriggerController {
       ...input,
       loggedUserId: query.userId ?? '',
     });
-    if (result.isRight()) return { trigger_id: result.value };
+    if (result.isRight()) return { triggerId: result.value };
     else
       return await ErrorMessageResult(result.value.name, result.value.message);
   }

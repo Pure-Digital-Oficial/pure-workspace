@@ -3,14 +3,17 @@ import {
   PrismaGeneralService,
   CreateTriggerRepositoryImpl,
   FindUserByIdRepositoryImpl,
+  ValidateTokenRepositoryImpl,
 } from '@pure-workspace/data-access';
-import { CreateTrigger } from '@pure-workspace/domain';
+import { CreateTrigger, ValidateToken } from '@pure-workspace/domain';
 import { CreateTriggerService } from './create-trigger.service';
 import { CreateTriggerController } from './create-trigger.controller';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   controllers: [CreateTriggerController],
   providers: [
+    ValidateToken,
     CreateTrigger,
     CreateTriggerService,
     {
@@ -20,6 +23,14 @@ import { CreateTriggerController } from './create-trigger.controller';
     {
       provide: 'CreateTriggerRepository',
       useClass: CreateTriggerRepositoryImpl,
+    },
+    {
+      provide: 'ValidateTokenRepository',
+      useClass: ValidateTokenRepositoryImpl,
+    },
+    {
+      provide: 'JwtService',
+      useClass: JwtService,
     },
     {
       provide: 'PrismaService',
