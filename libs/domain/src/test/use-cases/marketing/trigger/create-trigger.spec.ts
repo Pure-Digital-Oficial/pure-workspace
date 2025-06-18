@@ -31,7 +31,8 @@ const makeSut = (): SutTypes => {
     name: TriggerMock.name,
     content: TriggerMock.content,
     description: TriggerMock.description,
-    loggedId: TriggerMock.createBy,
+    loggedUserId: TriggerMock.createBy,
+    type: TriggerMock.type,
   };
 
   const sut = new CreateTrigger(
@@ -84,9 +85,19 @@ describe('CreateTrigger', () => {
     expect(result.isRight()).toBeFalsy();
     expect(result.value).toBeInstanceOf(InsufficientCharacters);
   });
-  it('should return EntityNotEmpty when pass empty loggedId in CreateTriggerDto object', async () => {
+  it('should return EntityNotEmpty when pass empty loggedUserId in CreateTriggerDto object', async () => {
     const { createTriggerDto, sut } = makeSut();
-    createTriggerDto.loggedId = '';
+    createTriggerDto.loggedUserId = '';
+    const result = await sut.execute(createTriggerDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityNotEmpty);
+  });
+
+  it('should return EntityNotEmpty when pass empty type in CreateTriggerDto object', async () => {
+    const { createTriggerDto, sut } = makeSut();
+    createTriggerDto.type = '';
     const result = await sut.execute(createTriggerDto);
 
     expect(result.isLeft()).toBeTruthy();

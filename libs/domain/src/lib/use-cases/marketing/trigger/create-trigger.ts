@@ -1,7 +1,11 @@
 import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../../bases';
 import { CreateTriggerDto } from '../../../dtos';
-import { EntityNotCreated, InsufficientCharacters } from '../../../errors';
+import {
+  EntityNotCreated,
+  EntityNotEmpty,
+  InsufficientCharacters,
+} from '../../../errors';
 import { UserVerificationId } from '../../../utils';
 import {
   CreateTriggerRepository,
@@ -9,7 +13,11 @@ import {
 } from '../../../repositories';
 
 export class CreateTrigger
-  implements UseCase<CreateTriggerDto, Either<InsufficientCharacters, string>>
+  implements
+    UseCase<
+      CreateTriggerDto,
+      Either<InsufficientCharacters | EntityNotEmpty | EntityNotCreated, string>
+    >
 {
   constructor(
     @Inject('FindUserByIdRepository')
@@ -19,8 +27,10 @@ export class CreateTrigger
   ) {}
   async execute(
     input: CreateTriggerDto
-  ): Promise<Either<InsufficientCharacters, string>> {
-    const { content, description, loggedId, name } = input;
+  ): Promise<
+    Either<InsufficientCharacters | EntityNotEmpty | EntityNotCreated, string>
+  > {
+    const { content, description, loggedUserId, name, type } = input;
     if (Object.keys(name).length < 1 || name.length < 3) {
       return left(new InsufficientCharacters('name'));
     }
@@ -33,8 +43,12 @@ export class CreateTrigger
       return left(new InsufficientCharacters('content'));
     }
 
+    if (Object.keys(type).length < 1) {
+      return left(new EntityNotEmpty('type'));
+    }
+
     const userVerification = await UserVerificationId(
-      loggedId,
+      loggedUserId,
       this.findUserByIdRepository
     );
 

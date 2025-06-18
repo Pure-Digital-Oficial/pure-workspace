@@ -130,9 +130,10 @@ model trigger {
     description String
 
     user_id    String
-    status     Status   @default(ACTIVE)
-    created_at DateTime @default(now())
-    updated_at DateTime @default(now())
+    type       TriggerType
+    status     Status      @default(ACTIVE)
+    created_at DateTime    @default(now())
+    updated_at DateTime    @default(now())
 
     user               user               @relation(fields: [user_id], references: [id])
     targets_references target_reference[]
@@ -211,4 +212,11 @@ enum UserType {
     SYSTEM
 
     @@schema("pure_general")
+}
+
+enum TriggerType {
+    EMAIL
+    PHONE
+
+    @@schema("pure_marketing")
 }

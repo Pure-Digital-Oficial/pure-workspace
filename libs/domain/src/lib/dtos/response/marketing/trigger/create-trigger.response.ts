@@ -4,4 +4,5 @@ export interface TriggerResponseDto {
   content: string;
   description: string;
   createBy: string;
+  type: string;
 }
