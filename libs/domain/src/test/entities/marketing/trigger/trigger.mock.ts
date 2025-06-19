@@ -10,4 +10,5 @@ export const TriggerMock: TriggerResponseDto = {
   createdAt: faker.date.anytime(),
   updatedAt: faker.date.anytime(),
   type: 'PHONE',
+  status: faker.string.alpha(3),
 };

@@ -8,13 +8,10 @@ import {
   TriggerType,
   TriggerPrismaResponseDto,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../application';
-// import { PrismaService } from 'nestjs-prisma';
+import { PrismaService } from 'nestjs-prisma';
 
 export class ListTriggersRepositoryImpl implements ListTriggersRepository {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
 
   async list(input: ListTriggersDto): Promise<ListTriggersResponseDto> {
     const skip = input?.skip || 0;
@@ -83,9 +80,10 @@ export class ListTriggersRepositoryImpl implements ListTriggersRepository {
           name: trigger.name ?? '',
           content: trigger.content ?? '',
           description: trigger.description ?? '',
+          status: trigger.status ?? '',
+          type: trigger.type ?? ('' as TriggerType),
           createBy: trigger.user.nickname ?? '',
           createdAt: trigger.created_at ?? new Date(),
-          type: trigger.type ?? ('' as TriggerType),
           updatedAt: trigger.updated_at ?? new Date(),
         };
       }
