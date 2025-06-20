@@ -35,6 +35,7 @@ export class FindTriggerByNameRepositoryImpl
       id: filteredName?.id ?? '',
       name: filteredName?.name ?? '',
       type: filteredName?.type ?? '',
+      status: filteredName?.status ?? '',
       content: filteredName?.content ?? '',
       createBy: filteredName?.user.nickname ?? '',
       description: filteredName?.description ?? '',
