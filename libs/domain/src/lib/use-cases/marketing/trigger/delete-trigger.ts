@@ -58,9 +58,7 @@ export class DeleteTrigger
       loggedUserId,
     });
 
-    if (
-      Object.keys(verifiedUserInTrigger.id ?? verifiedUserInTrigger).length < 1
-    ) {
+    if (Object.keys(verifiedUserInTrigger).length < 1) {
       return left(new EntityIsInvalid('Trigger'));
     }
 

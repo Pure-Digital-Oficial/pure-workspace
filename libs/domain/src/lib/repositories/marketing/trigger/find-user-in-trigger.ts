@@ -1,5 +1,5 @@
-import { FindUserInTriggerDto, TriggerResponseDto } from '../../../dtos';
+import { FindUserInTriggerDto } from '../../../dtos';
 
 export interface FindUserInTriggerRepository {
-  find(input: FindUserInTriggerDto): Promise<TriggerResponseDto>;
+  find(input: FindUserInTriggerDto): Promise<string>;
 }
