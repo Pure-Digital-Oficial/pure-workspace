@@ -45,7 +45,7 @@ export class DeleteTrigger
     }
 
     const userVerification = await UserVerificationId(
-      id,
+      loggedUserId,
       this.findUserByIdRepository
     );
 
