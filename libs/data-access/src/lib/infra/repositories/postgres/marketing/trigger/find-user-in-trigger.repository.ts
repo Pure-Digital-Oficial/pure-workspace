@@ -3,14 +3,12 @@ import {
   FindUserInTriggerDto,
   FindUserInTriggerRepository,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../application';
+import { PrismaService } from 'nestjs-prisma';
 
 export class FindUserInTriggerRepositoryImpl
   implements FindUserInTriggerRepository
 {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async find(input: FindUserInTriggerDto): Promise<string> {
     const findedTrigger = await this.prismaService['trigger'].findUnique({
       where: {
