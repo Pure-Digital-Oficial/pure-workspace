@@ -9,11 +9,8 @@ import {
 export class CreateTriggerRepositoryImpl implements CreateTriggerRepository {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async create({
-    name,
-    content,
-    description,
+    body: { name, content, description, type },
     loggedUserId,
-    type,
   }: CreateTriggerDto): Promise<string> {
     const triggerCreated = await this.prismaService['trigger'].create({
       data: {

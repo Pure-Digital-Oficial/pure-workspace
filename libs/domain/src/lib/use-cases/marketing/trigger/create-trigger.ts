@@ -37,7 +37,10 @@ export class CreateTrigger
   ): Promise<
     Either<InsufficientCharacters | EntityNotEmpty | EntityNotCreated, string>
   > {
-    const { content, description, loggedUserId, name, type } = input;
+    const {
+      loggedUserId,
+      body: { content, description, name, type },
+    } = input;
     if (Object.keys(name).length < 1 || name.length < 3) {
       return left(new InsufficientCharacters('name'));
     }

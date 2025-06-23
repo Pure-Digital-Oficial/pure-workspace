@@ -4,15 +4,21 @@ import {
   EntityIsInvalid,
   EntityNotExists,
   InsufficientCharacters,
+  EntityAlreadyExists,
+  EntityNotEmpty,
 } from '@/errors';
 import {
   EditTriggerRepository,
+  FindTriggerByContentRepository,
+  FindTriggerByNameRepository,
   FindUserByIdRepository,
   FindUserInTriggerRepository,
 } from '@/repositories';
 import { TriggerMock, UserMock } from '@/test/entities';
 import {
   EditTriggerRepositoryMock,
+  FindTriggerByContentRepositoryMock,
+  FindTriggerByNameRepositoryMock,
   FindUserByIdRepositoryMock,
   FindUserInTriggerRepositoryMock,
 } from '@/test/repositories';
@@ -24,24 +30,34 @@ interface SutTypes {
   editTriggerRepository: EditTriggerRepository;
   findUserByIdRepository: FindUserByIdRepository;
   findUserInTriggerRepository: FindUserInTriggerRepository;
+  findTriggerByNameRepository: FindTriggerByNameRepository;
+  findTriggerByContentRepository: FindTriggerByContentRepository;
 }
 
 const makeSut = (): SutTypes => {
   const editTriggerRepository = new EditTriggerRepositoryMock();
   const findUserByIdRepository = new FindUserByIdRepositoryMock();
   const findUserInTriggerRepository = new FindUserInTriggerRepositoryMock();
+  const findTriggerByNameRepository = new FindTriggerByNameRepositoryMock();
+  const findTriggerByContentRepository =
+    new FindTriggerByContentRepositoryMock();
 
   const editTriggerDto: EditTriggerDto = {
     id: TriggerMock.id,
-    content: TriggerMock.content,
-    description: TriggerMock.description,
     loggedUserId: UserMock.id,
-    name: TriggerMock.name,
+    body: {
+      content: TriggerMock.content,
+      description: TriggerMock.description,
+      name: TriggerMock.name,
+      type: TriggerMock.type,
+    },
   };
 
   const sut = new EditTrigger(
     findUserByIdRepository,
     findUserInTriggerRepository,
+    findTriggerByNameRepository,
+    findTriggerByContentRepository,
     editTriggerRepository
   );
 
@@ -49,6 +65,8 @@ const makeSut = (): SutTypes => {
     editTriggerRepository,
     findUserByIdRepository,
     findUserInTriggerRepository,
+    findTriggerByNameRepository,
+    findTriggerByContentRepository,
     editTriggerDto,
     sut,
   };
@@ -67,7 +85,7 @@ describe('EditTrigger', () => {
 
   it('should return InsufficientCharacters when pass incorrect name in editTriggerDto', async () => {
     const { sut, editTriggerDto } = makeSut();
-    editTriggerDto.name = '';
+    editTriggerDto.body.name = '';
 
     const result = await sut.execute(editTriggerDto);
 
@@ -78,7 +96,7 @@ describe('EditTrigger', () => {
 
   it('should return InsufficientCharacters when pass incorrect description in editTriggerDto', async () => {
     const { sut, editTriggerDto } = makeSut();
-    editTriggerDto.description = '';
+    editTriggerDto.body.description = '';
 
     const result = await sut.execute(editTriggerDto);
 
@@ -89,13 +107,23 @@ describe('EditTrigger', () => {
 
   it('should return InsufficientCharacters when pass incorrect content in editTriggerDto', async () => {
     const { sut, editTriggerDto } = makeSut();
-    editTriggerDto.content = '';
+    editTriggerDto.body.content = '';
 
     const result = await sut.execute(editTriggerDto);
 
     expect(result.isLeft()).toBeTruthy();
     expect(result.isRight()).toBeFalsy();
     expect(result.value).toBeInstanceOf(InsufficientCharacters);
+  });
+
+  it('should return EntityNotEmpty when pass empty type in editTriggerDto object', async () => {
+    const { editTriggerDto, sut } = makeSut();
+    editTriggerDto.body.type = '';
+    const result = await sut.execute(editTriggerDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
   it('should return EntityNotExists when a pass incorrect user id in editUserDto', async () => {
@@ -120,6 +148,30 @@ describe('EditTrigger', () => {
     expect(result.isLeft()).toBeTruthy();
     expect(result.isRight()).toBeFalsy();
     expect(result.value).toBeInstanceOf(EntityIsInvalid);
+  });
+
+  it('should return EntityAlreadyExists when trigger name exists in system', async () => {
+    const { editTriggerDto, sut } = makeSut();
+    jest
+      .spyOn(sut['findTriggerByNameRepository'], 'find')
+      .mockResolvedValueOnce(TriggerMock);
+    const result = await sut.execute(editTriggerDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityAlreadyExists);
+  });
+
+  it('should return EntityAlreadyExists when trigger content exists in system', async () => {
+    const { editTriggerDto, sut } = makeSut();
+    jest
+      .spyOn(sut['findTriggerByContentRepository'], 'find')
+      .mockResolvedValueOnce(TriggerMock);
+    const result = await sut.execute(editTriggerDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityAlreadyExists);
   });
 
   it('should return EntityNotEdited when not edited trigger in system', async () => {

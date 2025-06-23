@@ -1,7 +1,7 @@
+import { TriggerBodyDto } from './trigger.body.dto';
+
 export interface EditTriggerDto {
   id: string;
   loggedUserId: string;
-  name: string;
-  content: string;
-  description: string;
+  body: TriggerBodyDto;
 }

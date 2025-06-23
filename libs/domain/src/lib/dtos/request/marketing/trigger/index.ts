@@ -4,3 +4,4 @@ export * from './edit-trigger.dto';
 export * from './find-user-in-trigger.dto';
 export * from './list-triggers-filters.dto';
 export * from './list-triggers.dto';
+export * from './trigger.body.dto';

@@ -6,10 +6,13 @@ import {
   EntityNotEmpty,
   EntityIsInvalid,
   InsufficientCharacters,
+  EntityAlreadyExists,
 } from '../../../errors';
 import { UserVerificationId } from '../../../utils';
 import {
   EditTriggerRepository,
+  FindTriggerByContentRepository,
+  FindTriggerByNameRepository,
   FindUserByIdRepository,
   FindUserInTriggerRepository,
 } from '../../../repositories';
@@ -26,6 +29,10 @@ export class EditTrigger
     private findUserByIdRepository: FindUserByIdRepository,
     @Inject('FindUserInTriggerRepository')
     private findUserInTriggerRepository: FindUserInTriggerRepository,
+    @Inject('FindTriggerByNameRepository')
+    private findTriggerByNameRepository: FindTriggerByNameRepository,
+    @Inject('FindTriggerByContentRepository')
+    private findTriggerByContentRepository: FindTriggerByContentRepository,
     @Inject('EditTriggerRepository')
     private editTriggerRepository: EditTriggerRepository
   ) {}
@@ -34,7 +41,11 @@ export class EditTrigger
   ): Promise<
     Either<InsufficientCharacters | EntityNotEmpty | EntityNotEdited, string>
   > {
-    const { id, content, description, loggedUserId, name } = input;
+    const {
+      id,
+      loggedUserId,
+      body: { content, description, name, type },
+    } = input;
     if (Object.keys(name).length < 1 || name.length < 3) {
       return left(new InsufficientCharacters('name'));
     }
@@ -45,6 +56,10 @@ export class EditTrigger
 
     if (Object.keys(content).length < 1) {
       return left(new InsufficientCharacters('content'));
+    }
+
+    if (Object.keys(type).length < 1) {
+      return left(new EntityNotEmpty('type'));
     }
 
     const userVerification = await UserVerificationId(
@@ -63,6 +78,26 @@ export class EditTrigger
 
     if (Object.keys(verifiedUserInTrigger).length < 1) {
       return left(new EntityIsInvalid('Trigger'));
+    }
+
+    const findedTriggerByName = await this.findTriggerByNameRepository.find(
+      name
+    );
+
+    if (
+      Object.keys(findedTriggerByName?.id ?? findedTriggerByName).length > 0
+    ) {
+      return left(new EntityAlreadyExists('name'));
+    }
+
+    const findedTriggerByContent =
+      await this.findTriggerByContentRepository.find(content);
+
+    if (
+      Object.keys(findedTriggerByContent?.id ?? findedTriggerByContent).length >
+      0
+    ) {
+      return left(new EntityAlreadyExists('content'));
     }
 
     const editedTrigger = await this.editTriggerRepository.edit(input);
