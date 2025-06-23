@@ -1,5 +1,6 @@
 import {
   FindTriggerByContentRepository,
+  FindTriggerByEntityDto,
   TriggerResponseDto,
 } from '@pure-workspace/domain';
 import { PrismaService } from 'nestjs-prisma';
@@ -9,10 +10,15 @@ export class FindTriggerByContentRepositoryImpl
   implements FindTriggerByContentRepository
 {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
-  async find(content: string): Promise<TriggerResponseDto> {
+  async find(input: FindTriggerByEntityDto): Promise<TriggerResponseDto> {
+    const { entity, loggedUserId, id } = input;
+
     const filteredContent = await this.prismaService['trigger'].findFirst({
       where: {
-        content,
+        content: entity,
+        user_id: loggedUserId,
+        status: 'ACTIVE',
+        ...(id ? { id } : {}),
       },
       select: {
         id: true,

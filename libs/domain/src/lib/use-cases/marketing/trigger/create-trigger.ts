@@ -66,9 +66,10 @@ export class CreateTrigger
       return left(userVerification.value);
     }
 
-    const findedTriggerByName = await this.findTriggerByNameRepository.find(
-      name
-    );
+    const findedTriggerByName = await this.findTriggerByNameRepository.find({
+      entity: name,
+      loggedUserId,
+    });
 
     if (
       Object.keys(findedTriggerByName?.id ?? findedTriggerByName).length > 0
@@ -77,7 +78,10 @@ export class CreateTrigger
     }
 
     const findedTriggerByContent =
-      await this.findTriggerByContentRepository.find(content);
+      await this.findTriggerByContentRepository.find({
+        entity: content,
+        loggedUserId,
+      });
 
     if (
       Object.keys(findedTriggerByContent?.id ?? findedTriggerByContent).length >

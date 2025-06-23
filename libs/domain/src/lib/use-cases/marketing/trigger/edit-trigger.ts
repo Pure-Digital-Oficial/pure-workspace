@@ -80,9 +80,11 @@ export class EditTrigger
       return left(new EntityIsInvalid('Trigger'));
     }
 
-    const findedTriggerByName = await this.findTriggerByNameRepository.find(
-      name
-    );
+    const findedTriggerByName = await this.findTriggerByNameRepository.find({
+      entity: name,
+      loggedUserId,
+      id,
+    });
 
     if (
       Object.keys(findedTriggerByName?.id ?? findedTriggerByName).length > 0
@@ -91,7 +93,11 @@ export class EditTrigger
     }
 
     const findedTriggerByContent =
-      await this.findTriggerByContentRepository.find(content);
+      await this.findTriggerByContentRepository.find({
+        entity: content,
+        loggedUserId,
+        id,
+      });
 
     if (
       Object.keys(findedTriggerByContent?.id ?? findedTriggerByContent).length >

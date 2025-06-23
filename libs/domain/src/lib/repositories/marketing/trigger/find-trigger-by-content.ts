@@ -1,5 +1,5 @@
-import { TriggerResponseDto } from '../../../dtos';
+import { FindTriggerByEntityDto, TriggerResponseDto } from '../../../dtos';
 
 export interface FindTriggerByContentRepository {
-  find(content: string): Promise<TriggerResponseDto>;
+  find(input: FindTriggerByEntityDto): Promise<TriggerResponseDto>;
 }

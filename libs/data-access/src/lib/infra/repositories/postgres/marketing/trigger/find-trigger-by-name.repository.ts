@@ -1,4 +1,5 @@
 import {
+  FindTriggerByEntityDto,
   FindTriggerByNameRepository,
   TriggerResponseDto,
 } from '@pure-workspace/domain';
@@ -9,10 +10,15 @@ export class FindTriggerByNameRepositoryImpl
   implements FindTriggerByNameRepository
 {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
-  async find(name: string): Promise<TriggerResponseDto> {
+  async find(input: FindTriggerByEntityDto): Promise<TriggerResponseDto> {
+    const { entity, loggedUserId, id } = input;
+
     const filteredName = await this.prismaService['trigger'].findFirst({
       where: {
-        name,
+        name: entity,
+        user_id: loggedUserId,
+        status: 'ACTIVE',
+        ...(id ? { id } : {}),
       },
       select: {
         id: true,
