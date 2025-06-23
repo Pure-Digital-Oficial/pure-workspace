@@ -10,7 +10,7 @@ import { CreateTriggerService } from './create-trigger.service';
 import {
   ErrorMessageResult,
   CreateTriggerDto,
-  createTriggerSchema,
+  triggerBodySchema,
   userIdQuerySchema,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes';
@@ -25,7 +25,7 @@ export class CreateTriggerController {
   @UsePipes(
     new ZodValidationPipe({
       query: userIdQuerySchema,
-      body: createTriggerSchema,
+      body: triggerBodySchema,
     })
   )
   async create(

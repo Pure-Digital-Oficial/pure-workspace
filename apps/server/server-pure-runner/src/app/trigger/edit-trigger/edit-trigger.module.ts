@@ -3,6 +3,8 @@ import { EditTriggerService } from './edit-trigger.service';
 import { EditTriggerController } from './edit-trigger.controller';
 import {
   EditTriggerRepositoryImpl,
+  FindTriggerByContentRepositoryImpl,
+  FindTriggerByNameRepositoryImpl,
   FindUserByIdRepositoryImpl,
   FindUserInTriggerRepositoryImpl,
   PrismaGeneralService,
@@ -32,6 +34,14 @@ import { JwtService } from '@nestjs/jwt';
     {
       provide: 'FindUserInTriggerRepository',
       useClass: FindUserInTriggerRepositoryImpl,
+    },
+    {
+      provide: 'FindTriggerByNameRepository',
+      useClass: FindTriggerByNameRepositoryImpl,
+    },
+    {
+      provide: 'FindTriggerByContentRepository',
+      useClass: FindTriggerByContentRepositoryImpl,
     },
     {
       provide: 'ValidateTokenRepository',

@@ -10,7 +10,7 @@ import {
 import { EditTriggerService } from './edit-trigger.service';
 import {
   EditTriggerDto,
-  editTriggerSchema,
+  triggerBodySchema,
   ErrorMessageResult,
   idInParamSchema,
   userIdQuerySchema,
@@ -26,7 +26,7 @@ export class EditTriggerController {
     new ZodValidationPipe({
       param: idInParamSchema,
       query: userIdQuerySchema,
-      body: editTriggerSchema,
+      body: triggerBodySchema,
     })
   )
   //   @UseGuards(JwtAdminGuard)
