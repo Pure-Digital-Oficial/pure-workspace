@@ -26,7 +26,7 @@ export class ListTriggersController {
       body: listTriggersBodySchema,
     })
   )
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get()
   async list(
     @Query() query: { userId: string },
