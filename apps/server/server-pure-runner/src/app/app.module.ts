@@ -2,10 +2,14 @@ import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CreateTriggerModule, ListTriggersModule } from './trigger';
+import {
+  CreateTriggerModule,
+  DeleteTriggerModule,
+  ListTriggersModule,
+} from './trigger';
 
 @Module({
-  imports: [CreateTriggerModule, ListTriggersModule],
+  imports: [CreateTriggerModule, ListTriggersModule, DeleteTriggerModule],
   controllers: [AppController],
   providers: [AppService],
 })
