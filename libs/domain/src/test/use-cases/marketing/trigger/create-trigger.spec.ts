@@ -38,7 +38,7 @@ const makeSut = (): SutTypes => {
   const createTriggerRepository = new CreateTriggerRepositoryMock();
 
   const createTriggerDto: CreateTriggerDto = {
-    loggedUserId: TriggerMock.createBy,
+    loggedUserId: TriggerMock.createdBy,
     body: {
       name: TriggerMock.name,
       content: TriggerMock.content,

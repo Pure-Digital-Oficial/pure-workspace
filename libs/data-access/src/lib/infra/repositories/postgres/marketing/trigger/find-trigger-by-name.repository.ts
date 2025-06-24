@@ -45,7 +45,7 @@ export class FindTriggerByNameRepositoryImpl
         type: filteredName?.type ?? '',
         status: filteredName?.status ?? '',
         content: filteredName?.content ?? '',
-        createBy: filteredName?.user.nickname ?? '',
+        createdBy: filteredName?.user.nickname ?? '',
         description: filteredName?.description ?? '',
         createdAt: filteredName?.created_at ?? new Date(),
         updatedAt: filteredName?.updated_at ?? new Date(),

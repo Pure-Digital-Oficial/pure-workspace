@@ -3,7 +3,7 @@ export interface TargetResponseDto {
   content: string;
   triggerId: string;
   status: string;
-  createBy: string;
-  createAt: Date;
+  createdBy: string;
+  createdAt: Date;
   updatedAt: Date;
 }

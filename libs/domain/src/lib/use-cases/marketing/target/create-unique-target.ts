@@ -35,7 +35,7 @@ export class CreateUniqueTarget
     @Inject('FindTriggerByIdRepository')
     private findTriggerByIdRepository: FindTriggerByIdRepository,
     @Inject('FindTargetByContentRepository')
-    private findTargertByContentRepository: FindTargetByContentRepository,
+    private findTargetByContentRepository: FindTargetByContentRepository,
     @Inject('CreateUniqueTargetRepository')
     private createUniqueTargetRepository: CreateUniqueTargetRepository
   ) {}
@@ -77,11 +77,11 @@ export class CreateUniqueTarget
       triggerId
     );
 
-    if (Object.keys(findedTriggerById?.id).length < 1) {
+    if (Object.keys(findedTriggerById?.id ?? findedTriggerById).length < 1) {
       return left(new EntityNotExists('trigger ID'));
     }
 
-    const findedTarget = await this.findTargertByContentRepository.find({
+    const findedTarget = await this.findTargetByContentRepository.find({
       entity: content,
       loggedUserId,
     });
