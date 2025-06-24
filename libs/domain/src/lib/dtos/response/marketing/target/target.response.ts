@@ -1,11 +1,9 @@
-export interface TriggerResponseDto {
+export interface TargetResponseDto {
   id: string;
-  name: string;
   content: string;
-  description: string;
+  triggerId: string;
   status: string;
   createdBy: string;
   createdAt: Date;
   updatedAt: Date;
-  type: string;
 }

@@ -69,6 +69,7 @@ model user {
     triggers     trigger[]
     shots        shot[]
     shots_models shot_model[]
+    target_references target_reference[]
 
     @@schema("pure_general")
 }
@@ -147,11 +148,16 @@ model target_reference {
     id      String @id @default(uuid())
     content String
 
+    user_id String
     trigger_id String
-    local_id   String
+    local_id   String?
     status     Status @default(ACTIVE)
+    created_at DateTime  @default(now())
+    updated_at DateTime?
+    deleted_at DateTime?
 
     trigger trigger @relation(fields: [trigger_id], references: [id])
+    user  user       @relation(fields: [user_id], references: [id])
 
     @@schema("pure_marketing")
 }

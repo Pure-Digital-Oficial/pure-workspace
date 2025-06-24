@@ -8,6 +8,7 @@ import {
   ListTriggersModule,
   EditTriggerModule,
 } from './trigger';
+import { CreateUniqueTargetModule } from './target';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import {
     ListTriggersModule,
     DeleteTriggerModule,
     EditTriggerModule,
+    CreateUniqueTargetModule,
   ],
   controllers: [AppController],
   providers: [AppService],

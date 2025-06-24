@@ -82,7 +82,7 @@ export class ListTriggersRepositoryImpl implements ListTriggersRepository {
           description: trigger.description ?? '',
           status: trigger.status ?? '',
           type: trigger.type ?? ('' as TriggerType),
-          createBy: trigger.user.nickname ?? '',
+          createdBy: trigger.user.nickname ?? '',
           createdAt: trigger.created_at ?? new Date(),
           updatedAt: trigger.updated_at ?? new Date(),
         };
