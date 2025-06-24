@@ -18,7 +18,6 @@ export class FindTriggerByContentRepositoryImpl
         content: entity,
         user_id: loggedUserId,
         status: 'ACTIVE',
-        ...(id ? { id } : {}),
       },
       select: {
         id: true,
@@ -37,16 +36,21 @@ export class FindTriggerByContentRepositoryImpl
       },
     });
 
-    return {
-      id: filteredContent?.id ?? '',
-      name: filteredContent?.name ?? '',
-      type: filteredContent?.type ?? '',
-      status: filteredContent?.status ?? '',
-      content: filteredContent?.content ?? '',
-      createBy: filteredContent?.user.nickname ?? '',
-      description: filteredContent?.description ?? '',
-      createdAt: filteredContent?.created_at ?? new Date(),
-      updatedAt: filteredContent?.updated_at ?? new Date(),
-    };
+    let outputReturn: TriggerResponseDto = {} as TriggerResponseDto;
+
+    if (filteredContent?.id !== id) {
+      outputReturn = {
+        id: filteredContent?.id ?? '',
+        name: filteredContent?.name ?? '',
+        type: filteredContent?.type ?? '',
+        status: filteredContent?.status ?? '',
+        content: filteredContent?.content ?? '',
+        createBy: filteredContent?.user.nickname ?? '',
+        description: filteredContent?.description ?? '',
+        createdAt: filteredContent?.created_at ?? new Date(),
+        updatedAt: filteredContent?.updated_at ?? new Date(),
+      };
+    }
+    return outputReturn;
   }
 }

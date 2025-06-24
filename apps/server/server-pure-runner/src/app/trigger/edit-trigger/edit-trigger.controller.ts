@@ -4,7 +4,7 @@ import {
   Param,
   Put,
   Query,
-  //   UseGuards,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { EditTriggerService } from './edit-trigger.service';
@@ -16,6 +16,7 @@ import {
   userIdQuerySchema,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes';
+import { JwtAuthGuard } from '@pure-workspace/data-access';
 
 @Controller('edit-trigger')
 export class EditTriggerController {
@@ -29,7 +30,7 @@ export class EditTriggerController {
       body: triggerBodySchema,
     })
   )
-  //   @UseGuards(JwtAdminGuard)
+  @UseGuards(JwtAuthGuard)
   async edit(
     @Param() param: { id: string },
     @Query() query: { userId: string },
