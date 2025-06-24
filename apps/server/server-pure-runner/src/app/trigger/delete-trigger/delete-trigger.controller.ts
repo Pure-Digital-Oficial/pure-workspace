@@ -36,7 +36,7 @@ export class DeleteTriggerController {
       loggedUserId: query?.userId ?? '',
     });
 
-    if (result.isRight()) return { trigger_id: result.value };
+    if (result.isRight()) return { triggerId: result.value };
     else await ErrorMessageResult(result.value.name, result.value.message);
   }
 }

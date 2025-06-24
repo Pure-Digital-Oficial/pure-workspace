@@ -6,10 +6,16 @@ import {
   CreateTriggerModule,
   DeleteTriggerModule,
   ListTriggersModule,
+  EditTriggerModule,
 } from './trigger';
 
 @Module({
-  imports: [CreateTriggerModule, ListTriggersModule, DeleteTriggerModule],
+  imports: [
+    CreateTriggerModule,
+    ListTriggersModule,
+    DeleteTriggerModule,
+    EditTriggerModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

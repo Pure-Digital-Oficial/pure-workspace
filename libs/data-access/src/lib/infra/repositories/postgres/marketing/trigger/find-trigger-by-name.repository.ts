@@ -1,4 +1,5 @@
 import {
+  FindTriggerByEntityDto,
   FindTriggerByNameRepository,
   TriggerResponseDto,
 } from '@pure-workspace/domain';
@@ -9,10 +10,14 @@ export class FindTriggerByNameRepositoryImpl
   implements FindTriggerByNameRepository
 {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
-  async find(name: string): Promise<TriggerResponseDto> {
+  async find(input: FindTriggerByEntityDto): Promise<TriggerResponseDto> {
+    const { entity, loggedUserId, id } = input;
+
     const filteredName = await this.prismaService['trigger'].findFirst({
       where: {
-        name,
+        name: entity,
+        user_id: loggedUserId,
+        status: 'ACTIVE',
       },
       select: {
         id: true,
@@ -31,16 +36,22 @@ export class FindTriggerByNameRepositoryImpl
       },
     });
 
-    return {
-      id: filteredName?.id ?? '',
-      name: filteredName?.name ?? '',
-      type: filteredName?.type ?? '',
-      status: filteredName?.status ?? '',
-      content: filteredName?.content ?? '',
-      createBy: filteredName?.user.nickname ?? '',
-      description: filteredName?.description ?? '',
-      createdAt: filteredName?.created_at ?? new Date(),
-      updatedAt: filteredName?.updated_at ?? new Date(),
-    };
+    let outputReturn: TriggerResponseDto = {} as TriggerResponseDto;
+
+    if (filteredName?.id !== id) {
+      outputReturn = {
+        id: filteredName?.id ?? '',
+        name: filteredName?.name ?? '',
+        type: filteredName?.type ?? '',
+        status: filteredName?.status ?? '',
+        content: filteredName?.content ?? '',
+        createBy: filteredName?.user.nickname ?? '',
+        description: filteredName?.description ?? '',
+        createdAt: filteredName?.created_at ?? new Date(),
+        updatedAt: filteredName?.updated_at ?? new Date(),
+      };
+    }
+
+    return outputReturn;
   }
 }

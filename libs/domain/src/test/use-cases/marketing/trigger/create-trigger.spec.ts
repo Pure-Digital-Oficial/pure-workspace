@@ -38,11 +38,13 @@ const makeSut = (): SutTypes => {
   const createTriggerRepository = new CreateTriggerRepositoryMock();
 
   const createTriggerDto: CreateTriggerDto = {
-    name: TriggerMock.name,
-    content: TriggerMock.content,
-    description: TriggerMock.description,
     loggedUserId: TriggerMock.createBy,
-    type: TriggerMock.type,
+    body: {
+      name: TriggerMock.name,
+      content: TriggerMock.content,
+      description: TriggerMock.description,
+      type: TriggerMock.type,
+    },
   };
 
   const sut = new CreateTrigger(
@@ -74,7 +76,7 @@ describe('CreateTrigger', () => {
   });
   it('should return InsufficientCharacters when pass empty name in CreateTriggerDto object', async () => {
     const { createTriggerDto, sut } = makeSut();
-    createTriggerDto.name = '';
+    createTriggerDto.body.name = '';
     const result = await sut.execute(createTriggerDto);
 
     expect(result.isLeft()).toBeTruthy();
@@ -83,7 +85,7 @@ describe('CreateTrigger', () => {
   });
   it('should return InsufficientCharacters when pass empty content in CreateTriggerDto object', async () => {
     const { createTriggerDto, sut } = makeSut();
-    createTriggerDto.content = '';
+    createTriggerDto.body.content = '';
     const result = await sut.execute(createTriggerDto);
 
     expect(result.isLeft()).toBeTruthy();
@@ -92,7 +94,7 @@ describe('CreateTrigger', () => {
   });
   it('should return InsufficientCharacters when pass empty description in CreateTriggerDto object', async () => {
     const { createTriggerDto, sut } = makeSut();
-    createTriggerDto.description = '';
+    createTriggerDto.body.description = '';
     const result = await sut.execute(createTriggerDto);
 
     expect(result.isLeft()).toBeTruthy();
@@ -111,7 +113,7 @@ describe('CreateTrigger', () => {
 
   it('should return EntityNotEmpty when pass empty type in CreateTriggerDto object', async () => {
     const { createTriggerDto, sut } = makeSut();
-    createTriggerDto.type = '';
+    createTriggerDto.body.type = '';
     const result = await sut.execute(createTriggerDto);
 
     expect(result.isLeft()).toBeTruthy();

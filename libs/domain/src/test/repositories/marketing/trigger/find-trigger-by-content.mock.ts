@@ -1,15 +1,16 @@
 import {
   FindTriggerByContentRepository,
   TriggerResponseDto,
+  FindTriggerByEntityDto,
 } from '../../../../../src';
 
 export class FindTriggerByContentRepositoryMock
   implements FindTriggerByContentRepository
 {
-  inputMock = '';
+  inputMock = {} as FindTriggerByEntityDto;
   outputMock = {} as TriggerResponseDto;
-  async find(content: string): Promise<TriggerResponseDto> {
-    this.inputMock = content;
+  async find(input: FindTriggerByEntityDto): Promise<TriggerResponseDto> {
+    this.inputMock = input;
     return this.outputMock;
   }
 }

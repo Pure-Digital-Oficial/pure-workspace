@@ -1,5 +1,6 @@
 import {
   FindTriggerByContentRepository,
+  FindTriggerByEntityDto,
   TriggerResponseDto,
 } from '@pure-workspace/domain';
 import { PrismaService } from 'nestjs-prisma';
@@ -9,10 +10,14 @@ export class FindTriggerByContentRepositoryImpl
   implements FindTriggerByContentRepository
 {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
-  async find(content: string): Promise<TriggerResponseDto> {
+  async find(input: FindTriggerByEntityDto): Promise<TriggerResponseDto> {
+    const { entity, loggedUserId, id } = input;
+
     const filteredContent = await this.prismaService['trigger'].findFirst({
       where: {
-        content,
+        content: entity,
+        user_id: loggedUserId,
+        status: 'ACTIVE',
       },
       select: {
         id: true,
@@ -31,16 +36,21 @@ export class FindTriggerByContentRepositoryImpl
       },
     });
 
-    return {
-      id: filteredContent?.id ?? '',
-      name: filteredContent?.name ?? '',
-      type: filteredContent?.type ?? '',
-      status: filteredContent?.status ?? '',
-      content: filteredContent?.content ?? '',
-      createBy: filteredContent?.user.nickname ?? '',
-      description: filteredContent?.description ?? '',
-      createdAt: filteredContent?.created_at ?? new Date(),
-      updatedAt: filteredContent?.updated_at ?? new Date(),
-    };
+    let outputReturn: TriggerResponseDto = {} as TriggerResponseDto;
+
+    if (filteredContent?.id !== id) {
+      outputReturn = {
+        id: filteredContent?.id ?? '',
+        name: filteredContent?.name ?? '',
+        type: filteredContent?.type ?? '',
+        status: filteredContent?.status ?? '',
+        content: filteredContent?.content ?? '',
+        createBy: filteredContent?.user.nickname ?? '',
+        description: filteredContent?.description ?? '',
+        createdAt: filteredContent?.created_at ?? new Date(),
+        updatedAt: filteredContent?.updated_at ?? new Date(),
+      };
+    }
+    return outputReturn;
   }
 }

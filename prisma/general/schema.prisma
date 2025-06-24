@@ -67,6 +67,7 @@ model user {
     data         user_data[]
     contacts     contact_x_user[]
     triggers     trigger[]
+    shots        shot[]
     shots_models shot_model[]
 
     @@schema("pure_general")
@@ -133,7 +134,8 @@ model trigger {
     type       TriggerType
     status     Status      @default(ACTIVE)
     created_at DateTime    @default(now())
-    updated_at DateTime    @default(now())
+    updated_at DateTime?
+    deleted_at DateTime?
 
     user               user               @relation(fields: [user_id], references: [id])
     targets_references target_reference[]
@@ -156,14 +158,18 @@ model target_reference {
 
 model shot {
     id            String    @id @default(uuid())
-    model_id      String
     title         String
     scheduled     Boolean
     schedule_date DateTime?
-    status        Status    @default(ACTIVE)
-    created_at    DateTime  @default(now())
-    updated_at    DateTime?
 
+    model_id   String
+    user_id    String
+    status     Status    @default(ACTIVE)
+    created_at DateTime  @default(now())
+    updated_at DateTime?
+    deleted_at DateTime?
+
+    user  user       @relation(fields: [user_id], references: [id])
     model shot_model @relation(fields: [model_id], references: [id])
 
     @@schema("pure_marketing")
@@ -182,6 +188,7 @@ model shot_model {
     status     Status    @default(ACTIVE)
     created_at DateTime  @default(now())
     updated_at DateTime?
+    deleted_at DateTime?
 
     user  user   @relation(fields: [user_id], references: [id])
     shots shot[]

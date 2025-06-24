@@ -1,43 +1,48 @@
 import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../../bases';
-import { CreateTriggerDto } from '../../../dtos';
+import { EditTriggerDto } from '../../../dtos';
 import {
-  EntityAlreadyExists,
-  EntityNotCreated,
+  EntityNotEdited,
   EntityNotEmpty,
+  EntityIsInvalid,
   InsufficientCharacters,
+  EntityAlreadyExists,
 } from '../../../errors';
 import { UserVerificationId } from '../../../utils';
 import {
-  CreateTriggerRepository,
+  EditTriggerRepository,
   FindTriggerByContentRepository,
   FindTriggerByNameRepository,
   FindUserByIdRepository,
+  FindUserInTriggerRepository,
 } from '../../../repositories';
 
-export class CreateTrigger
+export class EditTrigger
   implements
     UseCase<
-      CreateTriggerDto,
-      Either<InsufficientCharacters | EntityNotEmpty | EntityNotCreated, string>
+      EditTriggerDto,
+      Either<InsufficientCharacters | EntityNotEmpty | EntityNotEdited, string>
     >
 {
   constructor(
     @Inject('FindUserByIdRepository')
     private findUserByIdRepository: FindUserByIdRepository,
+    @Inject('FindUserInTriggerRepository')
+    private findUserInTriggerRepository: FindUserInTriggerRepository,
     @Inject('FindTriggerByNameRepository')
     private findTriggerByNameRepository: FindTriggerByNameRepository,
     @Inject('FindTriggerByContentRepository')
     private findTriggerByContentRepository: FindTriggerByContentRepository,
-    @Inject('CreateTriggerRepository')
-    private createTriggerRepository: CreateTriggerRepository
+    @Inject('EditTriggerRepository')
+    private editTriggerRepository: EditTriggerRepository
   ) {}
   async execute(
-    input: CreateTriggerDto
+    input: EditTriggerDto
   ): Promise<
-    Either<InsufficientCharacters | EntityNotEmpty | EntityNotCreated, string>
+    Either<InsufficientCharacters | EntityNotEmpty | EntityNotEdited, string>
   > {
     const {
+      id,
       loggedUserId,
       body: { content, description, name, type },
     } = input;
@@ -66,9 +71,19 @@ export class CreateTrigger
       return left(userVerification.value);
     }
 
+    const verifiedUserInTrigger = await this.findUserInTriggerRepository.find({
+      id,
+      loggedUserId,
+    });
+
+    if (Object.keys(verifiedUserInTrigger).length < 1) {
+      return left(new EntityIsInvalid('Trigger'));
+    }
+
     const findedTriggerByName = await this.findTriggerByNameRepository.find({
       entity: name,
       loggedUserId,
+      id,
     });
 
     if (
@@ -81,6 +96,7 @@ export class CreateTrigger
       await this.findTriggerByContentRepository.find({
         entity: content,
         loggedUserId,
+        id,
       });
 
     if (
@@ -90,12 +106,12 @@ export class CreateTrigger
       return left(new EntityAlreadyExists('content'));
     }
 
-    const createdTrigger = await this.createTriggerRepository.create(input);
+    const editedTrigger = await this.editTriggerRepository.edit(input);
 
-    if (Object.keys(createdTrigger).length < 1) {
-      return left(new EntityNotCreated('trigger'));
+    if (Object.keys(editedTrigger).length < 1) {
+      return left(new EntityNotEdited('trigger'));
     }
 
-    return right(createdTrigger);
+    return right(editedTrigger);
   }
 }
