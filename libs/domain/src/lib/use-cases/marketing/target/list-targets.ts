@@ -21,7 +21,7 @@ export class ListTargets
     private findUserByIdRepository: FindUserByIdRepository,
     @Inject('FindTriggerByIdRepository')
     private findTriggerByIdRepository: FindTriggerByIdRepository,
-    @Inject('ListTriggersRepository')
+    @Inject('ListTargetsRepository')
     private listTargetsRepository: ListTargetsRepository
   ) {}
 
