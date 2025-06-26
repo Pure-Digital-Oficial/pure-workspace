@@ -1,14 +1,14 @@
 import { Inject } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import {
-  DeleteTriggerDto,
-  DeleteTriggerRepository,
+  DeleteTargetDto,
+  DeleteTargetRepository,
 } from '@pure-workspace/domain';
 
-export class DeleteTriggerRepositoryImpl implements DeleteTriggerRepository {
+export class DeleteTargetRepositoryImpl implements DeleteTargetRepository {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
-  async delete(input: DeleteTriggerDto): Promise<string> {
-    const updatedTrigger = await this.prismaService['trigger'].update({
+  async delete(input: DeleteTargetDto): Promise<string> {
+    const updatedTarget = await this.prismaService['target_reference'].update({
       where: {
         id: input.id,
       },
@@ -18,6 +18,6 @@ export class DeleteTriggerRepositoryImpl implements DeleteTriggerRepository {
       },
     });
 
-    return updatedTrigger.id;
+    return updatedTarget.id;
   }
 }
