@@ -1,5 +1,5 @@
-import { FindUserInTargetDto, TargetResponseDto } from '../../../dtos';
+import { FindUserInTargetDto } from '../../../dtos';
 
 export interface FindUserInTargetRepository {
-  find(input: FindUserInTargetDto): Promise<TargetResponseDto>;
+  find(input: FindUserInTargetDto): Promise<string>;
 }
