@@ -16,7 +16,10 @@
     "baseUrl": ".",
     "paths": {
       "@pure-workspace/data-access": ["libs/data-access/src/index.ts"],
-      "@pure-workspace/domain": ["libs/domain/src/index.ts"]
+      "@pure-workspace/domain": ["libs/domain/src/index.ts"],
+      "@pure-workspace/feature": ["libs/feature/src/index.ts"],
+      "@pure-workspace/feature/server": ["libs/feature/src/server.ts"],
+      "@pure-workspace/prisma/general": ["prisma/generated/general"]
     }
   },
   "exclude": ["node_modules", "tmp"]
