@@ -1,4 +1,4 @@
-import { DeleteTargetDto, TargetResponseDto, UserResponseDto } from '@/dtos';
+import { DeleteTargetDto, UserResponseDto } from '@/dtos';
 import {
   EntityNotEmpty,
   EntityNotDeleted,
@@ -98,7 +98,7 @@ describe('DeleteTarget', () => {
     const { deleteTargetDto, sut } = makeSut();
     jest
       .spyOn(sut['findUserInTargetRepository'], 'find')
-      .mockResolvedValueOnce({} as TargetResponseDto);
+      .mockResolvedValueOnce('');
     const result = await sut.execute(deleteTargetDto);
 
     expect(result.isLeft()).toBe(true);
