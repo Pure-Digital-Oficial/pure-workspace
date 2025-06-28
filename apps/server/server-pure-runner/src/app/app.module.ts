@@ -12,6 +12,7 @@ import {
   CreateUniqueTargetModule,
   ListTargetsModule,
   DeleteTargetModule,
+  EditTargetModule,
 } from './target';
 
 @Module({
@@ -23,6 +24,7 @@ import {
     CreateUniqueTargetModule,
     ListTargetsModule,
     DeleteTargetModule,
+    EditTargetModule,
   ],
   controllers: [AppController],
   providers: [AppService],
