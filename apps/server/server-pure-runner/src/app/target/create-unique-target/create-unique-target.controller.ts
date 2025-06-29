@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { CreateUniqueTargetService } from './create-unique-target.service';
 import {
+  CreateUniqueTargetDto,
   ErrorMessageResult,
   targetBodySchema,
   userIdQuerySchema,
@@ -29,13 +30,14 @@ export class CreateUniqueTargetController {
   )
   async create(
     @Query() query: { userId: string },
-    @Body() input: { body: { content: string; triggerId: string } }
+    @Body()
+    input: Omit<CreateUniqueTargetDto, 'loggedUserId' | 'internalStatus'>
   ) {
     const result = await this.createUniqueTargetService.create({
-      content: input?.body.content ?? '',
-      triggerId: input?.body.triggerId ?? '',
+      ...input,
       loggedUserId: query?.userId ?? '',
     });
+
     if (result.isRight()) return { targetId: result.value };
     else
       return await ErrorMessageResult(result.value.name, result.value.message);

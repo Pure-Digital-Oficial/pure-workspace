@@ -1,5 +1,3 @@
-export interface CreateUniqueTargetDto {
-  content: string;
-  triggerId: string;
-  loggedUserId: string;
-}
+import { TargetBodyDto } from './target-body.dto';
+
+export type CreateUniqueTargetDto = TargetBodyDto;

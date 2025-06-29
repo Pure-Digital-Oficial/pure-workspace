@@ -53,6 +53,7 @@ export class ListTargetsRepositoryImpl implements ListTargetsRepository {
           content: true,
           created_at: true,
           updated_at: true,
+          internal_status: true,
           user: {
             select: {
               nickname: true,
@@ -78,6 +79,7 @@ export class ListTargetsRepositoryImpl implements ListTargetsRepository {
           content: target.content ?? '',
           status: target.status ?? '',
           createdBy: target.user.nickname ?? '',
+          internalStatus: target?.internal_status ?? '',
           createdAt: target.created_at ?? new Date(),
           updatedAt: target.updated_at ?? new Date(),
         };

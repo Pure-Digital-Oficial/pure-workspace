@@ -7,6 +7,7 @@ export interface TargetPrismaResponseDto {
   trigger_id: string;
   created_at: Date;
   updated_at: Date | null;
+  internal_status: string;
   user: {
     nickname: string;
   };

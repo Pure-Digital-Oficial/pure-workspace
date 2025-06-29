@@ -152,6 +152,7 @@ model target_reference {
     trigger_id String
     local_id   String?
     status     Status @default(ACTIVE)
+    internal_status InternalStatus @default(ON_HOLD)
     created_at DateTime  @default(now())
     updated_at DateTime?
     deleted_at DateTime?
@@ -171,6 +172,7 @@ model shot {
     model_id   String
     user_id    String
     status     Status    @default(ACTIVE)
+    internal_status InternalStatus @default(ON_HOLD)
     created_at DateTime  @default(now())
     updated_at DateTime?
     deleted_at DateTime?
@@ -230,6 +232,16 @@ enum UserType {
 enum TriggerType {
     EMAIL
     PHONE
+
+    @@schema("pure_marketing")
+}
+
+enum InternalStatus {
+    ERROR
+    ON_HOLD
+    PROCESSING
+    SCHEDULED
+    COMPLETE
 
     @@schema("pure_marketing")
 }
