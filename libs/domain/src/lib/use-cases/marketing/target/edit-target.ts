@@ -101,6 +101,7 @@ export class EditTarget
     const findedTarget = await this.findTargetByContentRepository.find({
       entity: content,
       loggedUserId,
+      id,
     });
 
     if (Object.keys(findedTarget?.id ?? findedTarget).length > 0) {

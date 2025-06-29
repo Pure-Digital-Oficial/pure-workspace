@@ -13,6 +13,7 @@ import {
   ErrorMessageResult,
   idInParamSchema,
   userIdQuerySchema,
+  EditTargetDto,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes';
 import { JwtAuthGuard } from '@pure-workspace/data-access';
@@ -33,13 +34,12 @@ export class EditTargetController {
   async edit(
     @Param() param: { id: string },
     @Query() query: { userId: string },
-    @Body() input: { body: { content: string; triggerId: string } }
+    @Body() input: Omit<EditTargetDto, 'id' | 'loggedUserId'>
   ) {
     const result = await this.editTriggerService.edit({
-      content: input.body.content ?? '',
-      triggerId: input.body.triggerId ?? '',
-      loggedUserId: query.userId ?? '',
-      id: param.id ?? '',
+      ...input,
+      id: param?.id ?? '',
+      loggedUserId: query?.userId ?? '',
     });
 
     if (result.isRight()) return { targetId: result.value };

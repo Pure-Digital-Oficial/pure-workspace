@@ -10,4 +10,5 @@ export const TargetMock: TargetResponseDto = {
   createdAt: faker.date.anytime(),
   updatedAt: faker.date.anytime(),
   status: faker.string.alpha(3),
+  internalStatus: faker.string.alpha(3),
 };

@@ -11,7 +11,7 @@ export class FindTargetByContentRepositoryImpl
 {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async find(input: FindTargetByEntityDto): Promise<TargetResponseDto> {
-    const { entity, loggedUserId } = input;
+    const { entity, loggedUserId, id } = input;
 
     const filteredTarget = await this.prismaService[
       'target_reference'
@@ -29,6 +29,7 @@ export class FindTargetByContentRepositoryImpl
         created_at: true,
         deleted_at: true,
         updated_at: true,
+        internal_status: true,
         user: {
           select: {
             nickname: true,
@@ -37,14 +38,21 @@ export class FindTargetByContentRepositoryImpl
       },
     });
 
-    return {
-      id: filteredTarget?.id ?? '',
-      content: filteredTarget?.content ?? '',
-      createdAt: filteredTarget?.created_at ?? new Date(),
-      updatedAt: filteredTarget?.updated_at ?? new Date(),
-      createdBy: filteredTarget?.user.nickname ?? '',
-      status: filteredTarget?.status ?? '',
-      triggerId: filteredTarget?.trigger_id ?? '',
-    };
+    let outputReturn: TargetResponseDto = {} as TargetResponseDto;
+
+    if (filteredTarget?.id !== id) {
+      outputReturn = {
+        id: filteredTarget?.id ?? '',
+        content: filteredTarget?.content ?? '',
+        createdAt: filteredTarget?.created_at ?? new Date(),
+        updatedAt: filteredTarget?.updated_at ?? new Date(),
+        createdBy: filteredTarget?.user.nickname ?? '',
+        status: filteredTarget?.status ?? '',
+        triggerId: filteredTarget?.trigger_id ?? '',
+        internalStatus: filteredTarget?.internal_status ?? '',
+      };
+    }
+
+    return outputReturn;
   }
 }
