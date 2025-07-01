@@ -36,7 +36,7 @@ export class ChangeTargetsTrigger
     private findTriggerByIdRepository: FindTriggerByIdRepository,
     @Inject('FindUserInTargetRepository')
     private findUserInTargetRepository: FindUserInTargetRepository,
-    @Inject('ChangetTargetTriggerRepository')
+    @Inject('ChangeTargetTriggerRepository')
     private changeTargetTriggerRepository: ChangeTargetTriggerRepository
   ) {}
   async execute(

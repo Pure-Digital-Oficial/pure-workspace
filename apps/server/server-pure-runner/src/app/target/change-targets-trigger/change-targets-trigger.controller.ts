@@ -3,18 +3,18 @@ import {
   Controller,
   Put,
   Query,
-  //   UseGuards,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { ChangeTargetsTriggerService } from './change-targets-trigger.service';
 import {
   ChangeTargetsTriggerDto,
-  triggerBodySchema,
   ErrorMessageResult,
   userIdQuerySchema,
+  changeTargetsTriggerBodySchema,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes';
-// import { JwtAuthGuard } from '@pure-workspace/data-access';
+import { JwtAuthGuard } from '@pure-workspace/data-access';
 
 @Controller('change-targets-trigger')
 export class ChangeTargetsTriggerController {
@@ -26,10 +26,10 @@ export class ChangeTargetsTriggerController {
   @UsePipes(
     new ZodValidationPipe({
       query: userIdQuerySchema,
-      body: triggerBodySchema,
+      body: changeTargetsTriggerBodySchema,
     })
   )
-  //   @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async edit(
     @Query() query: { userId: string },
     @Body() input: Omit<ChangeTargetsTriggerDto, 'loggedUserId'>
