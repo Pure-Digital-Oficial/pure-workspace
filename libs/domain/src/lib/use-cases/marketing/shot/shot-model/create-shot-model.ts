@@ -1,8 +1,14 @@
 import { CreateShotModelDto } from '../../../../dtos';
 import { Either, left, right, UseCase } from '../../../../bases';
-import { EntityNotCreated, EntityNotEmpty } from '../../../../errors';
+import {
+  EntityAlreadyExists,
+  EntityNotCreated,
+  EntityNotEmpty,
+} from '../../../../errors';
 import {
   CreateShotModelRepository,
+  FindShotModelBySubjectRepository,
+  FindShotModelByTitleRepository,
   FindUserByIdRepository,
 } from '../../../../repositories';
 import { Inject } from '@nestjs/common';
@@ -14,6 +20,10 @@ export class CreateShotModel
   constructor(
     @Inject('FindUserByIdRepository')
     private findUserByIdRepository: FindUserByIdRepository,
+    @Inject('FindShotModelByTitleRepository')
+    private findShotModelByTitleRepository: FindShotModelByTitleRepository,
+    @Inject('FindShotModelBySubjectRepository')
+    private findShotModelBySubjectRepository: FindShotModelBySubjectRepository,
     @Inject('CreateShotModelRepository')
     private createShotModelRepository: CreateShotModelRepository
   ) {}
@@ -45,6 +55,27 @@ export class CreateShotModel
 
     if (userVerification.isLeft()) {
       return left(userVerification.value);
+    }
+
+    const findedShotModelTitle = await this.findShotModelByTitleRepository.find(
+      {
+        entity: title,
+        loggedUserId,
+      }
+    );
+
+    if (Object.keys(findedShotModelTitle).length > 0) {
+      return left(new EntityAlreadyExists('shot model title'));
+    }
+
+    const findedShotModelSubject =
+      await this.findShotModelBySubjectRepository.find({
+        entity: subject,
+        loggedUserId,
+      });
+
+    if (Object.keys(findedShotModelSubject).length > 0) {
+      return left(new EntityAlreadyExists('shot model subject'));
     }
 
     const createdShotModel = await this.createShotModelRepository.create(input);
