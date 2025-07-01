@@ -16,7 +16,7 @@ import {
   ChangeTargetTriggerRepository,
 } from '../../../repositories';
 
-export class ChangeTargetTrigger
+export class ChangeTargetsTrigger
   implements
     UseCase<
       ChangeTargetsTriggerDto,

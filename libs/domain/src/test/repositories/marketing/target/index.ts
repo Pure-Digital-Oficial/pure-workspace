@@ -1,3 +1,4 @@
+export * from './change-traget-trigger.mock';
 export * from './create-unique-target.mock';
 export * from './delete-target.mock';
 export * from './edit-target.mock';
