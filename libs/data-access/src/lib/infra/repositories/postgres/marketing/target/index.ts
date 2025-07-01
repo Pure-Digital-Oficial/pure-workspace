@@ -1,3 +1,4 @@
+export * from './change-targets-trigger.repository';
 export * from './create-unique-target.repository';
 export * from './delete-target.repository';
 export * from './edit-target.repository';

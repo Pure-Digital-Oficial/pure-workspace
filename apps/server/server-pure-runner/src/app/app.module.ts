@@ -13,6 +13,7 @@ import {
   ListTargetsModule,
   DeleteTargetModule,
   EditTargetModule,
+  ChangeTargetsTriggerModule,
 } from './target';
 
 @Module({
@@ -25,6 +26,7 @@ import {
     ListTargetsModule,
     DeleteTargetModule,
     EditTargetModule,
+    ChangeTargetsTriggerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
