@@ -15,7 +15,11 @@ import { Inject } from '@nestjs/common';
 import { UserVerificationId } from '../../../../utils';
 
 export class CreateShotModel
-  implements UseCase<CreateShotModelDto, Either<EntityNotEmpty, string>>
+  implements
+    UseCase<
+      CreateShotModelDto,
+      Either<EntityNotEmpty | EntityAlreadyExists | EntityNotCreated, string>
+    >
 {
   constructor(
     @Inject('FindUserByIdRepository')
@@ -29,7 +33,9 @@ export class CreateShotModel
   ) {}
   async execute(
     input: CreateShotModelDto
-  ): Promise<Either<EntityNotEmpty, string>> {
+  ): Promise<
+    Either<EntityNotEmpty | EntityAlreadyExists | EntityNotCreated, string>
+  > {
     const { body, loggedUserId, subject, title } = input;
 
     if (Object.keys(body).length < 1) {
@@ -64,7 +70,9 @@ export class CreateShotModel
       }
     );
 
-    if (Object.keys(findedShotModelTitle).length > 0) {
+    if (
+      Object.keys(findedShotModelTitle.id ?? findedShotModelTitle).length > 0
+    ) {
       return left(new EntityAlreadyExists('shot model title'));
     }
 
@@ -74,13 +82,16 @@ export class CreateShotModel
         loggedUserId,
       });
 
-    if (Object.keys(findedShotModelSubject).length > 0) {
+    if (
+      Object.keys(findedShotModelSubject?.id ?? findedShotModelSubject).length >
+      0
+    ) {
       return left(new EntityAlreadyExists('shot model subject'));
     }
 
     const createdShotModel = await this.createShotModelRepository.create(input);
 
-    if (Object.keys(createdShotModel)) {
+    if (Object.keys(createdShotModel).length < 1) {
       return left(new EntityNotCreated('shot model'));
     }
 

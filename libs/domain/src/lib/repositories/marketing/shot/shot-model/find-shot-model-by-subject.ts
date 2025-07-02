@@ -1,5 +1,8 @@
-import { FindShotModelByEntityDto } from '../../../../dtos';
+import {
+  FindShotModelByEntityDto,
+  ShotModelResponseDto,
+} from '../../../../dtos';
 
 export interface FindShotModelBySubjectRepository {
-  find(input: FindShotModelByEntityDto): Promise<string>;
+  find(input: FindShotModelByEntityDto): Promise<ShotModelResponseDto>;
 }
