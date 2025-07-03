@@ -3,18 +3,17 @@ import {
   Controller,
   Post,
   Query,
-  //   UseGuards,
-  //   UsePipes,
+  UseGuards,
+  UsePipes,
 } from '@nestjs/common';
 import {
   CreateShotModelDto,
   ErrorMessageResult,
-  //   CreateUniqueTargetDto,
-  //   targetBodySchema,
-  //   userIdQuerySchema,
+  shotModelBodySchema,
+  userIdQuerySchema,
 } from '@pure-workspace/domain';
-// import { ZodValidationPipe } from '../../pipes';
-// import { JwtAuthGuard } from '@pure-workspace/data-access';
+import { ZodValidationPipe } from '../../../pipes';
+import { JwtAuthGuard } from '@pure-workspace/data-access';
 import { CreateShotModelService } from './create-shot-model.service';
 
 @Controller('create-shot-model')
@@ -22,13 +21,13 @@ export class CreateShotModelController {
   constructor(private createShotModelService: CreateShotModelService) {}
 
   @Post()
-  //   @UseGuards(JwtAuthGuard)
-  //   @UsePipes(
-  //     new ZodValidationPipe({
-  //       query: userIdQuerySchema,
-  //       body: targetBodySchema,
-  //     })
-  //   )
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(
+    new ZodValidationPipe({
+      query: userIdQuerySchema,
+      body: shotModelBodySchema,
+    })
+  )
   async create(
     @Query() query: { userId: string },
     @Body()
