@@ -15,6 +15,7 @@ import {
   EditTargetModule,
   ChangeTargetsTriggerModule,
 } from './target';
+import { CreateShotModelModule } from './shot';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import {
     DeleteTargetModule,
     EditTargetModule,
     ChangeTargetsTriggerModule,
+    CreateShotModelModule,
   ],
   controllers: [AppController],
   providers: [AppService],
