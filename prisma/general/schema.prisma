@@ -185,8 +185,6 @@ model shot {
 
 model shot_model {
     id         String @id @default(uuid())
-    created_by String
-    sender     String
     title      String
     subject    String
     body       String
