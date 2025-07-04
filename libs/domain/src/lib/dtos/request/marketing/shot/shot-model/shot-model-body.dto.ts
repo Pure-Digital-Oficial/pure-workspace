@@ -3,4 +3,5 @@ export interface ShotModelBodyDto {
   body: string;
   attachment?: string;
   subject: string;
+  loggedUserId: string;
 }
