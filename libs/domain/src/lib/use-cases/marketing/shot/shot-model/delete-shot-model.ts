@@ -10,7 +10,7 @@ import {
 import {
   FindUserByIdRepository,
   FindUserInShotModelRepository,
-  DeleteTargetRepository,
+  DeleteShotModelRepository,
 } from '../../../../repositories';
 import { UserVerificationId } from '../../../../utils';
 
@@ -26,8 +26,8 @@ export class DeleteShotModel
     private findUserByIdRepository: FindUserByIdRepository,
     @Inject('FindUserInShotModelRepository')
     private findUserInShotModelRepository: FindUserInShotModelRepository,
-    @Inject('DeleteTargetRepository')
-    private deleteTargetRepository: DeleteTargetRepository
+    @Inject('DeleteShotModelRepository')
+    private deleteShotModelRepository: DeleteShotModelRepository
   ) {}
   async execute(
     input: DeleteShotModelDto
@@ -63,7 +63,7 @@ export class DeleteShotModel
       return left(new EntityIsInvalid('Shot Model'));
     }
 
-    const deletedShotModel = await this.deleteTargetRepository.delete(input);
+    const deletedShotModel = await this.deleteShotModelRepository.delete(input);
 
     if (Object.keys(deletedShotModel).length < 1) {
       return left(new EntityNotDeleted('Shot Model'));
