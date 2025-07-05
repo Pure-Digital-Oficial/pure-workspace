@@ -14,6 +14,7 @@ export class FindUserInShotModelRepositoryImpl
       where: {
         id: input.shotModelId,
         user_id: input.loggedUserId,
+        status: 'ACTIVE',
       },
     });
 
