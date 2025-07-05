@@ -4,7 +4,7 @@ import {
   Param,
   Put,
   Query,
-  //UseGuards,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { EditShotModelService } from './edit-shot-model.service';
@@ -16,7 +16,7 @@ import {
   EditShotModelDto,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../../pipes';
-//import { JwtAuthGuard } from '@pure-workspace/data-access';
+import { JwtAuthGuard } from '@pure-workspace/data-access';
 
 @Controller('edit-shot-model')
 export class EditShotModelController {
@@ -30,7 +30,7 @@ export class EditShotModelController {
       body: shotModelBodySchema,
     })
   )
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async edit(
     @Param() param: { id: string },
     @Query() query: { userId: string },
