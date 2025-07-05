@@ -19,6 +19,7 @@ import {
   CreateShotModelModule,
   ListShotModelsModule,
   DeleteShotModelModule,
+  EditShotModelModule,
 } from './shot';
 
 @Module({
@@ -35,6 +36,7 @@ import {
     CreateShotModelModule,
     ListShotModelsModule,
     DeleteShotModelModule,
+    EditShotModelModule,
   ],
   controllers: [AppController],
   providers: [AppService],
