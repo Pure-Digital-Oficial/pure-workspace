@@ -4,7 +4,7 @@ export interface ShotResponseDto {
   createdBy: string;
   title: string;
   scheduled: boolean;
-  scheduleDate?: string;
+  scheduleDate?: Date;
   status: string;
   createdAt: Date;
   updatedAt: Date;
