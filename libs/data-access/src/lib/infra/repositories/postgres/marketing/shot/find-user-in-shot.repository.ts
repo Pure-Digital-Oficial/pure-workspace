@@ -12,6 +12,7 @@ export class FindUserInShotRepositoryImpl implements FindUserInShotRepository {
       where: {
         id: input.shotId,
         user_id: input.loggedUserId,
+        status: 'ACTIVE',
       },
     });
 

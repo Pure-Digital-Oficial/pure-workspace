@@ -16,6 +16,7 @@ export class FindUserInTargetRepositoryImpl
       where: {
         id: input.targetId,
         user_id: input.loggedUserId,
+        status: 'ACTIVE',
       },
     });
 

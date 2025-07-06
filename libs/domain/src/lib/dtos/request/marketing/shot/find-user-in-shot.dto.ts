@@ -1,4 +1,4 @@
 export interface FindUserInShotDto {
-    shotId: string;
-    loggedUserId: string;
+  shotId: string;
+  loggedUserId: string;
 }
