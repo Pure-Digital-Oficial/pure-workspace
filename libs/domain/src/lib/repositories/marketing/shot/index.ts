@@ -1,4 +1,6 @@
 export * from './shot-model';
 export * from './create-shot';
+export * from './delete-shot';
 export * from './find-shot-by-title';
+export * from './find-user-in-shot';
 export * from './list-shots';
