@@ -3,15 +3,13 @@ import {
   FindShotByTitleRepository,
   ShotResponseDto,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../application';
+import { PrismaService } from 'nestjs-prisma';
 import { Inject } from '@nestjs/common';
 
 export class FindShotByTitleRepositoryImpl
   implements FindShotByTitleRepository
 {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async find(input: FindShotByEntityDto): Promise<ShotResponseDto> {
     const { entity, loggedUserId, id } = input;
 

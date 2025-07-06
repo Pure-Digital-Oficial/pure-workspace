@@ -1,11 +1,9 @@
-import { CreateShotDto, CreateShotRepository } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../application';
+import { PrismaService } from 'nestjs-prisma';
 import { Inject } from '@nestjs/common';
+import { CreateShotDto, CreateShotRepository } from '@pure-workspace/domain';
 
 export class CreateShotRepositoryImpl implements CreateShotRepository {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async create(input: CreateShotDto): Promise<string> {
     const { loggedUserId, modelId, title, scheduleDate } = input;
 

@@ -3,14 +3,12 @@ import {
   FindShotModelByIdRepository,
   ShotModelResponseDto,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../../application';
+import { PrismaService } from 'nestjs-prisma';
 
 export class FindShotModelByIdRepositoryImpl
   implements FindShotModelByIdRepository
 {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async find(id: string): Promise<ShotModelResponseDto> {
     const filteredShotModel = await this.prismaService['shot_model'].findFirst({
       where: {
