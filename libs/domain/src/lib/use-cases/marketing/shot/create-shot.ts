@@ -83,7 +83,7 @@ export class CreateShot
     );
 
     if (Object.keys(findedShotModel.id ?? findedShotModel).length < 1) {
-      return left(new EntityNotExists('shot'));
+      return left(new EntityNotExists('shot model'));
     }
 
     const createdShot = await this.createShotRepository.create(input);

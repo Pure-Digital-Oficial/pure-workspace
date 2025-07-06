@@ -15,6 +15,7 @@ export class FindShotModelByIdRepositoryImpl
     const filteredShotModel = await this.prismaService['shot_model'].findFirst({
       where: {
         id,
+        status: 'ACTIVE',
       },
       select: {
         id: true,
