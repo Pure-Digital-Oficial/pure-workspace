@@ -53,11 +53,10 @@ export class DeleteShot
       return left(userVerification.value);
     }
 
-    const verifiedUserInShot =
-      await this.findUserInShotRepository.find({
-        shotId: id,
-        loggedUserId,
-      });
+    const verifiedUserInShot = await this.findUserInShotRepository.find({
+      shotId: id,
+      loggedUserId,
+    });
 
     if (Object.keys(verifiedUserInShot).length < 1) {
       return left(new EntityIsInvalid('Shot or User'));
