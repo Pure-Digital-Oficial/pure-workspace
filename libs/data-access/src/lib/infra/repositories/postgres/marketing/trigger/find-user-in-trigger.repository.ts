@@ -14,6 +14,7 @@ export class FindUserInTriggerRepositoryImpl
       where: {
         id: input.id,
         user_id: input.loggedUserId,
+        status: 'ACTIVE',
       },
     });
 
