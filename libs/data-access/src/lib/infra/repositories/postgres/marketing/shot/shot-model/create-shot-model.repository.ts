@@ -2,15 +2,13 @@ import {
   CreateShotModelDto,
   CreateShotModelRepository,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../../application';
+import { PrismaService } from 'nestjs-prisma';
 import { Inject } from '@nestjs/common';
 
 export class CreateShotModelRepositoryImpl
   implements CreateShotModelRepository
 {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async create(input: CreateShotModelDto): Promise<string> {
     const { body, loggedUserId, subject, title, attachment } = input;
 
