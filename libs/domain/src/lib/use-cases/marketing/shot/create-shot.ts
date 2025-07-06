@@ -52,6 +52,10 @@ export class CreateShot
       return left(new EntityNotEmpty('user ID'));
     }
 
+    if (Object.keys(modelId).length < 1) {
+      return left(new EntityNotEmpty('model ID'));
+    }
+
     if (Object.keys(title).length < 1) {
       return left(new EntityNotEmpty('title'));
     }
@@ -70,7 +74,7 @@ export class CreateShot
       loggedUserId,
     });
 
-    if (Object.keys(findedShotTitle).length > 0) {
+    if (Object.keys(findedShotTitle.id ?? findedShotTitle).length > 0) {
       return left(new EntityAlreadyExists('shot title'));
     }
 
@@ -78,7 +82,7 @@ export class CreateShot
       modelId
     );
 
-    if (Object.keys(findedShotModel).length < 1) {
+    if (Object.keys(findedShotModel.id ?? findedShotModel).length < 1) {
       return left(new EntityNotExists('shot'));
     }
 
