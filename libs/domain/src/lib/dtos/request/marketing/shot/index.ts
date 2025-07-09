@@ -1,3 +1,4 @@
+export * from './history';
 export * from './shot-model';
 export * from './create-shot.dto';
 export * from './delete-shot.dto';

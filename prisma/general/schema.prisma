@@ -61,14 +61,14 @@ model user {
     updated_at DateTime  @default(now())
     deleted_at DateTime?
 
-    auth         auth[]
-    applications application_x_user[]
-    deleted      confirm_delete_user[]
-    data         user_data[]
-    contacts     contact_x_user[]
-    triggers     trigger[]
-    shots        shot[]
-    shots_models shot_model[]
+    auth              auth[]
+    applications      application_x_user[]
+    deleted           confirm_delete_user[]
+    data              user_data[]
+    contacts          contact_x_user[]
+    triggers          trigger[]
+    shots             shot[]
+    shots_models      shot_model[]
     target_references target_reference[]
 
     @@schema("pure_general")
@@ -148,17 +148,18 @@ model target_reference {
     id      String @id @default(uuid())
     content String
 
-    user_id String
-    trigger_id String
-    local_id   String?
-    status     Status @default(ACTIVE)
+    user_id         String
+    trigger_id      String
+    local_id        String?
+    status          Status         @default(ACTIVE)
     internal_status InternalStatus @default(ON_HOLD)
-    created_at DateTime  @default(now())
-    updated_at DateTime?
-    deleted_at DateTime?
+    created_at      DateTime       @default(now())
+    updated_at      DateTime?
+    deleted_at      DateTime?
 
     trigger trigger @relation(fields: [trigger_id], references: [id])
-    user  user       @relation(fields: [user_id], references: [id])
+    user    user    @relation(fields: [user_id], references: [id])
+    history history_shot[]
 
     @@schema("pure_marketing")
 }
@@ -169,26 +170,27 @@ model shot {
     scheduled     Boolean
     schedule_date DateTime?
 
-    model_id   String
-    user_id    String
-    status     Status    @default(ACTIVE)
+    model_id        String
+    user_id         String
+    status          Status         @default(ACTIVE)
     internal_status InternalStatus @default(ON_HOLD)
-    created_at DateTime  @default(now())
-    updated_at DateTime?
-    deleted_at DateTime?
+    created_at      DateTime       @default(now())
+    updated_at      DateTime?
+    deleted_at      DateTime?
 
     user  user       @relation(fields: [user_id], references: [id])
     model shot_model @relation(fields: [model_id], references: [id])
+    history history_shot[]
 
     @@schema("pure_marketing")
 }
 
 model shot_model {
-    id         String @id @default(uuid())
-    title      String
-    subject    String
-    body       String
-    image      String
+    id      String @id @default(uuid())
+    title   String
+    subject String
+    body    String
+    image   String
 
     user_id    String
     status     Status    @default(ACTIVE)
@@ -198,6 +200,27 @@ model shot_model {
 
     user  user   @relation(fields: [user_id], references: [id])
     shots shot[]
+
+    @@schema("pure_marketing")
+}
+
+model history_shot {
+    id              String  @id @default(uuid())
+    error           String?
+    target_id       String
+    shot_id         String
+    oppened         Boolean @default(false)
+    clicked_in_link Boolean @default(false)
+    
+    created_at DateTime
+    updated_at DateTime?
+    clicked_at DateTime?
+    oppened_at DateTime?
+    shoted_at  DateTime?
+    status     InternalStatus @default(PROCESSING)
+
+    target target_reference @relation(fields: [target_id], references: [id])
+    shot shot @relation(fields: [shot_id], references: [id])
 
     @@schema("pure_marketing")
 }

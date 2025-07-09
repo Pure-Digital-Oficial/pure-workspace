@@ -1,3 +1,4 @@
+export * from './history';
 export * from './shot-model';
 export * from './create-shot.mock';
 export * from './delete-shot.mock';
