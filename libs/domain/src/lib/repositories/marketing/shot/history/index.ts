@@ -1,1 +1,1 @@
-export * from './register-history-shot.dto';
+export * from './register-history-shot';
