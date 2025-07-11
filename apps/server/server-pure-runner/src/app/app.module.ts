@@ -25,6 +25,7 @@ import {
   DeleteShotModule,
   EditShotModule,
   RegisterHistoryShotModule,
+  ListHistoryShotsModule,
 } from './shot';
 
 @Module({
@@ -47,6 +48,7 @@ import {
     DeleteShotModule,
     EditShotModule,
     RegisterHistoryShotModule,
+    ListHistoryShotsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
