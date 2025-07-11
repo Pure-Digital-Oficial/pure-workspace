@@ -4,5 +4,6 @@ export * from './create-shot';
 export * from './delete-shot';
 export * from './edit-shot';
 export * from './find-shot-by-title';
+export * from './find-targets-by-shot-id';
 export * from './find-user-in-shot';
 export * from './list-shots';
