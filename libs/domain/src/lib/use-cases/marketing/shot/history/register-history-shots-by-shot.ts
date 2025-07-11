@@ -51,8 +51,8 @@ export class RegisterHistoryShotsByShot
       loggedUserId,
     });
 
-    if (targetsByShot?.targets.length < 1) {
-      return left(new EntityNotExists('Targets'));
+    if (Object.keys(targetsByShot?.targets ?? targetsByShot).length < 1) {
+      return left(new EntityNotExists('Targets or shot ID'));
     }
     const registeredHistoryShots: string[] = [];
 
