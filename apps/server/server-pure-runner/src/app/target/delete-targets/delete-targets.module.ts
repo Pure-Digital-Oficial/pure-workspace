@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { DeleteTargetService } from './delete-target.service';
-import { DeleteTargetController } from './delete-target.controller';
+import { DeleteTargetsService } from './delete-targets.service';
+import { DeleteTargetsController } from './delete-targets.controller';
 import {
   DeleteTargetRepositoryImpl,
   FindUserByIdRepositoryImpl,
@@ -8,15 +8,15 @@ import {
   PrismaGeneralService,
   ValidateTokenRepositoryImpl,
 } from '@pure-workspace/data-access';
-import { DeleteTarget, ValidateToken } from '@pure-workspace/domain';
+import { DeleteTargets, ValidateToken } from '@pure-workspace/domain';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  controllers: [DeleteTargetController],
+  controllers: [DeleteTargetsController],
   providers: [
     ValidateToken,
-    DeleteTarget,
-    DeleteTargetService,
+    DeleteTargets,
+    DeleteTargetsService,
     {
       provide: 'FindUserByIdRepository',
       useClass: FindUserByIdRepositoryImpl,
@@ -43,4 +43,4 @@ import { JwtService } from '@nestjs/jwt';
     },
   ],
 })
-export class DeleteTargetModule {}
+export class DeleteTargetsModule {}

@@ -14,7 +14,7 @@ import {
 } from '../../../repositories';
 import { UserVerificationId } from '../../../utils';
 
-export class DeleteTarget
+export class DeleteTargets
   implements
     UseCase<
       DeleteTargetsDto,

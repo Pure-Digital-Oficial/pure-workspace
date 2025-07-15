@@ -16,10 +16,10 @@ import {
   DeleteTargetRepositoryMock,
   FindUserInTargetRepositoryMock,
 } from '@/test/repositories';
-import { DeleteTarget } from '@/use-cases';
+import { DeleteTargets } from '@/use-cases';
 
 interface SutTypes {
-  sut: DeleteTarget;
+  sut: DeleteTargets;
   deleteTargetsDto: DeleteTargetsDto;
   findUserByIdRepository: FindUserByIdRepository;
   findUserInTargetRepository: FindUserInTargetRepository;
@@ -36,7 +36,7 @@ const makeSut = (): SutTypes => {
     loggedUserId: UserMock.id,
   };
 
-  const sut = new DeleteTarget(
+  const sut = new DeleteTargets(
     findUserByIdRepository,
     findUserInTargetRepository,
     deleteTargetRepository
@@ -51,7 +51,7 @@ const makeSut = (): SutTypes => {
   };
 };
 
-describe('DeleteTarget', () => {
+describe('DeleteTargets', () => {
   it('should return target ID when a pass correct user input in deleteTargetsDto object', async () => {
     const { sut, deleteTargetsDto } = makeSut();
 
