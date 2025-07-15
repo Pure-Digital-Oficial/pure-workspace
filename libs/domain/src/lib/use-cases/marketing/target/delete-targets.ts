@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../../bases';
-import { DeleteTargetDto } from '../../../dtos';
+import { DeleteTargetsDto } from '../../../dtos';
 import {
   EntityNotDeleted,
   EntityNotEmpty,
@@ -14,11 +14,11 @@ import {
 } from '../../../repositories';
 import { UserVerificationId } from '../../../utils';
 
-export class DeleteTarget
+export class DeleteTargets
   implements
     UseCase<
-      DeleteTargetDto,
-      Either<EntityNotEmpty | EntityNotExists | EntityNotDeleted, string>
+      DeleteTargetsDto,
+      Either<EntityNotEmpty | EntityNotExists | EntityNotDeleted, string[]>
     >
 {
   constructor(
@@ -30,13 +30,13 @@ export class DeleteTarget
     private deleteTargetRepository: DeleteTargetRepository
   ) {}
   async execute(
-    input: DeleteTargetDto
+    input: DeleteTargetsDto
   ): Promise<
-    Either<EntityNotEmpty | EntityNotExists | EntityNotDeleted, string>
+    Either<EntityNotEmpty | EntityNotExists | EntityNotDeleted, string[]>
   > {
-    const { id, loggedUserId } = input;
+    const { ids, loggedUserId } = input;
 
-    if (Object.keys(id).length < 1) {
+    if (ids.length < 1) {
       return left(new EntityNotEmpty('ID'));
     }
 
@@ -52,22 +52,30 @@ export class DeleteTarget
     if (userVerification.isLeft()) {
       return left(userVerification.value);
     }
+    const outPutIds: string[] = [];
 
-    const verifiedUserInTarget = await this.findUserInTargetRepository.find({
-      targetId: id,
-      loggedUserId,
-    });
+    for (const targetId of ids) {
+      const verifiedUserInTarget = await this.findUserInTargetRepository.find({
+        targetId,
+        loggedUserId,
+      });
 
-    if (Object.keys(verifiedUserInTarget).length < 1) {
-      return left(new EntityIsInvalid('Target'));
+      if (Object.keys(verifiedUserInTarget).length < 1) {
+        return left(new EntityIsInvalid('Target'));
+      }
+
+      const deletedTarget = await this.deleteTargetRepository.delete({
+        ...input,
+        id: targetId,
+      });
+
+      if (Object.keys(deletedTarget).length < 1) {
+        return left(new EntityNotDeleted('Target'));
+      }
+
+      outPutIds.push(deletedTarget);
     }
 
-    const deletedTrigger = await this.deleteTargetRepository.delete(input);
-
-    if (Object.keys(deletedTrigger).length < 1) {
-      return left(new EntityNotDeleted('Target'));
-    }
-
-    return right(deletedTrigger);
+    return right(outPutIds);
   }
 }

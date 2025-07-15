@@ -1,42 +1,43 @@
 import {
   Controller,
   Delete,
-  Param,
   Query,
+  Body,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import {
   userIdQuerySchema,
   ErrorMessageResult,
-  idInParamSchema,
+  deleteTargetsBodySchema,
+  DeleteTargetsDto,
 } from '@pure-workspace/domain';
 import { JwtAuthGuard } from '@pure-workspace/data-access';
-import { DeleteTargetService } from './delete-target.service';
+import { DeleteTargetsService } from './delete-targets.service';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 
-@Controller('delete-target')
-export class DeleteTargetController {
-  constructor(private readonly deleteTargetService: DeleteTargetService) {}
+@Controller('delete-targets')
+export class DeleteTargetsController {
+  constructor(private readonly deleteTargetsService: DeleteTargetsService) {}
 
   @UsePipes(
     new ZodValidationPipe({
-      param: idInParamSchema,
       query: userIdQuerySchema,
+      body: deleteTargetsBodySchema,
     })
   )
   @UseGuards(JwtAuthGuard)
-  @Delete(':id')
+  @Delete()
   async delete(
-    @Param() param: { id: string },
-    @Query() query: { userId: string }
+    @Query() query: { userId: string },
+    @Body() input: Omit<DeleteTargetsDto, 'loggedUserId'>
   ) {
-    const result = await this.deleteTargetService.delete({
-      id: param?.id ?? '',
+    const result = await this.deleteTargetsService.delete({
+      ...input,
       loggedUserId: query?.userId ?? '',
     });
 
-    if (result.isRight()) return { targetId: result.value };
+    if (result.isRight()) return { targetIds: result.value };
     else await ErrorMessageResult(result.value.name, result.value.message);
   }
 }

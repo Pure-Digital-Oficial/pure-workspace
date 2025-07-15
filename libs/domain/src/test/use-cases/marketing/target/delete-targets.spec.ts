@@ -1,4 +1,4 @@
-import { DeleteTargetDto, UserResponseDto } from '@/dtos';
+import { DeleteTargetsDto, UserResponseDto } from '@/dtos';
 import {
   EntityNotEmpty,
   EntityNotDeleted,
@@ -16,11 +16,11 @@ import {
   DeleteTargetRepositoryMock,
   FindUserInTargetRepositoryMock,
 } from '@/test/repositories';
-import { DeleteTarget } from '@/use-cases';
+import { DeleteTargets } from '@/use-cases';
 
 interface SutTypes {
-  sut: DeleteTarget;
-  deleteTargetDto: DeleteTargetDto;
+  sut: DeleteTargets;
+  deleteTargetsDto: DeleteTargetsDto;
   findUserByIdRepository: FindUserByIdRepository;
   findUserInTargetRepository: FindUserInTargetRepository;
   deleteTargetRepository: DeleteTargetRepository;
@@ -31,12 +31,12 @@ const makeSut = (): SutTypes => {
   const findUserInTargetRepository = new FindUserInTargetRepositoryMock();
   const deleteTargetRepository = new DeleteTargetRepositoryMock();
 
-  const deleteTargetDto: DeleteTargetDto = {
-    id: UserMock.id,
+  const deleteTargetsDto: DeleteTargetsDto = {
+    ids: [TargetMock.id],
     loggedUserId: UserMock.id,
   };
 
-  const sut = new DeleteTarget(
+  const sut = new DeleteTargets(
     findUserByIdRepository,
     findUserInTargetRepository,
     deleteTargetRepository
@@ -44,50 +44,50 @@ const makeSut = (): SutTypes => {
 
   return {
     sut,
-    deleteTargetDto,
+    deleteTargetsDto,
     findUserByIdRepository,
     findUserInTargetRepository,
     deleteTargetRepository,
   };
 };
 
-describe('DeleteTarget', () => {
-  it('should return target ID when a pass correct user input in deleteTargetDto object', async () => {
-    const { sut, deleteTargetDto } = makeSut();
+describe('DeleteTargets', () => {
+  it('should return target ID when a pass correct user input in deleteTargetsDto object', async () => {
+    const { sut, deleteTargetsDto } = makeSut();
 
-    const result = await sut.execute(deleteTargetDto);
+    const result = await sut.execute(deleteTargetsDto);
 
     expect(result.isLeft()).toBe(false);
     expect(result.isRight()).toBe(true);
-    expect(result.value).toBe(TargetMock.id);
+    expect(result.value).toStrictEqual([TargetMock.id]);
   });
 
-  it('should return EntityNotEmpty when pass empty id in deleteTargetDto object', async () => {
-    const { sut, deleteTargetDto } = makeSut();
-    deleteTargetDto.id = '';
-    const result = await sut.execute(deleteTargetDto);
+  it('should return EntityNotEmpty when pass empty id in deleteTargetsDto object', async () => {
+    const { sut, deleteTargetsDto } = makeSut();
+    deleteTargetsDto.ids = [];
+    const result = await sut.execute(deleteTargetsDto);
 
     expect(result.isLeft()).toBe(true);
     expect(result.isRight()).toBe(false);
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass empty logged user id in deleteTargetDto object', async () => {
-    const { sut, deleteTargetDto } = makeSut();
-    deleteTargetDto.loggedUserId = '';
-    const result = await sut.execute(deleteTargetDto);
+  it('should return EntityNotEmpty when pass empty logged user id in deleteTargetsDto object', async () => {
+    const { sut, deleteTargetsDto } = makeSut();
+    deleteTargetsDto.loggedUserId = '';
+    const result = await sut.execute(deleteTargetsDto);
 
     expect(result.isLeft()).toBe(true);
     expect(result.isRight()).toBe(false);
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotExists when pass incorrect ID in deleteTargetDto object', async () => {
-    const { deleteTargetDto, sut } = makeSut();
+  it('should return EntityNotExists when pass incorrect ID in deleteTargetsDto object', async () => {
+    const { deleteTargetsDto, sut } = makeSut();
     jest
       .spyOn(sut['findUserByIdRepository'], 'find')
       .mockResolvedValueOnce({} as UserResponseDto);
-    const result = await sut.execute(deleteTargetDto);
+    const result = await sut.execute(deleteTargetsDto);
 
     expect(result.isLeft()).toBe(true);
     expect(result.isRight()).toBe(false);
@@ -95,11 +95,11 @@ describe('DeleteTarget', () => {
   });
 
   it('should return EntityIsInvalid when pass incorrect ID or user ID in findUserInTargetRepository', async () => {
-    const { deleteTargetDto, sut } = makeSut();
+    const { deleteTargetsDto, sut } = makeSut();
     jest
       .spyOn(sut['findUserInTargetRepository'], 'find')
       .mockResolvedValueOnce('');
-    const result = await sut.execute(deleteTargetDto);
+    const result = await sut.execute(deleteTargetsDto);
 
     expect(result.isLeft()).toBe(true);
     expect(result.isRight()).toBe(false);
@@ -107,13 +107,13 @@ describe('DeleteTarget', () => {
   });
 
   it('should return EntityNotDeleted when not deleted target in system', async () => {
-    const { sut, deleteTargetDto } = makeSut();
+    const { sut, deleteTargetsDto } = makeSut();
 
     jest
       .spyOn(sut['deleteTargetRepository'], 'delete')
       .mockResolvedValueOnce('');
 
-    const result = await sut.execute(deleteTargetDto);
+    const result = await sut.execute(deleteTargetsDto);
 
     expect(result.isLeft()).toBe(true);
     expect(result.isRight()).toBe(false);

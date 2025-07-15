@@ -11,7 +11,7 @@ import {
 import {
   CreateUniqueTargetModule,
   ListTargetsModule,
-  DeleteTargetModule,
+  DeleteTargetsModule,
   EditTargetModule,
   ChangeTargetsTriggerModule,
 } from './target';
@@ -37,7 +37,7 @@ import {
     EditTriggerModule,
     CreateUniqueTargetModule,
     ListTargetsModule,
-    DeleteTargetModule,
+    DeleteTargetsModule,
     EditTargetModule,
     ChangeTargetsTriggerModule,
     CreateShotModelModule,
