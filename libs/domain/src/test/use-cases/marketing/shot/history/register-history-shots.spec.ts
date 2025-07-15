@@ -37,7 +37,7 @@ const makeSut = (): SutTypes => {
 
   const registerHistoryShotsDto: RegisterHistoryShotsDto = {
     loggedUserId: UserMock.id,
-    targetsIds: [HistoryShotMock.targetId],
+    targetIds: [HistoryShotMock.targetId],
     shotId: HistoryShotMock.shotId,
   };
 
@@ -81,7 +81,7 @@ describe('RegisterHistoryShots', () => {
 
   it('should return EntityNotEmpty when pass empty target ID in registerHistoryShotsDto object', async () => {
     const { registerHistoryShotsDto, sut } = makeSut();
-    registerHistoryShotsDto.targetsIds = [];
+    registerHistoryShotsDto.targetIds = [];
     const result = await sut.execute(registerHistoryShotsDto);
 
     expect(result.isLeft()).toBeTruthy();

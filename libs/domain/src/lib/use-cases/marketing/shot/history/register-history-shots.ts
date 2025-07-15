@@ -30,7 +30,7 @@ export class RegisterHistoryShots
   async execute(
     input: RegisterHistoryShotsDto
   ): Promise<Either<EntityNotEmpty, string[]>> {
-    const { loggedUserId, shotId, targetsIds } = input;
+    const { loggedUserId, shotId, targetIds } = input;
 
     if (Object.keys(shotId).length < 1) {
       return left(new EntityNotEmpty('Shot ID'));
@@ -39,7 +39,7 @@ export class RegisterHistoryShots
       return left(new EntityNotEmpty('user ID'));
     }
 
-    if (targetsIds.length < 1) {
+    if (targetIds.length < 1) {
       return left(new EntityNotEmpty('target ID'));
     }
 
@@ -63,7 +63,7 @@ export class RegisterHistoryShots
 
     const outPutIds: string[] = [];
 
-    for (const targetId of targetsIds) {
+    for (const targetId of targetIds) {
       const verifiedUserInTarget = await this.findUserInTargetRepository.find({
         targetId: targetId,
         loggedUserId,
