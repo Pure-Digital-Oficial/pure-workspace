@@ -14,6 +14,7 @@ import {
   DeleteTargetsModule,
   EditTargetModule,
   ChangeTargetsTriggerModule,
+  CreateTargetsModule,
 } from './target';
 import {
   CreateShotModelModule,
@@ -51,6 +52,7 @@ import {
     RegisterHistoryShotModule,
     ListHistoryShotsModule,
     RegisterHistoryShotsModule,
+    CreateTargetsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
