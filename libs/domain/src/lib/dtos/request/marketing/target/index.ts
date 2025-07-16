@@ -1,5 +1,6 @@
 export * from './change-targets-trigger.dto';
 export * from './change-unique-target-trigger.dto';
+export * from './create-targets.dto';
 export * from './create-unique-target.dto';
 export * from './delete-target.dto';
 export * from './delete-targets.dto';
