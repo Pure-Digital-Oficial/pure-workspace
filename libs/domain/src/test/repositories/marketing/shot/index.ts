@@ -1,5 +1,6 @@
 export * from './history';
 export * from './shot-model';
+export * from './change-shot-model-in-shot.mock';
 export * from './create-shot.mock';
 export * from './delete-shot.mock';
 export * from './edit-shot.mock';
