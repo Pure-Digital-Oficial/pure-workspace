@@ -3,7 +3,7 @@ import {
   Controller,
   Post,
   Query,
-  //UseGuards,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { CreateTargetsService } from './create-targets.service';
@@ -14,14 +14,14 @@ import {
   userIdQuerySchema,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes';
-//import { JwtAuthGuard } from '@pure-workspace/data-access';
+import { JwtAuthGuard } from '@pure-workspace/data-access';
 
 @Controller('create-targets')
 export class CreateTargetsController {
   constructor(private createTargetsService: CreateTargetsService) {}
 
   @Post()
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @UsePipes(
     new ZodValidationPipe({
       query: userIdQuerySchema,
@@ -31,7 +31,7 @@ export class CreateTargetsController {
   async create(
     @Query() query: { userId: string },
     @Body()
-    input: Omit<CreateTargetsDto, 'loggedUserId' | 'internalStatus'>
+    input: Omit<CreateTargetsDto, 'loggedUserId'>
   ) {
     const result = await this.createTargetsService.create({
       ...input,
