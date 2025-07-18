@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { ShotResponseDto } from '../../../../..';
+import { ShotResponseDto } from '../../../../../../src';
 
 export const ShotMock: ShotResponseDto = {
   id: faker.string.uuid(),

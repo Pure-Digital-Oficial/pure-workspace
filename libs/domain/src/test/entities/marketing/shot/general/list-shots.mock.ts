@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { ListShotsResponseDto } from '../../../../..';
-import { ShotMock } from '../shot.mock';
+import { ListShotsResponseDto } from '../../../../../../src';
+import { ShotMock } from './shot.mock';
 
 export const ListShotsMock: ListShotsResponseDto = {
   filteredTotal: faker.number.int(),
