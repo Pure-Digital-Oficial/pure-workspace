@@ -28,6 +28,7 @@ import {
   RegisterHistoryShotModule,
   ListHistoryShotsModule,
   RegisterHistoryShotsModule,
+  ChangeShotModelInShotModule,
 } from './shot';
 
 @Module({
@@ -53,6 +54,7 @@ import {
     ListHistoryShotsModule,
     RegisterHistoryShotsModule,
     CreateTargetsModule,
+    ChangeShotModelInShotModule,
   ],
   controllers: [AppController],
   providers: [AppService],
