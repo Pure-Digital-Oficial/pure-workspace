@@ -2,7 +2,7 @@ import {
   FindShotByEntityDto,
   FindShotByTitleRepository,
   ShotResponseDto,
-} from '../../../../../src';
+} from '../../../../../../src';
 
 export class FindShotByTitleRepositoryMock
   implements FindShotByTitleRepository

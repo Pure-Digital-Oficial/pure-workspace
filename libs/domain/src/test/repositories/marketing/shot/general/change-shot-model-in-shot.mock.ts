@@ -1,8 +1,8 @@
 import {
   ChangeShotModelInShotDto,
   ChangeShotModelInShotRepository,
-} from '../../../../../src';
-import { ShotMock } from '../../../entities';
+} from '../../../../../../src';
+import { ShotMock } from '../../../../entities';
 
 export class ChangeShotModelInShotRepositoryMock
   implements ChangeShotModelInShotRepository

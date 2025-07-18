@@ -1,5 +1,5 @@
-import { DeleteShotDto, DeleteShotRepository } from '../../../../../src';
-import { ShotMock } from '../../../entities';
+import { DeleteShotDto, DeleteShotRepository } from '../../../../../../src';
+import { ShotMock } from '../../../../entities';
 
 export class DeleteShotRepositoryMock implements DeleteShotRepository {
   inptuMock = {} as DeleteShotDto;

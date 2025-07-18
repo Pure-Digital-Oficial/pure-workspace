@@ -1,8 +1,8 @@
 import {
   FindUserInShotDto,
   FindUserInShotRepository,
-} from '../../../../../src';
-import { ShotMock } from '../../../entities';
+} from '../../../../../../src';
+import { ShotMock } from '../../../../entities';
 
 export class FindUserInShotRepositoryMock implements FindUserInShotRepository {
   inputMock = {} as FindUserInShotDto;

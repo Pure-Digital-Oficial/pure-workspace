@@ -1,5 +1,5 @@
-import { ShotMock } from '../../../entities';
-import { CreateShotDto, CreateShotRepository } from '../../../../../src';
+import { ShotMock } from '../../../../entities';
+import { CreateShotDto, CreateShotRepository } from '../../../../../../src';
 
 export class CreateShotRepositoryMock implements CreateShotRepository {
   inputMock = {} as CreateShotDto;

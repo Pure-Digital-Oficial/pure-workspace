@@ -2,8 +2,8 @@ import {
   ListShotsDto,
   ListShotsRepository,
   ListShotsResponseDto,
-} from '../../../../../src';
-import { ListShotsMock } from '../../../entities';
+} from '../../../../..';
+import { ListShotsMock } from '../../../../entities';
 
 export class ListShotsRepositoryMock implements ListShotsRepository {
   inputMock = {} as ListShotsDto;

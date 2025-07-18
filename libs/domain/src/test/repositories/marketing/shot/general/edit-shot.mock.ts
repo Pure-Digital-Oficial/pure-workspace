@@ -1,5 +1,5 @@
-import { EditShotDto, EditShotRepository } from '../../../../../src';
-import { ShotMock } from '../../../entities';
+import { EditShotDto, EditShotRepository } from '../../../../../../src';
+import { ShotMock } from '../../../../entities';
 
 export class EditShotRepositoryMock implements EditShotRepository {
   inptuMock = {} as EditShotDto;
