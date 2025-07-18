@@ -1,4 +1,4 @@
-import { ListShotsDto, ListShotsResponseDto } from '../../../dtos';
+import { ListShotsDto, ListShotsResponseDto } from '../../../../dtos';
 
 export interface ListShotsRepository {
   list(input: ListShotsDto): Promise<ListShotsResponseDto>;

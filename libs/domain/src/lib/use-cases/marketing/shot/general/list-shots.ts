@@ -1,12 +1,12 @@
 import { Inject } from '@nestjs/common';
-import { Either, left, right, UseCase } from '../../../bases';
+import { Either, left, right, UseCase } from '../../../../bases';
 import {
   FindUserByIdRepository,
   ListShotsRepository,
-} from '../../../repositories';
-import { ListShotsDto, ListShotsResponseDto } from '../../../dtos';
-import { EntityNotEmpty, EntityNotExists } from '../../../errors';
-import { UserVerificationId } from '../../../utils';
+} from '../../../../repositories';
+import { ListShotsDto, ListShotsResponseDto } from '../../../../dtos';
+import { EntityNotEmpty, EntityNotExists } from '../../../../errors';
+import { UserVerificationId } from '../../../../utils';
 
 export class ListShots
   implements

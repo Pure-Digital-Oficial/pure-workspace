@@ -1,18 +1,18 @@
 import { Inject } from '@nestjs/common';
-import { Either, left, right, UseCase } from '../../../bases';
+import { Either, left, right, UseCase } from '../../../../bases';
 import {
   EntityNotDeleted,
   EntityNotEmpty,
   EntityNotExists,
   EntityIsInvalid,
-} from '../../../errors';
+} from '../../../../errors';
 import {
   FindUserByIdRepository,
   FindUserInShotRepository,
   DeleteShotRepository,
-} from '../../../repositories';
-import { UserVerificationId } from '../../../utils';
-import { DeleteShotDto } from '../../../dtos';
+} from '../../../../repositories';
+import { UserVerificationId } from '../../../../utils';
+import { DeleteShotDto } from '../../../../dtos';
 
 export class DeleteShot
   implements

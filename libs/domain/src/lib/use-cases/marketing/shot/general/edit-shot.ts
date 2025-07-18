@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { Either, left, right, UseCase } from '../../../bases';
-import { EditShotDto } from '../../../dtos';
+import { Either, left, right, UseCase } from '../../../../bases';
+import { EditShotDto } from '../../../../dtos';
 import {
   EntityNotEdited,
   EntityNotEmpty,
@@ -8,15 +8,15 @@ import {
   InsufficientCharacters,
   EntityAlreadyExists,
   EntityNotExists,
-} from '../../../errors';
-import { UserVerificationId } from '../../../utils';
+} from '../../../../errors';
+import { UserVerificationId } from '../../../../utils';
 import {
   FindUserByIdRepository,
   FindUserInShotRepository,
   FindShotByTitleRepository,
   FindShotModelByIdRepository,
   EditShotRepository,
-} from '../../../repositories';
+} from '../../../../repositories';
 
 export class EditShot
   implements

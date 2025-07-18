@@ -1,4 +1,4 @@
-import { EditShotDto } from '../../../dtos';
+import { EditShotDto } from '../../../../dtos';
 
 export interface EditShotRepository {
   edit(input: EditShotDto): Promise<string>;

@@ -1,19 +1,19 @@
 import { Inject } from '@nestjs/common';
-import { Either, left, right, UseCase } from '../../../bases';
-import { ChangeShotModelInShotDto } from '../../../dtos';
+import { Either, left, right, UseCase } from '../../../../bases';
+import { ChangeShotModelInShotDto } from '../../../../dtos';
 import {
   EntityNotEdited,
   EntityNotEmpty,
   EntityNotExists,
   EntityIsInvalid,
-} from '../../../errors';
-import { UserVerificationId } from '../../../utils';
+} from '../../../../errors';
+import { UserVerificationId } from '../../../../utils';
 import {
   FindUserInShotRepository,
   FindShotModelByIdRepository,
   FindUserByIdRepository,
   ChangeShotModelInShotRepository,
-} from '../../../repositories';
+} from '../../../../repositories';
 
 export class ChangeShotModelInShot
   implements

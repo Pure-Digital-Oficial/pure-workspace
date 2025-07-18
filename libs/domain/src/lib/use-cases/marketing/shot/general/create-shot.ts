@@ -1,19 +1,19 @@
-import { CreateShotDto } from '../../../dtos';
-import { Either, left, right, UseCase } from '../../../bases';
+import { CreateShotDto } from '../../../../dtos';
+import { Either, left, right, UseCase } from '../../../../bases';
 import {
   EntityAlreadyExists,
   EntityNotCreated,
   EntityNotEmpty,
   EntityNotExists,
-} from '../../../errors';
+} from '../../../../errors';
 import {
   CreateShotRepository,
   FindShotByTitleRepository,
   FindUserByIdRepository,
   FindShotModelByIdRepository,
-} from '../../../repositories';
+} from '../../../../repositories';
 import { Inject } from '@nestjs/common';
-import { UserVerificationId } from '../../../utils';
+import { UserVerificationId } from '../../../../utils';
 
 export class CreateShot
   implements
