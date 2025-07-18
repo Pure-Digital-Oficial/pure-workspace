@@ -1,5 +1,6 @@
 export * from './history';
 export * from './shot-model';
+export * from './change-shot-model-in-shot.repository';
 export * from './create-shot.repository';
 export * from './delete-shot.repository';
 export * from './edit-shot.repository';
