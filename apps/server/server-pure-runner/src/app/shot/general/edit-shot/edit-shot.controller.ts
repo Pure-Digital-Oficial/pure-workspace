@@ -1,37 +1,43 @@
 import {
+  Body,
   Controller,
-  Delete,
   Param,
+  Put,
   Query,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
+import { EditShotService } from './edit-shot.service';
 import {
-  userIdQuerySchema,
+  shotBodySchema,
   ErrorMessageResult,
   idInParamSchema,
+  userIdQuerySchema,
+  EditShotDto,
 } from '@pure-workspace/domain';
+import { ZodValidationPipe } from '../../../pipes';
 import { JwtAuthGuard } from '@pure-workspace/data-access';
-import { DeleteShotService } from './delete-shot.service';
-import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 
-@Controller('delete-shot')
-export class DeleteShotController {
-  constructor(private readonly deleteShotService: DeleteShotService) {}
+@Controller('edit-shot')
+export class EditShotController {
+  constructor(private readonly editShotService: EditShotService) {}
 
+  @Put(':id')
   @UsePipes(
     new ZodValidationPipe({
       param: idInParamSchema,
       query: userIdQuerySchema,
+      body: shotBodySchema,
     })
   )
   @UseGuards(JwtAuthGuard)
-  @Delete(':id')
-  async delete(
+  async edit(
     @Param() param: { id: string },
-    @Query() query: { userId: string }
+    @Query() query: { userId: string },
+    @Body() input: Omit<EditShotDto, 'id' | 'loggedUserId'>
   ) {
-    const result = await this.deleteShotService.delete({
+    const result = await this.editShotService.edit({
+      ...input,
       id: param?.id ?? '',
       loggedUserId: query?.userId ?? '',
     });

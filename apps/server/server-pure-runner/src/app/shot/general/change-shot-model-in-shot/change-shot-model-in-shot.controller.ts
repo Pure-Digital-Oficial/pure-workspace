@@ -14,7 +14,7 @@ import {
   userIdQuerySchema,
   changeShotModelInShotBodySchema,
 } from '@pure-workspace/domain';
-import { ZodValidationPipe } from '../../pipes';
+import { ZodValidationPipe } from '../../../pipes';
 import { JwtAuthGuard } from '@pure-workspace/data-access';
 
 @Controller('change-shot-model-in-shot')

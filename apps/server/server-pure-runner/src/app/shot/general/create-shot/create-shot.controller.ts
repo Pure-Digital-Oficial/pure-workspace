@@ -12,7 +12,7 @@ import {
   shotBodySchema,
   userIdQuerySchema,
 } from '@pure-workspace/domain';
-import { ZodValidationPipe } from '../../pipes';
+import { ZodValidationPipe } from '../../../pipes';
 import { JwtAuthGuard } from '@pure-workspace/data-access';
 import { CreateShotService } from './create-shot.service';
 

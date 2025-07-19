@@ -7,7 +7,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ListShotsService } from './list-shots.service';
-import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../../../pipes';
 import {
   ErrorMessageResult,
   userIdQuerySchema,
