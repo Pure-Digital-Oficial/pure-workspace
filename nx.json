@@ -27,17 +27,10 @@
         "previewTargetName": "preview"
       }
     },
-    {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
-      }
-    },
+    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } },
     {
       "plugin": "@nx/jest/plugin",
-      "options": {
-        "targetName": "test"
-      },
+      "options": { "targetName": "test" },
       "exclude": [
         "apps/server/server-pure-general-e2e/**/*",
         "apps/server/server-pure-runner-e2e/**/*"
@@ -68,19 +61,11 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "e2e-ci--**/*": {
-      "dependsOn": ["^build"]
-    }
+    "e2e-ci--**/*": { "dependsOn": ["^build"] }
   },
   "generators": {
-    "@nx/next": {
-      "application": {
-        "style": "none",
-        "linter": "eslint"
-      }
-    },
-    "@nx/react": {
-      "library": {}
-    }
-  }
+    "@nx/next": { "application": { "style": "none", "linter": "eslint" } },
+    "@nx/react": { "library": {} }
+  },
+  "nxCloudId": "68adec83a4c6787f1c5d517b"
 }
