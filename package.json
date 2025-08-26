@@ -25,6 +25,7 @@
     "@faker-js/faker": "^9.6.0",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^11.0.12",
+    "@nx/angular": "^20.8.2",
     "@nx/cypress": "20.8.2",
     "@nx/eslint": "20.8.2",
     "@nx/eslint-plugin": "20.8.2",
