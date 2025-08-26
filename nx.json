@@ -82,5 +82,6 @@
     "@nx/react": {
       "library": {}
     }
-  }
+  },
+  "nxCloudId": "68adec230751b2328951215c"
 }
