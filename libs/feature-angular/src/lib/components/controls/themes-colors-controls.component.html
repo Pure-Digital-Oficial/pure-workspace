@@ -1,0 +1,34 @@
+<section class="theme-controls-section">
+  <!-- <input type="text"
+        matInput
+        [matAutocomplete]="auto"
+        [value]="theme()"
+        (optionSelected)="onThemeSelected($event)">
+        >
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        @for (option of themeList; track option) {
+          <mat-option [value]="option">{{option}}</mat-option>
+        }
+      </mat-autocomplete> -->
+  <button
+    mat-flat-button
+    (click)="setTheme('red')"
+    [disabled]="theme() === 'red'"
+  >
+    Red Theme
+  </button>
+  <button
+    mat-flat-button
+    (click)="setTheme('purple')"
+    [disabled]="theme() === 'purple'"
+  >
+    Purple Theme
+  </button>
+
+  <!-- Botão para modo claro/escuro -->
+  <button mat-icon-button (click)="isDarkMode.set(!isDarkMode())">
+    <mat-icon>
+      {{ isDarkMode() ? 'dark_mode' : 'light_mode' }}
+    </mat-icon>
+  </button>
+</section>

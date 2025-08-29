@@ -1,0 +1,29 @@
+@use './red' as customRed;
+@use './purple' as customPurple;
+@use '@angular/material' as mat;
+
+.html-theme-red {
+  @include mat.theme(
+    (
+      color: (
+        primary: customRed.$primary-palette,
+        tertiary: customRed.$tertiary-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+.html-theme-purple {
+  @include mat.theme(
+    (
+      color: (
+        primary: customPurple.$primary-palette,
+        tertiary: customPurple.$tertiary-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}

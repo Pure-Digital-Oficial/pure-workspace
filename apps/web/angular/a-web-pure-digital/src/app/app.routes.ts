@@ -5,7 +5,7 @@ export const appRoutes: Route[] = [
     path: '',
     loadComponent: () =>
       import('@pure-workspace/feature-angular').then(
-        (c) => c.FeatureAngularComponent
+        (c) => c.DashboardContainerComponent
       ),
   },
 ];
