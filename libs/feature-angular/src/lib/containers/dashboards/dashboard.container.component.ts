@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ThemesColorsControlsComponent } from '../../components';
+import { DefaultLayoutComponent } from '../../components';
 
 @Component({
   selector: 'lib-dashboard-container',
-  imports: [CommonModule, ThemesColorsControlsComponent],
+  imports: [CommonModule, DefaultLayoutComponent],
   templateUrl: './dashboard.container.component.html',
   styleUrl: './dashboard.container.component.scss',
 })

@@ -4,7 +4,7 @@ import { Component, signal, inject, effect } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
-import { ThemeColorsType, ThemesList } from '../../models';
+import { ThemeColorsType, ThemesList } from '../../../models';
 
 @Component({
   selector: 'lib-themes-colors-controls',

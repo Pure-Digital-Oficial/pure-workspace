@@ -1,1 +1,2 @@
-export * from './controls/themes-colors-controls.component';
+export * from './controls';
+export * from './layout';
