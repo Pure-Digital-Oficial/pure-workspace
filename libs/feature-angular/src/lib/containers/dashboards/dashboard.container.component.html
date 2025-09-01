@@ -1,1 +1,12 @@
-<lib-default-layout> Oi Dashboard </lib-default-layout>
+<lib-default-layout
+  [title]="'Dashboard'"
+  [menuItems]="[
+    { title: 'Página Principal', icon: 'home', route: '/' },
+    { title: 'Usuários', icon: 'info', route: '/users' }
+  ]"
+>
+  <section>
+    <button mat-raised-button>teste</button>
+    <lib-themes-colors-controls></lib-themes-colors-controls>
+  </section>
+</lib-default-layout>

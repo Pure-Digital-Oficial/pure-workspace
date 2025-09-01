@@ -1,9 +1,37 @@
+@use '@angular/material' as mat;
+
+:host {
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: var(--mat-sys-primary-container),
+    )
+  );
+}
+
 .layout-container {
   height: 100%;
   width: 100%;
 
   .layout-sidenav {
     max-width: 200px;
+    border-radius: 0;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
+  }
+
+  .layout-sidenav-content {
+    display: flex;
+    flex-direction: column;
+
+    .layout-toolbar {
+      box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
+      .toolbar-spacer {
+        flex: 1 1 auto;
+      }
+
+      .toolbar-title {
+        font-weight: 600;
+      }
+    }
   }
 
   .layout-sidenav-content {
