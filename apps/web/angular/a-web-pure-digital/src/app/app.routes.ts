@@ -8,4 +8,11 @@ export const appRoutes: Route[] = [
         (c) => c.DashboardContainerComponent
       ),
   },
+  {
+    path: 'users',
+    loadComponent: () =>
+      import('@pure-workspace/feature-angular').then(
+        (c) => c.UsersContainerComponent
+      ),
+  },
 ];
