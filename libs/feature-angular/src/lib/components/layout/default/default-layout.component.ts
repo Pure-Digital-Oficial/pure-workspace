@@ -8,7 +8,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
-import { SidenavItem } from '../../../models';
+import { SidenavItem } from '@pure-workspace/domain';
 import { CommonModule } from '@angular/common';
 import { ThemesColorsControlsComponent } from '../../controls';
 
