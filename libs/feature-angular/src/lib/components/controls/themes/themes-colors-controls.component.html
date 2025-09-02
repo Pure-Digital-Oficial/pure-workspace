@@ -1,22 +1,20 @@
 <section class="theme-controls-section">
-  <button
-    mat-flat-button
-    (click)="setTheme('red')"
-    [disabled]="theme() === 'red'"
+  <mat-select
+    [value]="theme()"
+    class="theme-colors-select"
+    (selectionChange)="onThemeSelected($event)"
   >
-    Red Theme
-  </button>
-  <button
-    mat-flat-button
-    (click)="setTheme('purple')"
-    [disabled]="theme() === 'purple'"
-  >
-    Purple Theme
-  </button>
+    @for (color of themeList; track color) {
+    <mat-option [value]="color">{{ getThemeColor(color)?.br }}</mat-option>
+    }
+  </mat-select>
 
-  <button mat-icon-button (click)="isDarkMode.set(!isDarkMode())">
-    <mat-icon>
-      {{ isDarkMode() ? 'dark_mode' : 'light_mode' }}
-    </mat-icon>
-  </button>
+  <div class="theme-button-container">
+    <button mat-icon-button (click)="isDarkMode.set(!isDarkMode())">
+      <mat-icon>
+        {{ isDarkMode() ? 'dark_mode' : 'light_mode' }}
+      </mat-icon>
+    </button>
+    <span>{{ isDarkMode() ? 'Escuro' : 'Claro' }}</span>
+  </div>
 </section>

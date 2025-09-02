@@ -1,0 +1,23 @@
+.theme-controls-section {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .theme-colors-select {
+    width: 130px;
+    display: 'flex';
+    text-align: center;
+    font-size: medium;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .theme-spacer {
+    flex: 1 1 auto;
+  }
+
+  .theme-button-container {
+    display: flex;
+    align-items: center;
+  }
+}

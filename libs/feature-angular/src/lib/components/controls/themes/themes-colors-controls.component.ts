@@ -1,21 +1,34 @@
-import { CommonModule } from '@angular/common';
-import { DOCUMENT } from '@angular/common';
-import { Component, signal, inject, effect } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { Component, signal, inject, effect, computed } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
-import { ThemeColorsType, ThemesList } from '../../../models';
+import { MatSelectChange } from '@angular/material/select';
+import { MatDividerModule } from '@angular/material/divider';
+import {
+  ThemeColorsType,
+  themesColorsByLangue,
+  themesList,
+} from '../../../models';
 
 @Component({
   selector: 'lib-themes-colors-controls',
-  imports: [CommonModule, MatButtonModule, MatIconModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSelectModule,
+    MatDividerModule,
+  ],
   templateUrl: './themes-colors-controls.component.html',
   styleUrl: './themes-colors-controls.component.scss',
 })
 export class ThemesColorsControlsComponent {
   isDarkMode = signal(false);
   theme = signal<ThemeColorsType>('purple');
-  themeList = ThemesList;
+
+  themeList = themesList;
+  themeText = computed(() => this.getThemeColor(this.theme())?.color ?? '');
   private _document = inject(DOCUMENT);
 
   constructor() {
@@ -31,18 +44,13 @@ export class ThemesColorsControlsComponent {
     });
   }
 
-  displayFn(theme: string): string {
-    return theme ? theme : '';
+  getThemeColor(selectedColor: string) {
+    const color = themesColorsByLangue.find((c) => c.color === selectedColor);
+    return color;
   }
 
-  onThemeSelected(event: unknown): void {
-    const { option } = event as MatAutocompleteSelectedEvent;
-    const value = option.value as ThemeColorsType;
-    console.log(`passou ${value}`);
-    this.setTheme(value);
-  }
-
-  setTheme(theme: ThemeColorsType) {
-    this.theme.set(theme as ThemeColorsType);
+  onThemeSelected(event: MatSelectChange) {
+    const value = event.value as ThemeColorsType;
+    this.theme.set(value);
   }
 }

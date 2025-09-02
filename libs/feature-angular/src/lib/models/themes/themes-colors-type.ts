@@ -1,3 +1,3 @@
-export const ThemesList = ['purple', 'red'] as const;
+export const themesList = ['purple', 'red'] as const;
 
-export type ThemeColorsType = (typeof ThemesList)[number];
+export type ThemeColorsType = (typeof themesList)[number];

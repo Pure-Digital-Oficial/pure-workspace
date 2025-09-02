@@ -16,10 +16,15 @@
     max-width: 200px;
     border-radius: 0;
     box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
+
+    a {
+      border-radius: 0;
+    }
   }
 
   .layout-sidenav-content {
     display: flex;
+    height: 100%;
     flex-direction: column;
 
     .layout-toolbar {
@@ -32,10 +37,5 @@
         font-weight: 600;
       }
     }
-  }
-
-  .layout-sidenav-content {
-    display: flex;
-    height: 100%;
   }
 }

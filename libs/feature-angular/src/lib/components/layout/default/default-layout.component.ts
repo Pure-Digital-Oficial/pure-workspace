@@ -5,10 +5,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { SidenavItem } from '../../../models';
 import { CommonModule } from '@angular/common';
+import { ThemesColorsControlsComponent } from '../../controls';
 
 @Component({
   selector: 'lib-default-layout',
@@ -21,7 +23,9 @@ import { CommonModule } from '@angular/common';
     MatIcon,
     MatListModule,
     MatToolbarModule,
+    MatDividerModule,
     RouterModule,
+    ThemesColorsControlsComponent,
   ],
   templateUrl: './default-layout.component.html',
   styleUrl: './default-layout.component.scss',
