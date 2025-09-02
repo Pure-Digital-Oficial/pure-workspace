@@ -17,8 +17,26 @@
     border-radius: 0;
     box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
 
-    a {
-      border-radius: 0;
+    .layout-sidenav-container {
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+
+      .layout-sidenav-list {
+        flex: 1;
+        a {
+          border-radius: 0;
+        }
+      }
+
+      .layout-settings-container {
+        margin-top: auto;
+        margin-bottom: 10px;
+        .layout-divider {
+          color: inherit;
+          margin: 0 10px 10px 10px;
+        }
+      }
     }
   }
 

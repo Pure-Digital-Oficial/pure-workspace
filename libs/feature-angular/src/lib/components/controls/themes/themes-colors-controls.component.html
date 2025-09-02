@@ -1,4 +1,15 @@
 <section class="theme-controls-section">
+  <button
+    class="theme-button"
+    mat-fab
+    extended
+    (click)="isDarkMode.set(!isDarkMode())"
+  >
+    <mat-icon>
+      {{ isDarkMode() ? 'dark_mode' : 'light_mode' }}
+    </mat-icon>
+    {{ isDarkMode() ? 'Escuro' : 'Claro' }}
+  </button>
   <mat-select
     [value]="theme()"
     class="theme-colors-select"
@@ -8,13 +19,4 @@
     <mat-option [value]="color">{{ getThemeColor(color)?.br }}</mat-option>
     }
   </mat-select>
-
-  <div class="theme-button-container">
-    <button mat-icon-button (click)="isDarkMode.set(!isDarkMode())">
-      <mat-icon>
-        {{ isDarkMode() ? 'dark_mode' : 'light_mode' }}
-      </mat-icon>
-    </button>
-    <span>{{ isDarkMode() ? 'Escuro' : 'Claro' }}</span>
-  </div>
 </section>

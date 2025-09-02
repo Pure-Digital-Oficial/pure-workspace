@@ -5,19 +5,14 @@
 
   .theme-colors-select {
     width: 130px;
-    display: 'flex';
-    text-align: center;
     font-size: medium;
-    font-weight: 600;
-    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
   }
 
-  .theme-spacer {
-    flex: 1 1 auto;
-  }
-
-  .theme-button-container {
-    display: flex;
-    align-items: center;
+  .theme-button {
+    background-color: transparent;
+    margin-bottom: 1rem;
   }
 }
