@@ -19,6 +19,13 @@ export const appRoutes: Route[] = [
     },
   },
   {
+    path: 'login',
+    loadComponent: () =>
+      import('@pure-workspace/feature-angular').then(
+        (c) => c.DefaultLoginContainerComponent
+      ),
+  },
+  {
     path: 'users',
     loadComponent: () =>
       import('@pure-workspace/feature-angular').then(
