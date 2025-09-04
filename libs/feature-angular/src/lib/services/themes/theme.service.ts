@@ -14,7 +14,7 @@ import { environment } from '../../environments';
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
   darkMode = signal(false);
-  selectedTheme = signal<ThemeColorsType>('purple');
+  selectedTheme = signal<ThemeColorsType>('red');
 
   readonly themeList = themesList;
   readonly selectedThemeLabel = computed(

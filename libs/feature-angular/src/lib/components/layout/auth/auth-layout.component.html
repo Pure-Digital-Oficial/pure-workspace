@@ -1,2 +1,22 @@
-<button mat-flat-button>Basic</button>
-<!-- <lib-theme-color-controls></lib-theme-color-controls> -->
+<main>
+  <section class="form-section">
+    <img [src]="logoImage" alt="logo" />
+    <h2>{{ title }}</h2>
+    <ng-content></ng-content>
+    <div class="btn-wrapper">
+      <button class="form-button" mat-flat-button>{{ primaryBtnText }}</button>
+      <div class="form-divider">
+        <div></div>
+        <span>or</span>
+        <div></div>
+      </div>
+      <button class="form-button" mat-stroked-button>
+        {{ secondaryBtnText }}
+      </button>
+    </div>
+  </section>
+  <section class="main-section">
+    <h1>You Should, MoveIt!</h1>
+    <img [src]="mainImage" alt="Login Image" />
+  </section>
+</main>

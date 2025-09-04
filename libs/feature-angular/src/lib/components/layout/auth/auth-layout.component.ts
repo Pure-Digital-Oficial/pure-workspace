@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ThemeService } from '../../../services';
 
@@ -10,4 +10,10 @@ import { ThemeService } from '../../../services';
 })
 export class AuthLayoutComponent {
   themeService = inject(ThemeService);
+
+  @Input() title = '';
+  @Input() primaryBtnText = '';
+  @Input() secondaryBtnText = '';
+  @Input() logoImage = '';
+  @Input() mainImage = '';
 }
