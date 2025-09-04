@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { SidenavItem } from '@pure-workspace/domain';
 import { CommonModule } from '@angular/common';
-import { ThemesColorsControlsComponent } from '../../controls';
+import { ThemeColorControlsComponent } from '../../controls';
 
 @Component({
   selector: 'lib-default-layout',
@@ -25,7 +25,7 @@ import { ThemesColorsControlsComponent } from '../../controls';
     MatToolbarModule,
     MatDividerModule,
     RouterModule,
-    ThemesColorsControlsComponent,
+    ThemeColorControlsComponent,
   ],
   templateUrl: './default-layout.component.html',
   styleUrl: './default-layout.component.scss',

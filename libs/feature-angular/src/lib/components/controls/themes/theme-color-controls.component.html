@@ -1,17 +1,12 @@
 <section class="theme-controls-section">
-  <button
-    class="theme-button"
-    mat-fab
-    extended
-    (click)="isDarkMode.set(!isDarkMode())"
-  >
+  <button class="theme-button" mat-fab extended (click)="onModeChanged()">
     <mat-icon>
-      {{ isDarkMode() ? 'dark_mode' : 'light_mode' }}
+      {{ darkMode() ? 'dark_mode' : 'light_mode' }}
     </mat-icon>
-    {{ isDarkMode() ? 'Escuro' : 'Claro' }}
+    {{ darkMode() ? 'Escuro' : 'Claro' }}
   </button>
   <mat-select
-    [value]="theme()"
+    [value]="selectedTheme()"
     class="theme-colors-select"
     (selectionChange)="onThemeSelected($event)"
   >

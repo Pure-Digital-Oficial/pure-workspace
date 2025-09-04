@@ -1,1 +1,1 @@
-export * from './themes/themes-colors-controls.component';
+export * from './themes/theme-color-controls.component';
