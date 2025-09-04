@@ -1,5 +1,9 @@
 <mat-drawer-container class="layout-container" autosize>
-  <mat-drawer #drawer class="layout-sidenav" mode="side">
+  <mat-drawer
+    #drawer
+    class="layout-sidenav"
+    [mode]="(drawerMode$ | async) || 'side'"
+  >
     <div class="layout-sidenav-container">
       <mat-nav-list class="layout-sidenav-list">
         <a

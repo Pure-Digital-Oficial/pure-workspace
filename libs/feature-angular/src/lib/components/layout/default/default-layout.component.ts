@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
@@ -10,7 +10,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { SidenavItem } from '@pure-workspace/domain';
 import { CommonModule } from '@angular/common';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { ThemeColorControlsComponent } from '../../controls';
+import { map, Observable, shareReplay } from 'rxjs';
 
 @Component({
   selector: 'lib-default-layout',
@@ -37,4 +39,13 @@ export class DefaultLayoutComponent {
   ];
   @Input() title = '';
   showFiller = false;
+  drawerMode: 'side' | 'over' = 'side';
+  private breakpointObserver = inject(BreakpointObserver);
+
+  drawerMode$: Observable<'side' | 'over'> = this.breakpointObserver
+    .observe(['(max-width: 1024px)'])
+    .pipe(
+      map((result) => (result.matches ? 'over' : 'side')),
+      shareReplay(1)
+    );
 }
