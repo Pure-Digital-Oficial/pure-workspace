@@ -4,4 +4,18 @@
   [secondaryBtnText]="'Cadastrar usuário'"
   [logoImage]="'svg/Logo.svg'"
   [mainImage]="'svg/Login_Image.svg'"
-></lib-auth-layout>
+>
+  <section class="inputs-form">
+    <lib-default-input
+      [type]="'email'"
+      [label]="'Email'"
+      [placeholder]="'Digite o Email'"
+    ></lib-default-input>
+
+    <lib-default-input
+      [type]="'password'"
+      [label]="'Senha'"
+      [placeholder]="'Digite a Senha'"
+    ></lib-default-input>
+  </section>
+</lib-auth-layout>
