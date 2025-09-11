@@ -1,5 +1,7 @@
 import { Route } from '@angular/router';
 import { SidenavItem } from '@pure-workspace/domain';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { authGuard } from '@pure-workspace/feature-angular';
 
 const defaultMenuItems: SidenavItem[] = [
   { title: 'Página Principal', icon: 'home', route: '/' },
@@ -13,6 +15,7 @@ export const appRoutes: Route[] = [
       import('@pure-workspace/feature-angular').then(
         (c) => c.DashboardContainerComponent
       ),
+    canActivate: [authGuard],
     data: {
       title: 'Dashboard',
       menuItems: defaultMenuItems,

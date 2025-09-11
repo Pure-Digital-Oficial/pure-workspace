@@ -5,16 +5,14 @@ import {
   themesList,
   themesColorsByLangue,
 } from '../../models';
-import {
-  getItemLocalStorage,
-  setItemLocalStorageService,
-} from '../../services';
+import { LocalStorageService } from '../../services';
 import { environment } from '../../environments';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
   darkMode = signal(false);
   selectedTheme = signal<ThemeColorsType>('red');
+  private storageService = inject(LocalStorageService);
 
   readonly themeList = themesList;
   readonly selectedThemeLabel = computed(
@@ -35,12 +33,12 @@ export class ThemeService {
 
   toggleDarkMode() {
     const mode = !this.darkMode();
-    setItemLocalStorageService(this.themeModeKey, mode);
+    this.storageService.setItem(this.themeModeKey, mode);
     this.darkMode.set(mode);
   }
 
   setTheme(theme: ThemeColorsType) {
-    setItemLocalStorageService(this.themeColorKey, theme);
+    this.storageService.setItem(this.themeColorKey, theme);
     this.selectedTheme.set(theme);
   }
 
@@ -49,12 +47,12 @@ export class ThemeService {
   }
 
   private _loadFromStorage() {
-    const storedDark = getItemLocalStorage(this.themeModeKey);
+    const storedDark = this.storageService.getItem(this.themeModeKey);
     if (typeof storedDark === 'boolean') {
       this.darkMode.set(storedDark);
     }
 
-    const storedColor = getItemLocalStorage(this.themeColorKey);
+    const storedColor = this.storageService.getItem(this.themeColorKey);
     if (storedColor) {
       this.selectedTheme.set(storedColor as ThemeColorsType);
     }
