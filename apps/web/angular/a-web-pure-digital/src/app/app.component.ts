@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import { SessionService } from '@pure-workspace/feature-angular';
 
 @Component({

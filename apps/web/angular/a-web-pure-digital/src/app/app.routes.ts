@@ -1,6 +1,5 @@
 import { Route } from '@angular/router';
 import { SidenavItem } from '@pure-workspace/domain';
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import { authGuard } from '@pure-workspace/feature-angular';
 
 const defaultMenuItems: SidenavItem[] = [
