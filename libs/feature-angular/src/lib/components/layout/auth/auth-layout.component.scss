@@ -15,19 +15,34 @@ main {
     height: 100%;
   }
 
+  @media (max-width: 1024px) {
+    .main-section {
+      display: none;
+    }
+  }
+
   .main-section {
     gap: 8px;
 
     flex-grow: 1;
     background-color: var.$gray-bg;
+
+    img {
+      max-width: 530px;
+      max-height: 530px;
+    }
   }
 
   .form-section {
     flex-grow: 0.3;
     padding: 0 35px;
 
+    .form-content {
+      width: 100%;
+    }
+
     img {
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
     h2 {
@@ -42,7 +57,7 @@ main {
       align-items: center;
       justify-content: center;
       width: 100%;
-      gap: 30px;
+      gap: 15px;
     }
 
     .divider {

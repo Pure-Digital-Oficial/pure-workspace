@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { SessionService } from '@pure-workspace/feature-angular';
 
 @Component({
   imports: [RouterModule],
@@ -8,5 +10,12 @@ import { RouterModule } from '@angular/router';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'a-web-pure-digital';
+  private session = inject(SessionService);
+  title = 'Pure Digital';
+
+  constructor() {
+    this.session.updateSession({
+      loggedAppId: '1',
+    });
+  }
 }

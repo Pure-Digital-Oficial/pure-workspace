@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ThemeService } from '../../../services';
 
@@ -16,4 +16,15 @@ export class AuthLayoutComponent {
   @Input() secondaryBtnText = '';
   @Input() logoImage = '';
   @Input() mainImage = '';
+  @Input() imagemTitle = '';
+  @Output() submitted = new EventEmitter<void>();
+  @Output() navigated = new EventEmitter<void>();
+
+  submit() {
+    this.submitted.emit();
+  }
+
+  navigate() {
+    this.navigated.emit();
+  }
 }
