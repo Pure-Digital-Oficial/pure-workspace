@@ -4,10 +4,10 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { SessionStorageService } from '../../services';
+import { TokenService } from '../../services';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
-  const tokenService = inject(SessionStorageService);
+  const tokenService = inject(TokenService);
 
   const cloneReq = getRequestWithUpdatedToken(req, tokenService);
 
@@ -16,9 +16,9 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
 
 const getRequestWithUpdatedToken = (
   req: HttpRequest<unknown>,
-  storageService: SessionStorageService
+  tokenService: TokenService
 ) => {
-  const token = storageService.getToken();
+  const token = tokenService.getToken();
   if (!token) return req;
 
   const headers = new HttpHeaders().append('Authorization', `Bearer ${token}`);

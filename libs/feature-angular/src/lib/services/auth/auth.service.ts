@@ -1,17 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { inject, Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 import { TokenResponseDto } from '@pure-workspace/domain';
-import { SessionStorageService } from '../utils';
 import { environment } from '../../environments';
-import { SessionService } from './session.service';
+import { TokenService, SessionService } from '.';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private storageService = inject(SessionStorageService);
+  private tokenService = inject(TokenService);
   private httpClient = inject(HttpClient);
   private router = inject(Router);
   private session = inject(SessionService);
@@ -34,28 +33,37 @@ export class AuthService {
       )
       .pipe(
         tap((value) => {
-          this.storageService.setAuthTokens({
+          this.tokenService.setAuthTokens({
             accessToken: value.accessToken,
             refreshToken: value.refreshToken,
           });
           this.router.navigate(['/']);
+        }),
+        catchError((error) => {
+          console.error('Erro no refresh:', error);
+          return throwError(() => error);
         })
       );
   }
 
   refresh(refreshToken: string) {
-    return this.httpClient
+    const result = this.httpClient
       .post<TokenResponseDto>(this.apiUrl + '/auth/refresh-token', {
         refreshToken,
       })
       .pipe(
         tap((value) => {
-          this.storageService.setAuthTokens({
+          this.tokenService.setAuthTokens({
             accessToken: value.accessToken,
             refreshToken: value.refreshToken,
           });
           this.router.navigate(['/']);
+        }),
+        catchError((error) => {
+          console.error('Erro no refresh:', error);
+          return throwError(() => error);
         })
       );
+    return result;
   }
 }

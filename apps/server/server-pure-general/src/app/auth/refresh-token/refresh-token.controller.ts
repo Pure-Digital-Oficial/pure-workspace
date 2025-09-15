@@ -1,4 +1,4 @@
-import { Controller, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ErrorMessageResult } from '@pure-workspace/domain';
 import { RefreshTokenService } from './refresh-token.service';
@@ -11,8 +11,14 @@ export class RefreshTokenController {
     private redisService: RedisService
   ) {}
   @Post()
-  async refresh(@Req() req: Request, @Res() response: Response) {
-    const refreshToken = req.cookies['refreshToken'];
+  async refresh(
+    @Req() req: Request,
+    @Res() response: Response,
+    @Body() body: { refreshToken?: string }
+  ) {
+    const refreshToken = body.refreshToken
+      ? body.refreshToken
+      : req.cookies['refreshToken'];
 
     const cachedRefreshToken = await this.redisService.get('refreshToken');
 
