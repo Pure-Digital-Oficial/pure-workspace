@@ -11,14 +11,15 @@
     "prisma:migrate:general": "npx prisma migrate dev --schema=./prisma/general/schema.prisma",
     "prisma:generate:marketing": "prisma generate --schema=./prisma/marketing/schema.prisma",
     "prisma:migrate:marketing": "npx prisma migrate dev --schema=./prisma/marketing/schema.prisma",
-    "docker": "docker-compose up",
-    "docker:postgres": "docker-compose -f docker-compose-postgres.yaml up",
+    "docker": "docker compose up",
+    "docker:postgres": "docker compose -f docker-compose-postgres.yaml up",
     "build:server-pure-general": "nx build server-pure-general",
     "build:web-pure-digital": "nx build web-pure-digital",
     "start:server-pure-general": "nx run server-pure-general:serve",
     "start:server-pure-runner": "nx run server-pure-runner:serve",
     "start:web-pure-digital": "nx dev web-pure-digital",
-    "start:a-web-pure-digital": "nx serve a-web-pure-digital"
+    "start:a-web-pure-digital": "nx serve a-web-pure-digital",
+    "build:a-web-pure-digital": "nx build a-web-pure-digital --prod"
   },
   "private": true,
   "devDependencies": {
