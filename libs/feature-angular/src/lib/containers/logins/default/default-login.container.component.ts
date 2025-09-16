@@ -49,7 +49,6 @@ export class DefaultLoginContainerComponent {
   }
 
   onSubmit() {
-    console.log('clicous');
     this.authService
       .login(this.loginForm.value.email, this.loginForm.value.password)
       .subscribe();

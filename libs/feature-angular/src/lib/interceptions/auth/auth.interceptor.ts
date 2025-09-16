@@ -1,8 +1,4 @@
-import {
-  HttpHeaders,
-  HttpInterceptorFn,
-  HttpRequest,
-} from '@angular/common/http';
+import { HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { TokenService } from '../../services';
 
@@ -21,8 +17,9 @@ const getRequestWithUpdatedToken = (
   const token = tokenService.getToken();
   if (!token) return req;
 
-  const headers = new HttpHeaders().append('Authorization', `Bearer ${token}`);
   return req.clone({
-    headers,
+    setHeaders: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 };
