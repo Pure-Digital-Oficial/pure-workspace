@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { SessionService } from '../../../../services';
 import { SessionResponseDto } from '@pure-workspace/domain';
@@ -12,6 +12,7 @@ import { SessionResponseDto } from '@pure-workspace/domain';
 export class UserPhotoControlsComponent {
   private sessionService = inject(SessionService);
   userData: Partial<SessionResponseDto> = {} as Partial<SessionResponseDto>;
+  @Input() nicknameTitle = 'Conectado com: ';
 
   constructor() {
     this.userData = this.sessionService.getSession();
