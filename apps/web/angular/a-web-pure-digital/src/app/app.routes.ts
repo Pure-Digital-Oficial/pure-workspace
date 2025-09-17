@@ -33,5 +33,6 @@ export const appRoutes: Route[] = [
       import('@pure-workspace/feature-angular').then(
         (c) => c.UsersContainerComponent
       ),
+    canActivate: [authGuard],
   },
 ];

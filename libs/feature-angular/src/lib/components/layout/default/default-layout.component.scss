@@ -32,10 +32,6 @@
       .layout-settings-container {
         margin-top: auto;
         margin-bottom: 10px;
-        .layout-divider {
-          color: inherit;
-          margin: 0 10px 10px 10px;
-        }
       }
     }
   }
@@ -56,4 +52,9 @@
       }
     }
   }
+}
+
+.layout-divider {
+  color: inherit;
+  margin: 0 10px 10px 10px;
 }

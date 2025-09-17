@@ -11,7 +11,10 @@ import { MatIcon } from '@angular/material/icon';
 import { SidenavItem } from '@pure-workspace/domain';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { ThemeColorControlsComponent } from '../../controls';
+import {
+  ThemeColorControlsComponent,
+  UserPhotoControlsComponent,
+} from '../../controls';
 import { map, Observable, shareReplay } from 'rxjs';
 
 @Component({
@@ -28,6 +31,7 @@ import { map, Observable, shareReplay } from 'rxjs';
     MatDividerModule,
     RouterModule,
     ThemeColorControlsComponent,
+    UserPhotoControlsComponent,
   ],
   templateUrl: './default-layout.component.html',
   styleUrl: './default-layout.component.scss',

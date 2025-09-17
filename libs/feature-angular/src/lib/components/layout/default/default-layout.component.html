@@ -3,8 +3,11 @@
     #drawer
     class="layout-sidenav"
     [mode]="(drawerMode$ | async) || 'side'"
+    [opened]="(drawerMode$ | async) === 'side'"
   >
     <div class="layout-sidenav-container">
+      <lib-user-photo-controls></lib-user-photo-controls>
+      <mat-divider class="layout-divider"></mat-divider>
       <mat-nav-list class="layout-sidenav-list">
         <a
           mat-list-item

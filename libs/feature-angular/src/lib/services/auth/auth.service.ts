@@ -37,7 +37,6 @@ export class AuthService {
             accessToken: value.accessToken,
             refreshToken: value.refreshToken,
           });
-          this.session.findSession().subscribe();
           this.router.navigate(['/']);
         }),
         catchError((error) => {
@@ -58,7 +57,6 @@ export class AuthService {
             accessToken: value.accessToken,
             refreshToken: value.refreshToken,
           });
-          this.session.findSession().subscribe();
           this.router.navigate(['/']);
         }),
         catchError((error) => {
