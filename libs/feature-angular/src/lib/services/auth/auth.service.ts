@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { inject, Injectable } from '@angular/core';
-import { catchError, tap, throwError } from 'rxjs';
+import { catchError, map, of, tap, throwError } from 'rxjs';
 import { TokenResponseDto } from '@pure-workspace/domain';
 import { environment } from '../../environments';
 import { TokenService, SessionService } from '.';
@@ -57,7 +57,6 @@ export class AuthService {
             accessToken: value.accessToken,
             refreshToken: value.refreshToken,
           });
-          this.router.navigate(['/']);
         }),
         catchError((error) => {
           console.error('Erro no refresh:', error);
@@ -65,5 +64,26 @@ export class AuthService {
         })
       );
     return result;
+  }
+
+  checkAuth() {
+    const token = this.tokenService.getToken();
+    const refreshToken = this.tokenService.getRefreshToken();
+
+    if (token) {
+      return this.session.findSession().pipe(
+        map(() => true),
+        catchError(() => of(false))
+      );
+    }
+
+    if (refreshToken) {
+      return this.refresh(refreshToken).pipe(
+        map(() => true),
+        catchError(() => of(false))
+      );
+    }
+
+    return of(false);
   }
 }
