@@ -1,7 +1,6 @@
-import { Component, inject, Input, signal } from '@angular/core';
+import { Component, computed, inject, Input } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { SessionService } from '../../../../services';
-import { SessionResponseDto } from '@pure-workspace/domain';
 
 @Component({
   selector: 'lib-user-photo-controls',
@@ -11,10 +10,10 @@ import { SessionResponseDto } from '@pure-workspace/domain';
 })
 export class UserPhotoControlsComponent {
   private sessionService = inject(SessionService);
-  userData = signal<Partial<SessionResponseDto>>({});
+  userData = computed(() => this.sessionService.session());
   @Input() nicknameTitle = 'Conectado com: ';
 
   constructor() {
-    this.userData.set(this.sessionService.getSession());
+    this.sessionService.findSession().subscribe();
   }
 }
