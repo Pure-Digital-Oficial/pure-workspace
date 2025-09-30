@@ -1,0 +1,17 @@
+<mat-drawer-container class="layout-container" autosize>
+  <mat-drawer
+    #drawer
+    class="layout-sidenav"
+    [mode]="(drawerMode$ | async) || 'side'"
+    [opened]="(drawerMode$ | async) === 'side'"
+  >
+    <div class="layout-sidenav-container">
+      <lib-sidenav-default-body [drawer]="drawer" [menuItems]="menuItems" />
+      <section class="layout-settings-container">
+        <mat-divider class="layout-divider"></mat-divider>
+        <lib-theme-color-controls></lib-theme-color-controls>
+      </section>
+    </div>
+  </mat-drawer>
+  <lib-sidenav-default-header [drawer]="drawer" [title]="title" />
+</mat-drawer-container>

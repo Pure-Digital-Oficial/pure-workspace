@@ -1,37 +1,25 @@
 import { Component, inject, Input } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatListModule } from '@angular/material/list';
-import { MatIcon } from '@angular/material/icon';
-import { SidenavItem } from '@pure-workspace/domain';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
+import { map, Observable, shareReplay } from 'rxjs';
+import { SidenavItem } from '@pure-workspace/domain';
 import {
   ThemeColorControlsComponent,
-  UserPhotoControlsComponent,
+  SidenavDefaultHeaderComponent,
+  SidenavDefaultBodyComponent,
 } from '../../controls';
-import { map, Observable, shareReplay } from 'rxjs';
 
 @Component({
   selector: 'lib-default-layout',
   imports: [
     CommonModule,
     MatSidenavModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatIcon,
-    MatListModule,
-    MatToolbarModule,
     MatDividerModule,
-    RouterModule,
     ThemeColorControlsComponent,
-    UserPhotoControlsComponent,
+    SidenavDefaultHeaderComponent,
+    SidenavDefaultBodyComponent,
   ],
   templateUrl: './default-layout.component.html',
   styleUrl: './default-layout.component.scss',

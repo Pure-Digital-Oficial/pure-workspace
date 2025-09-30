@@ -22,33 +22,9 @@
       height: 100%;
       flex-direction: column;
 
-      .layout-sidenav-list {
-        flex: 1;
-        a {
-          border-radius: 0;
-        }
-      }
-
       .layout-settings-container {
         margin-top: auto;
         margin-bottom: 10px;
-      }
-    }
-  }
-
-  .layout-sidenav-content {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-
-    .layout-toolbar {
-      box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
-      .toolbar-spacer {
-        flex: 1 1 auto;
-      }
-
-      .toolbar-title {
-        font-weight: 600;
       }
     }
   }
