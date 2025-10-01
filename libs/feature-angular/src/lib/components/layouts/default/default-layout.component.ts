@@ -6,9 +6,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { map, Observable, shareReplay } from 'rxjs';
 import { SidenavItem } from '@pure-workspace/domain';
 import {
-  ThemeColorControlsComponent,
   SidenavDefaultHeaderComponent,
   SidenavDefaultBodyComponent,
+  SidenavDefaultFooterComponent,
 } from '../../controls';
 
 @Component({
@@ -17,9 +17,9 @@ import {
     CommonModule,
     MatSidenavModule,
     MatDividerModule,
-    ThemeColorControlsComponent,
     SidenavDefaultHeaderComponent,
     SidenavDefaultBodyComponent,
+    SidenavDefaultFooterComponent,
   ],
   templateUrl: './default-layout.component.html',
   styleUrl: './default-layout.component.scss',
