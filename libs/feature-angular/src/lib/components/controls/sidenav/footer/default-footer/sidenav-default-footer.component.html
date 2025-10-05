@@ -1,1 +1,15 @@
-<lib-theme-color-controls></lib-theme-color-controls>
+<mat-accordion>
+  <mat-expansion-panel
+    (opened)="panelOpenState.set(true)"
+    (closed)="panelOpenState.set(false)"
+  >
+    <mat-expansion-panel-header>Temas</mat-expansion-panel-header>
+    <lib-theme-color-controls></lib-theme-color-controls>
+  </mat-expansion-panel>
+</mat-accordion>
+<section class="footer-signOut">
+  <button mat-fab extended (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    Sair
+  </button>
+</section>

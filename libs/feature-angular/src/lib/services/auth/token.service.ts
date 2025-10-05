@@ -29,4 +29,15 @@ export class TokenService {
   getRefreshToken() {
     return this.storageService.getCookie(environment.refreshTokenKey);
   }
+
+  removeAuthTokens() {
+    this.storageService.deleteCookies([
+      {
+        name: environment.accessTokenKey,
+      },
+      {
+        name: environment.refreshTokenKey,
+      },
+    ]);
+  }
 }

@@ -86,4 +86,10 @@ export class AuthService {
 
     return of(false);
   }
+
+  logout() {
+    this.tokenService.removeAuthTokens();
+    this.session.clearSession();
+    this.router.navigate(['/login']);
+  }
 }
