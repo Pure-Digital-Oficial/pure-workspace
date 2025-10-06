@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  Input,
   signal,
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -25,6 +26,8 @@ import { AuthService } from '../../../../../services';
 export class SidenavDefaultFooterComponent {
   private authService = inject(AuthService);
   readonly panelOpenState = signal(false);
+  @Input() themeTitle = 'Tema';
+  @Input() logoutTitle = 'Sair';
 
   logout() {
     this.authService.logout();

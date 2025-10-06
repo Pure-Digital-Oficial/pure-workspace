@@ -13,5 +13,7 @@
       </section>
     </div>
   </mat-drawer>
-  <lib-sidenav-default-header [drawer]="drawer" [title]="title" />
+  <lib-sidenav-default-header [drawer]="drawer" [title]="title">
+    <ng-content></ng-content>
+  </lib-sidenav-default-header>
 </mat-drawer-container>
