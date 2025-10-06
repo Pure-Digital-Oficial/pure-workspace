@@ -4,8 +4,9 @@
 
 ### Angular
 
-- npm i -D @nx/angular
-- npx nx g @nx/angular:application --name=<nome da aplicação> --directory=apps/front/<nome do diretorio> --routing=true --style=scss --standalone=false --no-interactive
+- npx nx add @nx/angular
+- npx nx g @nx/angular:lib libs/feature-angular
+- npx nx g @nx/angular:app apps/web/angular/a-web-pure-digital
 
 ## React
 

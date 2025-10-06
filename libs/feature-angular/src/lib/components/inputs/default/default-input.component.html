@@ -1,0 +1,21 @@
+<mat-form-field class="input-full-width">
+  <mat-label>{{ label }}</mat-label>
+  <input
+    matInput
+    [type]="hide() ? type : 'text'"
+    [value]="value"
+    [placeholder]="placeholder"
+    (input)="onInput($event)"
+  />
+  @if (type === 'password'){
+  <button
+    mat-icon-button
+    matSuffix
+    (click)="clickEvent($event)"
+    [attr.aria-label]="'Hide password'"
+    [attr.aria-pressed]="hide()"
+  >
+    <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+  </button>
+  }
+</mat-form-field>

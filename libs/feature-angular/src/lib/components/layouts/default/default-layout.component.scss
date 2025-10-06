@@ -1,0 +1,36 @@
+@use '@angular/material' as mat;
+
+:host {
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: var(--mat-sys-primary-container),
+    )
+  );
+}
+
+.layout-container {
+  height: 100%;
+  width: 100%;
+
+  .layout-sidenav {
+    max-width: 200px;
+    border-radius: 0;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
+
+    .layout-sidenav-container {
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+
+      .layout-settings-container {
+        margin-top: auto;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.layout-divider {
+  color: inherit;
+  margin: 0 10px 10px 10px;
+}

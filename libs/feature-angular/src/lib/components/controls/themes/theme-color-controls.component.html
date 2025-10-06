@@ -1,0 +1,19 @@
+<section class="theme-controls-section">
+  <button class="theme-button" mat-fab extended (click)="onModeChanged()">
+    <mat-icon>
+      {{ themeService.darkMode() ? 'dark_mode' : 'light_mode' }}
+    </mat-icon>
+    {{ themeService.darkMode() ? 'Escuro' : 'Claro' }}
+  </button>
+  <mat-select
+    [value]="themeService.selectedTheme()"
+    class="theme-colors-select"
+    (selectionChange)="onThemeSelected($event)"
+  >
+    @for (color of themeService.themeList; track color) {
+    <mat-option [value]="color">{{
+      themeService.getThemeColor(color)?.br
+    }}</mat-option>
+    }
+  </mat-select>
+</section>

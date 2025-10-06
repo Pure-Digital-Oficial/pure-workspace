@@ -12,12 +12,12 @@ services:
       - shared_network
     env_file:
       - .env
-  web-pure-digital:
+  a-web-pure-digital:
     build:
       context: .
-      dockerfile: ./configs/docker/Dockerfile.web-pure-digital
+      dockerfile: ./configs/docker/Dockerfile.a-web-pure-digital
     ports:
-      - '${WEB_PURE_DIGITAL_PORT}:3000'
+      - '${WEB_A_PURE_DIGITAL_PORT}:80'
     environment:
       - NODE_ENV=production
     networks:

@@ -1,0 +1,18 @@
+.theme-controls-section {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .theme-colors-select {
+    width: 130px;
+    font-size: medium;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
+  }
+
+  .theme-button {
+    background-color: transparent;
+    margin-bottom: 1rem;
+  }
+}

@@ -1,0 +1,12 @@
+.test {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  .test-1 {
+    flex: 1;
+  }
+
+  .test-2 {
+    margin-top: auto;
+  }
+}

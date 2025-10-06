@@ -1,0 +1,24 @@
+<lib-auth-layout
+  [title]="'Bem vindo(a) ao Pure Digital'"
+  [primaryBtnText]="'Fazer Login'"
+  [secondaryBtnText]="'Cadastrar usuário'"
+  [logoImage]="'svg/Logo.svg'"
+  [mainImage]="'svg/Login_Image.svg'"
+  (submitted)="onSubmit()"
+>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="inputs-form">
+    <lib-default-input
+      [type]="'email'"
+      [label]="'Email'"
+      [placeholder]="'Digite o Email'"
+      formControlName="email"
+    ></lib-default-input>
+
+    <lib-default-input
+      [type]="'password'"
+      [label]="'Senha'"
+      [placeholder]="'Digite a Senha'"
+      formControlName="password"
+    ></lib-default-input>
+  </form>
+</lib-auth-layout>
