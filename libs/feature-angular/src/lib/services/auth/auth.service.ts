@@ -73,23 +73,25 @@ export class AuthService {
     if (token) {
       return this.session.findSession().pipe(
         map(() => true),
-        catchError(() => of(false))
+        catchError(() =>
+          refreshToken ? this.tryRefresh(refreshToken) : of(false)
+        )
       );
     }
 
-    if (refreshToken) {
-      return this.refresh(refreshToken).pipe(
-        map(() => true),
-        catchError(() => of(false))
-      );
-    }
-
-    return of(false);
+    return refreshToken ? this.tryRefresh(refreshToken) : of(false);
   }
 
   logout() {
     this.tokenService.removeAuthTokens();
     this.session.clearSession();
     this.router.navigate(['/login']);
+  }
+
+  private tryRefresh(refreshToken: string) {
+    return this.refresh(refreshToken).pipe(
+      map(() => true),
+      catchError(() => of(false))
+    );
   }
 }
