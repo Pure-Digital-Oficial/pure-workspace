@@ -5,6 +5,7 @@ export interface TransactionResponseDto {
   type: string;
   status: string;
   value: number;
+  createdBy: string;
   createdAt: Date;
   updatedAt: Date;
 }

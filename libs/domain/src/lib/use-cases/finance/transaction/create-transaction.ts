@@ -8,7 +8,7 @@ import {
 } from '../../../errors';
 import {
   CreateTransactionRepository,
-  FindTransactionByValueAndNameRepository,
+  FindTransactionByNameAndValueRepository,
   FindUserByIdRepository,
 } from '../../../repositories';
 import { UserVerificationId } from '../../../utils';
@@ -23,8 +23,8 @@ export class CreateTransaction
   constructor(
     @Inject('FindUserByIdRepository')
     private findUserByIdRepository: FindUserByIdRepository,
-    @Inject('FindTransactionByValueAndNameRepository')
-    private findTransactionByValueAndNameRepository: FindTransactionByValueAndNameRepository,
+    @Inject('FindTransactionByNameAndValueRepository')
+    private findTransactionByNameAndValueRepository: FindTransactionByNameAndValueRepository,
     @Inject('CreateTransactionRepository')
     private createTransactionRepository: CreateTransactionRepository
   ) {}
@@ -55,7 +55,7 @@ export class CreateTransaction
       return left(new EntityNotEmpty('type'));
     }
 
-    if (Object.keys(value).length < 1) {
+    if (value < 1) {
       return left(new EntityNotEmpty('value'));
     }
 
@@ -69,13 +69,13 @@ export class CreateTransaction
     }
 
     const findedTransaction =
-      await this.findTransactionByValueAndNameRepository.find({
+      await this.findTransactionByNameAndValueRepository.find({
         value,
         name,
         loggedUserId,
       });
 
-    if (Object.keys(findedTransaction).length > 0) {
+    if (Object.keys(findedTransaction.id ?? findedTransaction).length > 0) {
       return left(new EntityAlreadyExists('Transaction'));
     }
 
