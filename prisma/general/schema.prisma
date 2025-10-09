@@ -244,7 +244,7 @@ model fixed_earning {
   @@schema("pure-finance")
 }
 
-model transacion {
+model transaction {
   id           String          @id @default(uuid())
   name         String
   value        Float
@@ -275,7 +275,7 @@ model category_transaction {
 
 
   user user @relation(fields: [user_id], references: [id])
-  transactions transacion[]
+  transactions transaction[]
   category_x_budget category_x_budget[]
 
   @@schema("pure-finance")
