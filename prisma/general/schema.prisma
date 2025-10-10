@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/general"
+  provider        = "prisma-client-js"
+  output          = "../generated/general"
   previewFeatures = ["multiSchema"]
 }
 
@@ -61,18 +61,19 @@ model user {
   updated_at DateTime  @default(now())
   deleted_at DateTime?
 
-  auth              auth[]
-  applications      application_x_user[]
-  deleted           confirm_delete_user[]
-  data              user_data[]
-  contacts          contact_x_user[]
-  triggers          trigger[]
-  shots             shot[]
-  shots_models      shot_model[]
-  target_references target_reference[]
-  fixed_earnings    fixed_earning[]
+  auth                  auth[]
+  applications          application_x_user[]
+  deleted               confirm_delete_user[]
+  data                  user_data[]
+  contacts              contact_x_user[]
+  triggers              trigger[]
+  shots                 shot[]
+  shots_models          shot_model[]
+  target_references     target_reference[]
+  fixed_earnings        fixed_earning[]
   category_transactions category_transaction[]
-  budgets         budget[]
+  budgets               budget[]
+  transactions          transaction[]
 
   @@schema("pure_general")
 }
@@ -258,24 +259,24 @@ model transaction {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
+  user     user                 @relation(fields: [user_id], references: [id])
   category category_transaction @relation(fields: [category_id], references: [id])
 
   @@schema("pure-finance")
 }
 
 model category_transaction {
-  id           String          @id @default(uuid())
-  name         String
-  description  String
-  status       Status          @default(ACTIVE)
-  user_id      String
+  id          String @id @default(uuid())
+  name        String
+  description String
+  status      Status @default(ACTIVE)
+  user_id     String
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-
-  user user @relation(fields: [user_id], references: [id])
-  transactions transaction[]
+  user              user                @relation(fields: [user_id], references: [id])
+  transactions      transaction[]
   category_x_budget category_x_budget[]
 
   @@schema("pure-finance")
@@ -295,15 +296,15 @@ model category_x_budget {
 }
 
 model budget {
-  id           String          @id @default(uuid())
-  status       Status          @default(ACTIVE)
-  user_id      String
+  id          String @id @default(uuid())
+  status      Status @default(ACTIVE)
+  user_id     String
   limit_value Float
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  user user @relation(fields: [user_id], references: [id])
+  user              user                @relation(fields: [user_id], references: [id])
   category_x_budget category_x_budget[]
 
   @@schema("pure-finance")

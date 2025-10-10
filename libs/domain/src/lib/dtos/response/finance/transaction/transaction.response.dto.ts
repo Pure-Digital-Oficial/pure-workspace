@@ -8,4 +8,6 @@ export interface TransactionResponseDto {
   createdBy: string;
   createdAt: Date;
   updatedAt: Date;
+  initialDate?: Date;
+  finalDate?: Date;
 }
