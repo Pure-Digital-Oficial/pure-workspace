@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { TransactionResponseDto } from '../../../../../src';
+import { TransactionResponseDto } from '../../../../index';
 
 export const TransactionMock: TransactionResponseDto = {
   id: faker.string.uuid(),

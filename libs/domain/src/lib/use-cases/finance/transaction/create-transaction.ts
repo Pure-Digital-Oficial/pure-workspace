@@ -5,9 +5,11 @@ import {
   EntityAlreadyExists,
   EntityNotCreated,
   EntityNotEmpty,
+  EntityNotExists,
 } from '../../../errors';
 import {
   CreateTransactionRepository,
+  FindCategoryTransactionByIdRepository,
   FindTransactionByNameAndValueRepository,
   FindUserByIdRepository,
 } from '../../../repositories';
@@ -17,7 +19,13 @@ export class CreateTransaction
   implements
     UseCase<
       CreateTransactionDto,
-      Either<EntityNotEmpty | EntityAlreadyExists | EntityNotCreated, string>
+      Either<
+        | EntityNotEmpty
+        | EntityAlreadyExists
+        | EntityNotExists
+        | EntityNotCreated,
+        string
+      >
     >
 {
   constructor(
@@ -25,15 +33,20 @@ export class CreateTransaction
     private findUserByIdRepository: FindUserByIdRepository,
     @Inject('FindTransactionByNameAndValueRepository')
     private findTransactionByNameAndValueRepository: FindTransactionByNameAndValueRepository,
+    @Inject('FindCategoryTransactionByIdRepository')
+    private findCategoryTransactionByIdRepository: FindCategoryTransactionByIdRepository,
     @Inject('CreateTransactionRepository')
     private createTransactionRepository: CreateTransactionRepository
   ) {}
   async execute(
     input: CreateTransactionDto
   ): Promise<
-    Either<EntityNotEmpty | EntityAlreadyExists | EntityNotCreated, string>
+    Either<
+      EntityNotEmpty | EntityAlreadyExists | EntityNotExists | EntityNotCreated,
+      string
+    >
   > {
-    const { categoryId, name, status, type, loggedUserId, value } = input;
+    const { categoryId, name, type, loggedUserId, value } = input;
 
     if (Object.keys(loggedUserId).length < 1) {
       return left(new EntityNotEmpty('user ID'));
@@ -45,10 +58,6 @@ export class CreateTransaction
 
     if (Object.keys(name).length < 1) {
       return left(new EntityNotEmpty('name'));
-    }
-
-    if (Object.keys(status).length < 1) {
-      return left(new EntityNotEmpty('status'));
     }
 
     if (Object.keys(type).length < 1) {
@@ -77,6 +86,13 @@ export class CreateTransaction
 
     if (Object.keys(findedTransaction.id ?? findedTransaction).length > 0) {
       return left(new EntityAlreadyExists('Transaction'));
+    }
+
+    const findedCategory =
+      await this.findCategoryTransactionByIdRepository.find(categoryId);
+
+    if (Object.keys(findedCategory.id ?? findedCategory).length < 1) {
+      return left(new EntityNotExists('category ID'));
     }
 
     const createdTransaction = await this.createTransactionRepository.create(

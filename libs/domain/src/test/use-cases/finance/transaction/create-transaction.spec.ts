@@ -1,4 +1,8 @@
-import { CreateTransactionDto, UserResponseDto } from '@/dtos';
+import {
+  CategoryTransactionResponseDto,
+  CreateTransactionDto,
+  UserResponseDto,
+} from '@/dtos';
 import {
   EntityAlreadyExists,
   EntityNotCreated,
@@ -7,16 +11,18 @@ import {
 } from '@/errors';
 import {
   CreateTransactionRepository,
+  FindCategoryTransactionByIdRepository,
   FindTransactionByNameAndValueRepository,
   FindUserByIdRepository,
 } from '@/repositories';
 import { TransactionMock } from '@/test/entities';
 import {
   CreateTransactionRepositoryMock,
+  FindCategoryTransactionByIdRepositoryMock,
   FindTransactionByNameAndValueRepositoryMock,
   FindUserByIdRepositoryMock,
 } from '@/test/repositories';
-import { GeneralStatus, TransactionType } from '@/types';
+import { TransactionType } from '@/types';
 import { CreateTransaction } from '@/use-cases';
 
 interface SutTypes {
@@ -24,6 +30,7 @@ interface SutTypes {
   createTransactionDto: CreateTransactionDto;
   findUserByIdRepository: FindUserByIdRepository;
   findTransactionByNameAndValueRepository: FindTransactionByNameAndValueRepository;
+  findCategoryTransactionByIdRepository: FindCategoryTransactionByIdRepository;
   createTransactionRepository: CreateTransactionRepository;
 }
 
@@ -31,12 +38,13 @@ const makeSut = (): SutTypes => {
   const findUserByIdRepository = new FindUserByIdRepositoryMock();
   const findTransactionByNameAndValueRepository =
     new FindTransactionByNameAndValueRepositoryMock();
+  const findCategoryTransactionByIdRepository =
+    new FindCategoryTransactionByIdRepositoryMock();
   const createTransactionRepository = new CreateTransactionRepositoryMock();
 
   const createTransactionDto: CreateTransactionDto = {
     categoryId: TransactionMock.category,
     name: TransactionMock.name,
-    status: TransactionMock.status as GeneralStatus,
     type: TransactionMock.type as TransactionType,
     value: TransactionMock.value,
     loggedUserId: TransactionMock.createdBy,
@@ -45,6 +53,7 @@ const makeSut = (): SutTypes => {
   const sut = new CreateTransaction(
     findUserByIdRepository,
     findTransactionByNameAndValueRepository,
+    findCategoryTransactionByIdRepository,
     createTransactionRepository
   );
 
@@ -53,6 +62,7 @@ const makeSut = (): SutTypes => {
     createTransactionDto,
     findUserByIdRepository,
     findTransactionByNameAndValueRepository,
+    findCategoryTransactionByIdRepository,
     createTransactionRepository,
   };
 };
@@ -98,16 +108,6 @@ describe('CreateTransaction', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass empty status in createTransactionDto object', async () => {
-    const { createTransactionDto, sut } = makeSut();
-    createTransactionDto.status = '' as GeneralStatus;
-    const result = await sut.execute(createTransactionDto);
-
-    expect(result.isLeft()).toBeTruthy();
-    expect(result.isRight()).toBeFalsy();
-    expect(result.value).toBeInstanceOf(EntityNotEmpty);
-  });
-
   it('should return EntityNotEmpty when pass empty type in createTransactionDto object', async () => {
     const { createTransactionDto, sut } = makeSut();
     createTransactionDto.type = '' as TransactionType;
@@ -133,6 +133,18 @@ describe('CreateTransaction', () => {
     jest
       .spyOn(sut['findUserByIdRepository'], 'find')
       .mockResolvedValueOnce({} as UserResponseDto);
+    const result = await sut.execute(createTransactionDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityNotExists);
+  });
+
+  it('should return EntityNotExists when not exists category transaction in the database', async () => {
+    const { createTransactionDto, sut } = makeSut();
+    jest
+      .spyOn(sut['findCategoryTransactionByIdRepository'], 'find')
+      .mockResolvedValueOnce({} as CategoryTransactionResponseDto);
     const result = await sut.execute(createTransactionDto);
 
     expect(result.isLeft()).toBeTruthy();
