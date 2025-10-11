@@ -1,17 +1,15 @@
+import { Inject } from '@nestjs/common';
+import { PrismaService } from 'nestjs-prisma';
 import {
   FindTransactionByNameAndValueDto,
   FindTransactionByNameAndValueRepository,
   TransactionResponseDto,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../application';
-import { Inject } from '@nestjs/common';
 
 export class FindTransactionByNameAndValueRepositoryImpl
   implements FindTransactionByNameAndValueRepository
 {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async find(
     input: FindTransactionByNameAndValueDto
   ): Promise<TransactionResponseDto> {

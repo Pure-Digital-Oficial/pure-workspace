@@ -1,16 +1,14 @@
 import { Inject } from '@nestjs/common';
+import { PrismaService } from 'nestjs-prisma';
 import {
   CreateTransactionDto,
   CreateTransactionRepository,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../application';
 
 export class CreateTransactionRepositoryImpl
   implements CreateTransactionRepository
 {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async create(input: CreateTransactionDto): Promise<string> {
     const {
       categoryId,
