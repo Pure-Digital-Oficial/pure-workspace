@@ -12,7 +12,7 @@ import {
   userIdQuerySchema,
   CreateTransactionDto,
 } from '@pure-workspace/domain';
-import { JwtAdminGuard } from '@pure-workspace/data-access';
+import { JwtAuthGuard } from '@pure-workspace/data-access';
 import { ZodValidationPipe } from '../../pipes';
 import { CreateTransactionService } from './create-transaction.service';
 
@@ -27,7 +27,7 @@ export class CreateTransactionController {
       body: transactionBodySchema,
     })
   )
-  @UseGuards(JwtAdminGuard)
+  @UseGuards(JwtAuthGuard)
   async create(
     @Query() query: { userId: string },
     @Body() input: Omit<CreateTransactionDto, 'loggedUserId'>
