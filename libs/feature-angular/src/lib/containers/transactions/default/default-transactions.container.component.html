@@ -1,6 +1,9 @@
 <lib-default-layout [title]="title" [menuItems]="menuItems">
-  <section class="test">
-    <div class="test-1">aa</div>
-    <div class="test-2">ab</div>
+  <section class="transaction-container">
+    <mat-list role="list" class="transaction-list">
+      @for (transaction of transactions; track transaction) {
+      <lib-list-item-transaction-controls [transaction]="transaction" />
+      }
+    </mat-list>
   </section>
 </lib-default-layout>

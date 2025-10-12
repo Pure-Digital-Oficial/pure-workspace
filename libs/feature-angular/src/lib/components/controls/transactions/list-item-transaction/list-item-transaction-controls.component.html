@@ -1,0 +1,19 @@
+<mat-list-item class="transaction-item">
+  <div class="transaction-item-header">
+    <span>Titulo: {{ transaction().name }}</span>
+    <span>Tipo: {{ transaction().type }}</span>
+  </div>
+  <div class="transaction-item-body">
+    <span class="transaction-item-value"
+      >Valor: {{ value() | currency : 'BRL' }}</span
+    >
+
+    <div class="transaction-item-date">
+      <span>Criado em: {{ transaction().createdAt | date : 'shortDate' }}</span>
+      <span
+        >Editado em: {{ transaction().updatedAt | date : 'shortDate' }}</span
+      >
+    </div>
+  </div>
+</mat-list-item>
+<mat-divider />

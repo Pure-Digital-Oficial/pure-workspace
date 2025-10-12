@@ -1,0 +1,10 @@
+.transaction-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  .transaction-list {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
+}

@@ -1,0 +1,27 @@
+.transaction-item {
+  width: 100%;
+  height: 80px;
+  margin-bottom: 10px;
+  .transaction-item-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+
+  .transaction-item-body {
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .transaction-item-value {
+      font-size: large;
+      font-weight: 600;
+    }
+
+    .transaction-item-date {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
