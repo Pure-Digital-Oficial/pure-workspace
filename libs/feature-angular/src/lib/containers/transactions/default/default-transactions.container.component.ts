@@ -1,12 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, inject, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SidenavItem, TransactionResponseDto } from '@pure-workspace/domain';
+import { SidenavItem } from '@pure-workspace/domain';
 import { MatListModule } from '@angular/material/list';
 import {
   DefaultLayoutComponent,
   ListItemTransactionControlsComponent,
 } from '../../../components';
-import { AuthService } from '../../../services';
+import { AuthService, TransactionService } from '../../../services';
 
 @Component({
   selector: 'lib-default-transactions-container',
@@ -20,37 +20,19 @@ import { AuthService } from '../../../services';
   styleUrl: './default-transactions.container.component.scss',
 })
 export class DefaultTransactionsContainerComponent {
+  private transactionService = inject(TransactionService);
   @Input() title = '';
   @Input() menuItems: SidenavItem[] = [];
-  transactions: TransactionResponseDto[] = [
-    {
-      id: '1',
-      category: 'categoria aa',
-      createdAt: new Date(),
-      createdBy: 'Erick',
-      name: 'Contas mensais',
-      status: 'ACTIVE',
-      type: 'DEPOSIT',
-      updatedAt: new Date(),
-      value: 12,
-    },
-    {
-      id: '2',
-      category: 'categoria aa1',
-      createdAt: new Date(),
-      createdBy: 'Erick 2',
-      name: 'Contas mensais 2',
-      status: 'ACTIVE',
-      type: 'WITHDRAW',
-      updatedAt: new Date(),
-      value: 12,
-    },
-  ];
+  transactions = computed(
+    () => this.transactionService.transactions().transactions
+  );
 
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data) => {
       this.menuItems = data['menuItems'] || [];
       this.title = data['title'] || '';
     });
+
+    this.transactionService.listTransactions().subscribe();
   }
 }

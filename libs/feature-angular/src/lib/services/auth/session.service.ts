@@ -10,7 +10,7 @@ import { catchError, of, tap, throwError } from 'rxjs';
 export class SessionService {
   private httpClient = inject(HttpClient);
   private _session = signal<Partial<SessionResponseDto>>({});
-  apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrl;
 
   session = this._session.asReadonly();
 

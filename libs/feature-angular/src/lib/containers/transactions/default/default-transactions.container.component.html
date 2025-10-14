@@ -1,7 +1,7 @@
 <lib-default-layout [title]="title" [menuItems]="menuItems">
   <section class="transaction-container">
     <mat-list role="list" class="transaction-list">
-      @for (transaction of transactions; track transaction) {
+      @for (transaction of transactions(); track transaction) {
       <lib-list-item-transaction-controls [transaction]="transaction" />
       }
     </mat-list>
