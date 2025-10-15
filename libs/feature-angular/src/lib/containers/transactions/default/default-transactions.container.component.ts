@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input } from '@angular/core';
+import { Component, computed, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SidenavItem } from '@pure-workspace/domain';
 import { MatListModule } from '@angular/material/list';
@@ -21,7 +21,7 @@ import { AuthService, TransactionService } from '../../../services';
   templateUrl: './default-transactions.container.component.html',
   styleUrl: './default-transactions.container.component.scss',
 })
-export class DefaultTransactionsContainerComponent {
+export class DefaultTransactionsContainerComponent implements OnInit {
   private transactionService = inject(TransactionService);
   @Input() title = '';
   @Input() menuItems: SidenavItem[] = [];
@@ -34,7 +34,9 @@ export class DefaultTransactionsContainerComponent {
       this.menuItems = data['menuItems'] || [];
       this.title = data['title'] || '';
     });
+  }
 
+  ngOnInit(): void {
     this.transactionService.listTransactions().subscribe();
   }
 

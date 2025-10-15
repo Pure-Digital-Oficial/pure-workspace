@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { catchError, of, tap, throwError } from 'rxjs';
+import { catchError, of, switchMap, tap, throwError } from 'rxjs';
 import { ListTransactionsResponseDto } from '@pure-workspace/domain';
 import { environment } from '../../../environments';
 import { SessionService } from '../../auth';
@@ -31,23 +31,31 @@ export class TransactionService {
       return of(this.__transactions());
     }
 
-    return this.httpClient
-      .get<ListTransactionsResponseDto>(
-        this.apiUrl + '/transaction/list-transactions',
-        {
-          params: {
-            userId: this.session.getSession().id ?? '',
-          },
+    return this.session.findSession().pipe(
+      switchMap((session) => {
+        if (!session.id) {
+          throw new Error('User ID not available');
         }
-      )
-      .pipe(
-        tap((value) => {
-          return this.updateTransactions(value);
-        }),
-        catchError((error) => {
-          console.error('Erro na listagem de transacoes:', error);
-          return throwError(() => error);
-        })
-      );
+
+        return this.httpClient
+          .get<ListTransactionsResponseDto>(
+            this.apiUrl + '/transaction/list-transactions',
+            {
+              params: {
+                userId: session.id,
+              },
+            }
+          )
+          .pipe(
+            tap((value) => {
+              this.updateTransactions(value);
+            }),
+            catchError((error) => {
+              console.error('Erro na listagem de transacoes:', error);
+              return throwError(() => error);
+            })
+          );
+      })
+    );
   }
 }
