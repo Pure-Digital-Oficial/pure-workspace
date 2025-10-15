@@ -1,4 +1,10 @@
 <lib-default-layout [title]="title" [menuItems]="menuItems">
+  <section class="transaction-search-container">
+    <lib-default-search-bar-controls
+      (valueChange)="onSearchValueChange($event)"
+      (action)="action()"
+    />
+  </section>
   <section class="transaction-container">
     <mat-list role="list" class="transaction-list">
       @for (transaction of transactions(); track transaction) {

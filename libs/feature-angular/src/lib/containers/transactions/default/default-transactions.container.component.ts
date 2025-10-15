@@ -5,6 +5,7 @@ import { MatListModule } from '@angular/material/list';
 import {
   DefaultLayoutComponent,
   ListItemTransactionControlsComponent,
+  DefaultSearchBarControlsComponent,
 } from '../../../components';
 import { AuthService, TransactionService } from '../../../services';
 
@@ -14,6 +15,7 @@ import { AuthService, TransactionService } from '../../../services';
     MatListModule,
     DefaultLayoutComponent,
     ListItemTransactionControlsComponent,
+    DefaultSearchBarControlsComponent,
   ],
   providers: [AuthService],
   templateUrl: './default-transactions.container.component.html',
@@ -34,5 +36,13 @@ export class DefaultTransactionsContainerComponent {
     });
 
     this.transactionService.listTransactions().subscribe();
+  }
+
+  action() {
+    console.log('clicou');
+  }
+
+  onSearchValueChange(value: string) {
+    console.log('Valor digitado:', value);
   }
 }
