@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { catchError, of, switchMap, tap, throwError } from 'rxjs';
-import { ListTransactionsResponseDto } from '@pure-workspace/domain';
+import {
+  ListTransactionFiltersDto,
+  ListTransactionsResponseDto,
+} from '@pure-workspace/domain';
 import { environment } from '../../../environments';
 import { SessionService } from '../../auth';
 
@@ -26,11 +29,22 @@ export class TransactionService {
     this.__transactions.set({} as ListTransactionsResponseDto);
   }
 
+  findTransactionByFilter(filter: ListTransactionFiltersDto) {
+    return this.fetchTransactions(filter);
+  }
+
   listTransactions() {
     if (this.__transactions().total > 0) {
       return of(this.__transactions());
     }
 
+    return this.fetchTransactions();
+  }
+
+  private fetchTransactions(
+    filters?: ListTransactionFiltersDto,
+    updateCache = true
+  ) {
     return this.session.findSession().pipe(
       switchMap((session) => {
         if (!session.id) {
@@ -38,20 +52,21 @@ export class TransactionService {
         }
 
         return this.httpClient
-          .get<ListTransactionsResponseDto>(
-            this.apiUrl + '/transaction/list-transactions',
+          .post<ListTransactionsResponseDto>(
+            `${this.apiUrl}/transaction/list-transactions`,
+            filters ? { filters: filters } : {},
             {
-              params: {
-                userId: session.id,
-              },
+              params: { userId: session.id as string },
             }
           )
           .pipe(
-            tap((value) => {
-              this.updateTransactions(value);
+            tap((response) => {
+              if (updateCache) {
+                this.updateTransactions(response);
+              }
             }),
             catchError((error) => {
-              console.error('Erro na listagem de transacoes:', error);
+              console.error('Erro na listagem de transações:', error);
               return throwError(() => error);
             })
           );

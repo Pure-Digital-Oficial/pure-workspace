@@ -45,6 +45,10 @@ export class DefaultTransactionsContainerComponent implements OnInit {
   }
 
   onSearchValueChange(value: string) {
-    console.log('Valor digitado:', value);
+    this.transactionService
+      .findTransactionByFilter({
+        name: value,
+      })
+      .subscribe();
   }
 }

@@ -1,7 +1,7 @@
 import {
   Body,
   Controller,
-  Get,
+  Post,
   Query,
   UseGuards,
   UsePipes,
@@ -20,7 +20,7 @@ import { ListTransactionsService } from './list-transactions.service';
 export class ListTransactionsController {
   constructor(private listTransactionsService: ListTransactionsService) {}
 
-  @Get()
+  @Post()
   @UsePipes(
     new ZodValidationPipe({
       query: userIdQuerySchema,
