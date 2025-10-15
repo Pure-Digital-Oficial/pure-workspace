@@ -1,11 +1,13 @@
 import { Component, computed, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SidenavItem } from '@pure-workspace/domain';
 import { MatListModule } from '@angular/material/list';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { SidenavItem } from '@pure-workspace/domain';
 import {
   DefaultLayoutComponent,
   ListItemTransactionControlsComponent,
   DefaultSearchBarControlsComponent,
+  CreateTransactionModalComponent,
 } from '../../../components';
 import { AuthService, TransactionService } from '../../../services';
 
@@ -13,6 +15,7 @@ import { AuthService, TransactionService } from '../../../services';
   selector: 'lib-default-transactions-container',
   imports: [
     MatListModule,
+    MatDialogModule,
     DefaultLayoutComponent,
     ListItemTransactionControlsComponent,
     DefaultSearchBarControlsComponent,
@@ -23,6 +26,7 @@ import { AuthService, TransactionService } from '../../../services';
 })
 export class DefaultTransactionsContainerComponent implements OnInit {
   private transactionService = inject(TransactionService);
+  private dialogService = inject(MatDialog);
   @Input() title = '';
   @Input() menuItems: SidenavItem[] = [];
   transactions = computed(
@@ -40,8 +44,8 @@ export class DefaultTransactionsContainerComponent implements OnInit {
     this.transactionService.listTransactions().subscribe();
   }
 
-  action() {
-    console.log('clicou');
+  createTransactionAction() {
+    this.dialogService.open(CreateTransactionModalComponent);
   }
 
   onSearchValueChange(value: string) {
