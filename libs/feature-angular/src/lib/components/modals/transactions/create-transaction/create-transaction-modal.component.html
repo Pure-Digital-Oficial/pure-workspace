@@ -1,2 +1,50 @@
-<h2 mat-dialog-title>Cadastrar Transação</h2>
-<mat-dialog-content> Teste </mat-dialog-content>
+<div class="transaction-modal-header">
+  <h2 mat-dialog-title>Cadastrar Transação</h2>
+  <button
+    mat-icon-button
+    mat-dialog-close
+    class="transaction-modal-header-close-button"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content class="transaction-modal-container">
+  <form [formGroup]="form" class="transacion-modal-form">
+    <lib-default-input
+      [type]="'text'"
+      [label]="'Nome'"
+      [placeholder]="'Digite o nome da transação'"
+      formControlName="name"
+    ></lib-default-input>
+    <lib-default-input
+      [type]="'number'"
+      [label]="'Valor'"
+      [placeholder]="'Digite o valor da transação'"
+      formControlName="value"
+    ></lib-default-input>
+    <div class="transaction-modal-select">
+      <mat-form-field class="transaction-modal-select-item">
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="categoryId">
+          <mat-option
+            *ngFor="let category of categories()"
+            [value]="category.id"
+          >
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="transaction-modal-select-item">
+        <mat-label>Tipo transação</mat-label>
+        <mat-select formControlName="type">
+          <mat-option value="WITHDRAW">SAQUE</mat-option>
+          <mat-option value="DEPOSIT">DEPÓSITO</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="onSubmit()">Cadastrar</button>
+</mat-dialog-actions>

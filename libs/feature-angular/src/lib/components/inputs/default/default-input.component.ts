@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-type InputTypes = 'text' | 'email' | 'password';
+type InputTypes = 'text' | 'email' | 'password' | 'number';
 
 @Component({
   selector: 'lib-default-input',
