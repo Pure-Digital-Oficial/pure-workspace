@@ -7,7 +7,7 @@
   </section>
   <section class="transaction-container">
     <mat-list role="list" class="transaction-list">
-      @for (transaction of transactions(); track transaction) {
+      @for (transaction of transactions(); track transaction.id) {
       <lib-list-item-transaction-controls [transaction]="transaction" />
       }
     </mat-list>

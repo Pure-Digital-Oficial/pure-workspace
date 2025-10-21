@@ -9,7 +9,7 @@ import {
   DefaultSearchBarControlsComponent,
   CreateTransactionModalComponent,
 } from '../../../components';
-import { AuthService, TransactionService } from '../../../services';
+import { AuthService, TransactionsService } from '../../../services';
 
 @Component({
   selector: 'lib-default-transactions-container',
@@ -25,12 +25,12 @@ import { AuthService, TransactionService } from '../../../services';
   styleUrl: './default-transactions.container.component.scss',
 })
 export class DefaultTransactionsContainerComponent implements OnInit {
-  private transactionService = inject(TransactionService);
+  private transactionsService = inject(TransactionsService);
   private dialogService = inject(MatDialog);
   @Input() title = '';
   @Input() menuItems: SidenavItem[] = [];
   transactions = computed(
-    () => this.transactionService.transactions().transactions
+    () => this.transactionsService.transactions().transactions
   );
 
   constructor(private route: ActivatedRoute) {
@@ -41,7 +41,7 @@ export class DefaultTransactionsContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.transactionService.listTransactions().subscribe();
+    this.transactionsService.listTransactions().subscribe();
   }
 
   createTransactionAction() {
@@ -49,7 +49,7 @@ export class DefaultTransactionsContainerComponent implements OnInit {
   }
 
   onSearchValueChange(value: string) {
-    this.transactionService
+    this.transactionsService
       .findTransactionByFilter({
         name: value,
       })

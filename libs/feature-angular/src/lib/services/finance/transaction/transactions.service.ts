@@ -11,7 +11,7 @@ import { SessionService } from '../../auth';
 @Injectable({
   providedIn: 'root',
 })
-export class TransactionService {
+export class TransactionsService {
   private httpClient = inject(HttpClient);
   private session = inject(SessionService);
   private __transactions = signal<ListTransactionsResponseDto>(
@@ -33,12 +33,21 @@ export class TransactionService {
     return this.fetchTransactions(filter);
   }
 
-  listTransactions() {
-    if (this.__transactions().total > 0) {
-      return of(this.__transactions());
+  listTransactions(id?: string) {
+    const cached = this.__transactions();
+
+    if (!cached || cached.total !== 0) {
+      return this.fetchTransactions();
     }
 
-    return this.fetchTransactions();
+    if (id) {
+      const exists = cached.transactions.some((t) => t.id === id);
+      if (!exists) {
+        return this.fetchTransactions();
+      }
+    }
+
+    return of(cached);
   }
 
   private fetchTransactions(
