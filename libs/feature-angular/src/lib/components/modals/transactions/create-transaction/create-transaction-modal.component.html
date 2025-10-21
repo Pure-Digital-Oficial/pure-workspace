@@ -11,12 +11,14 @@
 <mat-dialog-content class="transaction-modal-container">
   <form [formGroup]="form" class="transacion-modal-form">
     <lib-default-input
+      [required]="true"
       [type]="'text'"
       [label]="'Nome'"
       [placeholder]="'Digite o nome da transação'"
       formControlName="name"
     ></lib-default-input>
     <lib-default-input
+      [required]="true"
       [type]="'number'"
       [label]="'Valor'"
       [placeholder]="'Digite o valor da transação'"

@@ -24,6 +24,7 @@ export class DefaultInputComponent {
   @Input() label = '';
   @Input() placeholder = '';
   @Input() type: InputTypes = 'text';
+  @Input() required = false;
   hide = signal(true);
 
   value = '';
