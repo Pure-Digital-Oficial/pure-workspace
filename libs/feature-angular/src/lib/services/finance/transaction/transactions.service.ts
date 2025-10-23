@@ -3,6 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { catchError, of, switchMap, tap, throwError } from 'rxjs';
 import {
   ListTransactionFiltersDto,
+  ListTransactionsDto,
   ListTransactionsResponseDto,
 } from '@pure-workspace/domain';
 import { environment } from '../../../environments';
@@ -30,7 +31,13 @@ export class TransactionsService {
   }
 
   findTransactionByFilter(filter: ListTransactionFiltersDto) {
-    return this.fetchTransactions(filter);
+    return this.fetchTransactions({ filters: filter });
+  }
+
+  listTransactionsWithPaginated(
+    input: Pick<ListTransactionsDto, 'skip' | 'take'>
+  ) {
+    return this.fetchTransactions(input);
   }
 
   listTransactions(id?: string) {
@@ -51,7 +58,10 @@ export class TransactionsService {
   }
 
   private fetchTransactions(
-    filters?: ListTransactionFiltersDto,
+    listTransactionsDto?: Pick<
+      ListTransactionsDto,
+      'skip' | 'take' | 'filters'
+    >,
     updateCache = true
   ) {
     return this.session.findSession().pipe(
@@ -63,7 +73,16 @@ export class TransactionsService {
         return this.httpClient
           .post<ListTransactionsResponseDto>(
             `${this.apiUrl}/transaction/list-transactions`,
-            filters ? { filters: filters } : {},
+            listTransactionsDto?.filters
+              ? {
+                  filters: listTransactionsDto.filters,
+                  take: listTransactionsDto?.take,
+                  skip: listTransactionsDto?.skip,
+                }
+              : {
+                  take: listTransactionsDto?.take,
+                  skip: listTransactionsDto?.skip,
+                },
             {
               params: { userId: session.id as string },
             }

@@ -2,6 +2,7 @@ import { Component, computed, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 import { SidenavItem } from '@pure-workspace/domain';
 import {
   DefaultLayoutComponent,
@@ -16,6 +17,7 @@ import { AuthService, TransactionsService } from '../../../services';
   imports: [
     MatListModule,
     MatDialogModule,
+    MatPaginatorModule,
     DefaultLayoutComponent,
     ListItemTransactionControlsComponent,
     DefaultSearchBarControlsComponent,
@@ -29,6 +31,12 @@ export class DefaultTransactionsContainerComponent implements OnInit {
   private dialogService = inject(MatDialog);
   @Input() title = '';
   @Input() menuItems: SidenavItem[] = [];
+  pageSizeOptions = [6, 10, 25];
+  pageIndex = 0;
+  totalLength = computed(() => this.transactionsService.transactions().total);
+  pageEvent: PageEvent = {} as PageEvent;
+  pageSize = 6;
+
   transactions = computed(
     () => this.transactionsService.transactions().transactions
   );
@@ -53,6 +61,22 @@ export class DefaultTransactionsContainerComponent implements OnInit {
       .findTransactionByFilter({
         name: value,
       })
+      .subscribe();
+  }
+
+  onPageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+
+    const skip = e.pageIndex * e.pageSize;
+    const take = e.pageSize;
+    this.featchTransactions(skip, take);
+  }
+
+  private featchTransactions(skip: number, take: number) {
+    this.transactionsService
+      .listTransactionsWithPaginated({ skip, take })
       .subscribe();
   }
 }

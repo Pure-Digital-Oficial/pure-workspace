@@ -8,3 +8,11 @@
     width: 80%;
   }
 }
+.transaction-paginator-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  mat-paginator {
+    width: 80%;
+  }
+}

@@ -5,6 +5,18 @@
       (action)="createTransactionAction()"
     />
   </section>
+  <section class="transaction-paginator-container">
+    <mat-paginator
+      #paginators
+      [length]="totalLength()"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="pageIndex"
+      [pageSize]="pageSize"
+      (page)="onPageEvent($event)"
+      aria-label="Seletor de página"
+    >
+    </mat-paginator>
+  </section>
   <section class="transaction-container">
     <mat-list role="list" class="transaction-list">
       @for (transaction of transactions(); track transaction.id) {
