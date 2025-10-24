@@ -1,14 +1,16 @@
-<section class="search-container">
-  <div class="search-input">
-    <input
-      type="text"
-      [value]="searchValue"
-      (input)="onInputChange($event)"
-      (keyup.enter)="onEnter()"
-      placeholder="Pesquisar..."
-    />
+<section class="search-section">
+  <div class="search-container">
+    <div class="search-input">
+      <input
+        type="text"
+        [value]="searchValue"
+        (input)="onInputChange($event)"
+        (keyup.enter)="onEnter()"
+        placeholder="Pesquisar..."
+      />
+    </div>
+    <button mat-fab aria-label="search-icon" (click)="onButtonClick()">
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
-  <button mat-fab aria-label="search-icon" (click)="onButtonClick()">
-    <mat-icon>add</mat-icon>
-  </button>
 </section>
