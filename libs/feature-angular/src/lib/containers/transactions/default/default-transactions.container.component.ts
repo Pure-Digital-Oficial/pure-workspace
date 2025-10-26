@@ -7,8 +7,8 @@ import { SidenavItem } from '@pure-workspace/domain';
 import {
   DefaultLayoutComponent,
   ListItemTransactionControlsComponent,
-  DefaultSearchBarControlsComponent,
   CreateTransactionModalComponent,
+  ListLayoutComponent,
 } from '../../../components';
 import { AuthService, TransactionsService } from '../../../services';
 
@@ -20,7 +20,7 @@ import { AuthService, TransactionsService } from '../../../services';
     MatPaginatorModule,
     DefaultLayoutComponent,
     ListItemTransactionControlsComponent,
-    DefaultSearchBarControlsComponent,
+    ListLayoutComponent,
   ],
   providers: [AuthService],
   templateUrl: './default-transactions.container.component.html',
@@ -31,11 +31,10 @@ export class DefaultTransactionsContainerComponent implements OnInit {
   private dialogService = inject(MatDialog);
   @Input() title = '';
   @Input() menuItems: SidenavItem[] = [];
-  pageSizeOptions = [6, 10, 25];
   pageIndex = 0;
+  pageSize = 6;
   totalLength = computed(() => this.transactionsService.transactions().total);
   pageEvent: PageEvent = {} as PageEvent;
-  pageSize = 6;
 
   transactions = computed(
     () => this.transactionsService.transactions().transactions
