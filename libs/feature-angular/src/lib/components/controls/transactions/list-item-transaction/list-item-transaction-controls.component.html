@@ -1,19 +1,43 @@
 <mat-list-item class="transaction-item">
-  <div class="transaction-item-header">
-    <span>Titulo: {{ transaction().name }}</span>
-    <span>Tipo: {{ transaction().type }}</span>
-  </div>
-  <div class="transaction-item-body">
-    <span class="transaction-item-value"
-      >Valor: {{ value() | currency : 'BRL' }}</span
-    >
+  <div class="transaction-item-container">
+    <div class="transaction-item-body-container">
+      <div class="transaction-item-header">
+        <span>Titulo: {{ transaction().name }}</span>
+        <span>Tipo: {{ transaction().type }}</span>
+      </div>
+      <div class="transaction-item-body">
+        <span class="transaction-item-value"
+          >Valor: {{ value() | currency : 'BRL' }}</span
+        >
 
-    <div class="transaction-item-date">
-      <span>Criado em: {{ transaction().createdAt | date : 'shortDate' }}</span>
-      <span
-        >Editado em: {{ transaction().updatedAt | date : 'shortDate' }}</span
-      >
+        <div class="transaction-item-date">
+          <span
+            >Criado em: {{ transaction().createdAt | date : 'shortDate' }}</span
+          >
+          <span
+            >Editado em:
+            {{ transaction().updatedAt | date : 'shortDate' }}</span
+          >
+        </div>
+      </div>
     </div>
+    <button
+      mat-icon-button
+      aria-label="search-clear-icon"
+      [matMenuTriggerFor]="menu"
+    >
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        <span>Editar</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>Deletar</span>
+      </button>
+    </mat-menu>
   </div>
 </mat-list-item>
 <mat-divider />
