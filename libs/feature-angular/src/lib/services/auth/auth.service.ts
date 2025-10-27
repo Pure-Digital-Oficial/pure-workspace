@@ -14,8 +14,7 @@ export class AuthService {
   private httpClient = inject(HttpClient);
   private router = inject(Router);
   private session = inject(SessionService);
-
-  apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrl;
 
   login(email: string, password: string) {
     return this.httpClient

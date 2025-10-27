@@ -1,0 +1,24 @@
+<section class="search-section">
+  <div class="search-container">
+    <div class="search-input">
+      <input
+        type="text"
+        [value]="searchValue"
+        (input)="onInputChange($event)"
+        (keyup.enter)="onEnter()"
+        placeholder="Pesquisar..."
+      />
+      <button
+        *ngIf="searchValue"
+        mat-icon-button
+        aria-label="search-clear-icon"
+        (click)="onClearClick()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <button mat-fab aria-label="search-icon" (click)="onButtonClick()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</section>

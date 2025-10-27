@@ -1,3 +1,4 @@
 export * from './controls';
 export * from './layouts';
 export * from './inputs';
+export * from './modals';

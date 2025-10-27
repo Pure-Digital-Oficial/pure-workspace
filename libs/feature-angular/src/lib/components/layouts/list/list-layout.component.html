@@ -1,0 +1,23 @@
+<section class="search-container">
+  <lib-default-search-bar-controls
+    (valueChange)="onSearchChange($event)"
+    (action)="onCreate()"
+  />
+</section>
+<section class="paginator-container">
+  <mat-paginator
+    #paginators
+    [length]="length"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageIndex]="pageIndex"
+    [pageSize]="pageSize"
+    (page)="onPageEvent($event)"
+    [ariaLabel]="ariaLabel"
+  >
+  </mat-paginator>
+</section>
+<section class="list-container">
+  <mat-list role="list" class="list">
+    <ng-content></ng-content>
+  </mat-list>
+</section>

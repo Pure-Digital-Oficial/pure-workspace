@@ -5,6 +5,7 @@ import { authGuard } from '@pure-workspace/feature-angular';
 const defaultMenuItems: SidenavItem[] = [
   { title: 'Página Principal', icon: 'home', route: '/' },
   { title: 'Usuários', icon: 'info', route: '/users' },
+  { title: 'Transações', icon: 'currency_exchange', route: '/transactions' },
 ];
 
 export const appRoutes: Route[] = [
@@ -17,6 +18,18 @@ export const appRoutes: Route[] = [
     canActivate: [authGuard],
     data: {
       title: 'Dashboard',
+      menuItems: defaultMenuItems,
+    },
+  },
+  {
+    path: 'transactions',
+    loadComponent: () =>
+      import('@pure-workspace/feature-angular').then(
+        (c) => c.DefaultTransactionsContainerComponent
+      ),
+    canActivate: [authGuard],
+    data: {
+      title: 'Transações',
       menuItems: defaultMenuItems,
     },
   },

@@ -1,0 +1,14 @@
+<lib-default-layout [title]="title" [menuItems]="menuItems">
+  <lib-list-layout
+    [length]="totalLength()"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    (pageChange)="onPageEvent($event)"
+    (searchChange)="onSearchValueChange($event)"
+    (createAction)="createTransactionAction()"
+  >
+    @for (transaction of transactions(); track transaction.id) {
+    <lib-list-item-transaction-controls [transaction]="transaction" />
+    }
+  </lib-list-layout>
+</lib-default-layout>

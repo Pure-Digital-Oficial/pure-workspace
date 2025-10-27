@@ -1,0 +1,34 @@
+::ng-deep .mat-mdc-dialog-surface {
+  width: 600px !important;
+  max-width: none !important;
+
+  @media (max-width: 1024px) {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
+
+.transaction-modal-header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+
+  .transaction-modal-header-close-button {
+    margin-right: 15px;
+  }
+}
+
+.transaction-modal-container {
+  .transacion-modal-form {
+    .transaction-modal-select {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+
+      .transaction-modal-select-item {
+        width: 48%;
+      }
+    }
+  }
+}
