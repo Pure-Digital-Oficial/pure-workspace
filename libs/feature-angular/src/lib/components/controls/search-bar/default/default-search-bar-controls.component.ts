@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -5,7 +6,7 @@ import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'lib-default-search-bar-controls',
-  imports: [MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule],
   templateUrl: './default-search-bar-controls.component.html',
   styleUrl: './default-search-bar-controls.component.scss',
 })
@@ -37,6 +38,11 @@ export class DefaultSearchBarControlsComponent implements OnDestroy {
 
   onButtonClick() {
     this.action.emit();
+  }
+
+  onClearClick() {
+    this.searchValue = '';
+    this.searchSubject.next('');
   }
 
   ngOnDestroy(): void {
