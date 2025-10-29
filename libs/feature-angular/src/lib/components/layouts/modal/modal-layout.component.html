@@ -6,6 +6,6 @@
 </div>
 <ng-content></ng-content>
 <mat-dialog-actions align="end">
-  <button mat-button (click)="onClose()">Cancel</button>
-  <button mat-button (click)="onSubmit()">Cadastrar</button>
+  <button mat-button (click)="onClose()">{{ cancelButtonTitle }}</button>
+  <button mat-button (click)="onSubmit()">{{ actionButtonTitle }}</button>
 </mat-dialog-actions>

@@ -11,6 +11,8 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class ModalLayoutComponent {
   @Input() title = 'Modal Title';
+  @Input() cancelButtonTitle = 'Cancelar';
+  @Input() actionButtonTitle = 'Enviar';
   @Output() clicked = new EventEmitter<void>();
   @Output() submited = new EventEmitter<void>();
 

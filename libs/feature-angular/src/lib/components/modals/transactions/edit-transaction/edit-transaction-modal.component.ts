@@ -20,14 +20,18 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import {
+  TransactionResponseDto,
+  TransactionResponseItem,
+} from '@pure-workspace/domain';
 import { getFormValidationErrors } from '../../../../utils';
 import { TransactionForm } from '../../../../models';
 import { DefaultInputComponent } from '../../../inputs';
 import { ModalLayoutComponent } from '../../../layouts';
 import {
-  TransactionResponseDto,
-  TransactionResponseItem,
-} from '@pure-workspace/domain';
+  EditTransactionService,
+  TransactionsService,
+} from '../../../../services';
 
 @Component({
   selector: 'lib-edit-transaction-modal',
@@ -46,6 +50,8 @@ import {
 })
 export class EditTransactionModalComponent {
   private dialogRef = inject(MatDialogRef<EditTransactionModalComponent>);
+  private editTransactionService = inject(EditTransactionService);
+  private transactionsService = inject(TransactionsService);
   form: FormGroup<TransactionForm>;
   categories = computed<TransactionResponseItem[]>(() => [
     {
@@ -87,7 +93,22 @@ export class EditTransactionModalComponent {
     const errors = getFormValidationErrors(this.form);
 
     if (errors.length === 0) {
-      console.log('Form Submitted', this.form.value);
+      this.editTransactionService
+        .edit({
+          id: this.transactionData.id,
+          name: this.form.value.name,
+          value: parseFloat(this.form.value.value),
+          categoryId: this.form.value.categoryId,
+          type: this.form.value.type,
+        })
+        .subscribe((transaction) => {
+          if (transaction) {
+            this.transactionsService
+              .listTransactions(transaction.transaction_id)
+              .subscribe();
+            this.close();
+          }
+        });
     } else {
       console.log('Form Errors', errors);
     }
