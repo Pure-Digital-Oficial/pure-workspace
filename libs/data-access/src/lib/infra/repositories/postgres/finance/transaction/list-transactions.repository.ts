@@ -40,6 +40,7 @@ export class ListTransactionsRepositoryImpl
           id: true,
           category: {
             select: {
+              id: true,
               name: true,
             },
           },
@@ -72,7 +73,10 @@ export class ListTransactionsRepositoryImpl
       (transactions) => {
         return {
           id: transactions?.id ?? '',
-          category: transactions?.category.name ?? '',
+          category: {
+            id: transactions?.category?.id ?? '',
+            name: transactions?.category?.name ?? '',
+          },
           createdBy: transactions?.user.nickname ?? '',
           name: transactions?.name ?? '',
           status: transactions?.status ?? '',

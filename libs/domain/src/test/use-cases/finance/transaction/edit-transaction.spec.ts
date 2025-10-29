@@ -39,7 +39,7 @@ const makeSut = (): SutTypes => {
 
   const editTransactionDto: EditTransactionDto = {
     id: TransactionMock.id,
-    categoryId: TransactionMock.category,
+    categoryId: TransactionMock.category.id,
     name: TransactionMock.name,
     type: TransactionMock.type as TransactionType,
     value: TransactionMock.value,

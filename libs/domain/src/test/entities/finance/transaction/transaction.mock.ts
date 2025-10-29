@@ -3,7 +3,10 @@ import { TransactionResponseDto } from '../../../../index';
 
 export const TransactionMock: TransactionResponseDto = {
   id: faker.string.uuid(),
-  category: faker.string.alpha(3),
+  category: {
+    id: faker.string.uuid(),
+    name: faker.commerce.department(),
+  },
   createdAt: faker.date.anytime(),
   updatedAt: faker.date.anytime(),
   name: faker.commerce.productName(),

@@ -1,6 +1,8 @@
+import { TransactionResponseItem } from './category';
+
 export interface TransactionResponseDto {
   id: string;
-  category: string;
+  category: TransactionResponseItem;
   name: string;
   type: string;
   status: string;

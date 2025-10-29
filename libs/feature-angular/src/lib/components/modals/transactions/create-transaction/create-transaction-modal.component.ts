@@ -23,6 +23,7 @@ import {
 } from '../../../../services';
 import { DefaultInputComponent } from '../../../inputs';
 import { ModalLayoutComponent } from '../../../layouts';
+import { TransactionResponseItem } from '@pure-workspace/domain';
 
 @Component({
   selector: 'lib-create-transaction-modal',
@@ -44,7 +45,7 @@ export class CreateTransactionModalComponent {
   private transactionsService = inject(TransactionsService);
   private dialogRef = inject(MatDialogRef<CreateTransactionModalComponent>);
   form: FormGroup<TransactionForm>;
-  categories = computed(() => [
+  categories = computed<TransactionResponseItem[]>(() => [
     {
       id: '1',
       name: 'TEST',

@@ -24,7 +24,10 @@ import { getFormValidationErrors } from '../../../../utils';
 import { TransactionForm } from '../../../../models';
 import { DefaultInputComponent } from '../../../inputs';
 import { ModalLayoutComponent } from '../../../layouts';
-import { TransactionResponseDto } from '@pure-workspace/domain';
+import {
+  TransactionResponseDto,
+  TransactionResponseItem,
+} from '@pure-workspace/domain';
 
 @Component({
   selector: 'lib-edit-transaction-modal',
@@ -44,7 +47,7 @@ import { TransactionResponseDto } from '@pure-workspace/domain';
 export class EditTransactionModalComponent {
   private dialogRef = inject(MatDialogRef<EditTransactionModalComponent>);
   form: FormGroup<TransactionForm>;
-  categories = computed(() => [
+  categories = computed<TransactionResponseItem[]>(() => [
     {
       id: '1',
       name: 'TEST',
@@ -64,7 +67,7 @@ export class EditTransactionModalComponent {
         Validators.required,
         Validators.min(0.01),
       ]),
-      categoryId: new FormControl('', [
+      categoryId: new FormControl(this.transactionData.category.id, [
         Validators.required,
         Validators.minLength(1),
       ]),
