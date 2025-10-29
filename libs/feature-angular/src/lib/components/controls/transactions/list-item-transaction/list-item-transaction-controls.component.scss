@@ -34,3 +34,21 @@
     }
   }
 }
+.transaction-item {
+  @media (max-width: 1024px) {
+    .transaction-item-container {
+      .transaction-item-body-container {
+        .transaction-item-header {
+          font-size: 12px;
+        }
+
+        .transaction-item-body {
+          font-size: 12px;
+          .transaction-item-value {
+            font-size: medium;
+          }
+        }
+      }
+    }
+  }
+}

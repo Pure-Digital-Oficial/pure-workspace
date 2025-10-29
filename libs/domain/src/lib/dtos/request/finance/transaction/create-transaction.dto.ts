@@ -1,11 +1,3 @@
-import { TransactionType } from '../../../../types';
+import { TransactionBodyDto } from '.';
 
-export interface CreateTransactionDto {
-  name: string;
-  value: number;
-  type: TransactionType;
-  categoryId: string;
-  loggedUserId: string;
-  initialDate?: Date;
-  finalDate?: Date;
-}
+export type CreateTransactionDto = TransactionBodyDto;

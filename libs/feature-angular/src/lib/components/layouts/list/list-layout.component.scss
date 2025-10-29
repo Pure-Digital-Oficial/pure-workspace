@@ -27,7 +27,9 @@
       font-size: 8.4px;
     }
   }
-  .list {
-    width: 95%;
+  .list-container {
+    .list {
+      width: 95%;
+    }
   }
 }

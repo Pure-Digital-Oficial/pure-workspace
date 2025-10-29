@@ -43,7 +43,7 @@ const makeSut = (): SutTypes => {
   const createTransactionRepository = new CreateTransactionRepositoryMock();
 
   const createTransactionDto: CreateTransactionDto = {
-    categoryId: TransactionMock.category,
+    categoryId: TransactionMock.category.id,
     name: TransactionMock.name,
     type: TransactionMock.type as TransactionType,
     value: TransactionMock.value,

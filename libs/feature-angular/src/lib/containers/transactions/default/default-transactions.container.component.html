@@ -8,7 +8,10 @@
     (createAction)="createTransactionAction()"
   >
     @for (transaction of transactions(); track transaction.id) {
-    <lib-list-item-transaction-controls [transaction]="transaction" />
+    <lib-list-item-transaction-controls
+      [transaction]="transaction"
+      (edit)="editTransactionAction($event)"
+    />
     }
   </lib-list-layout>
 </lib-default-layout>
