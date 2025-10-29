@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h2 mat-dialog-title>{{ title }}</h2>
+  <button mat-icon-button class="modal-header-close-button" (click)="onClose()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<ng-content></ng-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onClose()">Cancel</button>
+  <button mat-button (click)="onSubmit()">Cadastrar</button>
+</mat-dialog-actions>

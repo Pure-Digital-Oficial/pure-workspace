@@ -1,5 +1,11 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  EventEmitter,
+  input,
+  Output,
+} from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,6 +27,7 @@ import { TransactionResponseDto } from '@pure-workspace/domain';
 })
 export class ListItemTransactionControlsComponent {
   transaction = input.required<TransactionResponseDto>();
+  @Output() edit = new EventEmitter<TransactionResponseDto>();
 
   value = computed(() => {
     if (this.transaction().type === 'WITHDRAW') {
@@ -29,4 +36,8 @@ export class ListItemTransactionControlsComponent {
 
     return this.transaction().value;
   });
+
+  editAction() {
+    this.edit.emit(this.transaction());
+  }
 }

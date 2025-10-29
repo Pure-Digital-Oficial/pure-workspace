@@ -3,12 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
-import { SidenavItem } from '@pure-workspace/domain';
+import { SidenavItem, TransactionResponseDto } from '@pure-workspace/domain';
 import {
   DefaultLayoutComponent,
   ListItemTransactionControlsComponent,
   CreateTransactionModalComponent,
   ListLayoutComponent,
+  EditTransactionModalComponent,
 } from '../../../components';
 import { AuthService, TransactionsService } from '../../../services';
 
@@ -53,6 +54,12 @@ export class DefaultTransactionsContainerComponent implements OnInit {
 
   createTransactionAction() {
     this.dialogService.open(CreateTransactionModalComponent);
+  }
+
+  editTransactionAction(transaction: TransactionResponseDto) {
+    this.dialogService.open(EditTransactionModalComponent, {
+      data: transaction,
+    });
   }
 
   onSearchValueChange(value: string) {

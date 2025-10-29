@@ -12,24 +12,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { DefaultInputComponent } from '../../../inputs';
 import { getFormValidationErrors } from '../../../../utils';
+import { TransactionForm } from '../../../../models';
 import {
   CreateTransactionService,
   TransactionsService,
 } from '../../../../services';
-
-interface TransactionForm {
-  name: FormControl;
-  value: FormControl;
-  categoryId: FormControl;
-  type: FormControl;
-}
+import { DefaultInputComponent } from '../../../inputs';
+import { ModalLayoutComponent } from '../../../layouts';
 
 @Component({
   selector: 'lib-create-transaction-modal',
@@ -38,12 +31,11 @@ interface TransactionForm {
   imports: [
     CommonModule,
     MatDialogModule,
-    MatButtonModule,
     MatSelectModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     DefaultInputComponent,
-    MatIcon,
+    ModalLayoutComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
