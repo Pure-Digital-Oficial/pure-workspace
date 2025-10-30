@@ -10,6 +10,7 @@ import {
   CreateTransactionModalComponent,
   ListLayoutComponent,
   EditTransactionModalComponent,
+  DeleteTransactionModalComponent,
 } from '../../../components';
 import { AuthService, TransactionsService } from '../../../services';
 
@@ -58,6 +59,14 @@ export class DefaultTransactionsContainerComponent implements OnInit {
 
   editTransactionAction(transaction: TransactionResponseDto) {
     this.dialogService.open(EditTransactionModalComponent, {
+      data: transaction,
+    });
+  }
+
+  deleteTransactionAction(
+    transaction: Pick<TransactionResponseDto, 'id' | 'name'>
+  ) {
+    this.dialogService.open(DeleteTransactionModalComponent, {
       data: transaction,
     });
   }

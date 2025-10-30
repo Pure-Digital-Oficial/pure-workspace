@@ -1,0 +1,13 @@
+<lib-modal-layout
+  [title]="'Deletar transação'"
+  (clicked)="close()"
+  (submited)="onSubmit()"
+  [actionButtonTitle]="'Sim'"
+  [cancelButtonTitle]="'Não'"
+>
+  <div class="delete-transaction-container">
+    <span
+      >{{ title }} <strong>{{ transactionData.name }}</strong> ?</span
+    >
+  </div>
+</lib-modal-layout>

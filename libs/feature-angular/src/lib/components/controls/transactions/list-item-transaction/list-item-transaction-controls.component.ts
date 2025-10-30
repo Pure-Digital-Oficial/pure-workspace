@@ -28,6 +28,9 @@ import { TransactionResponseDto } from '@pure-workspace/domain';
 export class ListItemTransactionControlsComponent {
   transaction = input.required<TransactionResponseDto>();
   @Output() edit = new EventEmitter<TransactionResponseDto>();
+  @Output() delete = new EventEmitter<
+    Pick<TransactionResponseDto, 'id' | 'name'>
+  >();
 
   value = computed(() => {
     if (this.transaction().type === 'WITHDRAW') {
@@ -39,5 +42,12 @@ export class ListItemTransactionControlsComponent {
 
   editAction() {
     this.edit.emit(this.transaction());
+  }
+
+  deleteAction() {
+    this.delete.emit({
+      id: this.transaction().id,
+      name: this.transaction().name,
+    });
   }
 }
