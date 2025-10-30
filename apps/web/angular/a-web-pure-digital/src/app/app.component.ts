@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SessionService } from '@pure-workspace/feature-angular';
+import { SnackbarStackControlsComponent } from '@pure-workspace/feature-angular';
 
 @Component({
-  imports: [RouterModule],
+  imports: [RouterModule, SnackbarStackControlsComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

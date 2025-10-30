@@ -3,3 +3,4 @@ export * from './users';
 export * from './sidenav';
 export * from './transactions';
 export * from './search-bar';
+export * from './snackbar';
