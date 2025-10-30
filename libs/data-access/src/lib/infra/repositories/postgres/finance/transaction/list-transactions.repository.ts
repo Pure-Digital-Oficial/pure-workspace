@@ -1,18 +1,17 @@
 import { Inject } from '@nestjs/common';
+import { PrismaService } from 'nestjs-prisma';
 import {
   ListTransactionsDto,
   ListTransactionsRepository,
   ListTransactionsResponseDto,
+  TransactionPrismaResponseDto,
   TransactionResponseDto,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../application';
 
 export class ListTransactionsRepositoryImpl
   implements ListTransactionsRepository
 {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async list(input: ListTransactionsDto): Promise<ListTransactionsResponseDto> {
     const skip = input?.skip || 0;
     const take = input?.take || 6;
@@ -24,8 +23,19 @@ export class ListTransactionsRepositoryImpl
               contains: input.filters.name.trim(),
               mode: 'insensitive' as const,
             },
+            status: {
+              not: {
+                equals: 'INACTIVE' as const,
+              },
+            },
           }
-        : {}),
+        : {
+            status: {
+              not: {
+                equals: 'INACTIVE' as const,
+              },
+            },
+          }),
     };
 
     const [transactions, filteredTotal, total] = await this.prismaService[
@@ -70,7 +80,7 @@ export class ListTransactionsRepositoryImpl
     const totalPages = Math.ceil(filteredTotal / take);
 
     const mappedTransactions: TransactionResponseDto[] = transactions.map(
-      (transactions) => {
+      (transactions: TransactionPrismaResponseDto) => {
         return {
           id: transactions?.id ?? '',
           category: {

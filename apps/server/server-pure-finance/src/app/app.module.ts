@@ -5,6 +5,7 @@ import {
   CreateTransactionModule,
   ListTransactionsModule,
   EditTransactionModule,
+  DeleteTransactionModule,
 } from './transaction';
 
 @Module({
@@ -12,6 +13,7 @@ import {
     CreateTransactionModule,
     ListTransactionsModule,
     EditTransactionModule,
+    DeleteTransactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
