@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { switchMap } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
 import { DeleteTransactionDto } from '@pure-workspace/domain';
 import { environment } from '../../../environments';
 import { SessionService } from '../../auth';
+import { SnackbarStackService } from '../../utils';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { SessionService } from '../../auth';
 export class DeleteTransactionService {
   private httpClient = inject(HttpClient);
   private session = inject(SessionService);
+  private snackbarService = inject(SnackbarStackService);
   private apiUrl = environment.financeUrl;
 
   delete(deleteTransactionDto: Omit<DeleteTransactionDto, 'loggedUserId'>) {
@@ -27,6 +29,12 @@ export class DeleteTransactionService {
             params: { userId: session.id as string },
           }
         );
+      }),
+      catchError((error) => {
+        const errorText = 'Erro ao deletar transação';
+        this.snackbarService.show(errorText, 'error');
+        console.error(`${errorText}:`, error);
+        return throwError(() => error);
       })
     );
   }

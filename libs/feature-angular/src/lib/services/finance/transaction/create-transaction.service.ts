@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { catchError, switchMap, throwError } from 'rxjs';
 import { CreateTransactionDto } from '@pure-workspace/domain';
 import { environment } from '../../../environments';
 import { SessionService } from '../../auth';
-import { switchMap } from 'rxjs';
+import { SnackbarStackService } from '../../utils';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { switchMap } from 'rxjs';
 export class CreateTransactionService {
   private httpClient = inject(HttpClient);
   private session = inject(SessionService);
+  private snackbarService = inject(SnackbarStackService);
   private apiUrl = environment.financeUrl;
 
   create(createTransactionDto: Omit<CreateTransactionDto, 'loggedUserId'>) {
@@ -27,6 +29,12 @@ export class CreateTransactionService {
             params: { userId: session.id as string },
           }
         );
+      }),
+      catchError((error) => {
+        const errorText = `Erro ao criar a transação: ${createTransactionDto.name}`;
+        this.snackbarService.show(errorText, 'error');
+        console.error(`${errorText}:`, error);
+        return throwError(() => error);
       })
     );
   }
