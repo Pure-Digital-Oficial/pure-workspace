@@ -1,12 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, OnDestroy } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  OnDestroy,
+  Input,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { DefaultButtonIconComponent } from '../../../buttons';
 
 @Component({
   selector: 'lib-default-search-bar-controls',
-  imports: [CommonModule, MatIconModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    DefaultButtonIconComponent,
+  ],
   templateUrl: './default-search-bar-controls.component.html',
   styleUrl: './default-search-bar-controls.component.scss',
 })
@@ -14,6 +28,7 @@ export class DefaultSearchBarControlsComponent implements OnDestroy {
   private searchSubject = new Subject<string>();
   private destroy$ = new Subject<void>();
   searchValue = '';
+  @Input() description = 'Criar';
   @Output() valueChange = new EventEmitter<string>();
   @Output() action = new EventEmitter<void>();
 

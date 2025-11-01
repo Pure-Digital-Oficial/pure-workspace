@@ -8,16 +8,20 @@
         (keyup.enter)="onEnter()"
         placeholder="Pesquisar..."
       />
-      <button
+      <lib-default-button-icon
         *ngIf="searchValue"
-        mat-icon-button
-        aria-label="search-clear-icon"
-        (click)="onClearClick()"
-      >
-        <mat-icon>close</mat-icon>
-      </button>
+        [ariaLabel]="'Botão de limpar o barra de pesquisa'"
+        [icon]="'close'"
+        [description]="'Limpar'"
+        (action)="onClearClick()"
+      />
     </div>
-    <button mat-fab aria-label="search-icon" (click)="onButtonClick()">
+    <button
+      mat-fab
+      aria-label="search-icon"
+      [matTooltip]="description"
+      (click)="onButtonClick()"
+    >
       <mat-icon>add</mat-icon>
     </button>
   </div>

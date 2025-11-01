@@ -21,13 +21,12 @@
         </div>
       </div>
     </div>
-    <button
-      mat-icon-button
-      aria-label="search-clear-icon"
+    <lib-default-button-icon
+      [ariaLabel]="'Icone de opções'"
+      [icon]="'more_horiz'"
+      [description]="'Opções'"
       [matMenuTriggerFor]="menu"
-    >
-      <mat-icon>more_horiz</mat-icon>
-    </button>
+    />
     <mat-menu #menu="matMenu">
       <button (click)="editAction()" mat-menu-item>
         <mat-icon>edit</mat-icon>

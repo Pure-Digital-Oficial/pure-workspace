@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './default-button-icon.component.html',
   styleUrl: './default-button-icon.component.scss',
 })
-export class DefaultComponent {
+export class DefaultButtonIconComponent {
   icon = input.required<string>();
   @Input() ariaLabel = 'icon button';
   @Input() description = '';
