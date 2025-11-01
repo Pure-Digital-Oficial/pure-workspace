@@ -30,6 +30,7 @@ import { DefaultInputComponent } from '../../../inputs';
 import { ModalLayoutComponent } from '../../../layouts';
 import {
   EditTransactionService,
+  SnackbarStackService,
   TransactionsService,
 } from '../../../../services';
 
@@ -52,6 +53,7 @@ export class EditTransactionModalComponent {
   private dialogRef = inject(MatDialogRef<EditTransactionModalComponent>);
   private editTransactionService = inject(EditTransactionService);
   private transactionsService = inject(TransactionsService);
+  private snackbarService = inject(SnackbarStackService);
   form: FormGroup<TransactionForm>;
   categories = computed<TransactionResponseItem[]>(() => [
     {
@@ -110,7 +112,9 @@ export class EditTransactionModalComponent {
           }
         });
     } else {
-      console.log('Form Errors', errors);
+      for (const error of errors) {
+        this.snackbarService.show(error, 'warning');
+      }
     }
   }
 }

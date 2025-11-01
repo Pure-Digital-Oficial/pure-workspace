@@ -4,6 +4,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, of, tap, throwError } from 'rxjs';
 import { TokenResponseDto } from '@pure-workspace/domain';
 import { environment } from '../../environments';
+import { SnackbarStackService } from '../utils';
 import { TokenService, SessionService } from '.';
 
 @Injectable({
@@ -14,6 +15,7 @@ export class AuthService {
   private httpClient = inject(HttpClient);
   private router = inject(Router);
   private session = inject(SessionService);
+  private snackbarService = inject(SnackbarStackService);
   private apiUrl = environment.apiUrl;
 
   login(email: string, password: string) {
@@ -39,7 +41,9 @@ export class AuthService {
           this.router.navigate(['/']);
         }),
         catchError((error) => {
-          console.error('Erro no refresh:', error);
+          const errorText = 'Erro no login:';
+          console.error(errorText, error);
+          this.snackbarService.show(errorText, 'error');
           return throwError(() => error);
         })
       );

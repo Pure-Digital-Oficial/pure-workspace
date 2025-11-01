@@ -8,6 +8,7 @@ import {
 } from '@pure-workspace/domain';
 import { environment } from '../../../environments';
 import { SessionService } from '../../auth';
+import { SnackbarStackService } from '../../utils';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ import { SessionService } from '../../auth';
 export class TransactionsService {
   private httpClient = inject(HttpClient);
   private session = inject(SessionService);
+  private snackbarService = inject(SnackbarStackService);
   private __transactions = signal<ListTransactionsResponseDto>(
     {} as ListTransactionsResponseDto
   );
@@ -94,7 +96,9 @@ export class TransactionsService {
               }
             }),
             catchError((error) => {
-              console.error('Erro na listagem de transações:', error);
+              const errorText = 'Erro na listagem de transações';
+              this.snackbarService.show(errorText, 'error');
+              console.error(`${errorText}:`, error);
               return throwError(() => error);
             })
           );

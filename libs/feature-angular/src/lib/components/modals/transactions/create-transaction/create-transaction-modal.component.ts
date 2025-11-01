@@ -19,6 +19,7 @@ import { getFormValidationErrors } from '../../../../utils';
 import { TransactionForm } from '../../../../models';
 import {
   CreateTransactionService,
+  SnackbarStackService,
   TransactionsService,
 } from '../../../../services';
 import { DefaultInputComponent } from '../../../inputs';
@@ -44,6 +45,7 @@ export class CreateTransactionModalComponent {
   private createTransactionService = inject(CreateTransactionService);
   private transactionsService = inject(TransactionsService);
   private dialogRef = inject(MatDialogRef<CreateTransactionModalComponent>);
+  private snackbarService = inject(SnackbarStackService);
   form: FormGroup<TransactionForm>;
   categories = computed<TransactionResponseItem[]>(() => [
     {
@@ -89,8 +91,9 @@ export class CreateTransactionModalComponent {
           }
         });
     } else {
-      // Colocar uma exibição melhor de erros depois
-      console.log('Erros de validação:', errors);
+      for (const error of errors) {
+        this.snackbarService.show(error, 'warning');
+      }
     }
   }
 }

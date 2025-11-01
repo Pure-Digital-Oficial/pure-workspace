@@ -1,0 +1,17 @@
+<div class="snackbar-stack">
+  <div
+    class="snackbar"
+    *ngFor="let msg of service.messages()"
+    [ngClass]="msg.type"
+  >
+    <span>{{ msg.message }}</span>
+    <button
+      mat-icon-button
+      (mousedown)="$event.preventDefault()"
+      (click)="service.dismiss(msg.id)"
+      tabindex="-1"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

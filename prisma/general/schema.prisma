@@ -239,6 +239,7 @@ model fixed_earning {
   user_id        String
   created_at     DateTime  @default(now())
   updated_at     DateTime  @default(now())
+  deleted_at DateTime?
 
   user user @relation(fields: [user_id], references: [id])
 
@@ -258,6 +259,7 @@ model transaction {
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+  deleted_at DateTime?
 
   user     user                 @relation(fields: [user_id], references: [id])
   category category_transaction @relation(fields: [category_id], references: [id])
@@ -274,6 +276,7 @@ model category_transaction {
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+  deleted_at DateTime?
 
   user              user                @relation(fields: [user_id], references: [id])
   transactions      transaction[]
@@ -303,6 +306,7 @@ model budget {
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+  deleted_at DateTime?
 
   user              user                @relation(fields: [user_id], references: [id])
   category_x_budget category_x_budget[]
