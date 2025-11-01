@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatIcon } from '@angular/material/icon';
+import { DefaultComponent } from '../../buttons';
 
 @Component({
   selector: 'lib-modal-layout',
   templateUrl: 'modal-layout.component.html',
   styleUrl: 'modal-layout.component.scss',
-  imports: [MatDialogModule, MatButtonModule, MatIcon],
+  imports: [MatDialogModule, MatButtonModule, DefaultComponent],
 })
 export class ModalLayoutComponent {
   @Input() title = 'Modal Title';
