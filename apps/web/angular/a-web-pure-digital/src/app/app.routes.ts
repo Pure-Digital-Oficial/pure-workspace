@@ -5,11 +5,21 @@ import { authGuard } from '@pure-workspace/feature-angular';
 const defaultMenuItems: SidenavItem[] = [
   { title: 'Página Principal', icon: 'home', route: '/' },
   {
-    title: 'Categorias T',
-    icon: 'category',
-    route: '/category-transacitons',
+    title: 'Transações',
+    icon: 'currency_exchange',
+    children: [
+      {
+        title: 'Transações',
+        icon: 'currency_exchange',
+        route: '/transactions',
+      },
+      {
+        title: 'Categorias',
+        icon: 'category',
+        route: '/category-transactions',
+      },
+    ],
   },
-  { title: 'Transações', icon: 'currency_exchange', route: '/transactions' },
 ];
 
 export const appRoutes: Route[] = [
@@ -38,7 +48,7 @@ export const appRoutes: Route[] = [
     },
   },
   {
-    path: 'category-transacitons',
+    path: 'category-transactions',
     loadComponent: () =>
       import('@pure-workspace/feature-angular').then(
         (c) => c.CategoryTransactionsContainerComponent

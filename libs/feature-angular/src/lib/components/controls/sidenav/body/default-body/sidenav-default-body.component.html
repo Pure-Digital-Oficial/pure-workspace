@@ -1,13 +1,41 @@
 <lib-user-photo-controls></lib-user-photo-controls>
 <mat-divider class="layout-divider"></mat-divider>
-<mat-nav-list class="layout-sidenav-list">
-  <a
-    mat-list-item
-    *ngFor="let item of menuItems"
-    [routerLink]="item.route"
-    (click)="drawer.toggle()"
+<mat-tree
+  #tree
+  [dataSource]="menuItems"
+  [childrenAccessor]="getChildren"
+  class="sidenav-tree"
+>
+  <mat-tree-node
+    *matTreeNodeDef="let node"
+    [isExpandable]="!!node.children?.length"
   >
-    <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-    <span>{{ item.title }}</span>
-  </a>
-</mat-nav-list>
+    <div class="sidenav-tree-text">
+      <mat-icon class="sidenav-tree-icon" *ngIf="node.icon">{{
+        node.icon
+      }}</mat-icon>
+      <a
+        *ngIf="!node.children?.length"
+        mat-list-item
+        [routerLink]="node.route"
+        (click)="drawer.toggle()"
+      >
+        {{ node.title }}
+      </a>
+      <span *ngIf="node.children?.length">{{ node.title }}</span>
+    </div>
+
+    <button
+      mat-icon-button
+      *ngIf="node.children?.length"
+      matTreeNodeToggle
+      [attr.aria-label]="'toggle ' + node.title"
+    >
+      <mat-icon>
+        {{
+          tree.isExpanded(node) ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
+        }}
+      </mat-icon>
+    </button>
+  </mat-tree-node>
+</mat-tree>
