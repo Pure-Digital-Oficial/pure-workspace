@@ -49,10 +49,6 @@ import { CreateTransactionController } from './create-transaction.controller';
       useClass: CreateTransactionRepositoryImpl,
     },
     {
-      provide: 'FindUserByIdRepository',
-      useClass: FindUserByIdRepositoryImpl,
-    },
-    {
       provide: 'FindCategoryTransactionByIdRepository',
       useClass: FindCategoryTransactionByIdRepositoryImpl,
     },

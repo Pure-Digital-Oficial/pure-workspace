@@ -13,7 +13,7 @@ import {
   ListTransactionsDto,
   listTransactionsBodySchema,
 } from '@pure-workspace/domain';
-import { ZodValidationPipe } from '../../pipes';
+import { ZodValidationPipe } from '../../../pipes';
 import { ListTransactionsService } from './list-transactions.service';
 
 @Controller('transaction/list-transactions')

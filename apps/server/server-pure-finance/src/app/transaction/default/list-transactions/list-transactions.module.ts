@@ -5,8 +5,13 @@ import {
   FindUserByIdRepositoryImpl,
   ValidateTokenRepositoryImpl,
   ListTransactionsRepositoryImpl,
+  JwtAdminGuard,
 } from '@pure-workspace/data-access';
-import { ListTransactions, ValidateToken } from '@pure-workspace/domain';
+import {
+  ListTransactions,
+  ValidateAdmin,
+  ValidateToken,
+} from '@pure-workspace/domain';
 import { ListTransactionsController } from './list-transactions.controller';
 import { ListTransactionsService } from './list-transactions.service';
 
@@ -16,6 +21,24 @@ import { ListTransactionsService } from './list-transactions.service';
     ValidateToken,
     ListTransactions,
     ListTransactionsService,
+    ValidateToken,
+    ValidateAdmin,
+    {
+      provide: JwtAdminGuard,
+      useFactory: (
+        validateAdmin: ValidateAdmin,
+        validateToken: ValidateToken
+      ) => new JwtAdminGuard(validateAdmin, validateToken),
+      inject: [ValidateAdmin, ValidateToken],
+    },
+    {
+      provide: 'ValidateTokenRepository',
+      useClass: ValidateTokenRepositoryImpl,
+    },
+    {
+      provide: 'JwtService',
+      useClass: JwtService,
+    },
     {
       provide: 'FindUserByIdRepository',
       useClass: FindUserByIdRepositoryImpl,

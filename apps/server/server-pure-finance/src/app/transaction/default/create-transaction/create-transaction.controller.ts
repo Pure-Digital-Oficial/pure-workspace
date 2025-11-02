@@ -1,43 +1,40 @@
 import {
   Body,
   Controller,
-  Param,
-  Put,
+  Post,
   Query,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import {
-  EditTransactionDto,
   ErrorMessageResult,
   transactionBodySchema,
   userIdQuerySchema,
+  CreateTransactionDto,
 } from '@pure-workspace/domain';
 import { JwtAuthGuard } from '@pure-workspace/data-access';
-import { EditTransactionService } from './edit-transaction.service';
-import { ZodValidationPipe } from '../../pipes';
+import { ZodValidationPipe } from '../../../pipes';
+import { CreateTransactionService } from './create-transaction.service';
 
-@Controller('transaction/edit-transaction')
-export class EditTransactionController {
-  constructor(private editTransactionService: EditTransactionService) {}
+@Controller('transaction/create-transaction')
+export class CreateTransactionController {
+  constructor(private createTransactionService: CreateTransactionService) {}
 
-  @Put(':id')
-  @UseGuards(JwtAuthGuard)
+  @Post()
   @UsePipes(
     new ZodValidationPipe({
       query: userIdQuerySchema,
       body: transactionBodySchema,
     })
   )
-  async edit(
-    @Param('id') id: string,
+  @UseGuards(JwtAuthGuard)
+  async create(
     @Query() query: { userId: string },
-    @Body() input: Omit<EditTransactionDto, 'loggedUserId' | 'id'>
+    @Body() input: Omit<CreateTransactionDto, 'loggedUserId'>
   ) {
-    const result = await this.editTransactionService.edit({
+    const result = await this.createTransactionService.create({
       ...input,
       loggedUserId: query?.userId ?? '',
-      id,
     });
 
     if (result.isRight()) return { transaction_id: result.value };

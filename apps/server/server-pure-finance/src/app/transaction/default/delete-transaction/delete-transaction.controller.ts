@@ -12,7 +12,7 @@ import {
   userIdQuerySchema,
 } from '@pure-workspace/domain';
 import { JwtAuthGuard } from '@pure-workspace/data-access';
-import { ZodValidationPipe } from '../../pipes';
+import { ZodValidationPipe } from '../../../pipes';
 import { DeleteTransactionService } from './delete-transaction.service';
 
 @Controller('transaction/delete-transaction')
