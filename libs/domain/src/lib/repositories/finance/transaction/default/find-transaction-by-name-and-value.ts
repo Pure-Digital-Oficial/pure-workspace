@@ -1,7 +1,7 @@
 import {
   FindTransactionByNameAndValueDto,
   TransactionResponseDto,
-} from '../../../dtos';
+} from '../../../../dtos';
 
 export interface FindTransactionByNameAndValueRepository {
   find(

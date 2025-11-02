@@ -1,17 +1,17 @@
 import { Inject } from '@nestjs/common';
-import { Either, left, right, UseCase } from '../../../bases';
-import { DeleteTransactionDto } from '../../../dtos';
+import { Either, left, right, UseCase } from '../../../../bases';
+import { DeleteTransactionDto } from '../../../../dtos';
 import {
   EntityNotDeleted,
   EntityNotEmpty,
   EntityNotExists,
-} from '../../../errors';
+} from '../../../../errors';
 import {
   DeleteTransactionRepository,
   FindTransactionByIdRepository,
   FindUserByIdRepository,
-} from '../../../repositories';
-import { UserVerificationId } from '../../../utils';
+} from '../../../../repositories';
+import { UserVerificationId } from '../../../../utils';
 
 export class DeleteTransaction
   implements

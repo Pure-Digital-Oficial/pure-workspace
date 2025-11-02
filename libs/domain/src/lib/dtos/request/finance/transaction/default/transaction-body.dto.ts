@@ -1,4 +1,4 @@
-import { TransactionType } from '../../../../types';
+import { TransactionType } from '../../../../../types';
 
 export interface TransactionBodyDto {
   name: string;

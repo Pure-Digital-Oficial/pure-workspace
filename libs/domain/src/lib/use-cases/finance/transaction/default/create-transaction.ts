@@ -1,19 +1,19 @@
 import { Inject } from '@nestjs/common';
-import { Either, left, right, UseCase } from '../../../bases';
-import { CreateTransactionDto } from '../../../dtos';
+import { Either, left, right, UseCase } from '../../../../bases';
+import { CreateTransactionDto } from '../../../../dtos';
 import {
   EntityAlreadyExists,
   EntityNotCreated,
   EntityNotEmpty,
   EntityNotExists,
-} from '../../../errors';
+} from '../../../../errors';
 import {
   CreateTransactionRepository,
   FindCategoryTransactionByIdRepository,
   FindTransactionByNameAndValueRepository,
   FindUserByIdRepository,
-} from '../../../repositories';
-import { UserVerificationId } from '../../../utils';
+} from '../../../../repositories';
+import { UserVerificationId } from '../../../../utils';
 
 export class CreateTransaction
   implements

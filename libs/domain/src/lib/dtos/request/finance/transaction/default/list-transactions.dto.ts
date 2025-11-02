@@ -1,4 +1,4 @@
-import { ListTransactionFiltersDto } from './list-transactions-filters.dto';
+import { ListTransactionFiltersDto } from '.';
 
 export interface ListTransactionsDto {
   filters?: ListTransactionFiltersDto;
