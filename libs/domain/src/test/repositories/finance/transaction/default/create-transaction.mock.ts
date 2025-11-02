@@ -1,8 +1,8 @@
 import {
   CreateTransactionDto,
   CreateTransactionRepository,
-} from '../../../../../src';
-import { TransactionMock } from '../../../entities';
+} from '../../../../../../src';
+import { TransactionMock } from '../../../../entities';
 
 export class CreateTransactionRepositoryMock
   implements CreateTransactionRepository

@@ -1,8 +1,8 @@
 import {
   DeleteTransactionDto,
   DeleteTransactionRepository,
-} from '../../../../index';
-import { TransactionMock } from '../../../entities';
+} from '../../../../../index';
+import { TransactionMock } from '../../../../entities';
 
 export class DeleteTransactionRepositoryMock
   implements DeleteTransactionRepository

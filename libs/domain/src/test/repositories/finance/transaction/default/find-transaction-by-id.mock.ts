@@ -1,8 +1,8 @@
 import {
   FindTransactionByIdRepository,
   TransactionResponseDto,
-} from '../../../../index';
-import { TransactionMock } from '../../../entities';
+} from '../../../../../index';
+import { TransactionMock } from '../../../../entities';
 
 export class FindTransactionByIdRepositoryMock
   implements FindTransactionByIdRepository

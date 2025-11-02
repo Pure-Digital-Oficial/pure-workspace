@@ -34,7 +34,7 @@ export class CreateCategoryTransaction
     @Inject('FindUserByIdRepository')
     private findUserByIdRepository: FindUserByIdRepository,
     @Inject('FindCategoryTransactionByNameRepository')
-    private findCategoryTransactionRepository: FindCategoryTransactionByNameRepository,
+    private findCategoryTransactionByNameRepository: FindCategoryTransactionByNameRepository,
     @Inject('CreateCategoryTransactionRepository')
     private createCategoryTransactionRepository: CreateCategoryTransactionRepository
   ) {}
@@ -69,10 +69,11 @@ export class CreateCategoryTransaction
       return left(userVerification.value);
     }
 
-    const findedCategory = await this.findCategoryTransactionRepository.find({
-      name,
-      loggedUserId,
-    });
+    const findedCategory =
+      await this.findCategoryTransactionByNameRepository.find({
+        name,
+        loggedUserId,
+      });
 
     if (Object.keys(findedCategory.id ?? findedCategory).length > 0) {
       return left(new EntityAlreadyExists('Category Transaction'));

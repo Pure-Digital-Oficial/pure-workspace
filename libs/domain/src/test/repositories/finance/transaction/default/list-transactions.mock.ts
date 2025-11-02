@@ -2,8 +2,8 @@ import {
   ListTransactionsDto,
   ListTransactionsRepository,
   ListTransactionsResponseDto,
-} from '../../../../index';
-import { ListTransactionsMock } from '../../../entities';
+} from '../../../../../index';
+import { ListTransactionsMock } from '../../../../entities';
 
 export class ListTransactionsRepositoryMock
   implements ListTransactionsRepository

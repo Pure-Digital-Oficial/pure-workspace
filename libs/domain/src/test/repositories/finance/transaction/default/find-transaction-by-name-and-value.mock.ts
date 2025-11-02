@@ -2,7 +2,7 @@ import {
   FindTransactionByNameAndValueDto,
   FindTransactionByNameAndValueRepository,
   TransactionResponseDto,
-} from '../../../../../src';
+} from '../../../../../../src';
 
 export class FindTransactionByNameAndValueRepositoryMock
   implements FindTransactionByNameAndValueRepository
