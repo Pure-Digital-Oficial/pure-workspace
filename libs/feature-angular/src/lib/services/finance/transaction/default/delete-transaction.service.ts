@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { DeleteTransactionDto } from '@pure-workspace/domain';
-import { environment } from '../../../environments';
-import { SessionService } from '../../auth';
-import { SnackbarStackService } from '../../utils';
+import { environment } from '../../../../environments';
+import { SessionService } from '../../../auth';
+import { SnackbarStackService } from '../../../utils';
 
 @Injectable({
   providedIn: 'root',

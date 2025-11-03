@@ -6,10 +6,10 @@ import {
   ListTransactionsDto,
   ListTransactionsResponseDto,
 } from '@pure-workspace/domain';
-import { environment } from '../../../environments';
-import { SessionService } from '../../auth';
-import { SnackbarStackService } from '../../utils';
-import { TransactionType } from '../../../models';
+import { environment } from '../../../../environments';
+import { SessionService } from '../../../auth';
+import { SnackbarStackService } from '../../../utils';
+import { TransactionType } from '../../../../models';
 
 @Injectable({
   providedIn: 'root',
