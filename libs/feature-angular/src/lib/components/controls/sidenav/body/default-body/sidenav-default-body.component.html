@@ -7,8 +7,9 @@
   class="sidenav-tree"
 >
   <mat-tree-node
-    *matTreeNodeDef="let node"
-    [isExpandable]="!!node.children?.length"
+    *matTreeNodeDef="let node; when: hasChild"
+    matTreeNodePadding
+    [matTreeNodePaddingIndent]="20"
   >
     <div class="sidenav-tree-text">
       <mat-icon class="sidenav-tree-icon" *ngIf="node.icon">{{
@@ -25,17 +26,14 @@
       <span *ngIf="node.children?.length">{{ node.title }}</span>
     </div>
 
-    <button
-      mat-icon-button
+    <lib-default-button-icon
       *ngIf="node.children?.length"
       matTreeNodeToggle
       [attr.aria-label]="'toggle ' + node.title"
-    >
-      <mat-icon>
-        {{
-          tree.isExpanded(node) ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
-        }}
-      </mat-icon>
-    </button>
+      [icon]="
+        tree.isExpanded(node) ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
+      "
+      [description]="'Expandir'"
+    />
   </mat-tree-node>
 </mat-tree>
