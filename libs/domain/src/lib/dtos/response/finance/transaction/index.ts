@@ -1,3 +1,2 @@
 export * from './category';
-export * from './list-transactions.response.dto';
-export * from './transaction.response.dto';
+export * from './default';

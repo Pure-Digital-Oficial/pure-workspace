@@ -4,22 +4,22 @@ import {
   PrismaGeneralService,
   FindUserByIdRepositoryImpl,
   ValidateTokenRepositoryImpl,
-  ListTransactionsRepositoryImpl,
+  ListCategoryTransactionsRepositoryImpl,
   JwtAdminGuard,
 } from '@pure-workspace/data-access';
 import {
-  ListTransactions,
+  ListCategoryTransactions,
   ValidateAdmin,
   ValidateToken,
 } from '@pure-workspace/domain';
-import { ListTransactionsController } from './list-transactions.controller';
-import { ListTransactionsService } from './list-transactions.service';
+import { ListCategoryTransactionsController } from './list-category-transactions.controller';
+import { ListCategoryTransactionsService } from './list-category-transactions.service';
 
 @Module({
-  controllers: [ListTransactionsController],
+  controllers: [ListCategoryTransactionsController],
   providers: [
-    ListTransactions,
-    ListTransactionsService,
+    ListCategoryTransactions,
+    ListCategoryTransactionsService,
     ValidateToken,
     ValidateAdmin,
     {
@@ -43,8 +43,8 @@ import { ListTransactionsService } from './list-transactions.service';
       useClass: FindUserByIdRepositoryImpl,
     },
     {
-      provide: 'ListTransactionsRepository',
-      useClass: ListTransactionsRepositoryImpl,
+      provide: 'ListCategoryTransactionsRepository',
+      useClass: ListCategoryTransactionsRepositoryImpl,
     },
     {
       provide: 'ValidateTokenRepository',
@@ -56,4 +56,4 @@ import { ListTransactionsService } from './list-transactions.service';
     },
   ],
 })
-export class ListTransactionsModule {}
+export class ListCategoryTransactionsModule {}

@@ -1,31 +1,47 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, computed, inject, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
-import { SidenavItem } from '@pure-workspace/domain';
+import {
+  CategoryTransactionResponseDto,
+  SidenavItem,
+} from '@pure-workspace/domain';
 import {
   CreateCategoryTransactionModalComponent,
   DefaultLayoutComponent,
   ListLayoutComponent,
+  ListItemCategoryTransactionControlsComponent,
 } from '../../../components';
-import { AuthService } from '../../../services';
+import { AuthService, CategoryTransactionsService } from '../../../services';
 
 @Component({
   selector: 'lib-category-transactions-container',
-  imports: [MatDialogModule, DefaultLayoutComponent, ListLayoutComponent],
+  imports: [
+    MatDialogModule,
+    DefaultLayoutComponent,
+    ListLayoutComponent,
+    ListItemCategoryTransactionControlsComponent,
+  ],
   providers: [AuthService],
   templateUrl: './category-transactions.container.component.html',
   styleUrl: './category-transactions.container.component.scss',
 })
-export class CategoryTransactionsContainerComponent {
+export class CategoryTransactionsContainerComponent implements OnInit {
   private dialogService = inject(MatDialog);
+  private categoryTransactionsService = inject(CategoryTransactionsService);
   @Input() title = '';
   @Input() menuItems: SidenavItem[] = [];
-
-  totalLength = 0;
   pageIndex = 0;
   pageSize = 6;
   pageEvent: PageEvent = {} as PageEvent;
+
+  totalLength = computed(
+    () => this.categoryTransactionsService.categoryTransactions().total
+  );
+
+  categoryTransactions = computed(
+    () => this.categoryTransactionsService.categoryTransactions().categories
+  );
 
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data) => {
@@ -34,13 +50,34 @@ export class CategoryTransactionsContainerComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.categoryTransactionsService.listCategoryTransactions().subscribe();
+  }
+
   createCategoryTransactionAction() {
     this.dialogService.open(CreateCategoryTransactionModalComponent);
   }
 
-  onSearchValueChange(value: string) {
-    console.log(value);
+  editCategoryTransactionAction(
+    categoryTransaction: CategoryTransactionResponseDto
+  ) {
+    console.log(categoryTransaction);
     //implements
+  }
+
+  deleteCategoryTransactionAction(
+    categoryTransaction: Pick<CategoryTransactionResponseDto, 'id' | 'name'>
+  ) {
+    console.log(categoryTransaction);
+    //implements
+  }
+
+  onSearchValueChange(value: string) {
+    this.categoryTransactionsService
+      .findCategoryTransactionByFilter({
+        name: value,
+      })
+      .subscribe();
   }
 
   onPageEvent(e: PageEvent) {
@@ -48,8 +85,14 @@ export class CategoryTransactionsContainerComponent {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
 
-    // const skip = e.pageIndex * e.pageSize;
-    // const take = e.pageSize;
-    // this.featchTransactions(skip, take);
+    const skip = e.pageIndex * e.pageSize;
+    const take = e.pageSize;
+    this.featchCategoryTransactions(skip, take);
+  }
+
+  private featchCategoryTransactions(skip: number, take: number) {
+    this.categoryTransactionsService
+      .listCategoryTransactionsWithPaginated({ skip, take })
+      .subscribe();
   }
 }

@@ -1,4 +1,4 @@
-import { TransactionResponseItem } from './category';
+import { TransactionResponseItem } from '../category';
 
 export interface TransactionResponseDto {
   id: string;

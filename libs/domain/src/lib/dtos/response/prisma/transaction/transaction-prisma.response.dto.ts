@@ -1,4 +1,4 @@
-import { GeneralStatus, TransactionType } from '../../../types';
+import { GeneralStatus, TransactionType } from '../../../../types';
 
 export interface TransactionPrismaResponseDto {
   name: string;

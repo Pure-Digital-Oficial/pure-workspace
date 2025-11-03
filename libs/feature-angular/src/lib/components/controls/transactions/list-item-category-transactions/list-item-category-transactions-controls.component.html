@@ -1,0 +1,40 @@
+<mat-list-item class="category-transaction-item">
+  <div class="category-transaction-item-container">
+    <div class="category-transaction-item-body-container">
+      <div class="category-transaction-item-header">
+        <span>Nome: {{ categoryTransaction().name }}</span>
+        <span>Criado por: {{ categoryTransaction().createdBy }}</span>
+      </div>
+      <div class="category-transaction-item-body">
+        <span>Descrição: {{ categoryTransaction().description }}</span>
+        <div class="category-transaction-item-date">
+          <span
+            >Criado em:
+            {{ categoryTransaction().createdAt | date : 'shortDate' }}</span
+          >
+          <span
+            >Editado em:
+            {{ categoryTransaction().updatedAt | date : 'shortDate' }}</span
+          >
+        </div>
+      </div>
+    </div>
+    <lib-default-button-icon
+      [ariaLabel]="'Icone de opções'"
+      [icon]="'more_horiz'"
+      [description]="'Opções'"
+      [matMenuTriggerFor]="menu"
+    />
+    <mat-menu #menu="matMenu">
+      <button (click)="editAction()" mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        <span>Editar</span>
+      </button>
+      <button (click)="deleteAction()" mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>Deletar</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-list-item>
+<mat-divider />

@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { ListTransactionsResponseDto } from '../../../../index';
+import { ListTransactionsResponseDto } from '../../../../../index';
 import { TransactionMock } from '.';
 
 export const ListTransactionsMock: ListTransactionsResponseDto = {
