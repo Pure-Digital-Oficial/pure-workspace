@@ -23,7 +23,7 @@ export class CategoryTransactionsService {
   );
   private apiUrl = environment.financeUrl;
 
-  transactions = this.__categoryTransactions.asReadonly();
+  categoryTransactions = this.__categoryTransactions.asReadonly();
 
   updateCategoryTransactions(categories: ListCategoryTransactionsResponseDto) {
     this.__categoryTransactions.set(categories);
@@ -37,13 +37,13 @@ export class CategoryTransactionsService {
     return this.fetchCategoryTransactions({ filters: filter });
   }
 
-  listTransactionsWithPaginated(
+  listCategoryTransactionsWithPaginated(
     input: Pick<ListTransactionsDto, 'skip' | 'take'>
   ) {
     return this.fetchCategoryTransactions(input);
   }
 
-  listTransactions(id?: string) {
+  listCategoryTransactions(id?: string) {
     const cached = this.__categoryTransactions();
 
     if (!cached || cached.total !== 0) {
