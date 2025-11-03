@@ -9,3 +9,25 @@
   color: inherit;
   margin: 0 10px 10px 10px;
 }
+
+.sidenav-tree {
+  .mat-tree-node,
+  .mat-nested-tree-node {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px 10px 10px;
+  }
+  .sidenav-tree-text {
+    display: flex;
+    align-items: center;
+  }
+
+  .sidenav-tree-icon {
+    margin-right: 10px;
+  }
+
+  a[mat-list-item] {
+    color: inherit;
+    text-decoration: none;
+  }
+}
