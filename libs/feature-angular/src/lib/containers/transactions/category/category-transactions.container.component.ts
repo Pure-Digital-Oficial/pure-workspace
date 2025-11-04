@@ -12,6 +12,7 @@ import {
   ListLayoutComponent,
   ListItemCategoryTransactionControlsComponent,
   EditCategoryTransactionModalComponent,
+  DeleteCategoryTransactionModalComponent,
 } from '../../../components';
 import { AuthService, CategoryTransactionsService } from '../../../services';
 
@@ -70,8 +71,9 @@ export class CategoryTransactionsContainerComponent implements OnInit {
   deleteCategoryTransactionAction(
     categoryTransaction: Pick<CategoryTransactionResponseDto, 'id' | 'name'>
   ) {
-    console.log(categoryTransaction);
-    //implements
+    this.dialogService.open(DeleteCategoryTransactionModalComponent, {
+      data: categoryTransaction,
+    });
   }
 
   onSearchValueChange(value: string) {
