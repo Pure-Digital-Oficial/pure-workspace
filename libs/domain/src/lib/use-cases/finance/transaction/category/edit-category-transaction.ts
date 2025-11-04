@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { EditCategoryTransactionDto } from '../../../../dtos';
 import { Either, left, right, UseCase } from '../../../../bases';
 import {
+  EntityAlreadyExists,
   EntityNotEdited,
   EntityNotEmpty,
   EntityNotExists,
@@ -9,6 +10,7 @@ import {
 import {
   EditCategoryTransactionRepository,
   FindCategoryTransactionByIdRepository,
+  FindCategoryTransactionByNameRepository,
   FindUserByIdRepository,
 } from '../../../../repositories';
 import { UserVerificationId } from '../../../../utils';
@@ -23,6 +25,8 @@ export class EditCategoryTransaction
   constructor(
     @Inject('FindUserByIdRepository')
     private findUserByIdRepository: FindUserByIdRepository,
+    @Inject('FindCategoryTransactionByNameRepository')
+    private findCategoryTransactionByNameRepository: FindCategoryTransactionByNameRepository,
     @Inject('FindCategoryTransactionByIdRepository')
     private findCategoryTransactionByIdRepository: FindCategoryTransactionByIdRepository,
     @Inject('EditCategoryTransactionRepository')
@@ -56,6 +60,19 @@ export class EditCategoryTransaction
 
     if (userVerification.isLeft()) {
       return left(userVerification.value);
+    }
+
+    const findedCategoryByName =
+      await this.findCategoryTransactionByNameRepository.find({
+        name,
+        loggedUserId,
+      });
+
+    if (
+      Object.keys(findedCategoryByName.id ?? findedCategoryByName).length > 0 &&
+      findedCategoryByName.id !== id
+    ) {
+      return left(new EntityAlreadyExists('category name'));
     }
 
     const findedCategory =
