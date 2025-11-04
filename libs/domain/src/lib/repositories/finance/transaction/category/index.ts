@@ -1,4 +1,5 @@
 export * from './create-category-transaciton';
+export * from './delete-category-transaction';
 export * from './edit-category-transaction';
 export * from './find-category-transacation-by-id';
 export * from './find-category-transaction-by-name';
