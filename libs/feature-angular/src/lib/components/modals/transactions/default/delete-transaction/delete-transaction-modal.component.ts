@@ -14,8 +14,8 @@ import { TransactionResponseDto } from '@pure-workspace/domain';
 import {
   DeleteTransactionService,
   TransactionsService,
-} from '../../../../services';
-import { ModalLayoutComponent } from '../../../layouts';
+} from '../../../../../services';
+import { ModalLayoutComponent } from '../../../../layouts';
 
 @Component({
   selector: 'lib-delete-transaction-modal',

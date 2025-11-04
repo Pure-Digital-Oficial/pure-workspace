@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -7,23 +12,28 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { CategoryTransactionResponseDto } from '@pure-workspace/domain';
 import { ModalLayoutComponent } from '../../../../layouts';
 import { DefaultInputComponent } from '../../../../inputs';
 import { CategoryTransactionForm } from '../../../../../models';
 import {
   CategoryTransactionsService,
-  CreateCategoryTransactionService,
+  EditCategoryTransactionService,
   SnackbarStackService,
 } from '../../../../../services';
 import { getFormValidationErrors } from '../../../../../utils';
 
 @Component({
-  selector: 'lib-create-category-transaction-modal',
-  templateUrl: 'create-category-transaction-modal.component.html',
-  styleUrl: 'create-category-transaction-modal.component.scss',
+  selector: 'lib-edit-category-transaction-modal',
+  templateUrl: 'edit-category-transaction-modal.component.html',
+  styleUrl: 'edit-category-transaction-modal.component.scss',
   imports: [
     CommonModule,
     MatDialogModule,
@@ -35,21 +45,28 @@ import { getFormValidationErrors } from '../../../../../utils';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateCategoryTransactionModalComponent {
+export class EditCategoryTransactionModalComponent {
   private dialogRef = inject(
-    MatDialogRef<CreateCategoryTransactionModalComponent>
+    MatDialogRef<EditCategoryTransactionModalComponent>
   );
   private snackbarService = inject(SnackbarStackService);
-  private createCategoryTransactionService = inject(
-    CreateCategoryTransactionService
+  private editCategoryTransactionService = inject(
+    EditCategoryTransactionService
   );
   private categoryTransactionsService = inject(CategoryTransactionsService);
   form: FormGroup<CategoryTransactionForm>;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA)
+    public categoryTransactionData: CategoryTransactionResponseDto
+  ) {
     this.form = this.fb.group({
-      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      description: new FormControl('', [
+      name: new FormControl(this.categoryTransactionData.name, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      description: new FormControl(this.categoryTransactionData.description, [
         Validators.required,
         Validators.minLength(3),
       ]),
@@ -65,8 +82,9 @@ export class CreateCategoryTransactionModalComponent {
     const errors = getFormValidationErrors(this.form);
 
     if (errors.length === 0) {
-      this.createCategoryTransactionService
-        .create({
+      this.editCategoryTransactionService
+        .edit({
+          id: this.categoryTransactionData.id,
           name: this.form.value.name,
           description: this.form.value.description,
         })
@@ -76,7 +94,7 @@ export class CreateCategoryTransactionModalComponent {
               .listCategoryTransactions(categoryTransaction.transaction_id)
               .subscribe();
             this.snackbarService.show(
-              'Categoria criada com sucesso',
+              'Categoria editada com sucesso',
               'success'
             );
             this.close();

@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  Inject,
   inject,
 } from '@angular/core';
 import {
@@ -13,31 +12,24 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { TransactionResponseItem } from '@pure-workspace/domain';
+import { getFormValidationErrors } from '../../../../../utils';
+import { TransactionForm } from '../../../../../models';
 import {
-  TransactionResponseDto,
-  TransactionResponseItem,
-} from '@pure-workspace/domain';
-import { getFormValidationErrors } from '../../../../utils';
-import { TransactionForm } from '../../../../models';
-import { DefaultInputComponent } from '../../../inputs';
-import { ModalLayoutComponent } from '../../../layouts';
-import {
-  EditTransactionService,
+  CreateTransactionService,
   SnackbarStackService,
   TransactionsService,
-} from '../../../../services';
+} from '../../../../../services';
+import { DefaultInputComponent } from '../../../../inputs';
+import { ModalLayoutComponent } from '../../../../layouts';
 
 @Component({
-  selector: 'lib-edit-transaction-modal',
-  templateUrl: 'edit-transaction-modal.component.html',
-  styleUrl: 'edit-transaction-modal.component.scss',
+  selector: 'lib-create-transaction-modal',
+  templateUrl: 'create-transaction-modal.component.html',
+  styleUrl: 'create-transaction-modal.component.scss',
   imports: [
     CommonModule,
     MatDialogModule,
@@ -49,10 +41,10 @@ import {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditTransactionModalComponent {
-  private dialogRef = inject(MatDialogRef<EditTransactionModalComponent>);
-  private editTransactionService = inject(EditTransactionService);
+export class CreateTransactionModalComponent {
+  private createTransactionService = inject(CreateTransactionService);
   private transactionsService = inject(TransactionsService);
+  private dialogRef = inject(MatDialogRef<CreateTransactionModalComponent>);
   private snackbarService = inject(SnackbarStackService);
   form: FormGroup<TransactionForm>;
   categories = computed<TransactionResponseItem[]>(() => [
@@ -62,27 +54,15 @@ export class EditTransactionModalComponent {
     },
   ]);
 
-  constructor(
-    private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public transactionData: TransactionResponseDto
-  ) {
+  constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      name: new FormControl(this.transactionData.name, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      value: new FormControl(this.transactionData.value, [
-        Validators.required,
-        Validators.min(0.01),
-      ]),
-      categoryId: new FormControl(this.transactionData.category.id, [
+      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      value: new FormControl('', [Validators.required, Validators.min(0.01)]),
+      categoryId: new FormControl('', [
         Validators.required,
         Validators.minLength(1),
       ]),
-      type: new FormControl(this.transactionData.type, [
-        Validators.required,
-        Validators.minLength(1),
-      ]),
+      type: new FormControl('', [Validators.required, Validators.minLength(1)]),
     });
   }
 
@@ -95,9 +75,8 @@ export class EditTransactionModalComponent {
     const errors = getFormValidationErrors(this.form);
 
     if (errors.length === 0) {
-      this.editTransactionService
-        .edit({
-          id: this.transactionData.id,
+      this.createTransactionService
+        .create({
           name: this.form.value.name,
           value: parseFloat(this.form.value.value),
           categoryId: this.form.value.categoryId,

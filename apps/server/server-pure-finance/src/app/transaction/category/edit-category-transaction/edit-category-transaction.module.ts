@@ -1,28 +1,27 @@
 import { JwtService } from '@nestjs/jwt';
 import { Module } from '@nestjs/common';
 import {
-  EditTransactionRepositoryImpl,
+  EditCategoryTransactionRepositoryImpl,
   FindCategoryTransactionByIdRepositoryImpl,
-  FindTransactionByIdRepositoryImpl,
-  FindTransactionByNameAndValueRepositoryImpl,
+  FindCategoryTransactionByNameRepositoryImpl,
   FindUserByIdRepositoryImpl,
   JwtAdminGuard,
   PrismaGeneralService,
   ValidateTokenRepositoryImpl,
 } from '@pure-workspace/data-access';
 import {
-  EditTransaction,
+  EditCategoryTransaction,
   ValidateAdmin,
   ValidateToken,
 } from '@pure-workspace/domain';
-import { EditTransactionService } from './edit-transaction.service';
-import { EditTransactionController } from './edit-transaction.controller';
+import { EditCategoryTransactionService } from './edit-category-transaction.service';
+import { EditCategoryTransactionController } from './edit-category-transaction.controller';
 
 @Module({
-  controllers: [EditTransactionController],
+  controllers: [EditCategoryTransactionController],
   providers: [
-    EditTransactionService,
-    EditTransaction,
+    EditCategoryTransactionService,
+    EditCategoryTransaction,
     ValidateToken,
     ValidateAdmin,
     {
@@ -42,24 +41,20 @@ import { EditTransactionController } from './edit-transaction.controller';
       useClass: JwtService,
     },
     {
-      provide: 'EditTransactionRepository',
-      useClass: EditTransactionRepositoryImpl,
+      provide: 'EditCategoryTransactionRepository',
+      useClass: EditCategoryTransactionRepositoryImpl,
     },
     {
       provide: 'FindUserByIdRepository',
       useClass: FindUserByIdRepositoryImpl,
     },
     {
+      provide: 'FindCategoryTransactionByNameRepository',
+      useClass: FindCategoryTransactionByNameRepositoryImpl,
+    },
+    {
       provide: 'FindCategoryTransactionByIdRepository',
       useClass: FindCategoryTransactionByIdRepositoryImpl,
-    },
-    {
-      provide: 'FindTransactionByIdRepository',
-      useClass: FindTransactionByIdRepositoryImpl,
-    },
-    {
-      provide: 'FindTransactionByNameAndValueRepository',
-      useClass: FindTransactionByNameAndValueRepositoryImpl,
     },
     {
       provide: 'PrismaService',
@@ -67,4 +62,4 @@ import { EditTransactionController } from './edit-transaction.controller';
     },
   ],
 })
-export class EditTransactionModule {}
+export class EditCategoryTransactionModule {}

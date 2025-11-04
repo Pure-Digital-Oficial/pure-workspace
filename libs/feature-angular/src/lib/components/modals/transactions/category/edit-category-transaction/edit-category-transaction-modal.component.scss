@@ -1,0 +1,17 @@
+::ng-deep .mat-mdc-dialog-surface {
+  width: 600px !important;
+  max-width: none !important;
+
+  @media (max-width: 1024px) {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
+
+.category-transaction-modal-container {
+  .category-transacion-modal-form {
+    .category-transacion-area {
+      width: 100%;
+    }
+  }
+}

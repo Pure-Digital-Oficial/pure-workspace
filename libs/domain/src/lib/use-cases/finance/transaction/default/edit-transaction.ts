@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../../../bases';
 import { EditTransactionDto } from '../../../../dtos';
 import {
+  EntityAlreadyExists,
   EntityNotEdited,
   EntityNotEmpty,
   EntityNotExists,
@@ -10,6 +11,7 @@ import {
   EditTransactionRepository,
   FindCategoryTransactionByIdRepository,
   FindTransactionByIdRepository,
+  FindTransactionByNameAndValueRepository,
   FindUserByIdRepository,
 } from '../../../../repositories';
 import { UserVerificationId } from '../../../../utils';
@@ -18,7 +20,13 @@ export class EditTransaction
   implements
     UseCase<
       EditTransactionDto,
-      Either<EntityNotEmpty | EntityNotExists, string>
+      Either<
+        | EntityNotEmpty
+        | EntityNotExists
+        | EntityAlreadyExists
+        | EntityNotEdited,
+        string
+      >
     >
 {
   constructor(
@@ -26,6 +34,8 @@ export class EditTransaction
     private findUserByIdRepository: FindUserByIdRepository,
     @Inject('FindTransactionByIdRepository')
     private findTransactionByIdRepository: FindTransactionByIdRepository,
+    @Inject('FindTransactionByNameAndValueRepository')
+    private findTransactionByNameAndValueRepository: FindTransactionByNameAndValueRepository,
     @Inject('FindCategoryTransactionByIdRepository')
     private findCategoryTransactionByIdRepository: FindCategoryTransactionByIdRepository,
     @Inject('EditTransactionRepository')
@@ -34,7 +44,12 @@ export class EditTransaction
 
   async execute(
     input: EditTransactionDto
-  ): Promise<Either<EntityNotEmpty | EntityNotExists, string>> {
+  ): Promise<
+    Either<
+      EntityNotEmpty | EntityNotExists | EntityAlreadyExists | EntityNotEdited,
+      string
+    >
+  > {
     const { categoryId, id, loggedUserId, name, type, value } = input;
 
     if (Object.keys(id).length < 1) {
@@ -68,6 +83,21 @@ export class EditTransaction
 
     if (userVerification.isLeft()) {
       return left(userVerification.value);
+    }
+
+    const findedTransactionByName =
+      await this.findTransactionByNameAndValueRepository.find({
+        name,
+        value,
+        loggedUserId,
+      });
+
+    if (
+      Object.keys(findedTransactionByName.id ?? findedTransactionByName)
+        .length > 0 &&
+      findedTransactionByName.id !== id
+    ) {
+      return left(new EntityAlreadyExists('transaction name'));
     }
 
     const findedCategory =
