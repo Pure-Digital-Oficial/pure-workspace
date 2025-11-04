@@ -11,6 +11,7 @@ import {
   DefaultLayoutComponent,
   ListLayoutComponent,
   ListItemCategoryTransactionControlsComponent,
+  EditCategoryTransactionModalComponent,
 } from '../../../components';
 import { AuthService, CategoryTransactionsService } from '../../../services';
 
@@ -61,8 +62,9 @@ export class CategoryTransactionsContainerComponent implements OnInit {
   editCategoryTransactionAction(
     categoryTransaction: CategoryTransactionResponseDto
   ) {
-    console.log(categoryTransaction);
-    //implements
+    this.dialogService.open(EditCategoryTransactionModalComponent, {
+      data: categoryTransaction,
+    });
   }
 
   deleteCategoryTransactionAction(

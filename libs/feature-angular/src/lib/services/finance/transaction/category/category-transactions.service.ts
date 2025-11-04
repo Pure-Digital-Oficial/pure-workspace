@@ -101,7 +101,7 @@ export class CategoryTransactionsService {
               }
             }),
             catchError((error) => {
-              const errorText = 'Erro na listagem de Categorias das transações';
+              const errorText = 'Erro ao criar a categoria das transações';
               this.snackbarService.show(errorText, 'error');
               console.error(`${errorText}:`, error);
               return throwError(() => error);
