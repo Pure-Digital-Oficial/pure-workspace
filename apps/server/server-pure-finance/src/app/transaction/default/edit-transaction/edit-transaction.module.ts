@@ -4,6 +4,7 @@ import {
   EditTransactionRepositoryImpl,
   FindCategoryTransactionByIdRepositoryImpl,
   FindTransactionByIdRepositoryImpl,
+  FindTransactionByNameAndValueRepositoryImpl,
   FindUserByIdRepositoryImpl,
   JwtAdminGuard,
   PrismaGeneralService,
@@ -55,6 +56,10 @@ import { EditTransactionController } from './edit-transaction.controller';
     {
       provide: 'FindTransactionByIdRepository',
       useClass: FindTransactionByIdRepositoryImpl,
+    },
+    {
+      provide: 'FindTransactionByNameAndValueRepository',
+      useClass: FindTransactionByNameAndValueRepositoryImpl,
     },
     {
       provide: 'PrismaService',

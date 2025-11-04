@@ -4,11 +4,17 @@ import {
   TransactionResponseDto,
   UserResponseDto,
 } from '@/dtos';
-import { EntityNotEdited, EntityNotEmpty, EntityNotExists } from '@/errors';
+import {
+  EntityAlreadyExists,
+  EntityNotEdited,
+  EntityNotEmpty,
+  EntityNotExists,
+} from '@/errors';
 import {
   EditTransactionRepository,
   FindCategoryTransactionByIdRepository,
   FindTransactionByIdRepository,
+  FindTransactionByNameAndValueRepository,
   FindUserByIdRepository,
 } from '@/repositories';
 import { TransactionMock } from '@/test/entities';
@@ -26,6 +32,7 @@ interface SutTypes {
   editTransactionDto: EditTransactionDto;
   findUserByIdRepository: FindUserByIdRepository;
   findTransactionByIdRepository: FindTransactionByIdRepository;
+  findTransactionByNameAndValueRepository: FindTransactionByNameAndValueRepository;
   findCategoryTransactionByIdRepository: FindCategoryTransactionByIdRepository;
   editTransactionRepository: EditTransactionRepository;
 }
@@ -33,6 +40,10 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   const findUserByIdRepository = new FindUserByIdRepositoryMock();
   const findTransactionByIdRepository = new FindTransactionByIdRepositoryMock();
+  const findTransactionByNameAndValueRepository: FindTransactionByNameAndValueRepository =
+    {
+      find: jest.fn(async () => TransactionMock),
+    };
   const findCategoryTransactionByIdRepository =
     new FindCategoryTransactionByIdRepositoryMock();
   const editTransactionRepository = new EditTransactionRepositoryMock();
@@ -49,6 +60,7 @@ const makeSut = (): SutTypes => {
   const sut = new EditTransaction(
     findUserByIdRepository,
     findTransactionByIdRepository,
+    findTransactionByNameAndValueRepository,
     findCategoryTransactionByIdRepository,
     editTransactionRepository
   );
@@ -58,6 +70,7 @@ const makeSut = (): SutTypes => {
     editTransactionDto,
     findUserByIdRepository,
     findTransactionByIdRepository,
+    findTransactionByNameAndValueRepository,
     findCategoryTransactionByIdRepository,
     editTransactionRepository,
   };
@@ -156,6 +169,21 @@ describe('EditTransaction', () => {
     expect(result.isLeft()).toBeTruthy();
     expect(result.isRight()).toBeFalsy();
     expect(result.value).toBeInstanceOf(EntityNotExists);
+  });
+
+  it('should return EntityAlreadyExists when the category transaction exists other in database with same name and value', async () => {
+    const { editTransactionDto, sut } = makeSut();
+    jest
+      .spyOn(sut['findTransactionByNameAndValueRepository'], 'find')
+      .mockResolvedValueOnce({
+        ...TransactionMock,
+        id: 'any_id',
+      });
+    const result = await sut.execute(editTransactionDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityAlreadyExists);
   });
 
   it('should return EntityNotExists when not exists transaction in the database', async () => {
