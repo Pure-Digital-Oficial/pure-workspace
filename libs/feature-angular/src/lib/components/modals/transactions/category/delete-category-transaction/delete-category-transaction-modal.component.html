@@ -1,0 +1,13 @@
+<lib-modal-layout
+  [title]="'Deletar categoria da transação'"
+  (clicked)="close()"
+  (submited)="onSubmit()"
+  [actionButtonTitle]="'Sim'"
+  [cancelButtonTitle]="'Não'"
+>
+  <div class="delete-category-transaction-container">
+    <span
+      >{{ title }} <strong>{{ categoryTransactionData.name }}</strong> ?</span
+    >
+  </div>
+</lib-modal-layout>
