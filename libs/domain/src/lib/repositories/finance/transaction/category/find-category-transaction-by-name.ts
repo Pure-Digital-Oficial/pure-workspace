@@ -1,10 +1,10 @@
 import {
-  BodyCategoryTransactionDto,
+  CategoryTransactionBodyDto,
   CategoryTransactionResponseDto,
 } from '../../../../dtos';
 
 export interface FindCategoryTransactionByNameRepository {
   find(
-    input: Pick<BodyCategoryTransactionDto, 'name' | 'loggedUserId'>
+    input: Pick<CategoryTransactionBodyDto, 'name' | 'loggedUserId'>
   ): Promise<CategoryTransactionResponseDto>;
 }

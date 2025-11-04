@@ -64,7 +64,7 @@ export class CreateTransaction
       return left(new EntityNotEmpty('type'));
     }
 
-    if (value < 1) {
+    if (value < 0.1) {
       return left(new EntityNotEmpty('value'));
     }
 

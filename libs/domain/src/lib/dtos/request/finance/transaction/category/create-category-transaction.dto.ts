@@ -1,3 +1,3 @@
-import { BodyCategoryTransactionDto } from '.';
+import { CategoryTransactionBodyDto } from '.';
 
-export type CreateCategoryTransactionDto = BodyCategoryTransactionDto;
+export type CreateCategoryTransactionDto = CategoryTransactionBodyDto;

@@ -1,5 +1,5 @@
-import { BodyCategoryTransactionDto } from '.';
+import { CategoryTransactionBodyDto } from '.';
 
-export interface EditCategoryTransactionDto extends BodyCategoryTransactionDto {
+export interface EditCategoryTransactionDto extends CategoryTransactionBodyDto {
   id: string;
 }
