@@ -1,4 +1,4 @@
-import { DeleteCategoryTransactionDto } from 'libs/domain/src/lib/dtos';
+import { DeleteCategoryTransactionDto } from '../../../../dtos';
 
 export interface DeleteCategoryTransactionRepository {
   delete(input: DeleteCategoryTransactionDto): Promise<string>;

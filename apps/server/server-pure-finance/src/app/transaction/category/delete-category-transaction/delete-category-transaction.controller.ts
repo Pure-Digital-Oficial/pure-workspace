@@ -9,11 +9,13 @@ import {
 import { ErrorMessageResult, userIdQuerySchema } from '@pure-workspace/domain';
 import { JwtAuthGuard } from '@pure-workspace/data-access';
 import { ZodValidationPipe } from '../../../pipes';
-import { DeleteTransactionService } from './delete-transaction.service';
+import { DeleteCategoryTransactionService } from './delete-category-transaction.service';
 
-@Controller('transaction/delete-transaction')
-export class DeleteTransactionController {
-  constructor(private deleteTransactionService: DeleteTransactionService) {}
+@Controller('transaction/delete-category-transaction')
+export class DeleteCategoryTransactionController {
+  constructor(
+    private deleteCategoryTransactionService: DeleteCategoryTransactionService
+  ) {}
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
@@ -23,12 +25,12 @@ export class DeleteTransactionController {
     })
   )
   async delete(@Param('id') id: string, @Query() query: { userId: string }) {
-    const result = await this.deleteTransactionService.delete({
+    const result = await this.deleteCategoryTransactionService.delete({
       loggedUserId: query?.userId ?? '',
       id,
     });
 
-    if (result.isRight()) return { transaction_id: result.value };
+    if (result.isRight()) return { category_transaction_id: result.value };
     else
       return await ErrorMessageResult(result.value.name, result.value.message);
   }
