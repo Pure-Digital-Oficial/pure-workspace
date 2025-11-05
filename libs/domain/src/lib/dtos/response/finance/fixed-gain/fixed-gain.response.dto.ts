@@ -4,7 +4,6 @@ export interface FixedGainResponseDto {
   value: number;
   status: string;
   dayOfReceipt: number;
-  loggedUserId: string;
   frequency: string;
   createdAt: Date;
   updatedAt: Date;
