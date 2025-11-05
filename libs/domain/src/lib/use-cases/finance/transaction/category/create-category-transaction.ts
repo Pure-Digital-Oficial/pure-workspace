@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import {
-  BodyCategoryTransactionDto,
+  CategoryTransactionBodyDto,
   CreateCategoryTransactionDto,
 } from '../../../../dtos';
 import { Either, left, right, UseCase } from '../../../../bases';
@@ -39,7 +39,7 @@ export class CreateCategoryTransaction
     private createCategoryTransactionRepository: CreateCategoryTransactionRepository
   ) {}
   async execute(
-    input: BodyCategoryTransactionDto
+    input: CategoryTransactionBodyDto
   ): Promise<
     Either<
       EntityNotEmpty | EntityNotExists | EntityAlreadyExists | EntityNotCreated,

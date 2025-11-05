@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import {
-  BodyCategoryTransactionDto,
+  CategoryTransactionBodyDto,
   CategoryTransactionResponseDto,
   FindCategoryTransactionByNameRepository,
 } from '@pure-workspace/domain';
@@ -12,7 +12,7 @@ export class FindCategoryTransactionByNameRepositoryImpl
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
 
   async find(
-    input: Pick<BodyCategoryTransactionDto, 'name' | 'loggedUserId'>
+    input: Pick<CategoryTransactionBodyDto, 'name' | 'loggedUserId'>
   ): Promise<CategoryTransactionResponseDto> {
     const { loggedUserId, name } = input;
 

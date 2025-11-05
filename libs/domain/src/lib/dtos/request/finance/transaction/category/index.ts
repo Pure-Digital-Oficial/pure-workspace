@@ -1,4 +1,4 @@
-export * from './body-category-transaction.dto';
+export * from './category-transaction-body.dto';
 export * from './create-category-transaction.dto';
 export * from './delete-category-transaction.dto';
 export * from './edit-category-transaction.dto';

@@ -1,5 +1,5 @@
 import {
-  BodyCategoryTransactionDto,
+  CategoryTransactionBodyDto,
   CategoryTransactionResponseDto,
   FindCategoryTransactionByNameRepository,
 } from '../../../../../index';
@@ -7,9 +7,9 @@ import {
 export class FindCategoryTransactionByNameRepositoryMock
   implements FindCategoryTransactionByNameRepository
 {
-  inputMock = {} as Pick<BodyCategoryTransactionDto, 'name' | 'loggedUserId'>;
+  inputMock = {} as Pick<CategoryTransactionBodyDto, 'name' | 'loggedUserId'>;
   async find(
-    input: Pick<BodyCategoryTransactionDto, 'name' | 'loggedUserId'>
+    input: Pick<CategoryTransactionBodyDto, 'name' | 'loggedUserId'>
   ): Promise<CategoryTransactionResponseDto> {
     this.inputMock = input;
     return {} as CategoryTransactionResponseDto;

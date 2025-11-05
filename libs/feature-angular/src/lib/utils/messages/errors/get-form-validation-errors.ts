@@ -23,6 +23,11 @@ export function getFormValidationErrors(form: FormGroup): string[] {
         errorMessages.push(`"${label}" deve ser maior que ${minValue}.`);
       }
 
+      if (control.errors['max']) {
+        const minValue = control.errors['max'].max;
+        errorMessages.push(`"${label}" deve ser menor ou igual à ${minValue}.`);
+      }
+
       if (control.errors['email']) {
         errorMessages.push(`"${label}" deve ser um e-mail válido.`);
       }

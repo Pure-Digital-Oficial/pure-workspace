@@ -20,6 +20,7 @@ const defaultMenuItems: SidenavItem[] = [
       },
     ],
   },
+  { title: 'Ganhos Fixos', icon: 'paid', route: '/fixed-gain' },
 ];
 
 export const appRoutes: Route[] = [
@@ -56,6 +57,18 @@ export const appRoutes: Route[] = [
     canActivate: [authGuard],
     data: {
       title: 'Categorias das transações',
+      menuItems: defaultMenuItems,
+    },
+  },
+  {
+    path: 'fixed-gain',
+    loadComponent: () =>
+      import('@pure-workspace/feature-angular').then(
+        (c) => c.DefaultFixedGainContainerComponent
+      ),
+    canActivate: [authGuard],
+    data: {
+      title: 'Ganhos Fixos',
       menuItems: defaultMenuItems,
     },
   },

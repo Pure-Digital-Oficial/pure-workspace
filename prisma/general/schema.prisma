@@ -70,7 +70,7 @@ model user {
   shots                 shot[]
   shots_models          shot_model[]
   target_references     target_reference[]
-  fixed_earnings        fixed_earning[]
+  fixed_gains        fixed_gain[]
   category_transactions category_transaction[]
   budgets               budget[]
   transactions          transaction[]
@@ -229,7 +229,7 @@ model history_shot {
   @@schema("pure_marketing")
 }
 
-model fixed_earning {
+model fixed_gain {
   id             String    @id @default(uuid())
   name           String
   value          Float
