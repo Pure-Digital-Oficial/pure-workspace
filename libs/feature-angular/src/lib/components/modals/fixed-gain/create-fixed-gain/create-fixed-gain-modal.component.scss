@@ -1,0 +1,9 @@
+::ng-deep .mat-mdc-dialog-surface {
+  width: 600px !important;
+  max-width: none !important;
+
+  @media (max-width: 1024px) {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
