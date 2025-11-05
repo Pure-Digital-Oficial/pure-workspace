@@ -5,6 +5,7 @@ import {
   EntityAlreadyExists,
   EntityNotCreated,
   EntityNotEmpty,
+  EntityNotExists,
 } from '../../../errors';
 import {
   FindUserByIdRepository,
@@ -14,7 +15,17 @@ import {
 import { UserVerificationId } from '../../../utils';
 
 export class CreateFixedGain
-  implements UseCase<CreateFixedGainDto, Either<EntityNotEmpty, string>>
+  implements
+    UseCase<
+      CreateFixedGainDto,
+      Either<
+        | EntityNotEmpty
+        | EntityNotExists
+        | EntityAlreadyExists
+        | EntityNotCreated,
+        string
+      >
+    >
 {
   constructor(
     @Inject('FindUserByIdRepository')
@@ -26,7 +37,12 @@ export class CreateFixedGain
   ) {}
   async execute(
     input: CreateFixedGainDto
-  ): Promise<Either<EntityNotEmpty, string>> {
+  ): Promise<
+    Either<
+      EntityNotEmpty | EntityNotExists | EntityAlreadyExists | EntityNotCreated,
+      string
+    >
+  > {
     const { dayOfReceipt, loggedUserId, name, value, frequency } = input;
 
     if (Object.keys(name).length < 1) {
