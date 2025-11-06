@@ -4,3 +4,4 @@ export * from './sidenav';
 export * from './transactions';
 export * from './search-bar';
 export * from './snackbar';
+export * from './lists';

@@ -1,11 +1,18 @@
 <lib-default-layout [title]="title" [menuItems]="menuItems">
   <lib-list-layout
-    [length]="totalLength"
+    [length]="totalLength()"
     [pageSize]="pageSize"
     [pageIndex]="pageIndex"
     (pageChange)="onPageEvent($event)"
     (searchChange)="onSearchValueChange($event)"
     (createAction)="createFixedGainAction()"
   >
+    @for (fixedGain of fixedGains(); track fixedGain.id) {
+    <lib-list-item-fixed-gains-controls
+      [fixedGain]="fixedGain"
+      (edit)="editFixedGainAction($event)"
+      (delete)="deleteFixedGainAction($event)"
+    />
+    }
   </lib-list-layout>
 </lib-default-layout>
