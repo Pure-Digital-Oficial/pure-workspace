@@ -1,0 +1,41 @@
+<mat-list-item class="fixed-gain-item">
+  <div class="fixed-gain-item-container">
+    <div class="fixed-gain-item-body-container">
+      <div class="fixed-gain-item-header">
+        <span>Nome: {{ fixedGain().name }}</span>
+        <span>Frequência: {{ fixedGain().frequency }}</span>
+      </div>
+      <div class="fixed-gain-item-body">
+        <span class="fixed-gain-item-value"
+          >Valor: {{ fixedGain().value | currency : 'BRL' }}</span
+        >
+
+        <div class="fixed-gain-item-date">
+          <span
+            >Criado em: {{ fixedGain().createdAt | date : 'shortDate' }}</span
+          >
+          <span
+            >Editado em: {{ fixedGain().updatedAt | date : 'shortDate' }}</span
+          >
+        </div>
+      </div>
+    </div>
+    <lib-default-button-icon
+      [ariaLabel]="'Icone de opções'"
+      [icon]="'more_horiz'"
+      [description]="'Opções'"
+      [matMenuTriggerFor]="menu"
+    />
+    <mat-menu #menu="matMenu">
+      <button (click)="editAction()" mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        <span>Editar</span>
+      </button>
+      <button (click)="deleteAction()" mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>Deletar</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-list-item>
+<mat-divider />
