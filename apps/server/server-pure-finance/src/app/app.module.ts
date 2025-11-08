@@ -11,7 +11,11 @@ import {
   EditCategoryTransactionModule,
   DeleteCategoryTransactionModule,
 } from './transaction';
-import { CreateFixedGainModule, ListFixedGainsModule } from './fixed-gain';
+import {
+  CreateFixedGainModule,
+  ListFixedGainsModule,
+  EditFixedGainModule,
+} from './fixed-gain';
 
 @Module({
   imports: [
@@ -25,6 +29,7 @@ import { CreateFixedGainModule, ListFixedGainsModule } from './fixed-gain';
     DeleteCategoryTransactionModule,
     CreateFixedGainModule,
     ListFixedGainsModule,
+    EditFixedGainModule,
   ],
   controllers: [AppController],
   providers: [AppService],

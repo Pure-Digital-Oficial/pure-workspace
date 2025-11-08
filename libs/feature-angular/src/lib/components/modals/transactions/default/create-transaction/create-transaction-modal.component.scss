@@ -1,23 +1,11 @@
-::ng-deep .mat-mdc-dialog-surface {
-  width: 600px !important;
-  max-width: none !important;
+.transacion-modal-form {
+  .transaction-modal-select {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
 
-  @media (max-width: 1024px) {
-    width: 100% !important;
-    max-width: none !important;
-  }
-}
-
-.transaction-modal-container {
-  .transacion-modal-form {
-    .transaction-modal-select {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-
-      .transaction-modal-select-item {
-        width: 48%;
-      }
+    .transaction-modal-select-item {
+      width: 48%;
     }
   }
 }

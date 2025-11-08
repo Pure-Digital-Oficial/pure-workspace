@@ -8,6 +8,7 @@ import {
   DefaultLayoutComponent,
   ListLayoutComponent,
   ListItemFixedGainControlsComponent,
+  EditFixedGainModalComponent,
 } from '../../../components';
 import { AuthService, FixedGainsService } from '../../../services';
 
@@ -52,7 +53,9 @@ export class DefaultFixedGainContainerComponent implements OnInit {
   }
 
   editFixedGainAction(fixedGainResponseDto: FixedGainResponseDto) {
-    console.log(fixedGainResponseDto);
+    this.dialogService.open(EditFixedGainModalComponent, {
+      data: fixedGainResponseDto,
+    });
   }
 
   deleteFixedGainAction(

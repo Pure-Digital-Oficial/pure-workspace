@@ -9,7 +9,6 @@ import {
 import { environment } from '../../../../environments';
 import { SessionService } from '../../../auth';
 import { SnackbarStackService } from '../../../utils';
-import { TransactionType } from '../../../../models';
 
 @Injectable({
   providedIn: 'root',
@@ -60,10 +59,6 @@ export class TransactionsService {
     return of(cached);
   }
 
-  private mapTransactionType(type: string) {
-    return TransactionType[type] ?? type;
-  }
-
   private fetchTransactions(
     listTransactionsDto?: Pick<
       ListTransactionsDto,
@@ -96,15 +91,8 @@ export class TransactionsService {
           )
           .pipe(
             tap((response) => {
-              const mappedResponse = {
-                ...response,
-                transactions: response.transactions.map((t) => ({
-                  ...t,
-                  type: this.mapTransactionType(t.type),
-                })),
-              };
               if (updateCache) {
-                this.updateTransactions(mappedResponse);
+                this.updateTransactions(response);
               }
             }),
             catchError((error) => {

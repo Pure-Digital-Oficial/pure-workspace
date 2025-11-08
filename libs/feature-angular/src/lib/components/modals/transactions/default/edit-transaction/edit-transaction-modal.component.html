@@ -4,42 +4,40 @@
   (submited)="onSubmit()"
   [actionButtonTitle]="'Editar'"
 >
-  <mat-dialog-content class="transaction-modal-container">
-    <form [formGroup]="form" class="transacion-modal-form">
-      <lib-default-input
-        [required]="true"
-        [type]="'text'"
-        [label]="'Nome'"
-        [placeholder]="'Digite o nome da transação'"
-        formControlName="name"
-      />
-      <lib-default-input
-        [required]="true"
-        [type]="'number'"
-        [label]="'Valor'"
-        [placeholder]="'Digite o valor da transação'"
-        formControlName="value"
-      />
-      <div class="transaction-modal-select">
-        <mat-form-field class="transaction-modal-select-item">
-          <mat-label>Categoria</mat-label>
-          <mat-select formControlName="categoryId">
-            <mat-option
-              *ngFor="let category of categories()"
-              [value]="category.id"
-            >
-              {{ category.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="transaction-modal-select-item">
-          <mat-label>Tipo transação</mat-label>
-          <mat-select formControlName="type">
-            <mat-option value="WITHDRAW">SAQUE</mat-option>
-            <mat-option value="DEPOSIT">DEPÓSITO</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </form>
-  </mat-dialog-content>
+  <form [formGroup]="form" class="transacion-modal-form">
+    <lib-default-input
+      [required]="true"
+      [type]="'text'"
+      [label]="'Nome'"
+      [placeholder]="'Digite o nome da transação'"
+      formControlName="name"
+    />
+    <lib-default-input
+      [required]="true"
+      [type]="'number'"
+      [label]="'Valor'"
+      [placeholder]="'Digite o valor da transação'"
+      formControlName="value"
+    />
+    <div class="transaction-modal-select">
+      <mat-form-field class="transaction-modal-select-item">
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="categoryId">
+          <mat-option
+            *ngFor="let category of categories()"
+            [value]="category.id"
+          >
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="transaction-modal-select-item">
+        <mat-label>Tipo transação</mat-label>
+        <mat-select formControlName="type">
+          <mat-option value="WITHDRAW">SAQUE</mat-option>
+          <mat-option value="DEPOSIT">DEPÓSITO</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
 </lib-modal-layout>

@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { TransactionResponseDto } from '@pure-workspace/domain';
 import { DefaultButtonIconComponent } from '../../../buttons';
+import { TransactionTypePipe } from 'libs/feature-angular/src/lib/pipes';
 
 @Component({
   selector: 'lib-list-item-transaction-controls',
@@ -23,6 +24,7 @@ import { DefaultButtonIconComponent } from '../../../buttons';
     MatIcon,
     MatMenuModule,
     DefaultButtonIconComponent,
+    TransactionTypePipe,
   ],
   templateUrl: './list-item-transaction-controls.component.html',
   styleUrl: './list-item-transaction-controls.component.scss',
