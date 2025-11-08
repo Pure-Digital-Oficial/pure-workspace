@@ -12,7 +12,7 @@ import {
   FindFixedGainByNameAndValueRepository,
   FindUserByIdRepository,
   EditFixedGainRepository,
-  FindFixedGaindByIdRepository,
+  FindFixedGainByIdRepository,
 } from '../../../repositories';
 
 export class EditFixedGain
@@ -33,8 +33,8 @@ export class EditFixedGain
     private findUserByIdRepository: FindUserByIdRepository,
     @Inject('FindFixedGainByNameAndValueRepository')
     private findFixedGainByNameAndValueRepository: FindFixedGainByNameAndValueRepository,
-    @Inject('FindFixedGaindByIdRepository')
-    private findFixedGainByIdRepository: FindFixedGaindByIdRepository,
+    @Inject('FindFixedGainByIdRepository')
+    private findFixedGainByIdRepository: FindFixedGainByIdRepository,
     @Inject('EditFixedGainRepository')
     private editFixedGainRepository: EditFixedGainRepository
   ) {}

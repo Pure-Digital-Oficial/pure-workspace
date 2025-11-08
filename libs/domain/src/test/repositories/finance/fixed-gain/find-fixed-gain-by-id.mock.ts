@@ -1,11 +1,11 @@
 import {
-  FindFixedGaindByIdRepository,
+  FindFixedGainByIdRepository,
   FixedGainResponseDto,
 } from '../../../../index';
 import { FixedGainMock } from '../../../entities';
 
 export class FindFixedGainByIdRepositoryMock
-  implements FindFixedGaindByIdRepository
+  implements FindFixedGainByIdRepository
 {
   inputMock = '';
   async find(id: string): Promise<FixedGainResponseDto> {

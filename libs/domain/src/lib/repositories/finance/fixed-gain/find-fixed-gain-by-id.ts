@@ -1,5 +1,5 @@
 import { FixedGainResponseDto } from '../../../dtos';
 
-export interface FindFixedGaindByIdRepository {
+export interface FindFixedGainByIdRepository {
   find(id: string): Promise<FixedGainResponseDto>;
 }

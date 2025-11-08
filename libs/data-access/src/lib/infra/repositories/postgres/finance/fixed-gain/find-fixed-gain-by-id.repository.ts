@@ -1,12 +1,12 @@
 import { Inject } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import {
-  FindFixedGaindByIdRepository,
+  FindFixedGainByIdRepository,
   FixedGainResponseDto,
 } from '@pure-workspace/domain';
 
 export class FindFixedGainByIdRepositoryImpl
-  implements FindFixedGaindByIdRepository
+  implements FindFixedGainByIdRepository
 {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async find(id: string): Promise<FixedGainResponseDto> {
