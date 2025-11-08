@@ -3,7 +3,7 @@
     <div class="transaction-item-body-container">
       <div class="transaction-item-header">
         <span>Titulo: {{ transaction().name }}</span>
-        <span>Tipo: {{ transaction().type }}</span>
+        <span>Tipo: {{ transaction().type | transactionType }}</span>
       </div>
       <div class="transaction-item-body">
         <span class="transaction-item-value"

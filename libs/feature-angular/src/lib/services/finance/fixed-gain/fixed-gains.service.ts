@@ -9,7 +9,6 @@ import {
 import { environment } from '../../../environments';
 import { SessionService } from '../../auth';
 import { SnackbarStackService } from '../../utils';
-import { FixedGainFrequencyRecord } from '../../../models';
 
 @Injectable({
   providedIn: 'root',
@@ -58,10 +57,6 @@ export class FixedGainsService {
     return of(cached);
   }
 
-  private mapFixedGainFrequency(frequency: string) {
-    return FixedGainFrequencyRecord[frequency] ?? frequency;
-  }
-
   private fetchFixedGains(
     listFixedGainsDto?: Pick<ListFixedGainsDto, 'skip' | 'take' | 'filters'>,
     updateCache = true
@@ -91,15 +86,8 @@ export class FixedGainsService {
           )
           .pipe(
             tap((response) => {
-              const mappedResponse = {
-                ...response,
-                fixedGains: response.fixedGains.map((t) => ({
-                  ...t,
-                  frequency: this.mapFixedGainFrequency(t.frequency),
-                })),
-              };
               if (updateCache) {
-                this.updateFixedGains(mappedResponse);
+                this.updateFixedGains(response);
               }
             }),
             catchError((error) => {

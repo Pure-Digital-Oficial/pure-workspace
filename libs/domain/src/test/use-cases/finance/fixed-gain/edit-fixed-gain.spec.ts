@@ -7,7 +7,7 @@ import { EditFixedGain } from '@/use-cases';
 import {
   EditFixedGainRepository,
   FindFixedGainByNameAndValueRepository,
-  FindFixedGaindByIdRepository,
+  FindFixedGainByIdRepository,
   FindUserByIdRepository,
 } from '@/repositories';
 import {
@@ -30,7 +30,7 @@ interface SutTypes {
   editFixedGainDto: EditFixedGainDto;
   findUserByIdRepository: FindUserByIdRepository;
   findFixedGainByNameAndValueRepository: FindFixedGainByNameAndValueRepository;
-  findFixedGainByIdRepository: FindFixedGaindByIdRepository;
+  findFixedGainByIdRepository: FindFixedGainByIdRepository;
   editFixedGainRepository: EditFixedGainRepository;
 }
 

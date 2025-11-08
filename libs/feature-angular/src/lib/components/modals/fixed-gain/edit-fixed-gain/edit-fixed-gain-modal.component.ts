@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -7,13 +12,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ModalLayoutComponent } from '../../../layouts';
 import {
-  CreateFixedGainService,
+  EditFixedGainService,
   FixedGainsService,
   SnackbarStackService,
 } from '../../../../services';
@@ -24,11 +33,12 @@ import {
 } from '../../../../models';
 import { getFormValidationErrors } from '../../../../utils';
 import { DefaultInputComponent } from '../../../inputs';
+import { FixedGainResponseDto } from '@pure-workspace/domain';
 
 @Component({
-  selector: 'lib-create-fixed-gain-modal',
-  templateUrl: 'create-fixed-gain-modal.component.html',
-  styleUrl: 'create-fixed-gain-modal.component.scss',
+  selector: 'lib-edit-fixed-gain-modal',
+  templateUrl: 'edit-fixed-gain-modal.component.html',
+  styleUrl: 'edit-fixed-gain-modal.component.scss',
   imports: [
     CommonModule,
     MatDialogModule,
@@ -42,27 +52,34 @@ import { DefaultInputComponent } from '../../../inputs';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateFixedGainModalComponent {
-  private dialogRef = inject(MatDialogRef<CreateFixedGainModalComponent>);
+export class EditFixedGainModalComponent {
+  private dialogRef = inject(MatDialogRef<EditFixedGainModalComponent>);
   private snackbarService = inject(SnackbarStackService);
-  private createFixedGainService = inject(CreateFixedGainService);
+  private editFixedGainService = inject(EditFixedGainService);
   private fixedGainsService = inject(FixedGainsService);
   form: FormGroup<FixedGainForm>;
   frequencies: FixedGainFrequency[] = ListFixedGainFrequencies;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA)
+    public fixedGainResponseDto: FixedGainResponseDto
+  ) {
+    console.log(fixedGainResponseDto);
     this.form = this.fb.group({
-      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      dayOfReceipt: new FormControl<number>(0, [
+      name: new FormControl(this.fixedGainResponseDto.name, [
         Validators.required,
-        Validators.min(1),
-        Validators.max(31),
+        Validators.minLength(3),
       ]),
-      frequency: new FormControl('', [
+      dayOfReceipt: new FormControl<number>(
+        this.fixedGainResponseDto.dayOfReceipt,
+        [Validators.required, Validators.min(1), Validators.max(31)]
+      ),
+      frequency: new FormControl(this.fixedGainResponseDto.frequency, [
         Validators.required,
         Validators.minLength(1),
       ]),
-      value: new FormControl<number>(0, [
+      value: new FormControl<number>(this.fixedGainResponseDto.value, [
         Validators.required,
         Validators.min(0.01),
       ]),
@@ -79,8 +96,9 @@ export class CreateFixedGainModalComponent {
 
     if (errors.length === 0) {
       const value = this.form.value;
-      this.createFixedGainService
-        .create({
+      this.editFixedGainService
+        .edit({
+          id: this.fixedGainResponseDto.id,
           name: value.name,
           value: parseFloat(value.value),
           dayOfReceipt: parseFloat(value.dayOfReceipt),

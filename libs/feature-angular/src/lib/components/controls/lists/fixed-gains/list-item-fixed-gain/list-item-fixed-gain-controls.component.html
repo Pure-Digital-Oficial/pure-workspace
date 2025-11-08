@@ -3,7 +3,9 @@
     <div class="fixed-gain-item-body-container">
       <div class="fixed-gain-item-header">
         <span>Nome: {{ fixedGain().name }}</span>
-        <span>Frequência: {{ fixedGain().frequency }}</span>
+        <span
+          >Frequência: {{ fixedGain().frequency | fixedGainFrequency }}</span
+        >
       </div>
       <div class="fixed-gain-item-body">
         <span class="fixed-gain-item-value"
