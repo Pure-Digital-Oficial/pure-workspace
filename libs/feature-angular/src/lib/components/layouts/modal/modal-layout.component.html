@@ -8,7 +8,10 @@
     (action)="onClose()"
   />
 </div>
-<ng-content></ng-content>
+<mat-dialog-content class="fixed-gain-modal-container">
+  <ng-content></ng-content>
+</mat-dialog-content>
+
 <mat-dialog-actions align="end">
   <button mat-button (click)="onClose()">{{ cancelButtonTitle }}</button>
   <button mat-button (click)="onSubmit()">{{ actionButtonTitle }}</button>

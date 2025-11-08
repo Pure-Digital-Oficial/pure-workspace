@@ -4,41 +4,39 @@
   (submited)="onSubmit()"
   [actionButtonTitle]="'Editar'"
 >
-  <mat-dialog-content class="fixed-gain-modal-container">
-    <form [formGroup]="form">
-      <lib-default-input
-        [required]="true"
-        [type]="'text'"
-        [label]="'Nome'"
-        [placeholder]="'Digite o nome da transação'"
-        formControlName="name"
-      />
-      <lib-default-input
-        [required]="true"
-        [type]="'number'"
-        [label]="'Valor'"
-        [placeholder]="'Digite o valor da transação'"
-        formControlName="value"
-      />
-      <lib-default-input
-        [required]="true"
-        [type]="'number'"
-        [label]="'Dia de recebimento'"
-        [placeholder]="'Digite o dia de recebimento'"
-        formControlName="dayOfReceipt"
-      />
+  <form [formGroup]="form">
+    <lib-default-input
+      [required]="true"
+      [type]="'text'"
+      [label]="'Nome'"
+      [placeholder]="'Digite o nome da transação'"
+      formControlName="name"
+    />
+    <lib-default-input
+      [required]="true"
+      [type]="'number'"
+      [label]="'Valor'"
+      [placeholder]="'Digite o valor da transação'"
+      formControlName="value"
+    />
+    <lib-default-input
+      [required]="true"
+      [type]="'number'"
+      [label]="'Dia de recebimento'"
+      [placeholder]="'Digite o dia de recebimento'"
+      formControlName="dayOfReceipt"
+    />
 
-      <mat-form-field class="modal-select-item">
-        <mat-label>Frequencia</mat-label>
-        <mat-select formControlName="frequency">
-          <mat-option
-            *ngFor="let frequency of frequencies"
-            [value]="frequency.id"
-          >
-            {{ frequency.title }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </form>
-  </mat-dialog-content>
+    <mat-form-field class="modal-select-item">
+      <mat-label>Frequencia</mat-label>
+      <mat-select formControlName="frequency">
+        <mat-option
+          *ngFor="let frequency of frequencies"
+          [value]="frequency.id"
+        >
+          {{ frequency.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
 </lib-modal-layout>
