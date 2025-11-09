@@ -1,4 +1,5 @@
 export * from './create-fixed-gain.mock';
+export * from './delete-fixed-gain.mock';
 export * from './edit-fixed-gain.mock';
 export * from './find-fixed-gain-by-id.mock';
 export * from './find-fixed-gain-by-name-and-value.mock';
