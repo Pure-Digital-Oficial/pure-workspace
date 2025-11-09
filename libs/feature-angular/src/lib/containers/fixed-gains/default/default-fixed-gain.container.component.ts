@@ -9,6 +9,7 @@ import {
   ListLayoutComponent,
   ListItemFixedGainControlsComponent,
   EditFixedGainModalComponent,
+  DeleteFixedGainModalComponent,
 } from '../../../components';
 import { AuthService, FixedGainsService } from '../../../services';
 
@@ -59,9 +60,11 @@ export class DefaultFixedGainContainerComponent implements OnInit {
   }
 
   deleteFixedGainAction(
-    categoryTransaction: Pick<FixedGainResponseDto, 'id' | 'name'>
+    fixedGainResponseDto: Pick<FixedGainResponseDto, 'id' | 'name'>
   ) {
-    console.log(categoryTransaction);
+    this.dialogService.open(DeleteFixedGainModalComponent, {
+      data: fixedGainResponseDto,
+    });
   }
 
   onSearchValueChange(value: string) {

@@ -1,0 +1,13 @@
+<lib-modal-layout
+  [title]="'Deletar ganho fixo'"
+  (clicked)="close()"
+  (submited)="onSubmit()"
+  [actionButtonTitle]="'Sim'"
+  [cancelButtonTitle]="'Não'"
+>
+  <div class="delete-fixed-gain-container">
+    <span
+      >{{ title }} <strong>{{ fixedGainData.name }}</strong> ?</span
+    >
+  </div>
+</lib-modal-layout>
