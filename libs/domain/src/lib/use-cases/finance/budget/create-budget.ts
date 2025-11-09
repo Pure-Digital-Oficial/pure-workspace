@@ -5,6 +5,7 @@ import {
   EntityAlreadyExists,
   EntityNotCreated,
   EntityNotEmpty,
+  EntityNotExists,
 } from '../../../errors';
 import {
   CreateBudgetRepository,
@@ -14,7 +15,17 @@ import {
 import { UserVerificationId } from '../../../utils';
 
 export class CreateBudget
-  implements UseCase<CreateBudgetDto, Either<EntityNotEmpty, string>>
+  implements
+    UseCase<
+      CreateBudgetDto,
+      Either<
+        | EntityNotEmpty
+        | EntityNotExists
+        | EntityAlreadyExists
+        | EntityNotCreated,
+        string
+      >
+    >
 {
   constructor(
     @Inject('FindUserByIdRepository')
@@ -24,7 +35,14 @@ export class CreateBudget
     @Inject('CreateBudgetRepository')
     private createBudgetRepository: CreateBudgetRepository
   ) {}
-  async execute(input: BudgetBodyDto): Promise<Either<EntityNotEmpty, string>> {
+  async execute(
+    input: BudgetBodyDto
+  ): Promise<
+    Either<
+      EntityNotEmpty | EntityNotExists | EntityAlreadyExists | EntityNotCreated,
+      string
+    >
+  > {
     const { name, description, limitValue, loggedUserId } = input;
 
     if (Object.keys(name).length < 1) {
