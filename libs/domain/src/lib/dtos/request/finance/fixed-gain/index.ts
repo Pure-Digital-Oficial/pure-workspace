@@ -1,4 +1,5 @@
 export * from './create-fixed-gain.dto';
+export * from './delete-fixed-gain.dto';
 export * from './edit-fixed-gain.dto';
 export * from './find-fixed-gain-by-value-and-name.dto';
 export * from './fixed-gain-body.dto';

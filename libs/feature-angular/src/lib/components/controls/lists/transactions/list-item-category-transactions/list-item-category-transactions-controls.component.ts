@@ -5,7 +5,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { CategoryTransactionResponseDto } from '@pure-workspace/domain';
-import { DefaultButtonIconComponent } from '../../../buttons';
+import { DefaultButtonIconComponent } from '../../../../buttons';
 
 @Component({
   selector: 'lib-list-item-category-transaction-controls',

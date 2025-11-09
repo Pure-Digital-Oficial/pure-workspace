@@ -15,6 +15,7 @@ import {
   CreateFixedGainModule,
   ListFixedGainsModule,
   EditFixedGainModule,
+  DeleteFixedGainModule,
 } from './fixed-gain';
 
 @Module({
@@ -30,6 +31,7 @@ import {
     CreateFixedGainModule,
     ListFixedGainsModule,
     EditFixedGainModule,
+    DeleteFixedGainModule,
   ],
   controllers: [AppController],
   providers: [AppService],
