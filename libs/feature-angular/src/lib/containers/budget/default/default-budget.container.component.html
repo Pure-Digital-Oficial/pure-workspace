@@ -1,0 +1,11 @@
+<lib-default-layout [title]="title" [menuItems]="menuItems">
+  <lib-list-layout
+    [length]="totalLength"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    (pageChange)="onPageEvent($event)"
+    (searchChange)="onSearchValueChange($event)"
+    (createAction)="createFixedGainAction()"
+  >
+  </lib-list-layout>
+</lib-default-layout>
