@@ -1,5 +1,4 @@
-export * from './transaction';
-export * from './fixed-gain.prisma.response.dto';
+export * from './finance';
 export * from './history-shot.response.dto';
 export * from './shot-model.prisma.response.dto';
 export * from './shot-prisma.response.dto';
