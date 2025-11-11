@@ -3,3 +3,4 @@ export * from './users/user.container.component';
 export * from './logins';
 export * from './transactions';
 export * from './fixed-gains';
+export * from './budget';

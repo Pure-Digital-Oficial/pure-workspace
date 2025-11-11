@@ -4,6 +4,8 @@ import { authGuard } from '@pure-workspace/feature-angular';
 
 const defaultMenuItems: SidenavItem[] = [
   { title: 'Página Principal', icon: 'home', route: '/' },
+  { title: 'Ganhos Fixos', icon: 'paid', route: '/fixed-gain' },
+  { title: 'Orçamento', icon: 'account_balance_wallet', route: '/budget' },
   {
     title: 'Transações',
     icon: 'currency_exchange',
@@ -20,7 +22,6 @@ const defaultMenuItems: SidenavItem[] = [
       },
     ],
   },
-  { title: 'Ganhos Fixos', icon: 'paid', route: '/fixed-gain' },
 ];
 
 export const appRoutes: Route[] = [
@@ -69,6 +70,18 @@ export const appRoutes: Route[] = [
     canActivate: [authGuard],
     data: {
       title: 'Ganhos Fixos',
+      menuItems: defaultMenuItems,
+    },
+  },
+  {
+    path: 'budget',
+    loadComponent: () =>
+      import('@pure-workspace/feature-angular').then(
+        (c) => c.DefaultBudgetContainerComponent
+      ),
+    canActivate: [authGuard],
+    data: {
+      title: 'Orçamento',
       menuItems: defaultMenuItems,
     },
   },

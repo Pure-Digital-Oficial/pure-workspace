@@ -70,7 +70,7 @@ model user {
   shots                 shot[]
   shots_models          shot_model[]
   target_references     target_reference[]
-  fixed_gains        fixed_gain[]
+  fixed_gains           fixed_gain[]
   category_transactions category_transaction[]
   budgets               budget[]
   transactions          transaction[]
@@ -239,7 +239,7 @@ model fixed_gain {
   user_id        String
   created_at     DateTime  @default(now())
   updated_at     DateTime  @default(now())
-  deleted_at DateTime?
+  deleted_at     DateTime?
 
   user user @relation(fields: [user_id], references: [id])
 
@@ -257,8 +257,8 @@ model transaction {
   initial_date DateTime?
   final_date   DateTime?
 
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
   deleted_at DateTime?
 
   user     user                 @relation(fields: [user_id], references: [id])
@@ -274,8 +274,8 @@ model category_transaction {
   status      Status @default(ACTIVE)
   user_id     String
 
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
   deleted_at DateTime?
 
   user              user                @relation(fields: [user_id], references: [id])
@@ -300,12 +300,14 @@ model category_x_budget {
 
 model budget {
   id          String @id @default(uuid())
+  name        String
+  description String
   status      Status @default(ACTIVE)
   user_id     String
   limit_value Float
 
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
   deleted_at DateTime?
 
   user              user                @relation(fields: [user_id], references: [id])
