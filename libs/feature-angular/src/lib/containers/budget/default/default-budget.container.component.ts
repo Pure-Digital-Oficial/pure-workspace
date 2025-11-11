@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, computed, inject, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
@@ -7,28 +7,34 @@ import {
   DefaultLayoutComponent,
   ListLayoutComponent,
   CreateBudgetModalComponent,
+  ListItemBudgetControlsComponent,
 } from '../../../components';
-import { AuthService } from '../../../services';
+import { AuthService, BudgetsService } from '../../../services';
 
 @Component({
   selector: 'lib-category-transactions-container',
-  imports: [MatDialogModule, DefaultLayoutComponent, ListLayoutComponent],
+  imports: [
+    MatDialogModule,
+    DefaultLayoutComponent,
+    ListLayoutComponent,
+    ListItemBudgetControlsComponent,
+  ],
   providers: [AuthService],
   templateUrl: './default-budget.container.component.html',
   styleUrl: './default-budget.container.component.scss',
 })
-export class DefaultBudgetContainerComponent {
+export class DefaultBudgetContainerComponent implements OnInit {
   private dialogService = inject(MatDialog);
-  // private fixedGainsService = inject(FixedGainsService);
+  private budgetsService = inject(BudgetsService);
   @Input() title = '';
   @Input() menuItems: SidenavItem[] = [];
   pageIndex = 0;
   pageSize = 6;
   pageEvent: PageEvent = {} as PageEvent;
 
-  totalLength = 0; //computed(() => this.fixedGainsService.fixedGains().total);
+  totalLength = computed(() => this.budgetsService.budgets().total);
 
-  fixedGains = 0; //computed(() => this.fixedGainsService.fixedGains().fixedGains);
+  budgets = computed(() => this.budgetsService.budgets().budgets);
 
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data) => {
@@ -37,9 +43,9 @@ export class DefaultBudgetContainerComponent {
     });
   }
 
-  // ngOnInit(): void {
-  //   this.fixedGainsService.listFixedGains().subscribe();
-  // }
+  ngOnInit(): void {
+    this.budgetsService.listBudgets().subscribe();
+  }
 
   createFixedGainAction() {
     this.dialogService.open(CreateBudgetModalComponent);
@@ -47,7 +53,7 @@ export class DefaultBudgetContainerComponent {
 
   editFixedGainAction(budgetResponseDto: BudgetResponseDto) {
     // this.dialogService.open(EditFixedGainModalComponent, {
-    //   data: fixedGainResponseDto,
+    //   data: budgetResponseDto,
     // });
     console.log(budgetResponseDto);
   }
@@ -56,18 +62,17 @@ export class DefaultBudgetContainerComponent {
     budgetResponseDto: Pick<BudgetResponseDto, 'id' | 'name'>
   ) {
     // this.dialogService.open(DeleteFixedGainModalComponent, {
-    //   data: fixedGainResponseDto,
+    //   data: budgetResponseDto,
     // });
     console.log(budgetResponseDto);
   }
 
   onSearchValueChange(value: string) {
-    // this.fixedGainsService
-    //   .findFixedGainsByFilter({
-    //     name: value,
-    //   })
-    //   .subscribe();
-    console.log(value);
+    this.budgetsService
+      .findBudgetsByFilter({
+        name: value,
+      })
+      .subscribe();
   }
 
   onPageEvent(e: PageEvent) {
@@ -81,9 +86,6 @@ export class DefaultBudgetContainerComponent {
   }
 
   private featchBudgets(skip: number, take: number) {
-    // this.fixedGainsService
-    //   .listFixedGainsWithPaginated({ skip, take })
-    //   .subscribe();
-    console.log(skip, take);
+    this.budgetsService.listBudgetsWithPaginated({ skip, take }).subscribe();
   }
 }

@@ -1,11 +1,18 @@
 <lib-default-layout [title]="title" [menuItems]="menuItems">
   <lib-list-layout
-    [length]="totalLength"
+    [length]="totalLength()"
     [pageSize]="pageSize"
     [pageIndex]="pageIndex"
     (pageChange)="onPageEvent($event)"
     (searchChange)="onSearchValueChange($event)"
     (createAction)="createFixedGainAction()"
   >
+    @for (budget of budgets(); track budget.id) {
+    <lib-list-item-budget-controls
+      [budget]="budget"
+      (edit)="editFixedGainAction($event)"
+      (delete)="deleteFixedGainAction($event)"
+    />
+    }
   </lib-list-layout>
 </lib-default-layout>

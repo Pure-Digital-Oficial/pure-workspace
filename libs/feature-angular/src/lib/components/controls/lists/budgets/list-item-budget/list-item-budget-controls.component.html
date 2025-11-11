@@ -1,0 +1,37 @@
+<mat-list-item class="budget-item">
+  <div class="budget-item-container">
+    <div class="budget-item-body-container">
+      <div class="budget-item-header">
+        <span>Nome: {{ budget().name }}</span>
+        <span>Criado por: {{ budget().createdBy }}</span>
+      </div>
+      <div class="budget-item-body">
+        <span class="budget-item-value"
+          >Valor limite: {{ budget().limitValue | currency : 'BRL' }}</span
+        >
+
+        <div class="budget-item-date">
+          <span>Criado em: {{ budget().createdAt | date : 'shortDate' }}</span>
+          <span>Editado em: {{ budget().updatedAt | date : 'shortDate' }}</span>
+        </div>
+      </div>
+    </div>
+    <lib-default-button-icon
+      [ariaLabel]="'Icone de opções'"
+      [icon]="'more_horiz'"
+      [description]="'Opções'"
+      [matMenuTriggerFor]="menu"
+    />
+    <mat-menu #menu="matMenu">
+      <button (click)="editAction()" mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        <span>Editar</span>
+      </button>
+      <button (click)="deleteAction()" mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>Deletar</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-list-item>
+<mat-divider />
