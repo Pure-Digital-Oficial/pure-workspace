@@ -1,4 +1,4 @@
-import { FixedGainType, GeneralStatus } from '../../../types';
+import { FixedGainType, GeneralStatus } from '../../../../types';
 
 export interface FixedGainPrismaResponseDto {
   id: string;
