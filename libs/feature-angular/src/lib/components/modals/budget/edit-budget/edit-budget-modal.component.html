@@ -1,0 +1,31 @@
+<lib-modal-layout
+  [title]="'Editar orçamento'"
+  (clicked)="close()"
+  (submited)="onSubmit()"
+  [actionButtonTitle]="'Editar'"
+>
+  <form [formGroup]="form">
+    <lib-default-input
+      [required]="true"
+      [type]="'text'"
+      [label]="'Nome'"
+      [placeholder]="'Digite o nome do orçamento'"
+      formControlName="name"
+    />
+    <lib-default-input
+      [required]="true"
+      [type]="'number'"
+      [label]="'Valor limite'"
+      [placeholder]="'Digite o valor limite do orçamento'"
+      formControlName="limitValue"
+    />
+    <mat-form-field class="modal-area">
+      <mat-label>Descrição</mat-label>
+      <textarea
+        formControlName="description"
+        [placeholder]="'Digite a descrição do orçamento'"
+        matInput
+      ></textarea>
+    </mat-form-field>
+  </form>
+</lib-modal-layout>

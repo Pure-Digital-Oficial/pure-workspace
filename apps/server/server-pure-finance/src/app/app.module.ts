@@ -17,7 +17,11 @@ import {
   EditFixedGainModule,
   DeleteFixedGainModule,
 } from './fixed-gain';
-import { CreateBudgetModule, ListBudgetsModule } from './budget';
+import {
+  CreateBudgetModule,
+  EditBudgetModule,
+  ListBudgetsModule,
+} from './budget';
 
 @Module({
   imports: [
@@ -35,6 +39,7 @@ import { CreateBudgetModule, ListBudgetsModule } from './budget';
     DeleteFixedGainModule,
     CreateBudgetModule,
     ListBudgetsModule,
+    EditBudgetModule,
   ],
   controllers: [AppController],
   providers: [AppService],
