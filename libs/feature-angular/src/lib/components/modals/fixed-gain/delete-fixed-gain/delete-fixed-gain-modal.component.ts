@@ -18,7 +18,7 @@ import {
 import { ModalLayoutComponent } from '../../../layouts';
 
 @Component({
-  selector: 'lib-delete-transaction-modal',
+  selector: 'lib-delete-fixed-gain-modal',
   templateUrl: 'delete-fixed-gain-modal.component.html',
   styleUrl: 'delete-fixed-gain-modal.component.scss',
   imports: [MatDialogModule, ModalLayoutComponent],

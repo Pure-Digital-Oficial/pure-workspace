@@ -1,0 +1,10 @@
+.delete-container {
+  height: 80px;
+  width: 400px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  span {
+    width: 80%;
+  }
+}

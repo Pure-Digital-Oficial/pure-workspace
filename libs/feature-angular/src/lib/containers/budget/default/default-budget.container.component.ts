@@ -9,6 +9,7 @@ import {
   CreateBudgetModalComponent,
   ListItemBudgetControlsComponent,
   EditBudgetModalComponent,
+  DeleteBudgetModalComponent,
 } from '../../../components';
 import { AuthService, BudgetsService } from '../../../services';
 
@@ -61,10 +62,9 @@ export class DefaultBudgetContainerComponent implements OnInit {
   deleteFixedGainAction(
     budgetResponseDto: Pick<BudgetResponseDto, 'id' | 'name'>
   ) {
-    // this.dialogService.open(DeleteFixedGainModalComponent, {
-    //   data: budgetResponseDto,
-    // });
-    console.log(budgetResponseDto);
+    this.dialogService.open(DeleteBudgetModalComponent, {
+      data: budgetResponseDto,
+    });
   }
 
   onSearchValueChange(value: string) {
