@@ -15,6 +15,7 @@ export class EditBudgetRepositoryImpl implements EditBudgetRepository {
         name,
         description,
         limit_value: limitValue,
+        updated_at: new Date(),
       },
     });
 
