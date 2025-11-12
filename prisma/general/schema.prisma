@@ -74,6 +74,7 @@ model user {
   category_transactions category_transaction[]
   budgets               budget[]
   transactions          transaction[]
+  category_x_budgets    category_x_budget[]
 
   @@schema("pure_general")
 }
@@ -288,9 +289,11 @@ model category_transaction {
 model category_x_budget {
   category_id String
   budget_id   String
+  created_by  String
 
   created_at DateTime @default(now())
 
+  user     user                 @relation(fields: [created_by], references: [id])
   category category_transaction @relation(fields: [category_id], references: [id])
   budget   budget               @relation(fields: [budget_id], references: [id])
 
