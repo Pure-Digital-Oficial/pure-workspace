@@ -74,7 +74,7 @@ export class EditBudget
 
     const findedBudgetById = await this.findBudgetByIdRepository.find(id);
 
-    if (Object.keys(findedBudgetById.id).length < 1) {
+    if (Object.keys(findedBudgetById?.id ?? findedBudgetById).length < 1) {
       return left(new EntityNotExists('budget'));
     }
 
