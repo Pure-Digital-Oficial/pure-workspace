@@ -15,6 +15,7 @@ export class DeleteBudgetRepositoryImpl implements DeleteBudgetRepository {
         id,
       },
       data: {
+        status: 'INACTIVE',
         deleted_at: new Date(),
       },
     });

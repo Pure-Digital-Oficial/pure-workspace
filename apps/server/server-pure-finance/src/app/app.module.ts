@@ -21,6 +21,7 @@ import {
   CreateBudgetModule,
   EditBudgetModule,
   ListBudgetsModule,
+  DeleteBudgetModule,
 } from './budget';
 
 @Module({
@@ -40,6 +41,7 @@ import {
     CreateBudgetModule,
     ListBudgetsModule,
     EditBudgetModule,
+    DeleteBudgetModule,
   ],
   controllers: [AppController],
   providers: [AppService],
