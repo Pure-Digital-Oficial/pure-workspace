@@ -1,0 +1,13 @@
+<lib-modal-layout
+  [title]="'Deletar orçamento'"
+  (clicked)="close()"
+  (submited)="onSubmit()"
+  [actionButtonTitle]="'Sim'"
+  [cancelButtonTitle]="'Não'"
+>
+  <div class="delete-container">
+    <span
+      >{{ title }} <strong>{{ fixedGainData.name }}</strong> ?</span
+    >
+  </div>
+</lib-modal-layout>

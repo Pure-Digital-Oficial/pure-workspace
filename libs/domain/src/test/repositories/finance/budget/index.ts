@@ -1,4 +1,5 @@
 export * from './create-budget.mock';
+export * from './delete-budget.mock';
 export * from './edit-budget.mock';
 export * from './find-budget-by-id.mock';
 export * from './find-budget-by-name.mock';
