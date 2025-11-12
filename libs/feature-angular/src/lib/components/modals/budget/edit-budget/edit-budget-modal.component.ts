@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -7,14 +12,19 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { BudgetResponseDto } from '@pure-workspace/domain';
 import { ModalLayoutComponent } from '../../../layouts';
 import {
   BudgetsService,
-  CreateBudgetService,
+  EditBudgetService,
   SnackbarStackService,
 } from '../../../../services';
 import { BudgetForm } from '../../../../models';
@@ -22,9 +32,9 @@ import { getFormValidationErrors } from '../../../../utils';
 import { DefaultInputComponent } from '../../../inputs';
 
 @Component({
-  selector: 'lib-create-budget-modal',
-  templateUrl: 'create-budget-modal.component.html',
-  styleUrl: 'create-budget-modal.component.scss',
+  selector: 'lib-edit-budget-modal',
+  templateUrl: 'edit-budget-modal.component.html',
+  styleUrl: 'edit-budget-modal.component.scss',
   imports: [
     CommonModule,
     MatDialogModule,
@@ -38,21 +48,28 @@ import { DefaultInputComponent } from '../../../inputs';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateBudgetModalComponent {
-  private dialogRef = inject(MatDialogRef<CreateBudgetModalComponent>);
+export class EditBudgetModalComponent {
+  private dialogRef = inject(MatDialogRef<EditBudgetModalComponent>);
   private snackbarService = inject(SnackbarStackService);
-  private createBudgetService = inject(CreateBudgetService);
+  private editBudgetService = inject(EditBudgetService);
   private budgetsService = inject(BudgetsService);
   form: FormGroup<BudgetForm>;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA)
+    public budgetResponseDto: BudgetResponseDto
+  ) {
     this.form = this.fb.group({
-      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      limitValue: new FormControl<number>(0, [
+      name: new FormControl(this.budgetResponseDto.name, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      limitValue: new FormControl<number>(this.budgetResponseDto.limitValue, [
         Validators.required,
         Validators.min(0.01),
       ]),
-      description: new FormControl('', [
+      description: new FormControl(this.budgetResponseDto.description, [
         Validators.required,
         Validators.minLength(1),
       ]),
@@ -69,8 +86,9 @@ export class CreateBudgetModalComponent {
 
     if (errors.length === 0) {
       const value = this.form.value;
-      this.createBudgetService
-        .create({
+      this.editBudgetService
+        .edit({
+          id: this.budgetResponseDto.id,
           name: value.name,
           limitValue: parseFloat(value.limitValue),
           description: value.description,

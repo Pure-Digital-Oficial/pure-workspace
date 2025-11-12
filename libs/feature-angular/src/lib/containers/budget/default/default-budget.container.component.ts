@@ -8,6 +8,7 @@ import {
   ListLayoutComponent,
   CreateBudgetModalComponent,
   ListItemBudgetControlsComponent,
+  EditBudgetModalComponent,
 } from '../../../components';
 import { AuthService, BudgetsService } from '../../../services';
 
@@ -52,10 +53,9 @@ export class DefaultBudgetContainerComponent implements OnInit {
   }
 
   editFixedGainAction(budgetResponseDto: BudgetResponseDto) {
-    // this.dialogService.open(EditFixedGainModalComponent, {
-    //   data: budgetResponseDto,
-    // });
-    console.log(budgetResponseDto);
+    this.dialogService.open(EditBudgetModalComponent, {
+      data: budgetResponseDto,
+    });
   }
 
   deleteFixedGainAction(
