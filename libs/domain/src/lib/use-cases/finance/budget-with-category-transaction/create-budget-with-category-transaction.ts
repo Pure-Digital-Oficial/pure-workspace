@@ -6,7 +6,7 @@ import {
 } from '../../../dtos';
 import {
   EntityAlreadyExists,
-  EntityNotEdited,
+  EntityNotCreated,
   EntityNotEmpty,
   EntityNotExists,
 } from '../../../errors';
@@ -23,7 +23,13 @@ export class CreateBudgetWithCategoryTransaction
   implements
     UseCase<
       CreateBudgetWithCategoryTransactionDto,
-      Either<EntityNotEmpty, string>
+      Either<
+        | EntityNotEmpty
+        | EntityNotExists
+        | EntityAlreadyExists
+        | EntityNotCreated,
+        string
+      >
     >
 {
   constructor(
@@ -40,7 +46,12 @@ export class CreateBudgetWithCategoryTransaction
   ) {}
   async execute(
     input: BudgetWithCategoryTransactionBodyDto
-  ): Promise<Either<EntityNotEmpty, string>> {
+  ): Promise<
+    Either<
+      EntityNotEmpty | EntityNotExists | EntityAlreadyExists | EntityNotCreated,
+      string
+    >
+  > {
     const { budgetId, categoryTransactionId, loggedUserId } = input;
 
     if (Object.keys(budgetId).length < 1) {
@@ -93,7 +104,7 @@ export class CreateBudgetWithCategoryTransaction
       await this.createBudgetWithCategoryTransactionRepository.create(input);
 
     if (Object.keys(createdBudgetWithCategoryTransaction).length < 1) {
-      return left(new EntityNotEdited('budget with category transaction'));
+      return left(new EntityNotCreated('budget with category transaction'));
     }
 
     return right(createdBudgetWithCategoryTransaction);
