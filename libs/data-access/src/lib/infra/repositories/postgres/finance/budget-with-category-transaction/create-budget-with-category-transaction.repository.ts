@@ -23,6 +23,8 @@ export class CreateBudgetWithCategoryTransactionRepositoryImpl
       },
     });
 
-    return `${createdBudgetWithCategory.budget_id}${createdBudgetWithCategory.category_id}`;
+    return `${createdBudgetWithCategory?.budget_id ?? ''}${
+      createdBudgetWithCategory?.category_id ?? ''
+    }`;
   }
 }

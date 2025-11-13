@@ -27,6 +27,8 @@ export class FindBudgetWithCategoryTransactionByIdsRepositoryImpl
       },
     });
 
-    return `${findedBudgetWithCategoryTransaction?.budget_id}${findedBudgetWithCategoryTransaction?.category_id}`;
+    return `${findedBudgetWithCategoryTransaction?.budget_id ?? ''}${
+      findedBudgetWithCategoryTransaction?.category_id ?? ''
+    }`;
   }
 }
