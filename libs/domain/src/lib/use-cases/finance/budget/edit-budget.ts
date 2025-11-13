@@ -66,7 +66,7 @@ export class EditBudget
     });
 
     if (
-      Object.keys(findedBudgetByName.id ?? findedBudgetByName).length > 0 &&
+      Object.keys(findedBudgetByName?.id ?? findedBudgetByName).length > 0 &&
       findedBudgetByName.id !== id
     ) {
       return left(new EntityAlreadyExists('budget name'));
