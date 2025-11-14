@@ -10,6 +10,7 @@ import {
   ListItemBudgetControlsComponent,
   EditBudgetModalComponent,
   DeleteBudgetModalComponent,
+  ListBudgetOrTransactionsModalComponent,
 } from '../../../components';
 import { AuthService, BudgetsService } from '../../../services';
 
@@ -63,6 +64,12 @@ export class DefaultBudgetContainerComponent implements OnInit {
     budgetResponseDto: Pick<BudgetResponseDto, 'id' | 'name'>
   ) {
     this.dialogService.open(DeleteBudgetModalComponent, {
+      data: budgetResponseDto,
+    });
+  }
+
+  listCategoryTransactions(budgetResponseDto: BudgetResponseDto) {
+    this.dialogService.open(ListBudgetOrTransactionsModalComponent, {
       data: budgetResponseDto,
     });
   }

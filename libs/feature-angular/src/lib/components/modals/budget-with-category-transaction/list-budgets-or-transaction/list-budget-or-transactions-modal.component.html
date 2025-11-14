@@ -5,14 +5,16 @@
     [ariaLabel]="'Botão de fechar o modal'"
     [icon]="'close'"
     [description]="'Fechar'"
-    (action)="onClose()"
+    (action)="close()"
   />
 </div>
 <mat-dialog-content class="modal-container">
-  <ng-content></ng-content>
+  <section class="modal-body">
+    <section class="search-container">
+      <lib-default-search-bar-controls
+        (valueChange)="onSearchChange($event)"
+        (action)="onCreate()"
+      />
+    </section>
+  </section>
 </mat-dialog-content>
-
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onClose()">{{ cancelButtonTitle }}</button>
-  <button mat-button (click)="onSubmit()">{{ actionButtonTitle }}</button>
-</mat-dialog-actions>
