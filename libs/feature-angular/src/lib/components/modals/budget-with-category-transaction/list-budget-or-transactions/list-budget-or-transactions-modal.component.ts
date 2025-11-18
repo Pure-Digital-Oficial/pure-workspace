@@ -2,8 +2,10 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   inject,
   Input,
+  Output,
 } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { SnackbarStackService } from '../../../../services';
@@ -30,6 +32,7 @@ export class ListBudgetOrTransactionsModalComponent {
   );
   private snackbarService = inject(SnackbarStackService);
   @Input() title = 'Modal Title';
+  @Output() create = new EventEmitter<void>();
 
   close() {
     this.dialogRef.close();
@@ -40,6 +43,6 @@ export class ListBudgetOrTransactionsModalComponent {
   }
 
   onCreate() {
-    console.log('clicou');
+    this.create.emit();
   }
 }

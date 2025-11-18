@@ -11,6 +11,7 @@ import {
   EditBudgetModalComponent,
   DeleteBudgetModalComponent,
   ListBudgetOrTransactionsModalComponent,
+  CreateBudgetWithTransactionByBudgetModalComponent,
 } from '../../../components';
 import { AuthService, BudgetsService } from '../../../services';
 
@@ -69,8 +70,18 @@ export class DefaultBudgetContainerComponent implements OnInit {
   }
 
   listCategoryTransactions(budgetResponseDto: BudgetResponseDto) {
-    this.dialogService.open(ListBudgetOrTransactionsModalComponent, {
-      data: budgetResponseDto,
+    const dialogRef = this.dialogService.open(
+      ListBudgetOrTransactionsModalComponent
+    );
+
+    dialogRef.componentInstance.create.subscribe(() => {
+      dialogRef.close();
+      this.dialogService.open(
+        CreateBudgetWithTransactionByBudgetModalComponent,
+        {
+          data: budgetResponseDto,
+        }
+      );
     });
   }
 
