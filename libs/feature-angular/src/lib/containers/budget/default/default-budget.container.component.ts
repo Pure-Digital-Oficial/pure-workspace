@@ -75,11 +75,11 @@ export class DefaultBudgetContainerComponent implements OnInit {
     );
 
     dialogRef.componentInstance.create.subscribe(() => {
-      dialogRef.close();
       this.dialogService.open(
         CreateBudgetWithTransactionByBudgetModalComponent,
         {
           data: budgetResponseDto,
+          autoFocus: true,
         }
       );
     });
