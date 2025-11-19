@@ -10,6 +10,8 @@ import {
   ListItemBudgetControlsComponent,
   EditBudgetModalComponent,
   DeleteBudgetModalComponent,
+  ListBudgetOrTransactionsModalComponent,
+  CreateBudgetWithTransactionByBudgetModalComponent,
 } from '../../../components';
 import { AuthService, BudgetsService } from '../../../services';
 
@@ -64,6 +66,22 @@ export class DefaultBudgetContainerComponent implements OnInit {
   ) {
     this.dialogService.open(DeleteBudgetModalComponent, {
       data: budgetResponseDto,
+    });
+  }
+
+  listCategoryTransactions(budgetResponseDto: BudgetResponseDto) {
+    const dialogRef = this.dialogService.open(
+      ListBudgetOrTransactionsModalComponent
+    );
+
+    dialogRef.componentInstance.create.subscribe(() => {
+      this.dialogService.open(
+        CreateBudgetWithTransactionByBudgetModalComponent,
+        {
+          data: budgetResponseDto,
+          autoFocus: true,
+        }
+      );
     });
   }
 

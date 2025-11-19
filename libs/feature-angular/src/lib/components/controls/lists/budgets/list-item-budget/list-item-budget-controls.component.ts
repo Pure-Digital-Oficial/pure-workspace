@@ -25,6 +25,7 @@ export class ListItemBudgetControlsComponent {
   budget = input.required<BudgetResponseDto>();
   @Output() edit = new EventEmitter<BudgetResponseDto>();
   @Output() delete = new EventEmitter<Pick<BudgetResponseDto, 'id' | 'name'>>();
+  @Output() categories = new EventEmitter<BudgetResponseDto>();
 
   editAction() {
     this.edit.emit(this.budget());
@@ -35,5 +36,9 @@ export class ListItemBudgetControlsComponent {
       id: this.budget().id,
       name: this.budget().name,
     });
+  }
+
+  categoriesAction() {
+    this.categories.emit(this.budget());
   }
 }

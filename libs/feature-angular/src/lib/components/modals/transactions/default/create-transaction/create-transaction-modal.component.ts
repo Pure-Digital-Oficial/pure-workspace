@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   inject,
+  OnInit,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -19,6 +20,7 @@ import { TransactionResponseItem } from '@pure-workspace/domain';
 import { getFormValidationErrors } from '../../../../../utils';
 import { TransactionForm } from '../../../../../models';
 import {
+  CategoryTransactionsService,
   CreateTransactionService,
   SnackbarStackService,
   TransactionsService,
@@ -41,18 +43,16 @@ import { ModalLayoutComponent } from '../../../../layouts';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateTransactionModalComponent {
+export class CreateTransactionModalComponent implements OnInit {
   private createTransactionService = inject(CreateTransactionService);
   private transactionsService = inject(TransactionsService);
+  private categoryTransactionsService = inject(CategoryTransactionsService);
   private dialogRef = inject(MatDialogRef<CreateTransactionModalComponent>);
   private snackbarService = inject(SnackbarStackService);
   form: FormGroup<TransactionForm>;
-  categories = computed<TransactionResponseItem[]>(() => [
-    {
-      id: '1',
-      name: 'TEST',
-    },
-  ]);
+  categories = computed<TransactionResponseItem[]>(
+    () => this.categoryTransactionsService.categoryTransactions().categories
+  );
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -64,6 +64,10 @@ export class CreateTransactionModalComponent {
       ]),
       type: new FormControl('', [Validators.required, Validators.minLength(1)]),
     });
+  }
+
+  ngOnInit(): void {
+    this.categoryTransactionsService.listCategoryTransactions().subscribe();
   }
 
   close() {
