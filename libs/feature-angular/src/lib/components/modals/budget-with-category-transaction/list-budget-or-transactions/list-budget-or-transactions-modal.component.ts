@@ -31,7 +31,7 @@ export class ListBudgetOrTransactionsModalComponent {
     MatDialogRef<ListBudgetOrTransactionsModalComponent>
   );
   private snackbarService = inject(SnackbarStackService);
-  @Input() title = 'Modal Title';
+  @Input() title = 'Categorias relacionadas com o orçamento';
   @Output() create = new EventEmitter<void>();
 
   close() {

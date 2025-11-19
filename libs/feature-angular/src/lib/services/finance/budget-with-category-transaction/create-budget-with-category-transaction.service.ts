@@ -29,7 +29,7 @@ export class CreateBudgetWithCategoryTransactionService {
 
         return this.httpClient.post<{ budget_id: string }>(
           this.apiUrl +
-            'budget-with-category-transaction/create-budget-with-category-transaction',
+            '/budget-with-category-transaction/create-budget-with-category-transaction',
           createBudgetWithCategoryTransactionDto,
           {
             params: { userId: session.id as string },
