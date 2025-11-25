@@ -12,6 +12,7 @@ import {
   TransactionResponseItem,
 } from '@pure-workspace/domain';
 import {
+  BudgetWithCategoryTransactionsService,
   CategoryTransactionsService,
   CreateBudgetWithCategoryTransactionService,
   SnackbarStackService,
@@ -46,6 +47,9 @@ export class CreateBudgetWithTransactionByBudgetModalComponent
   private categoryTransactionsService = inject(CategoryTransactionsService);
   private createBudgetWithCategoryTransactionService = inject(
     CreateBudgetWithCategoryTransactionService
+  );
+  private budgetWithCategoryTransactionsService = inject(
+    BudgetWithCategoryTransactionsService
   );
   private snackbarService = inject(SnackbarStackService);
   form: FormGroup<BudgetWithCategoryTransactionForm>;
@@ -88,6 +92,11 @@ export class CreateBudgetWithTransactionByBudgetModalComponent
           categoryTransactionId: this.form.value.categoryTransactionId,
         })
         .subscribe(() => {
+          this.budgetWithCategoryTransactionsService
+            .findBudgetWithCategoryTransactionsByFilter({
+              budgetId: this.budgetResponseDto.id,
+            })
+            .subscribe();
           this.dialogRef.close(true);
         });
     } else {

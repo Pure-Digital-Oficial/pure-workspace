@@ -31,8 +31,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'lib-list-budget-or-transactions-modal',
-  templateUrl: 'list-budget-or-transactions-modal.component.html',
-  styleUrl: 'list-budget-or-transactions-modal.component.scss',
+  templateUrl: 'list-category-transactions-by-budget-modal.component.html',
+  styleUrl: 'list-category-transactions-by-budget-modal.component.scss',
   imports: [
     CommonModule,
     MatDialogModule,
@@ -45,9 +45,9 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListBudgetOrTransactionsModalComponent implements OnInit {
+export class ListCategoryTransactionsByBudgetModalComponent implements OnInit {
   private dialogRef = inject(
-    MatDialogRef<ListBudgetOrTransactionsModalComponent>
+    MatDialogRef<ListCategoryTransactionsByBudgetModalComponent>
   );
   private snackbarService = inject(SnackbarStackService);
   private budgetWithCategoryTransactionsService = inject(
@@ -68,7 +68,6 @@ export class ListBudgetOrTransactionsModalComponent implements OnInit {
   @Input() pageSize = 6;
   @Input() pageIndex = 0;
   @Input() ariaLabel = 'Seletor de página';
-  pageSizeOptions = [6, 10, 25];
   pageEvent: PageEvent = {} as PageEvent;
 
   constructor(
@@ -104,10 +103,6 @@ export class ListBudgetOrTransactionsModalComponent implements OnInit {
     const skip = e.pageIndex * e.pageSize;
     const take = e.pageSize;
     this.featchCategoryTransactions(skip, take);
-  }
-
-  onSearchValueChange(value: string) {
-    console.log('implementar: ', value);
   }
 
   private featchCategoryTransactions(skip: number, take: number) {

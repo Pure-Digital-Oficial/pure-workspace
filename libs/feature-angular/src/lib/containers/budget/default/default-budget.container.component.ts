@@ -10,7 +10,7 @@ import {
   ListItemBudgetControlsComponent,
   EditBudgetModalComponent,
   DeleteBudgetModalComponent,
-  ListBudgetOrTransactionsModalComponent,
+  ListCategoryTransactionsByBudgetModalComponent,
   CreateBudgetWithTransactionByBudgetModalComponent,
 } from '../../../components';
 import { AuthService, BudgetsService } from '../../../services';
@@ -71,7 +71,7 @@ export class DefaultBudgetContainerComponent implements OnInit {
 
   listCategoryTransactions(budgetResponseDto: BudgetResponseDto) {
     const dialogRef = this.dialogService.open(
-      ListBudgetOrTransactionsModalComponent,
+      ListCategoryTransactionsByBudgetModalComponent,
       {
         data: budgetResponseDto,
       }
