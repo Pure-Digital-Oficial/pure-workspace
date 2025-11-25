@@ -18,6 +18,13 @@
   }
 }
 
+.list-container {
+  width: 80%;
+  display: flex;
+  justify-self: center;
+  flex-direction: column;
+}
+
 ::ng-deep .mat-mdc-dialog-surface {
   width: 800px !important;
   max-width: none !important;

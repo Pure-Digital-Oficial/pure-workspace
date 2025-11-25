@@ -15,6 +15,28 @@
         (valueChange)="onSearchChange($event)"
         (action)="onCreate()"
       />
+      <div class="list-container">
+        <section class="paginator-container">
+          <mat-paginator
+            #paginators
+            [length]="length()"
+            [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]="pageIndex"
+            [pageSize]="pageSize"
+            (page)="onPageEvent($event)"
+            [ariaLabel]="ariaLabel"
+          >
+          </mat-paginator>
+        </section>
+        <mat-list role="list" class="list">
+          @for (categoryTransaction of categoryTransactions(); track
+          categoryTransaction.id) {
+          <lib-list-item-category-transaction-by-budget-controls
+            [categoryTransaction]="categoryTransaction"
+          />
+          }
+        </mat-list>
+      </div>
     </section>
   </section>
 </mat-dialog-content>

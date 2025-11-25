@@ -34,7 +34,9 @@ export class DefaultFixedGainContainerComponent implements OnInit {
   pageSize = 6;
   pageEvent: PageEvent = {} as PageEvent;
 
-  totalLength = computed(() => this.fixedGainsService.fixedGains().total);
+  totalLength = computed(
+    () => this.fixedGainsService.fixedGains().filteredTotal
+  );
 
   fixedGains = computed(() => this.fixedGainsService.fixedGains().fixedGains);
 

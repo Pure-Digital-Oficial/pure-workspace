@@ -36,7 +36,7 @@ export class DefaultBudgetContainerComponent implements OnInit {
   pageSize = 6;
   pageEvent: PageEvent = {} as PageEvent;
 
-  totalLength = computed(() => this.budgetsService.budgets().total);
+  totalLength = computed(() => this.budgetsService.budgets().filteredTotal);
 
   budgets = computed(() => this.budgetsService.budgets().budgets);
 
@@ -71,7 +71,10 @@ export class DefaultBudgetContainerComponent implements OnInit {
 
   listCategoryTransactions(budgetResponseDto: BudgetResponseDto) {
     const dialogRef = this.dialogService.open(
-      ListBudgetOrTransactionsModalComponent
+      ListBudgetOrTransactionsModalComponent,
+      {
+        data: budgetResponseDto,
+      }
     );
 
     dialogRef.componentInstance.create.subscribe(() => {

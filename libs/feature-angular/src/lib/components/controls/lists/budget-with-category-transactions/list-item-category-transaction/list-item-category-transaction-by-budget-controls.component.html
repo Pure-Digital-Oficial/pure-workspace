@@ -1,0 +1,36 @@
+<mat-list-item class="item">
+  <div class="item-container">
+    <div class="item-body-container">
+      <div class="item-header">
+        <span>Nome: {{ categoryTransaction().categoryTransaction.name }}</span>
+        <span
+          >Criado por:
+          {{ categoryTransaction().categoryTransaction.createdBy }}</span
+        >
+      </div>
+      <div class="item-body">
+        <span
+          >Descrição:
+          {{ categoryTransaction().categoryTransaction.description }}</span
+        >
+      </div>
+    </div>
+    <lib-default-button-icon
+      [ariaLabel]="'Icone de opções'"
+      [icon]="'more_horiz'"
+      [description]="'Opções'"
+      [matMenuTriggerFor]="menu"
+    />
+    <mat-menu #menu="matMenu">
+      <button (click)="editAction()" mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        <span>Editar</span>
+      </button>
+      <button (click)="deleteAction()" mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>Deletar</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-list-item>
+<mat-divider />
