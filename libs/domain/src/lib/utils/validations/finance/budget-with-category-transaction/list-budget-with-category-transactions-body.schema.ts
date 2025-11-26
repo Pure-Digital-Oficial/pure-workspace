@@ -6,6 +6,7 @@ export const listBudgetWithCategoryTransactionsBodySchema = z
       .object({
         budgetId: z.string().optional(),
         categoryTransactionId: z.string().optional(),
+        name: z.string().optional(),
       })
       .optional(),
     take: z.coerce.number().optional(),

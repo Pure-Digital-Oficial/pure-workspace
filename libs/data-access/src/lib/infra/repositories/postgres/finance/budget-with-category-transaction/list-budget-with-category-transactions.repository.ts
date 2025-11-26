@@ -29,6 +29,28 @@ export class ListBudgetWithCategoryTransactionsRepositoryImpl
             category_id: input.filters?.categoryTransactionId ?? undefined,
           }
         : {}),
+      ...(input.filters?.name != null
+        ? {
+            OR: [
+              {
+                category: {
+                  name: {
+                    contains: input.filters?.name,
+                    mode: 'insensitive' as const,
+                  },
+                },
+              },
+              {
+                budget: {
+                  name: {
+                    contains: input.filters?.name,
+                    mode: 'insensitive' as const,
+                  },
+                },
+              },
+            ],
+          }
+        : {}),
     };
 
     const [items, filteredTotal, total] = await this.prismaService[
