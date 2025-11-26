@@ -53,9 +53,20 @@ export class CreateBudgetWithTransactionByBudgetModalComponent
   );
   private snackbarService = inject(SnackbarStackService);
   form: FormGroup<BudgetWithCategoryTransactionForm>;
-  categories = computed<TransactionResponseItem[]>(
-    () => this.categoryTransactionsService.categoryTransactions().categories
-  );
+  categories = computed<TransactionResponseItem[]>(() => {
+    const categories =
+      this.categoryTransactionsService.categoryTransactions().categories || [];
+
+    const categoriesByBudget =
+      this.budgetWithCategoryTransactionsService.budgetWithCategoryTransactions()
+        .items || [];
+
+    const idsByBudget = new Set(
+      categoriesByBudget.map((item) => item.categoryTransaction.id)
+    );
+
+    return categories.filter((category) => !idsByBudget.has(category.id));
+  });
   private dialogRef = inject(
     MatDialogRef<CreateBudgetWithTransactionByBudgetModalComponent>
   );
