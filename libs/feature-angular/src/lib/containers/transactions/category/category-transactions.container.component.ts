@@ -38,7 +38,7 @@ export class CategoryTransactionsContainerComponent implements OnInit {
   pageEvent: PageEvent = {} as PageEvent;
 
   totalLength = computed(
-    () => this.categoryTransactionsService.categoryTransactions().total
+    () => this.categoryTransactionsService.categoryTransactions().filteredTotal
   );
 
   categoryTransactions = computed(

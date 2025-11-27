@@ -1,0 +1,15 @@
+<div class="background-container">
+  <div
+    *ngFor="let icon of animatedIcons"
+    class="animated-icon"
+    [style.left.%]="icon.left"
+    [style.top.%]="icon.top"
+    [style.width.px]="icon.size"
+    [style.height.px]="icon.size"
+    [style.animation-duration.s]="icon.animationDuration"
+    [style.animation-delay.s]="icon.delay"
+    [style.transform]="'rotate(' + icon.rotation + 'deg)'"
+  >
+    <mat-icon [svgIcon]="icon.svgPath" class="custom-icon"></mat-icon>
+  </div>
+</div>

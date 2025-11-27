@@ -23,7 +23,10 @@ import {
   ListBudgetsModule,
   DeleteBudgetModule,
 } from './budget';
-import { CreateBudgetWithCategoryTransactionModule } from './budget-with-category-transaction';
+import {
+  CreateBudgetWithCategoryTransactionModule,
+  ListBudgetWithCategoryTransactionsModule,
+} from './budget-with-category-transaction';
 
 @Module({
   imports: [
@@ -44,6 +47,7 @@ import { CreateBudgetWithCategoryTransactionModule } from './budget-with-categor
     EditBudgetModule,
     DeleteBudgetModule,
     CreateBudgetWithCategoryTransactionModule,
+    ListBudgetWithCategoryTransactionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

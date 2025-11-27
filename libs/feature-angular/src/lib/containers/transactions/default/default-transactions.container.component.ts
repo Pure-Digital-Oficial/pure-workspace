@@ -35,7 +35,9 @@ export class DefaultTransactionsContainerComponent implements OnInit {
   @Input() menuItems: SidenavItem[] = [];
   pageIndex = 0;
   pageSize = 6;
-  totalLength = computed(() => this.transactionsService.transactions().total);
+  totalLength = computed(
+    () => this.transactionsService.transactions().filteredTotal
+  );
   pageEvent: PageEvent = {} as PageEvent;
 
   transactions = computed(

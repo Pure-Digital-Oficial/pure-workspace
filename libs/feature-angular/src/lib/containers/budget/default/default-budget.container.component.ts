@@ -10,7 +10,7 @@ import {
   ListItemBudgetControlsComponent,
   EditBudgetModalComponent,
   DeleteBudgetModalComponent,
-  ListBudgetOrTransactionsModalComponent,
+  ListCategoryTransactionsByBudgetModalComponent,
   CreateBudgetWithTransactionByBudgetModalComponent,
 } from '../../../components';
 import { AuthService, BudgetsService } from '../../../services';
@@ -36,7 +36,7 @@ export class DefaultBudgetContainerComponent implements OnInit {
   pageSize = 6;
   pageEvent: PageEvent = {} as PageEvent;
 
-  totalLength = computed(() => this.budgetsService.budgets().total);
+  totalLength = computed(() => this.budgetsService.budgets().filteredTotal);
 
   budgets = computed(() => this.budgetsService.budgets().budgets);
 
@@ -71,7 +71,10 @@ export class DefaultBudgetContainerComponent implements OnInit {
 
   listCategoryTransactions(budgetResponseDto: BudgetResponseDto) {
     const dialogRef = this.dialogService.open(
-      ListBudgetOrTransactionsModalComponent
+      ListCategoryTransactionsByBudgetModalComponent,
+      {
+        data: budgetResponseDto,
+      }
     );
 
     dialogRef.componentInstance.create.subscribe(() => {

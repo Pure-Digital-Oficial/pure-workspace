@@ -1,0 +1,48 @@
+@use '@angular/material' as mat;
+
+:host ::ng-deep .custom-icon svg path {
+  fill: currentColor !important;
+}
+
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.animated-icon {
+  position: absolute;
+  animation-name: float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .custom-icon {
+    width: 80%;
+    height: 80%;
+    color: var(--mat-sys-primary-container);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-1deg);
+  }
+  75% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+}
