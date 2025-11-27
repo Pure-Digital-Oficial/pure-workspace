@@ -14,6 +14,13 @@
     </div>
   </mat-drawer>
   <lib-sidenav-default-header [drawer]="drawer" [title]="title">
+    <lib-animated-background
+      [icons]="backgroundIcons"
+      [quantity]="50"
+      [minSize]="20"
+      [maxSize]="60"
+      [animationDuration]="30"
+    />
     <ng-content></ng-content>
   </lib-sidenav-default-header>
 </mat-drawer-container>

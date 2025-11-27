@@ -10,6 +10,7 @@ import {
   SidenavDefaultBodyComponent,
   SidenavDefaultFooterComponent,
 } from '../../controls';
+import { AnimatedBackgroundComponent } from '../../animations';
 
 @Component({
   selector: 'lib-default-layout',
@@ -20,6 +21,7 @@ import {
     SidenavDefaultHeaderComponent,
     SidenavDefaultBodyComponent,
     SidenavDefaultFooterComponent,
+    AnimatedBackgroundComponent,
   ],
   templateUrl: './default-layout.component.html',
   styleUrl: './default-layout.component.scss',
@@ -33,6 +35,11 @@ export class DefaultLayoutComponent {
   showFiller = false;
   drawerMode: 'side' | 'over' = 'side';
   private breakpointObserver = inject(BreakpointObserver);
+  @Input() backgroundIcons = [
+    'svg/icons/Money_Bag.svg',
+    'svg/icons/Pig_Money.svg',
+    'svg/icons/Pig_Bank.svg',
+  ];
 
   drawerMode$: Observable<'side' | 'over'> = this.breakpointObserver
     .observe(['(max-width: 1024px)'])
