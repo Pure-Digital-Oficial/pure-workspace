@@ -95,7 +95,7 @@ export class CreateBudgetWithCategoryTransaction
         budgetId,
         categoryTransactionId,
       });
-    console.log(findedBudgetWithCategoryTransaction);
+
     if (Object.keys(findedBudgetWithCategoryTransaction).length > 0) {
       return left(new EntityAlreadyExists('budget with category transaction'));
     }

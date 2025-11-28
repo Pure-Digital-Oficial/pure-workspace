@@ -25,12 +25,7 @@ import {
   FindCategoryTransactionByIdRepositoryMock,
   FindUserByIdRepositoryMock,
 } from '@/test/repositories';
-import {
-  EntityAlreadyExists,
-  EntityNotDeleted,
-  EntityNotEmpty,
-  EntityNotExists,
-} from '@/errors';
+import { EntityNotDeleted, EntityNotEmpty, EntityNotExists } from '@/errors';
 
 export interface SutTypes {
   sut: DeleteBudgetWithCategoryTransaction;
@@ -154,16 +149,16 @@ describe('DeleteBudgetWithCategoryTransaction', () => {
     expect(result.value).toBeInstanceOf(EntityNotExists);
   });
 
-  it('should return EntityAlreadyExists when exist the budget with category transaction in the database', async () => {
+  it('should return EntityNotExists when pass incorrect budget ID or Category transaction ID in deleteBudgetWithCategoryTransactionDto object', async () => {
     const { deleteBudgetWithCategoryTransactionDto, sut } = makeSut();
     jest
       .spyOn(sut['findBudgetWithCategoryTransactionByIdsRepository'], 'find')
-      .mockResolvedValueOnce(BudgetWithCategoryTransactionMock.id);
+      .mockResolvedValueOnce('');
     const result = await sut.execute(deleteBudgetWithCategoryTransactionDto);
 
     expect(result.isLeft()).toBeTruthy();
     expect(result.isRight()).toBeFalsy();
-    expect(result.value).toBeInstanceOf(EntityAlreadyExists);
+    expect(result.value).toBeInstanceOf(EntityNotExists);
   });
 
   it('should return EntityNotDeleted when not deleted the budget with category transaction in the database', async () => {

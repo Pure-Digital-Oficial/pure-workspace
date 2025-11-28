@@ -26,6 +26,7 @@ import {
 import {
   CreateBudgetWithCategoryTransactionModule,
   ListBudgetWithCategoryTransactionsModule,
+  DeleteBudgetWithCategoryTransactionModule,
 } from './budget-with-category-transaction';
 
 @Module({
@@ -48,6 +49,7 @@ import {
     DeleteBudgetModule,
     CreateBudgetWithCategoryTransactionModule,
     ListBudgetWithCategoryTransactionsModule,
+    DeleteBudgetWithCategoryTransactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

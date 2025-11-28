@@ -5,7 +5,6 @@ import {
   DeleteBudgetWithCategoryTransactionDto,
 } from '../../../dtos';
 import {
-  EntityAlreadyExists,
   EntityNotDeleted,
   EntityNotEmpty,
   EntityNotExists,
@@ -23,7 +22,7 @@ export class DeleteBudgetWithCategoryTransaction
   implements
     UseCase<
       DeleteBudgetWithCategoryTransactionDto,
-      Either<EntityNotEmpty, string>
+      Either<EntityNotEmpty | EntityNotExists | EntityNotDeleted, string>
     >
 {
   constructor(
@@ -40,7 +39,9 @@ export class DeleteBudgetWithCategoryTransaction
   ) {}
   async execute(
     input: BudgetWithCategoryTransactionBodyDto
-  ): Promise<Either<EntityNotEmpty, string>> {
+  ): Promise<
+    Either<EntityNotEmpty | EntityNotExists | EntityNotDeleted, string>
+  > {
     const { budgetId, categoryTransactionId, loggedUserId } = input;
 
     if (Object.keys(budgetId).length < 1) {
@@ -84,9 +85,9 @@ export class DeleteBudgetWithCategoryTransaction
         budgetId,
         categoryTransactionId,
       });
-    console.log(findedBudgetWithCategoryTransaction);
-    if (Object.keys(findedBudgetWithCategoryTransaction).length > 0) {
-      return left(new EntityAlreadyExists('budget with category transaction'));
+
+    if (Object.keys(findedBudgetWithCategoryTransaction).length < 1) {
+      return left(new EntityNotExists('budget with category transaction'));
     }
 
     const createdBudgetWithCategoryTransaction =
