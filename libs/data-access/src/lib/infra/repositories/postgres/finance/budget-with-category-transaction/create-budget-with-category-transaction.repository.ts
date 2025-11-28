@@ -3,14 +3,12 @@ import {
   CreateBudgetWithCategoryTransactionDto,
   CreateBudgetWithCategoryTransactionRepository,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from 'libs/data-access/src/lib/application';
+import { PrismaService } from 'nestjs-prisma';
 
 export class CreateBudgetWithCategoryTransactionRepositoryImpl
   implements CreateBudgetWithCategoryTransactionRepository
 {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async create(input: CreateBudgetWithCategoryTransactionDto): Promise<string> {
     const { budgetId, categoryTransactionId, loggedUserId } = input;
     const createdBudgetWithCategory = await this.prismaService[
