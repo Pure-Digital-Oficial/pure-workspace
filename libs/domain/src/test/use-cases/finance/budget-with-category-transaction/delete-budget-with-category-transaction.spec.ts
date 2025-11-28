@@ -21,7 +21,6 @@ import {
 import {
   DeleteBudgetWithCategoryTransactionRepositoryMock,
   FindBudgetByIdRepositoryMock,
-  FindBudgetWithCategoryTransactionByIdsRepositoryMock,
   FindCategoryTransactionByIdRepositoryMock,
   FindUserByIdRepositoryMock,
 } from '@/test/repositories';
@@ -42,8 +41,10 @@ const makeSut = (): SutTypes => {
   const findCategoryTransactionByIdRepository =
     new FindCategoryTransactionByIdRepositoryMock();
   const findBudgetByIdRepository = new FindBudgetByIdRepositoryMock();
-  const findBudgetWithCategoryTransactionByIdsRepository =
-    new FindBudgetWithCategoryTransactionByIdsRepositoryMock();
+  const findBudgetWithCategoryTransactionByIdsRepository: FindBudgetWithCategoryTransactionByIdsRepository =
+    {
+      find: jest.fn(async () => BudgetWithCategoryTransactionMock.id),
+    };
   const deleteBudgetWithCategoryTransactionRepository =
     new DeleteBudgetWithCategoryTransactionRepositoryMock();
 
