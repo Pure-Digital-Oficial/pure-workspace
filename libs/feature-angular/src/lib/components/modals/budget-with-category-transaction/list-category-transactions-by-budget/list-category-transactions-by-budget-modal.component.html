@@ -32,6 +32,7 @@
           categoryTransaction.id) {
           <lib-list-item-category-transaction-by-budget-controls
             [categoryTransaction]="categoryTransaction"
+            (delete)="onDeleteRelation($event)"
           />
           }
         </mat-list>

@@ -29,7 +29,7 @@ export class DeleteBudgetWithCategoryTransactionService {
 
         return this.httpClient.delete<{ budget_with_category_id: string }>(
           this.apiUrl +
-            'budget-with-category-transaction/delete-budget-with-category-transaction',
+            '/budget-with-category-transaction/delete-budget-with-category-transaction',
           {
             body: deleteBudgetWithCategoryTransactionDto,
             params: { userId: session.id as string },
