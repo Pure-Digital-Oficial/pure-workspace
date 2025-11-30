@@ -1,5 +1,8 @@
-import { Component, input } from '@angular/core';
-import { BudgetWithCategoryTransactionResponseDto } from '@pure-workspace/domain';
+import { Component, EventEmitter, input, Output } from '@angular/core';
+import {
+  BudgetWithCategoryTransactionResponseDto,
+  DeleteBudgetWithCategoryTransactionDto,
+} from '@pure-workspace/domain';
 import { MatListModule } from '@angular/material/list';
 import { DefaultButtonIconComponent } from '../../../../buttons';
 import { MatMenuModule } from '@angular/material/menu';
@@ -25,12 +28,17 @@ export class ListItemCategoryTransactionByBudgetControlsComponent {
     input.required<
       Pick<BudgetWithCategoryTransactionResponseDto, 'categoryTransaction'>
     >();
+  @Output() delete = new EventEmitter<
+    Pick<DeleteBudgetWithCategoryTransactionDto, 'categoryTransactionId'>
+  >();
 
   editAction() {
     console.log('Edit action for budget:', this.categoryTransaction());
   }
 
   deleteAction() {
-    console.log('Delete action for budget:', this.categoryTransaction());
+    this.delete.emit({
+      categoryTransactionId: this.categoryTransaction().categoryTransaction.id,
+    });
   }
 }

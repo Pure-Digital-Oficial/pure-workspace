@@ -12,22 +12,24 @@ import {
 } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
+  MatDialog,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import {
-  BudgetWithCategoryTransactionsService,
-  SnackbarStackService,
-} from '../../../../services';
+import { BudgetWithCategoryTransactionsService } from '../../../../services';
 import { DefaultButtonIconComponent } from '../../../buttons';
 import { MatButtonModule } from '@angular/material/button';
 import {
   DefaultSearchBarControlsComponent,
   ListItemCategoryTransactionByBudgetControlsComponent,
 } from '../../../controls';
-import { BudgetResponseDto } from '@pure-workspace/domain';
+import {
+  BudgetResponseDto,
+  DeleteBudgetWithCategoryTransactionDto,
+} from '@pure-workspace/domain';
 import { MatList } from '@angular/material/list';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { DeleteBudgetWithCategoryTransactionModalComponent } from '../delete-budget-with-category-transaction/delete-budget-with-category-transaction-modal.component';
 
 @Component({
   selector: 'lib-list-budget-or-transactions-modal',
@@ -49,7 +51,7 @@ export class ListCategoryTransactionsByBudgetModalComponent implements OnInit {
   private dialogRef = inject(
     MatDialogRef<ListCategoryTransactionsByBudgetModalComponent>
   );
-  private snackbarService = inject(SnackbarStackService);
+  private dialogService = inject(MatDialog);
   private budgetWithCategoryTransactionsService = inject(
     BudgetWithCategoryTransactionsService
   );
@@ -88,11 +90,27 @@ export class ListCategoryTransactionsByBudgetModalComponent implements OnInit {
   }
 
   onSearchChange(value: string) {
-    console.log(value);
+    this.budgetWithCategoryTransactionsService.findBudgetWithCategoryTransactionsByFilter(
+      {
+        budgetId: this.budgetResponseDto.id,
+        name: value,
+      }
+    );
   }
 
   onCreate() {
     this.create.emit();
+  }
+
+  onDeleteRelation(
+    input: Pick<DeleteBudgetWithCategoryTransactionDto, 'categoryTransactionId'>
+  ) {
+    this.dialogService.open(DeleteBudgetWithCategoryTransactionModalComponent, {
+      data: {
+        budgetId: this.budgetResponseDto.id,
+        categoryTransactionId: input.categoryTransactionId,
+      },
+    });
   }
 
   onPageEvent(e: PageEvent) {

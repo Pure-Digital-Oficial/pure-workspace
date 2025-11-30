@@ -3,14 +3,12 @@ import {
   BudgetWithCategoryTransactionBodyDto,
   FindBudgetWithCategoryTransactionByIdsRepository,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from 'libs/data-access/src/lib/application';
+import { PrismaService } from 'nestjs-prisma';
 
 export class FindBudgetWithCategoryTransactionByIdsRepositoryImpl
   implements FindBudgetWithCategoryTransactionByIdsRepository
 {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async find(
     input: Omit<BudgetWithCategoryTransactionBodyDto, 'loggedUserId'>
   ): Promise<string> {
