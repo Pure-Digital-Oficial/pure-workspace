@@ -87,6 +87,31 @@ export class EditBudgetWithCategoryTransaction
       return left(new EntityNotExists('budget with category transaction'));
     }
 
+    if (input.newBudgetId) {
+      const findedNewBudget = await this.findBudgetByIdRepository.find(
+        input.newBudgetId
+      );
+
+      if (Object.keys(findedNewBudget.id ?? findedNewBudget).length < 1) {
+        return left(new EntityNotExists('new budget ID'));
+      }
+    }
+
+    if (input.newCategoryTransactionId) {
+      const findedNewCategoryTransaction =
+        await this.findCategoryTransactionByIdRepository.find(
+          input.newCategoryTransactionId
+        );
+
+      if (
+        Object.keys(
+          findedNewCategoryTransaction.id ?? findedNewCategoryTransaction
+        ).length < 1
+      ) {
+        return left(new EntityNotExists('new category transaction ID'));
+      }
+    }
+
     const editedBudgetWithCategoryTransaction =
       await this.editBudgetWithCategoryTransactionRepository.edit(input);
 

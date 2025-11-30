@@ -138,8 +138,41 @@ describe('EditBudgetWithCategoryTransaction', () => {
     expect(result.value).toBeInstanceOf(EntityNotExists);
   });
 
+  it('should return EntityNotExists when pass incorrect new category transaction ID in editBudgetWithCategoryTransactionDto object', async () => {
+    const { editBudgetWithCategoryTransactionDto, sut } = makeSut();
+    editBudgetWithCategoryTransactionDto.newCategoryTransactionId =
+      'invalid-category-transaction-id';
+    jest
+      .spyOn(sut['findCategoryTransactionByIdRepository'], 'find')
+      .mockResolvedValueOnce(CategoryTransactionMock);
+    jest
+      .spyOn(sut['findCategoryTransactionByIdRepository'], 'find')
+      .mockResolvedValueOnce({} as CategoryTransactionResponseDto);
+    const result = await sut.execute(editBudgetWithCategoryTransactionDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityNotExists);
+  });
+
   it('should return EntityNotExists when pass incorrect budget ID in editBudgetWithCategoryTransactionDto object', async () => {
     const { editBudgetWithCategoryTransactionDto, sut } = makeSut();
+    jest
+      .spyOn(sut['findBudgetByIdRepository'], 'find')
+      .mockResolvedValueOnce({} as BudgetResponseDto);
+    const result = await sut.execute(editBudgetWithCategoryTransactionDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityNotExists);
+  });
+
+  it('should return EntityNotExists when pass incorrect new budget ID in editBudgetWithCategoryTransactionDto object', async () => {
+    const { editBudgetWithCategoryTransactionDto, sut } = makeSut();
+    editBudgetWithCategoryTransactionDto.newBudgetId = 'invalid-budget-id';
+    jest
+      .spyOn(sut['findBudgetByIdRepository'], 'find')
+      .mockResolvedValueOnce(BudgetMock);
     jest
       .spyOn(sut['findBudgetByIdRepository'], 'find')
       .mockResolvedValueOnce({} as BudgetResponseDto);
