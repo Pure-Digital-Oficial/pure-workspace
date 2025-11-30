@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../../bases';
 import { EditBudgetWithCategoryTransactionDto } from '../../../dtos';
 import {
-  EntityNotDeleted,
+  EntityNotEdited,
   EntityNotEmpty,
   EntityNotExists,
 } from '../../../errors';
@@ -19,7 +19,7 @@ export class EditBudgetWithCategoryTransaction
   implements
     UseCase<
       EditBudgetWithCategoryTransactionDto,
-      Either<EntityNotEmpty | EntityNotExists | EntityNotDeleted, string>
+      Either<EntityNotEmpty | EntityNotExists | EntityNotEdited, string>
     >
 {
   constructor(
@@ -37,7 +37,7 @@ export class EditBudgetWithCategoryTransaction
   async execute(
     input: EditBudgetWithCategoryTransactionDto
   ): Promise<
-    Either<EntityNotEmpty | EntityNotExists | EntityNotDeleted, string>
+    Either<EntityNotEmpty | EntityNotExists | EntityNotEdited, string>
   > {
     const { budgetId, categoryTransactionId, loggedUserId } = input;
 
@@ -88,10 +88,10 @@ export class EditBudgetWithCategoryTransaction
     }
 
     const editedBudgetWithCategoryTransaction =
-      await this.editBudgetWithCategoryTransactionRepository.delete(input);
+      await this.editBudgetWithCategoryTransactionRepository.edit(input);
 
     if (Object.keys(editedBudgetWithCategoryTransaction).length < 1) {
-      return left(new EntityNotDeleted('budget with category transaction'));
+      return left(new EntityNotEdited('budget with category transaction'));
     }
 
     return right(editedBudgetWithCategoryTransaction);
