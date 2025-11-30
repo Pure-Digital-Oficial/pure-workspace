@@ -1,14 +1,13 @@
 import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../../bases';
-import { CreateBudgetWithCategoryTransactionDto } from '../../../dtos';
+import { EditBudgetWithCategoryTransactionDto } from '../../../dtos';
 import {
-  EntityAlreadyExists,
-  EntityNotCreated,
+  EntityNotDeleted,
   EntityNotEmpty,
   EntityNotExists,
 } from '../../../errors';
 import {
-  CreateBudgetWithCategoryTransactionRepository,
+  EditBudgetWithCategoryTransactionRepository,
   FindBudgetByIdRepository,
   FindBudgetWithCategoryTransactionByIdsRepository,
   FindCategoryTransactionByIdRepository,
@@ -16,17 +15,11 @@ import {
 } from '../../../repositories';
 import { UserVerificationId } from '../../../utils';
 
-export class CreateBudgetWithCategoryTransaction
+export class EditBudgetWithCategoryTransaction
   implements
     UseCase<
-      CreateBudgetWithCategoryTransactionDto,
-      Either<
-        | EntityNotEmpty
-        | EntityNotExists
-        | EntityAlreadyExists
-        | EntityNotCreated,
-        string
-      >
+      EditBudgetWithCategoryTransactionDto,
+      Either<EntityNotEmpty | EntityNotExists | EntityNotDeleted, string>
     >
 {
   constructor(
@@ -38,16 +31,13 @@ export class CreateBudgetWithCategoryTransaction
     private findBudgetByIdRepository: FindBudgetByIdRepository,
     @Inject('FindBudgetWithCategoryTransactionByIdsRepository')
     private findBudgetWithCategoryTransactionByIdsRepository: FindBudgetWithCategoryTransactionByIdsRepository,
-    @Inject('CreateBudgetWithCategoryTransactionRepository')
-    private createBudgetWithCategoryTransactionRepository: CreateBudgetWithCategoryTransactionRepository
+    @Inject('EditBudgetWithCategoryTransactionRepository')
+    private editBudgetWithCategoryTransactionRepository: EditBudgetWithCategoryTransactionRepository
   ) {}
   async execute(
-    input: CreateBudgetWithCategoryTransactionDto
+    input: EditBudgetWithCategoryTransactionDto
   ): Promise<
-    Either<
-      EntityNotEmpty | EntityNotExists | EntityAlreadyExists | EntityNotCreated,
-      string
-    >
+    Either<EntityNotEmpty | EntityNotExists | EntityNotDeleted, string>
   > {
     const { budgetId, categoryTransactionId, loggedUserId } = input;
 
@@ -93,17 +83,17 @@ export class CreateBudgetWithCategoryTransaction
         categoryTransactionId,
       });
 
-    if (Object.keys(findedBudgetWithCategoryTransaction).length > 0) {
-      return left(new EntityAlreadyExists('budget with category transaction'));
+    if (Object.keys(findedBudgetWithCategoryTransaction).length < 1) {
+      return left(new EntityNotExists('budget with category transaction'));
     }
 
-    const createdBudgetWithCategoryTransaction =
-      await this.createBudgetWithCategoryTransactionRepository.create(input);
+    const editedBudgetWithCategoryTransaction =
+      await this.editBudgetWithCategoryTransactionRepository.delete(input);
 
-    if (Object.keys(createdBudgetWithCategoryTransaction).length < 1) {
-      return left(new EntityNotCreated('budget with category transaction'));
+    if (Object.keys(editedBudgetWithCategoryTransaction).length < 1) {
+      return left(new EntityNotDeleted('budget with category transaction'));
     }
 
-    return right(createdBudgetWithCategoryTransaction);
+    return right(editedBudgetWithCategoryTransaction);
   }
 }
