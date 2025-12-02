@@ -51,7 +51,14 @@ export class EditBudgetWithTransactionByBudgetModalComponent implements OnInit {
   );
   private snackbarService = inject(SnackbarStackService);
   form: FormGroup<BudgetWithCategoryTransactionForm>;
-  categories = computed<TransactionResponseItem[]>(() => {
+  categories = computed<TransactionResponseItem[]>(() =>
+    this.ajustCategoryTransactions()
+  );
+  private dialogRef = inject(
+    MatDialogRef<EditBudgetWithTransactionByBudgetModalComponent>
+  );
+
+  private ajustCategoryTransactions() {
     const categories =
       this.categoryTransactionsService.categoryTransactions().categories || [];
 
@@ -63,11 +70,12 @@ export class EditBudgetWithTransactionByBudgetModalComponent implements OnInit {
       categoriesByBudget.map((item) => item.categoryTransaction.id)
     );
 
+    idsByBudget.delete(
+      this.budgetWithCategoryTransactionData.categoryTransactionId
+    );
+
     return categories.filter((category) => !idsByBudget.has(category.id));
-  });
-  private dialogRef = inject(
-    MatDialogRef<EditBudgetWithTransactionByBudgetModalComponent>
-  );
+  }
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -79,10 +87,10 @@ export class EditBudgetWithTransactionByBudgetModalComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       budgetId: [this.budgetWithCategoryTransactionData.budgetId],
-      categoryTransactionId: new FormControl('', [
-        Validators.required,
-        Validators.min(1),
-      ]),
+      categoryTransactionId: new FormControl(
+        this.budgetWithCategoryTransactionData.categoryTransactionId,
+        [Validators.required, Validators.min(1)]
+      ),
     });
   }
 
