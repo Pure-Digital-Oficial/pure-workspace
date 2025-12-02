@@ -65,7 +65,6 @@ export class EditFixedGainModalComponent {
     @Inject(MAT_DIALOG_DATA)
     public fixedGainResponseDto: FixedGainResponseDto
   ) {
-    console.log(fixedGainResponseDto);
     this.form = this.fb.group({
       name: new FormControl(this.fixedGainResponseDto.name, [
         Validators.required,

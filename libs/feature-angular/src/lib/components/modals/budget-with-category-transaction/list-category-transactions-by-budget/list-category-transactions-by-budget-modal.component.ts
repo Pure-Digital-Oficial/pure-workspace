@@ -26,10 +26,12 @@ import {
 import {
   BudgetResponseDto,
   DeleteBudgetWithCategoryTransactionDto,
+  EditBudgetWithCategoryTransactionDto,
 } from '@pure-workspace/domain';
 import { MatList } from '@angular/material/list';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { DeleteBudgetWithCategoryTransactionModalComponent } from '../delete-budget-with-category-transaction/delete-budget-with-category-transaction-modal.component';
+import { EditBudgetWithTransactionByBudgetModalComponent } from '../edit-budget-with-transaction-by-budget/edit-budget-with-transaction-by-budget-modal.component';
 
 @Component({
   selector: 'lib-list-budget-or-transactions-modal',
@@ -102,10 +104,21 @@ export class ListCategoryTransactionsByBudgetModalComponent implements OnInit {
     this.create.emit();
   }
 
-  onDeleteRelation(
+  onDeleteRelationship(
     input: Pick<DeleteBudgetWithCategoryTransactionDto, 'categoryTransactionId'>
   ) {
     this.dialogService.open(DeleteBudgetWithCategoryTransactionModalComponent, {
+      data: {
+        budgetId: this.budgetResponseDto.id,
+        categoryTransactionId: input.categoryTransactionId,
+      },
+    });
+  }
+
+  onEditRelationship(
+    input: Pick<EditBudgetWithCategoryTransactionDto, 'categoryTransactionId'>
+  ) {
+    this.dialogService.open(EditBudgetWithTransactionByBudgetModalComponent, {
       data: {
         budgetId: this.budgetResponseDto.id,
         categoryTransactionId: input.categoryTransactionId,

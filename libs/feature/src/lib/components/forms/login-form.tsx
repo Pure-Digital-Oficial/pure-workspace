@@ -128,7 +128,7 @@ export const LoginForm: FC<LoginFormProps> = ({
         router.push('/home');
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         showAlert('Usuário ou a senha estão inválidos', 'error');
       });
   };

@@ -1,0 +1,17 @@
+<lib-modal-layout
+  [title]="'Editar categoria do orçamento'"
+  (clicked)="close()"
+  (submited)="onSubmit()"
+  [actionButtonTitle]="'Editar'"
+>
+  <form [formGroup]="form" class="modal-form">
+    <mat-form-field class="modal-select-item">
+      <mat-label>Categoria</mat-label>
+      <mat-select formControlName="categoryTransactionId">
+        <mat-option *ngFor="let category of categories()" [value]="category.id">
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</lib-modal-layout>
