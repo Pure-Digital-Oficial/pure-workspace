@@ -11,7 +11,6 @@ import {
   EditBudgetModalComponent,
   DeleteBudgetModalComponent,
   ListCategoryTransactionsByBudgetModalComponent,
-  CreateBudgetWithTransactionByBudgetModalComponent,
 } from '../../../components';
 import { AuthService, BudgetsService } from '../../../services';
 
@@ -70,21 +69,9 @@ export class DefaultBudgetContainerComponent implements OnInit {
   }
 
   listCategoryTransactions(budgetResponseDto: BudgetResponseDto) {
-    const dialogRef = this.dialogService.open(
-      ListCategoryTransactionsByBudgetModalComponent,
-      {
-        data: budgetResponseDto,
-      }
-    );
-
-    dialogRef.componentInstance.create.subscribe(() => {
-      this.dialogService.open(
-        CreateBudgetWithTransactionByBudgetModalComponent,
-        {
-          data: budgetResponseDto,
-          autoFocus: true,
-        }
-      );
+    this.dialogService.open(ListCategoryTransactionsByBudgetModalComponent, {
+      data: budgetResponseDto,
+      panelClass: 'list-category-transactions',
     });
   }
 

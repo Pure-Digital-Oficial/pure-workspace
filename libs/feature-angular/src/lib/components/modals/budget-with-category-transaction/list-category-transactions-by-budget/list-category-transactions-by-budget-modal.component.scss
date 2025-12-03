@@ -18,19 +18,46 @@
   }
 }
 
-.list-container {
-  width: 80%;
-  display: flex;
-  justify-self: center;
-  flex-direction: column;
+.modal-body {
+  .list-container {
+    width: 80%;
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+
+    @media (max-width: 1024px) {
+      max-width: auto !important;
+    }
+
+    @media (max-width: 450px) {
+      width: 95%;
+    }
+  }
 }
 
-::ng-deep .mat-mdc-dialog-surface {
-  width: 800px !important;
-  max-width: none !important;
-
-  @media (max-width: 1024px) {
-    width: 100% !important;
+::ng-deep .list-category-transactions {
+  .mat-mdc-dialog-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     max-width: none !important;
+    min-width: auto !important;
+
+    @media (max-width: 1024px) {
+      min-width: inherit !important;
+    }
+  }
+
+  .mat-mdc-dialog-surface {
+    @media (min-width: 1025px) {
+      width: 800px !important;
+      max-width: 800px !important;
+    }
+
+    @media (max-width: 1024px) {
+      width: 100% !important;
+      min-width: none !important;
+      max-width: auto !important;
+    }
   }
 }

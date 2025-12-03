@@ -30,8 +30,11 @@ import {
 } from '@pure-workspace/domain';
 import { MatList } from '@angular/material/list';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { DeleteBudgetWithCategoryTransactionModalComponent } from '../delete-budget-with-category-transaction/delete-budget-with-category-transaction-modal.component';
-import { EditBudgetWithTransactionByBudgetModalComponent } from '../edit-budget-with-transaction-by-budget/edit-budget-with-transaction-by-budget-modal.component';
+import {
+  CreateBudgetWithTransactionByBudgetModalComponent,
+  EditBudgetWithTransactionByBudgetModalComponent,
+  DeleteBudgetWithCategoryTransactionModalComponent,
+} from '..';
 
 @Component({
   selector: 'lib-list-budget-or-transactions-modal',
@@ -101,7 +104,10 @@ export class ListCategoryTransactionsByBudgetModalComponent implements OnInit {
   }
 
   onCreate() {
-    this.create.emit();
+    this.dialogService.open(CreateBudgetWithTransactionByBudgetModalComponent, {
+      data: this.budgetResponseDto,
+      autoFocus: true,
+    });
   }
 
   onDeleteRelationship(
