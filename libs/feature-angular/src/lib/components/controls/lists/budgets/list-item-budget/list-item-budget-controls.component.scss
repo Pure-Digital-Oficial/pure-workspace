@@ -1,7 +1,11 @@
 .budget-item {
   width: 100%;
-  height: 80px;
   margin-bottom: 10px;
+  height: auto;
+  span {
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
   .budget-item-container {
     display: flex;
     flex-direction: row;
@@ -34,6 +38,10 @@
     }
   }
 }
+.divider {
+  margin-bottom: 5px;
+}
+
 .budget-item {
   @media (max-width: 1024px) {
     .budget-item-container {
