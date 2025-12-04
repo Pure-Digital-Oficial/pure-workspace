@@ -95,12 +95,12 @@ export class ListCategoryTransactionsByBudgetModalComponent implements OnInit {
   }
 
   onSearchChange(value: string) {
-    this.budgetWithCategoryTransactionsService.findBudgetWithCategoryTransactionsByFilter(
-      {
+    this.budgetWithCategoryTransactionsService
+      .findBudgetWithCategoryTransactionsByFilter({
         budgetId: this.budgetResponseDto.id,
         name: value,
-      }
-    );
+      })
+      .subscribe();
   }
 
   onCreate() {
