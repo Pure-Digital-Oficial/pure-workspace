@@ -1,5 +1,8 @@
 <div class="modal-header">
-  <h2 mat-dialog-title>{{ title }}</h2>
+  <div class="modal-title-container">
+    <mat-icon class="modal-icon-title">list_alt</mat-icon>
+    <h2 mat-dialog-title>{{ title }}</h2>
+  </div>
   <lib-default-button-icon
     class="modal-header-close-button"
     [ariaLabel]="'Botão de fechar o modal'"

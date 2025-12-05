@@ -35,6 +35,7 @@ import {
   EditBudgetWithTransactionByBudgetModalComponent,
   DeleteBudgetWithCategoryTransactionModalComponent,
 } from '..';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'lib-list-budget-or-transactions-modal',
@@ -49,6 +50,7 @@ import {
     ListItemCategoryTransactionByBudgetControlsComponent,
     MatList,
     MatPaginator,
+    MatIcon,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
