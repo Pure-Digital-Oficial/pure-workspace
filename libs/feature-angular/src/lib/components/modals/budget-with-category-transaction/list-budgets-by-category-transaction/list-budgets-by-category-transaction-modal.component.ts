@@ -30,6 +30,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatList } from '@angular/material/list';
 import {
+  CreateBudgetWithTransactionByCategoryTransactionModalComponent,
   DeleteBudgetWithCategoryTransactionModalComponent,
   EditBudgetByCategoryTransactionModalComponent,
 } from '..';
@@ -92,11 +93,15 @@ export class ListBudgetsByCategoryTransactionModalComponent implements OnInit {
   }
 
   onCreate() {
-    // this.dialogService.open(CreateBudgetWithTransactionByBudgetModalComponent, {
-    //   data: this.budgetResponseDto,
-    //   autoFocus: true,
-    // });
-    console.log('create');
+    this.dialogService.open(
+      CreateBudgetWithTransactionByCategoryTransactionModalComponent,
+      {
+        data: {
+          categoryTransactionId: this.categoryTransactionResponseDto.id,
+        },
+        autoFocus: true,
+      }
+    );
   }
 
   onSearchChange(value: string) {

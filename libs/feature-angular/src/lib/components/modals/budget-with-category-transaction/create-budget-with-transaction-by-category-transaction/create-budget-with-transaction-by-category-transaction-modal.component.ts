@@ -12,8 +12,8 @@ import {
   TransactionResponseItem,
 } from '@pure-workspace/domain';
 import {
+  BudgetsService,
   BudgetWithCategoryTransactionsService,
-  CategoryTransactionsService,
   CreateBudgetWithCategoryTransactionService,
   SnackbarStackService,
 } from '../../../../services';
@@ -29,9 +29,11 @@ import { BudgetWithCategoryTransactionForm } from '../../../../models';
 import { getFormValidationErrors } from '../../../../utils';
 
 @Component({
-  selector: 'lib-create-budget-with-transaction-by-budget-modal',
-  templateUrl: 'create-budget-with-transaction-by-budget-modal.component.html',
-  styleUrl: 'create-budget-with-transaction-by-budget-modal.component.scss',
+  selector: 'lib-create-budget-with-transaction-by-category-transaction-modal',
+  templateUrl:
+    'create-budget-with-transaction-by-category-transaction-modal.component.html',
+  styleUrl:
+    'create-budget-with-transaction-by-category-transaction-modal.component.scss',
   imports: [
     CommonModule,
     MatDialogModule,
@@ -41,10 +43,10 @@ import { getFormValidationErrors } from '../../../../utils';
     ModalLayoutComponent,
   ],
 })
-export class CreateBudgetWithTransactionByBudgetModalComponent
+export class CreateBudgetWithTransactionByCategoryTransactionModalComponent
   implements OnInit
 {
-  private categoryTransactionsService = inject(CategoryTransactionsService);
+  private budgetsService = inject(BudgetsService);
   private createBudgetWithCategoryTransactionService = inject(
     CreateBudgetWithCategoryTransactionService
   );
@@ -53,47 +55,43 @@ export class CreateBudgetWithTransactionByBudgetModalComponent
   );
   private snackbarService = inject(SnackbarStackService);
   form: FormGroup<BudgetWithCategoryTransactionForm>;
-  categories = computed<TransactionResponseItem[]>(() =>
-    this.ajustCategoryTransactions()
-  );
+  budgets = computed<TransactionResponseItem[]>(() => this.ajustBudgets());
   private dialogRef = inject(
-    MatDialogRef<CreateBudgetWithTransactionByBudgetModalComponent>
+    MatDialogRef<CreateBudgetWithTransactionByCategoryTransactionModalComponent>
   );
 
-  private ajustCategoryTransactions() {
-    const categories =
-      this.categoryTransactionsService.categoryTransactions().categories || [];
+  private ajustBudgets() {
+    const budgets = this.budgetsService.budgets().budgets || [];
 
-    const categoriesByBudget =
+    const budgetWithCategory =
       this.budgetWithCategoryTransactionsService.budgetWithCategoryTransactions()
         .items || [];
 
     const idsByBudget = new Set(
-      categoriesByBudget.map((item) => item.categoryTransaction.id)
+      budgetWithCategory.map((item) => item.budget.id)
     );
 
-    return categories.filter((category) => !idsByBudget.has(category.id));
+    return budgets.filter((budget) => !idsByBudget.has(budget.id));
   }
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public budgetWithCategoryTransactionData: Pick<
       CreateBudgetWithCategoryTransactionDto,
-      'budgetId'
+      'categoryTransactionId'
     >,
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
-      budgetId: [this.budgetWithCategoryTransactionData.budgetId],
-      categoryTransactionId: new FormControl('', [
-        Validators.required,
-        Validators.min(1),
-      ]),
+      budgetId: new FormControl('', [Validators.required, Validators.min(1)]),
+      categoryTransactionId: [
+        this.budgetWithCategoryTransactionData.categoryTransactionId,
+      ],
     });
   }
 
   ngOnInit(): void {
-    this.categoryTransactionsService.listCategoryTransactions().subscribe();
+    this.budgetsService.listBudgets().subscribe();
   }
 
   close() {
@@ -112,7 +110,8 @@ export class CreateBudgetWithTransactionByBudgetModalComponent
         .subscribe(() => {
           this.budgetWithCategoryTransactionsService
             .findBudgetWithCategoryTransactionsByFilter({
-              budgetId: this.budgetWithCategoryTransactionData.budgetId,
+              categoryTransactionId:
+                this.budgetWithCategoryTransactionData.categoryTransactionId,
             })
             .subscribe();
           this.dialogRef.close(true);
