@@ -29,7 +29,10 @@ import {
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatList } from '@angular/material/list';
-import { DeleteBudgetWithCategoryTransactionModalComponent } from '..';
+import {
+  DeleteBudgetWithCategoryTransactionModalComponent,
+  EditBudgetByCategoryTransactionModalComponent,
+} from '..';
 @Component({
   selector: 'lib-list-budgets-by-category-transaction-modal',
   templateUrl: 'list-budgets-by-category-transaction-modal.component.html',
@@ -119,13 +122,12 @@ export class ListBudgetsByCategoryTransactionModalComponent implements OnInit {
   onEditRelationship(
     input: Pick<EditBudgetWithCategoryTransactionDto, 'budgetId'>
   ) {
-    // this.dialogService.open(EditBudgetWithTransactionByBudgetModalComponent, {
-    //   data: {
-    //     budgetId: this.categoryTransactionResponseDto.id,
-    //     categoryTransactionId: input.budgetId,
-    //   },
-    // });
-    console.log(input);
+    this.dialogService.open(EditBudgetByCategoryTransactionModalComponent, {
+      data: {
+        budgetId: input.budgetId,
+        categoryTransactionId: this.categoryTransactionResponseDto.id,
+      },
+    });
   }
 
   onPageEvent(e: PageEvent) {
