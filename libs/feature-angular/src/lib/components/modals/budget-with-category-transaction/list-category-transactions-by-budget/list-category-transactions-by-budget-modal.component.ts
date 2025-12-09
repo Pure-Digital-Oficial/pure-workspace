@@ -3,12 +3,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  EventEmitter,
   Inject,
   inject,
   Input,
   OnInit,
-  Output,
 } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
@@ -63,7 +61,6 @@ export class ListCategoryTransactionsByBudgetModalComponent implements OnInit {
     BudgetWithCategoryTransactionsService
   );
   @Input() title = 'Categorias relacionadas com o orçamento';
-  @Output() create = new EventEmitter<void>();
   categoryTransactions = computed(
     () =>
       this.budgetWithCategoryTransactionsService.budgetWithCategoryTransactions()

@@ -80,6 +80,7 @@ export class CategoryTransactionsContainerComponent implements OnInit {
   listBudgets(categoryTransaction: CategoryTransactionResponseDto) {
     this.dialogService.open(ListBudgetsByCategoryTransactionModalComponent, {
       data: categoryTransaction,
+      panelClass: 'list-budgets',
     });
   }
 

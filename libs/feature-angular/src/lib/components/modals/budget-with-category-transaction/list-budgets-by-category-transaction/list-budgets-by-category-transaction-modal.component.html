@@ -18,6 +18,28 @@
         (valueChange)="onSearchChange($event)"
         (action)="onCreate()"
       />
+      <div class="list-container">
+        <section class="paginator-container">
+          <mat-paginator
+            #paginators
+            [length]="length()"
+            [pageIndex]="pageIndex"
+            [pageSize]="pageSize"
+            (page)="onPageEvent($event)"
+            [ariaLabel]="ariaLabel"
+          >
+          </mat-paginator>
+        </section>
+        <mat-list role="list" class="list">
+          @for (budget of budgets(); track budget.id) {
+          <lib-list-item-budget-by-category-transaction-controls
+            [budget]="budget"
+            (delete)="onDeleteRelationship($event)"
+            (edit)="onEditRelationship($event)"
+          />
+          }
+        </mat-list>
+      </div>
     </section>
   </section>
 </mat-dialog-content>
