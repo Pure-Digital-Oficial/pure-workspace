@@ -26,6 +26,7 @@ export class ListItemCategoryTransactionControlsComponent {
   @Output() delete = new EventEmitter<
     Pick<CategoryTransactionResponseDto, 'id' | 'name'>
   >();
+  @Output() budgets = new EventEmitter<CategoryTransactionResponseDto>();
 
   editAction() {
     this.edit.emit(this.categoryTransaction());
@@ -36,5 +37,9 @@ export class ListItemCategoryTransactionControlsComponent {
       id: this.categoryTransaction().id,
       name: this.categoryTransaction().name,
     });
+  }
+
+  budgetsAction() {
+    this.budgets.emit(this.categoryTransaction());
   }
 }

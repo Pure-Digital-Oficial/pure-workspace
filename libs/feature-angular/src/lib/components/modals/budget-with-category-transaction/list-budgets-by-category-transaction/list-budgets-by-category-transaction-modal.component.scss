@@ -1,0 +1,83 @@
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+
+  .modal-title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+
+    .modal-icon-title {
+      font-size: 35px;
+      height: auto;
+      width: auto;
+    }
+
+    h2 {
+      white-space: normal;
+      overflow-wrap: break-word;
+      width: auto;
+      padding: 0;
+      padding-left: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @media (max-width: 1024px) {
+        width: 85%;
+        font-size: medium;
+      }
+    }
+  }
+
+  .modal-header-close-button {
+    margin-right: 15px;
+  }
+}
+
+.modal-body {
+  .list-container {
+    width: 80%;
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+
+    @media (max-width: 1024px) {
+      max-width: auto !important;
+    }
+
+    @media (max-width: 450px) {
+      width: 95%;
+    }
+  }
+}
+
+::ng-deep .list-budgets {
+  .mat-mdc-dialog-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    max-width: none !important;
+    min-width: auto !important;
+
+    @media (max-width: 1024px) {
+      min-width: inherit !important;
+    }
+  }
+
+  .mat-mdc-dialog-surface {
+    @media (min-width: 1025px) {
+      width: 800px !important;
+      max-width: 800px !important;
+    }
+
+    @media (max-width: 1024px) {
+      width: 100% !important;
+      min-width: none !important;
+      max-width: auto !important;
+    }
+  }
+}
