@@ -55,7 +55,9 @@ export class ListFixedGainsRepositoryImpl implements ListFixedGainsRepository {
           value: true,
           user: {
             select: {
+              id: true,
               nickname: true,
+              picture: true,
             },
           },
         },
@@ -79,7 +81,11 @@ export class ListFixedGainsRepositoryImpl implements ListFixedGainsRepository {
           status: fixedGain?.status ?? '',
           frequency: fixedGain?.frequency ?? '',
           dayOfReceipt: fixedGain?.day_of_receipt ?? '',
-          createdBy: fixedGain?.user.nickname ?? '',
+          createdBy: {
+            id: fixedGain?.user.id ?? '',
+            nickname: fixedGain?.user.nickname ?? '',
+            picture: fixedGain?.user.picture ?? '',
+          },
           createdAt: fixedGain?.created_at ?? new Date(),
           updatedAt: fixedGain?.updated_at ?? new Date(),
         };
