@@ -22,7 +22,9 @@ export class FindBudgetByIdRepositoryImpl implements FindBudgetByIdRepository {
         updated_at: true,
         user: {
           select: {
+            id: true,
             nickname: true,
+            picture: true,
           },
         },
       },
@@ -34,7 +36,11 @@ export class FindBudgetByIdRepositoryImpl implements FindBudgetByIdRepository {
       description: findedBudget?.description ?? '',
       limitValue: findedBudget?.limit_value ?? 0,
       status: findedBudget?.status ?? '',
-      createdBy: findedBudget?.user.nickname ?? '',
+      createdBy: {
+        id: findedBudget?.user.id ?? '',
+        nickname: findedBudget?.user.nickname ?? '',
+        picture: findedBudget?.user.picture ?? '',
+      },
       createdAt: findedBudget?.created_at ?? new Date(),
       updatedAt: findedBudget?.updated_at ?? new Date(),
     };

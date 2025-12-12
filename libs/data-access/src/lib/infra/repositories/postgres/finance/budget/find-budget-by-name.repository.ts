@@ -28,7 +28,9 @@ export class FindBudgetByNameRepositoryImpl
         updated_at: true,
         user: {
           select: {
+            id: true,
             nickname: true,
+            picture: true,
           },
         },
       },
