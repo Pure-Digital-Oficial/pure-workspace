@@ -116,6 +116,7 @@ export class ListCategoryTransactionsByBudgetModalComponent implements OnInit {
       data: {
         budgetId: this.budgetResponseDto.id,
         categoryTransactionId: input.categoryTransactionId,
+        type: 'budget',
       },
     });
   }

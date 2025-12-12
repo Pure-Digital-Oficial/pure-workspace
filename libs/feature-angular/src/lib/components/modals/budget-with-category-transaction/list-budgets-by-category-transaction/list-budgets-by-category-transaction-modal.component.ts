@@ -118,8 +118,9 @@ export class ListBudgetsByCategoryTransactionModalComponent implements OnInit {
   ) {
     this.dialogService.open(DeleteBudgetWithCategoryTransactionModalComponent, {
       data: {
-        budgetId: this.categoryTransactionResponseDto.id,
-        categoryTransactionId: input.budgetId,
+        budgetId: input.budgetId,
+        categoryTransactionId: this.categoryTransactionResponseDto.id,
+        type: 'category',
       },
     });
   }
