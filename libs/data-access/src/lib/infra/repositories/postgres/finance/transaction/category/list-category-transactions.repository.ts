@@ -57,7 +57,9 @@ export class ListCategoryTransactionsRepositoryImpl
           updated_at: true,
           user: {
             select: {
+              id: true,
               nickname: true,
+              picture: true,
             },
           },
         },
@@ -78,7 +80,11 @@ export class ListCategoryTransactionsRepositoryImpl
           id: category?.id ?? '',
           name: category?.name ?? '',
           description: category?.description ?? '',
-          createdBy: category?.user.nickname ?? '',
+          createdBy: {
+            id: category?.user.id ?? '',
+            nickname: category?.user.nickname ?? '',
+            picture: category?.user.picture ?? '',
+          },
           status: category?.status ?? '',
           createdAt: category?.created_at ?? new Date(),
           updatedAt: category?.updated_at ?? new Date(),
