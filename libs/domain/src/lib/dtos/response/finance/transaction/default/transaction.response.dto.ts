@@ -1,3 +1,4 @@
+import { CreatedByResponseDto } from '../../../user';
 import { TransactionResponseItem } from '../category';
 
 export interface TransactionResponseDto {
@@ -7,7 +8,7 @@ export interface TransactionResponseDto {
   type: string;
   status: string;
   value: number;
-  createdBy: string;
+  createdBy: CreatedByResponseDto;
   createdAt: Date;
   updatedAt: Date;
   initialDate?: Date;

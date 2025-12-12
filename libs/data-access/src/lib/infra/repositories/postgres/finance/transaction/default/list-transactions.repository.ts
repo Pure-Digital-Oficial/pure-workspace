@@ -56,7 +56,9 @@ export class ListTransactionsRepositoryImpl
           },
           user: {
             select: {
+              id: true,
               nickname: true,
+              picture: true,
             },
           },
           name: true,
@@ -87,7 +89,11 @@ export class ListTransactionsRepositoryImpl
             id: transactions?.category?.id ?? '',
             name: transactions?.category?.name ?? '',
           },
-          createdBy: transactions?.user.nickname ?? '',
+          createdBy: {
+            id: transactions?.user.id ?? '',
+            nickname: transactions?.user.nickname ?? '',
+            picture: transactions?.user.picture ?? '',
+          },
           name: transactions?.name ?? '',
           status: transactions?.status ?? '',
           type: transactions?.type ?? '',
