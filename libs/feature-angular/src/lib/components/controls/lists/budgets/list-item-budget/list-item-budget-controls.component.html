@@ -3,7 +3,10 @@
     <div class="budget-item-body-container">
       <div class="budget-item-header">
         <span>Nome: {{ budget().name }}</span>
-        <span>Criado por: {{ budget().createdBy }}</span>
+        <div class="created-by">
+          <span>Criado por:</span>
+          <img [src]="budget().createdBy.picture" [alt]="'created by'" />
+        </div>
       </div>
       <div class="budget-item-body">
         <span class="budget-item-value"

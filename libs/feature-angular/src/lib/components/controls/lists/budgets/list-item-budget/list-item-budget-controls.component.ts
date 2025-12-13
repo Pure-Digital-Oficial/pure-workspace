@@ -4,6 +4,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BudgetResponseDto } from '@pure-workspace/domain';
 import { DefaultButtonIconComponent } from '../../../../buttons';
 
@@ -16,6 +17,7 @@ import { DefaultButtonIconComponent } from '../../../../buttons';
     MatButtonModule,
     MatIcon,
     MatMenuModule,
+    MatTooltipModule,
     DefaultButtonIconComponent,
   ],
   templateUrl: './list-item-budget-controls.component.html',

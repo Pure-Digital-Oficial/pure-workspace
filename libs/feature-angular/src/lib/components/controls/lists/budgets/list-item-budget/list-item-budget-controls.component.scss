@@ -17,6 +17,19 @@
         display: flex;
         justify-content: space-between;
         font-size: 14px;
+
+        .created-by {
+          width: 50%;
+          max-width: 120px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          img {
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+          }
+        }
       }
 
       .budget-item-body {
@@ -26,6 +39,8 @@
         justify-content: space-between;
         align-items: center;
         .budget-item-value {
+          width: 50%;
+          max-width: 300px;
           font-size: large;
           font-weight: 600;
         }
