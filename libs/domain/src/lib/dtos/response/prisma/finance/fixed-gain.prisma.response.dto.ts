@@ -10,6 +10,8 @@ export interface FixedGainPrismaResponseDto {
   created_at: Date;
   updated_at: Date;
   user: {
+    id: string;
     nickname: string;
+    picture: string | null;
   };
 }

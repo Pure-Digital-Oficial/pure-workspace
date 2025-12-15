@@ -13,6 +13,7 @@ import {
   ListItemCategoryTransactionControlsComponent,
   EditCategoryTransactionModalComponent,
   DeleteCategoryTransactionModalComponent,
+  ListBudgetsByCategoryTransactionModalComponent,
 } from '../../../components';
 import { AuthService, CategoryTransactionsService } from '../../../services';
 
@@ -73,6 +74,13 @@ export class CategoryTransactionsContainerComponent implements OnInit {
   ) {
     this.dialogService.open(DeleteCategoryTransactionModalComponent, {
       data: categoryTransaction,
+    });
+  }
+
+  listBudgets(categoryTransaction: CategoryTransactionResponseDto) {
+    this.dialogService.open(ListBudgetsByCategoryTransactionModalComponent, {
+      data: categoryTransaction,
+      panelClass: 'list-budgets',
     });
   }
 

@@ -40,6 +40,9 @@ export class DefaultLayoutComponent {
     'svg/icons/Pig_Money.svg',
     'svg/icons/Pig_Bank.svg',
   ];
+  animedtedQuantity = this.breakpointObserver
+    .observe(['(max-width: 1024px)'])
+    .pipe(map((result) => (result.matches ? 25 : 50)));
 
   drawerMode$: Observable<'side' | 'over'> = this.breakpointObserver
     .observe(['(max-width: 1024px)'])

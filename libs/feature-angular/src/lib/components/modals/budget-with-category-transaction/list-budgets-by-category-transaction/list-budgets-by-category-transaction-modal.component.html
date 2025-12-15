@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <div class="modal-title-container">
+    <mat-icon class="modal-icon-title">list_alt</mat-icon>
+    <h2 mat-dialog-title>{{ title }}</h2>
+  </div>
+  <lib-default-button-icon
+    class="modal-header-close-button"
+    [ariaLabel]="'Botão de fechar o modal'"
+    [icon]="'close'"
+    [description]="'Fechar'"
+    (action)="close()"
+  />
+</div>
+<mat-dialog-content class="modal-container">
+  <section class="modal-body">
+    <section class="search-container">
+      <lib-default-search-bar-controls
+        (valueChange)="onSearchChange($event)"
+        (action)="onCreate()"
+      />
+      <div class="list-container">
+        <section class="paginator-container">
+          <mat-paginator
+            #paginators
+            [length]="length()"
+            [pageIndex]="pageIndex"
+            [pageSize]="pageSize"
+            (page)="onPageEvent($event)"
+            [ariaLabel]="ariaLabel"
+          >
+          </mat-paginator>
+        </section>
+        <mat-list role="list" class="list">
+          @for (budget of budgets(); track budget.id) {
+          <lib-list-item-budget-by-category-transaction-controls
+            [budget]="budget"
+            (delete)="onDeleteRelationship($event)"
+            (edit)="onEditRelationship($event)"
+          />
+          }
+        </mat-list>
+      </div>
+    </section>
+  </section>
+</mat-dialog-content>

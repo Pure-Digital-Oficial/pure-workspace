@@ -25,7 +25,9 @@ export class FindFixedGainByIdRepositoryImpl
         value: true,
         user: {
           select: {
+            id: true,
             nickname: true,
+            picture: true,
           },
         },
       },
@@ -40,7 +42,11 @@ export class FindFixedGainByIdRepositoryImpl
       dayOfReceipt: findedFixedGain?.day_of_receipt ?? 0,
       createdAt: findedFixedGain?.created_at ?? new Date(),
       updatedAt: findedFixedGain?.updated_at ?? new Date(),
-      createdBy: findedFixedGain?.user.nickname ?? '',
+      createdBy: {
+        id: findedFixedGain?.user.id ?? '',
+        nickname: findedFixedGain?.user.nickname ?? '',
+        picture: findedFixedGain?.user.picture ?? '',
+      },
     };
   }
 }

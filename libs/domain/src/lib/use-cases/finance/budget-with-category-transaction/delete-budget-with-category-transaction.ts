@@ -1,9 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../../bases';
-import {
-  BudgetWithCategoryTransactionBodyDto,
-  DeleteBudgetWithCategoryTransactionDto,
-} from '../../../dtos';
+import { DeleteBudgetWithCategoryTransactionDto } from '../../../dtos';
 import {
   EntityNotDeleted,
   EntityNotEmpty,
@@ -38,7 +35,7 @@ export class DeleteBudgetWithCategoryTransaction
     private deleteBudgetWithCategoryTransactionRepository: DeleteBudgetWithCategoryTransactionRepository
   ) {}
   async execute(
-    input: BudgetWithCategoryTransactionBodyDto
+    input: DeleteBudgetWithCategoryTransactionDto
   ): Promise<
     Either<EntityNotEmpty | EntityNotExists | EntityNotDeleted, string>
   > {
@@ -90,13 +87,13 @@ export class DeleteBudgetWithCategoryTransaction
       return left(new EntityNotExists('budget with category transaction'));
     }
 
-    const createdBudgetWithCategoryTransaction =
+    const deletedBudgetWithCategoryTransaction =
       await this.deleteBudgetWithCategoryTransactionRepository.delete(input);
 
-    if (Object.keys(createdBudgetWithCategoryTransaction).length < 1) {
+    if (Object.keys(deletedBudgetWithCategoryTransaction).length < 1) {
       return left(new EntityNotDeleted('budget with category transaction'));
     }
 
-    return right(createdBudgetWithCategoryTransaction);
+    return right(deletedBudgetWithCategoryTransaction);
   }
 }

@@ -1,3 +1,5 @@
+import { CreatedByResponseDto } from '../../../user';
+
 export interface CategoryTransactionResponseDto {
   id: string;
   name: string;
@@ -5,5 +7,5 @@ export interface CategoryTransactionResponseDto {
   status: string;
   createdAt: Date;
   updatedAt: Date;
-  createdBy: string;
+  createdBy: CreatedByResponseDto;
 }

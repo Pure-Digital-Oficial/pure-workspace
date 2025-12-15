@@ -32,8 +32,14 @@ export class ListItemCategoryTransactionByBudgetControlsComponent {
     Pick<DeleteBudgetWithCategoryTransactionDto, 'categoryTransactionId'>
   >();
 
+  @Output() edit = new EventEmitter<
+    Pick<DeleteBudgetWithCategoryTransactionDto, 'categoryTransactionId'>
+  >();
+
   editAction() {
-    console.log('Edit action for budget:', this.categoryTransaction());
+    this.edit.emit({
+      categoryTransactionId: this.categoryTransaction().categoryTransaction.id,
+    });
   }
 
   deleteAction() {

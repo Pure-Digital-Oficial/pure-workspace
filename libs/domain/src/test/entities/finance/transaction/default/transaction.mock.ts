@@ -12,6 +12,10 @@ export const TransactionMock: TransactionResponseDto = {
   name: faker.commerce.productName(),
   status: faker.string.alpha(3),
   type: faker.string.alpha(3),
-  createdBy: faker.person.fullName(),
+  createdBy: {
+    id: faker.string.uuid(),
+    nickname: faker.commerce.department(),
+    picture: faker.commerce.department(),
+  },
   value: faker.number.int({ min: 1, max: 1000 }),
 };

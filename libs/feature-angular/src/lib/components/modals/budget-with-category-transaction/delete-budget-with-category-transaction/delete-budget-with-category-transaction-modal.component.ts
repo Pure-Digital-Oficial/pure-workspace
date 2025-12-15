@@ -10,12 +10,12 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { DeleteBudgetWithCategoryTransactionDto } from '@pure-workspace/domain';
 import {
   BudgetWithCategoryTransactionsService,
   DeleteBudgetWithCategoryTransactionService,
 } from '../../../../services';
 import { ModalLayoutComponent } from '../../../layouts';
+import { DeleteBudgetWithCategoryTransactionInterface } from '../../../../models';
 
 @Component({
   selector: 'lib-delete-budget-with-category-transaction-modal',
@@ -39,10 +39,7 @@ export class DeleteBudgetWithCategoryTransactionModalComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public budgetWithCategoryTransactionData: Pick<
-      DeleteBudgetWithCategoryTransactionDto,
-      'budgetId' | 'categoryTransactionId'
-    >
+    public budgetWithCategoryTransactionData: DeleteBudgetWithCategoryTransactionInterface
   ) {}
 
   close() {
@@ -58,12 +55,22 @@ export class DeleteBudgetWithCategoryTransactionModalComponent {
       })
       .subscribe((budgetWithCategoryTransaction) => {
         if (budgetWithCategoryTransaction) {
-          this.budgetWithCategoryTransactionsService
-            .listBudgetWithCategoryTransactions(
-              budgetWithCategoryTransaction.budget_with_category_id
-            )
-            .subscribe();
-          this.close();
+          if (this.budgetWithCategoryTransactionData.type == 'budget') {
+            this.budgetWithCategoryTransactionsService
+              .findBudgetWithCategoryTransactionsByFilter({
+                budgetId: this.budgetWithCategoryTransactionData.budgetId,
+              })
+              .subscribe();
+            this.close();
+          } else {
+            this.budgetWithCategoryTransactionsService
+              .findBudgetWithCategoryTransactionsByFilter({
+                categoryTransactionId:
+                  this.budgetWithCategoryTransactionData.categoryTransactionId,
+              })
+              .subscribe();
+            this.close();
+          }
         }
       });
   }

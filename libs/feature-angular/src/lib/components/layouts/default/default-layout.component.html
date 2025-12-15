@@ -16,7 +16,7 @@
   <lib-sidenav-default-header [drawer]="drawer" [title]="title">
     <lib-animated-background
       [icons]="backgroundIcons"
-      [quantity]="50"
+      [quantity]="(animedtedQuantity | async) || 50"
       [minSize]="20"
       [maxSize]="60"
       [animationDuration]="30"

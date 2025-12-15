@@ -10,5 +10,9 @@ export const FixedGainMock: FixedGainResponseDto = {
   frequency: 'DAILY',
   createdAt: faker.date.anytime(),
   updatedAt: faker.date.anytime(),
-  createdBy: faker.string.uuid(),
+  createdBy: {
+    id: faker.string.uuid(),
+    nickname: faker.commerce.department(),
+    picture: faker.commerce.department(),
+  },
 };

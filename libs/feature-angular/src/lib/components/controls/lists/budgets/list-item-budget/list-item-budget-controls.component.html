@@ -3,7 +3,7 @@
     <div class="budget-item-body-container">
       <div class="budget-item-header">
         <span>Nome: {{ budget().name }}</span>
-        <span>Criado por: {{ budget().createdBy }}</span>
+        <lib-created-by-controls [createdBy]="budget().createdBy" />
       </div>
       <div class="budget-item-body">
         <span class="budget-item-value"
@@ -38,4 +38,4 @@
     </mat-menu>
   </div>
 </mat-list-item>
-<mat-divider />
+<mat-divider class="divider" />

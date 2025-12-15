@@ -1,0 +1,11 @@
+.created-by-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  img {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin-left: 20px;
+  }
+}

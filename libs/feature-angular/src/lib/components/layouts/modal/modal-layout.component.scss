@@ -8,9 +8,8 @@
     margin-right: 15px;
   }
   h2 {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow-wrap: break-word;
     width: auto;
     @media (max-width: 1024px) {
       width: 85%;

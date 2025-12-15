@@ -3,12 +3,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  EventEmitter,
   Inject,
   inject,
   Input,
   OnInit,
-  Output,
 } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
@@ -26,10 +24,16 @@ import {
 import {
   BudgetResponseDto,
   DeleteBudgetWithCategoryTransactionDto,
+  EditBudgetWithCategoryTransactionDto,
 } from '@pure-workspace/domain';
 import { MatList } from '@angular/material/list';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { DeleteBudgetWithCategoryTransactionModalComponent } from '../delete-budget-with-category-transaction/delete-budget-with-category-transaction-modal.component';
+import {
+  CreateBudgetWithTransactionByBudgetModalComponent,
+  EditBudgetWithTransactionByBudgetModalComponent,
+  DeleteBudgetWithCategoryTransactionModalComponent,
+} from '..';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'lib-list-budget-or-transactions-modal',
@@ -44,6 +48,7 @@ import { DeleteBudgetWithCategoryTransactionModalComponent } from '../delete-bud
     ListItemCategoryTransactionByBudgetControlsComponent,
     MatList,
     MatPaginator,
+    MatIcon,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -56,7 +61,6 @@ export class ListCategoryTransactionsByBudgetModalComponent implements OnInit {
     BudgetWithCategoryTransactionsService
   );
   @Input() title = 'Categorias relacionadas com o orçamento';
-  @Output() create = new EventEmitter<void>();
   categoryTransactions = computed(
     () =>
       this.budgetWithCategoryTransactionsService.budgetWithCategoryTransactions()
@@ -90,22 +94,37 @@ export class ListCategoryTransactionsByBudgetModalComponent implements OnInit {
   }
 
   onSearchChange(value: string) {
-    this.budgetWithCategoryTransactionsService.findBudgetWithCategoryTransactionsByFilter(
-      {
+    this.budgetWithCategoryTransactionsService
+      .findBudgetWithCategoryTransactionsByFilter({
         budgetId: this.budgetResponseDto.id,
         name: value,
-      }
-    );
+      })
+      .subscribe();
   }
 
   onCreate() {
-    this.create.emit();
+    this.dialogService.open(CreateBudgetWithTransactionByBudgetModalComponent, {
+      data: this.budgetResponseDto,
+      autoFocus: true,
+    });
   }
 
-  onDeleteRelation(
+  onDeleteRelationship(
     input: Pick<DeleteBudgetWithCategoryTransactionDto, 'categoryTransactionId'>
   ) {
     this.dialogService.open(DeleteBudgetWithCategoryTransactionModalComponent, {
+      data: {
+        budgetId: this.budgetResponseDto.id,
+        categoryTransactionId: input.categoryTransactionId,
+        type: 'budget',
+      },
+    });
+  }
+
+  onEditRelationship(
+    input: Pick<EditBudgetWithCategoryTransactionDto, 'categoryTransactionId'>
+  ) {
+    this.dialogService.open(EditBudgetWithTransactionByBudgetModalComponent, {
       data: {
         budgetId: this.budgetResponseDto.id,
         categoryTransactionId: input.categoryTransactionId,

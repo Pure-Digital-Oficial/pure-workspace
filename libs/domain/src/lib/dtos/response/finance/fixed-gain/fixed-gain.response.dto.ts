@@ -1,3 +1,5 @@
+import { CreatedByResponseDto } from '../../user';
+
 export interface FixedGainResponseDto {
   id: string;
   name: string;
@@ -7,5 +9,5 @@ export interface FixedGainResponseDto {
   frequency: string;
   createdAt: Date;
   updatedAt: Date;
-  createdBy: string;
+  createdBy: CreatedByResponseDto;
 }

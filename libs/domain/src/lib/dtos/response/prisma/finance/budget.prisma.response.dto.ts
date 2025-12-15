@@ -9,6 +9,8 @@ export interface BudgetPrismaResponseDto {
   created_at: Date;
   updated_at: Date;
   user: {
+    id: string;
     nickname: string;
+    picture: string | null;
   };
 }

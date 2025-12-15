@@ -31,7 +31,9 @@ export class FindTransactionByNameAndValueRepositoryImpl
           },
           user: {
             select: {
+              id: true,
               nickname: true,
+              picture: true,
             },
           },
           name: true,
@@ -49,7 +51,11 @@ export class FindTransactionByNameAndValueRepositoryImpl
     return {
       id: findedTransaction?.id ?? '',
       category: findedTransaction?.category.name ?? '',
-      createdBy: findedTransaction?.user.nickname ?? '',
+      createdBy: {
+        id: findedTransaction?.user.id ?? '',
+        nickname: findedTransaction?.user.nickname ?? '',
+        picture: findedTransaction?.user.picture ?? '',
+      },
       name: findedTransaction?.name ?? '',
       status: findedTransaction?.status ?? '',
       type: findedTransaction?.type ?? '',

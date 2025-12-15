@@ -26,7 +26,9 @@ export class FindCategoryTransactionByIdRepositoryImpl
         updated_at: true,
         user: {
           select: {
+            id: true,
             nickname: true,
+            picture: true,
           },
         },
       },
@@ -39,7 +41,11 @@ export class FindCategoryTransactionByIdRepositoryImpl
       status: findedCategoryTransaction?.status ?? '',
       createdAt: findedCategoryTransaction?.created_at ?? new Date(),
       updatedAt: findedCategoryTransaction?.updated_at ?? new Date(),
-      createdBy: findedCategoryTransaction?.user.nickname ?? '',
+      createdBy: {
+        id: findedCategoryTransaction?.user.id ?? '',
+        nickname: findedCategoryTransaction?.user.nickname ?? '',
+        picture: findedCategoryTransaction?.user.picture ?? '',
+      },
     };
   }
 }

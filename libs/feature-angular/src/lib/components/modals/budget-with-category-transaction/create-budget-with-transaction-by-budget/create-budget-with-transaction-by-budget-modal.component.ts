@@ -8,7 +8,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import {
-  BudgetResponseDto,
+  CreateBudgetWithCategoryTransactionDto,
   TransactionResponseItem,
 } from '@pure-workspace/domain';
 import {
@@ -53,7 +53,14 @@ export class CreateBudgetWithTransactionByBudgetModalComponent
   );
   private snackbarService = inject(SnackbarStackService);
   form: FormGroup<BudgetWithCategoryTransactionForm>;
-  categories = computed<TransactionResponseItem[]>(() => {
+  categories = computed<TransactionResponseItem[]>(() =>
+    this.ajustCategoryTransactions()
+  );
+  private dialogRef = inject(
+    MatDialogRef<CreateBudgetWithTransactionByBudgetModalComponent>
+  );
+
+  private ajustCategoryTransactions() {
     const categories =
       this.categoryTransactionsService.categoryTransactions().categories || [];
 
@@ -66,18 +73,18 @@ export class CreateBudgetWithTransactionByBudgetModalComponent
     );
 
     return categories.filter((category) => !idsByBudget.has(category.id));
-  });
-  private dialogRef = inject(
-    MatDialogRef<CreateBudgetWithTransactionByBudgetModalComponent>
-  );
+  }
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public budgetResponseDto: BudgetResponseDto,
+    public budgetWithCategoryTransactionData: Pick<
+      CreateBudgetWithCategoryTransactionDto,
+      'budgetId'
+    >,
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
-      budgetId: [this.budgetResponseDto.id],
+      budgetId: [this.budgetWithCategoryTransactionData.budgetId],
       categoryTransactionId: new FormControl('', [
         Validators.required,
         Validators.min(1),
@@ -105,7 +112,7 @@ export class CreateBudgetWithTransactionByBudgetModalComponent
         .subscribe(() => {
           this.budgetWithCategoryTransactionsService
             .findBudgetWithCategoryTransactionsByFilter({
-              budgetId: this.budgetResponseDto.id,
+              budgetId: this.budgetWithCategoryTransactionData.budgetId,
             })
             .subscribe();
           this.dialogRef.close(true);

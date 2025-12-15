@@ -6,7 +6,11 @@ export const BudgetMock: BudgetResponseDto = {
   name: faker.commerce.productName(),
   description: faker.commerce.productDescription(),
   status: 'ACTIVE',
-  createdBy: faker.commerce.department(),
+  createdBy: {
+    id: faker.string.uuid(),
+    nickname: faker.commerce.department(),
+    picture: faker.commerce.department(),
+  },
   limitValue: faker.number.float(),
   createdAt: faker.date.anytime(),
   updatedAt: faker.date.anytime(),

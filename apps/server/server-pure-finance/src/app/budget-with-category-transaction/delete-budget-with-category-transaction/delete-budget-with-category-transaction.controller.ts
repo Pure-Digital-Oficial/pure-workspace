@@ -32,7 +32,7 @@ export class DeleteBudgetWithCategoryTransactionController {
     })
   )
   @UseGuards(JwtAuthGuard)
-  async create(
+  async delete(
     @Query() query: { userId: string },
     @Body() input: Omit<DeleteBudgetWithCategoryTransactionDto, 'loggedUserId'>
   ) {

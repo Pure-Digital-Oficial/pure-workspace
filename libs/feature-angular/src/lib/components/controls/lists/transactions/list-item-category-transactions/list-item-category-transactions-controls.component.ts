@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { CategoryTransactionResponseDto } from '@pure-workspace/domain';
 import { DefaultButtonIconComponent } from '../../../../buttons';
+import { CreatedByControlsComponent } from '../../../users/created-by/created-by-controls.component';
 
 @Component({
   selector: 'lib-list-item-category-transaction-controls',
@@ -16,6 +17,7 @@ import { DefaultButtonIconComponent } from '../../../../buttons';
     MatIcon,
     MatMenuModule,
     DefaultButtonIconComponent,
+    CreatedByControlsComponent,
   ],
   templateUrl: './list-item-category-transactions-controls.component.html',
   styleUrl: './list-item-category-transactions-controls.component.scss',
@@ -26,6 +28,7 @@ export class ListItemCategoryTransactionControlsComponent {
   @Output() delete = new EventEmitter<
     Pick<CategoryTransactionResponseDto, 'id' | 'name'>
   >();
+  @Output() budgets = new EventEmitter<CategoryTransactionResponseDto>();
 
   editAction() {
     this.edit.emit(this.categoryTransaction());
@@ -36,5 +39,9 @@ export class ListItemCategoryTransactionControlsComponent {
       id: this.categoryTransaction().id,
       name: this.categoryTransaction().name,
     });
+  }
+
+  budgetsAction() {
+    this.budgets.emit(this.categoryTransaction());
   }
 }

@@ -54,7 +54,9 @@ export class ListBudgetsRepositoryImpl implements ListBudgetsRepository {
           updated_at: true,
           user: {
             select: {
+              id: true,
               nickname: true,
+              picture: true,
             },
           },
         },
@@ -77,7 +79,11 @@ export class ListBudgetsRepositoryImpl implements ListBudgetsRepository {
           limitValue: budget?.limit_value ?? 0,
           status: budget?.status ?? '',
           description: budget?.description ?? '',
-          createdBy: budget?.user.nickname ?? '',
+          createdBy: {
+            id: budget?.user.id ?? '',
+            nickname: budget?.user.nickname ?? '',
+            picture: budget?.user.picture ?? '',
+          },
           createdAt: budget?.created_at ?? new Date(),
           updatedAt: budget?.updated_at ?? new Date(),
         };

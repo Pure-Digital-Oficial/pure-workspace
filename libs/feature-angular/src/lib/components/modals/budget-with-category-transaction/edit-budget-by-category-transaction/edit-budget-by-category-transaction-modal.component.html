@@ -1,0 +1,18 @@
+<lib-modal-layout
+  [title]="'Editar categoria do orçamento'"
+  (clicked)="close()"
+  (submited)="onSubmit()"
+  [actionButtonTitle]="'Editar'"
+  class="edit-relationship"
+>
+  <form [formGroup]="form" class="modal-form">
+    <mat-form-field class="modal-select-item">
+      <mat-label>Orçamento</mat-label>
+      <mat-select formControlName="budgetId">
+        <mat-option *ngFor="let budget of budgets()" [value]="budget.id">
+          {{ budget.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</lib-modal-layout>
