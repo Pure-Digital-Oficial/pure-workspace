@@ -7,6 +7,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BudgetResponseDto } from '@pure-workspace/domain';
 import { DefaultButtonIconComponent } from '../../../../buttons';
+import { CreatedByControlsComponent } from '../../../users/created-by/created-by-controls.component';
 
 @Component({
   selector: 'lib-list-item-budget-controls',
@@ -19,6 +20,7 @@ import { DefaultButtonIconComponent } from '../../../../buttons';
     MatMenuModule,
     MatTooltipModule,
     DefaultButtonIconComponent,
+    CreatedByControlsComponent,
   ],
   templateUrl: './list-item-budget-controls.component.html',
   styleUrl: './list-item-budget-controls.component.scss',

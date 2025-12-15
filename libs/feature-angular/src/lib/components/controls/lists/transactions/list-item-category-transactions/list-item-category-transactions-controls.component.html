@@ -3,7 +3,9 @@
     <div class="category-transaction-item-body-container">
       <div class="category-transaction-item-header">
         <span>Nome: {{ categoryTransaction().name }}</span>
-        <span>Criado por: {{ categoryTransaction().createdBy }}</span>
+        <lib-created-by-controls
+          [createdBy]="categoryTransaction().createdBy"
+        />
       </div>
       <div class="category-transaction-item-body">
         <span>Descrição: {{ categoryTransaction().description }}</span>
