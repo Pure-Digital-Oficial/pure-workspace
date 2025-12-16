@@ -1,6 +1,13 @@
 <lib-default-layout [title]="title" [menuItems]="menuItems">
-  <section class="test">
-    <div class="test-1">aa</div>
-    <div class="test-2">ab</div>
+  <section class="main-container">
+    <section class="transactions-container">
+      <span>Todas movimentações</span>
+      <mat-list class="transactions-list">
+        @for (transaction of transactions(); track transaction.id) {
+        <lib-list-item-transaction-home-controls [transaction]="transaction" />
+        }
+      </mat-list>
+    </section>
+    <section class="cards-container"></section>
   </section>
 </lib-default-layout>
