@@ -9,6 +9,7 @@ import {
   DefaultLayoutComponent,
   ListItemTransactionHomeControlsComponent,
   ValueCardComponent,
+  GraphCardComponent,
 } from '../../components';
 import { TransactionsService } from '../../services';
 
@@ -22,6 +23,7 @@ import { TransactionsService } from '../../services';
     ListItemTransactionHomeControlsComponent,
     MatList,
     ValueCardComponent,
+    GraphCardComponent,
   ],
   templateUrl: './dashboard.container.component.html',
   styleUrl: './dashboard.container.component.scss',
