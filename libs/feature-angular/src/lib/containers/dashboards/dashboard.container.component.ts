@@ -2,13 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
+import { MatList } from '@angular/material/list';
+import { MatChipsModule } from '@angular/material/chips';
 import { SidenavItem } from '@pure-workspace/domain';
 import {
   DefaultLayoutComponent,
   ListItemTransactionHomeControlsComponent,
+  ValueCardComponent,
 } from '../../components';
 import { TransactionsService } from '../../services';
-import { MatList } from '@angular/material/list';
 
 @Component({
   selector: 'lib-dashboard-container',
@@ -16,8 +18,10 @@ import { MatList } from '@angular/material/list';
     CommonModule,
     DefaultLayoutComponent,
     MatButtonModule,
+    MatChipsModule,
     ListItemTransactionHomeControlsComponent,
     MatList,
+    ValueCardComponent,
   ],
   templateUrl: './dashboard.container.component.html',
   styleUrl: './dashboard.container.component.scss',

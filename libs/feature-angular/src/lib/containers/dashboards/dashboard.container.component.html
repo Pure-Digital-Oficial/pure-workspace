@@ -1,13 +1,32 @@
 <lib-default-layout [title]="title" [menuItems]="menuItems">
-  <section class="main-container">
-    <section class="transactions-container">
-      <span>Todas movimentações</span>
-      <mat-list class="transactions-list">
-        @for (transaction of transactions(); track transaction.id) {
-        <lib-list-item-transaction-home-controls [transaction]="transaction" />
-        }
-      </mat-list>
+  <section class="dashboard-container">
+    <section class="cards-section">
+      <lib-value-card [title]="'Title test 1'" [value]="10" />
+      <lib-value-card [title]="'Title test 2'" [value]="20" />
+      <lib-value-card [title]="'Title test 3'" [value]="30" />
     </section>
-    <section class="cards-container"></section>
+    <section class="main-container">
+      <section class="transactions-container">
+        <span>Todas movimentações</span>
+        <mat-list class="transactions-list">
+          @for (transaction of transactions(); track transaction.id) {
+          <lib-list-item-transaction-home-controls
+            [transaction]="transaction"
+          />
+          }
+        </mat-list>
+      </section>
+      <section class="cards-container">
+        <div class="card-container">
+          <span>Titulo Test</span>
+        </div>
+        <div class="card-container">
+          <span>Titulo Test</span>
+        </div>
+        <div class="card-container">
+          <span>Titulo Test</span>
+        </div>
+      </section>
+    </section>
   </section>
 </lib-default-layout>
