@@ -1,9 +1,9 @@
 <lib-default-layout [title]="title" [menuItems]="menuItems">
   <section class="dashboard-container">
     <section class="cards-section">
-      <lib-value-card [title]="'Title test 1'" [value]="10" />
-      <lib-value-card [title]="'Title test 2'" [value]="20" />
-      <lib-value-card [title]="'Title test 3'" [value]="30" />
+      @for (total of totals; track total.title) {
+      <lib-value-card [title]="total.title" [value]="total.total" />
+      }
     </section>
     <section class="main-container">
       <section class="transactions-container">

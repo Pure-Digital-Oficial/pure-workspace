@@ -4,7 +4,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
 import { MatList } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
-import { SidenavItem } from '@pure-workspace/domain';
+import {
+  SidenavItem,
+  TotalsTransactionResponseDto,
+} from '@pure-workspace/domain';
 import {
   DefaultLayoutComponent,
   ListItemTransactionHomeControlsComponent,
@@ -35,6 +38,12 @@ export class DashboardContainerComponent implements OnInit {
   transactions = computed(
     () => this.transactionsService.transactions().transactions
   );
+
+  totals: TotalsTransactionResponseDto[] = [
+    { title: 'Saldo', total: 1000 },
+    { title: 'Depositos', total: 3000 },
+    { title: 'Saques', total: 2000 },
+  ];
 
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data) => {
