@@ -47,7 +47,7 @@ const makeSut = (): SutTypes => {
     name: TransactionMock.name,
     type: TransactionMock.type as TransactionType,
     value: TransactionMock.value,
-    loggedUserId: TransactionMock.createdBy,
+    loggedUserId: TransactionMock.createdBy.id,
   };
 
   const sut = new CreateTransaction(
