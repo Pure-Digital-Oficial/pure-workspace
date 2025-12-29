@@ -1,0 +1,53 @@
+.transaction-item {
+  width: 100%;
+  margin-bottom: 10px;
+  height: auto;
+  span {
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+  .transaction-item-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    .transaction-item-body-container {
+      width: 100%;
+      .transaction-item-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+      }
+
+      .transaction-item-body {
+        font-size: 14px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        .transaction-item-value {
+          font-size: large;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+.transaction-item {
+  @media (max-width: 1024px) {
+    .transaction-item-container {
+      .transaction-item-body-container {
+        .transaction-item-header {
+          font-size: 12px;
+        }
+
+        .transaction-item-body {
+          font-size: 12px;
+          .transaction-item-value {
+            font-size: medium;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,26 @@
 <lib-default-layout [title]="title" [menuItems]="menuItems">
-  <section class="test">
-    <div class="test-1">aa</div>
-    <div class="test-2">ab</div>
+  <section class="dashboard-container">
+    <section class="cards-section">
+      @for (total of totals; track total.title) {
+      <lib-value-card [title]="total.title" [value]="total.total" />
+      }
+    </section>
+    <section class="main-container">
+      <section class="transactions-container">
+        <span>Todas movimentações</span>
+        <mat-list class="transactions-list">
+          @for (transaction of transactions(); track transaction.id) {
+          <lib-list-item-transaction-home-controls
+            [transaction]="transaction"
+          />
+          }
+        </mat-list>
+      </section>
+      <section class="cards-container">
+        <lib-graph-card [title]="'Title Card 1'" />
+        <lib-graph-card [title]="'Title Card 2'" />
+        <lib-graph-card [title]="'Title Card 3'" />
+      </section>
+    </section>
   </section>
 </lib-default-layout>
