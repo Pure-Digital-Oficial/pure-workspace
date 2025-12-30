@@ -6,7 +6,7 @@ import { MatList } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import {
   SidenavItem,
-  TotalsTransactionResponseDto,
+  TotalTransactionsResponseDto,
 } from '@pure-workspace/domain';
 import {
   DefaultLayoutComponent,
@@ -39,7 +39,7 @@ export class DashboardContainerComponent implements OnInit {
     () => this.transactionsService.transactions().transactions
   );
 
-  totals: TotalsTransactionResponseDto[] = [
+  totals: TotalTransactionsResponseDto[] = [
     { title: 'Saldo', total: 1000 },
     { title: 'Depositos', total: 3000 },
     { title: 'Saques', total: 2000 },
