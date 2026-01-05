@@ -11,6 +11,7 @@ import {
   ErrorMessageResult,
   userIdQuerySchema,
   ListTotalTransactionsDto,
+  listTotalTransactionsBodySchema,
 } from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../../pipes';
 import { ListTotalTransactionsService } from './list-total-transactions.service';
@@ -25,6 +26,7 @@ export class ListTotalTransactionsController {
   @UsePipes(
     new ZodValidationPipe({
       query: userIdQuerySchema,
+      body: listTotalTransactionsBodySchema,
     })
   )
   @UseGuards(JwtAuthGuard)
