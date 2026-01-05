@@ -14,21 +14,24 @@ export class ListTotalTransactionsRepositoryImpl
     input: ListTotalTransactionsDto
   ): Promise<TotalTransactionsResponseDto[]> {
     const { finalDate, initialDate, loggedUserId } = input;
+    const endFinalDate = new Date(finalDate.getTime() + 24 * 60 * 60 * 1000);
 
-    const [deposit, withdraw] = await this.prismaService['$transaction']([
+    const whereClause = {
+      created_at: {
+        gte: initialDate,
+        lt: endFinalDate,
+      },
+      user_id: loggedUserId,
+      status: 'ACTIVE' as const,
+    };
+
+    const [deposits, withdraws] = await this.prismaService['$transaction']([
       this.prismaService['transaction'].aggregate({
         _sum: {
           value: true,
         },
         where: {
-          initial_date: {
-            gte: initialDate,
-          },
-          final_date: {
-            lte: finalDate,
-          },
-          user_id: loggedUserId,
-          status: 'ACTIVE',
+          ...whereClause,
           type: 'DEPOSIT',
         },
       }),
@@ -37,20 +40,13 @@ export class ListTotalTransactionsRepositoryImpl
           value: true,
         },
         where: {
-          initial_date: {
-            gte: initialDate,
-          },
-          final_date: {
-            lte: finalDate,
-          },
-          user_id: loggedUserId,
-          status: 'ACTIVE',
+          ...whereClause,
           type: 'WITHDRAW',
         },
       }),
     ]);
 
-    const balance = (deposit._sum.value || 0) - (withdraw._sum.value || 0);
+    const balance = (deposits._sum.value || 0) - (withdraws._sum.value || 0);
 
     return [
       {
@@ -59,11 +55,11 @@ export class ListTotalTransactionsRepositoryImpl
       },
       {
         title: 'DEPOSITS',
-        total: deposit._sum.value || 0,
+        total: deposits._sum.value || 0,
       },
       {
         title: 'WITHDRAWS',
-        total: withdraw._sum.value || 0,
+        total: withdraws._sum.value || 0,
       },
     ];
   }

@@ -10,6 +10,7 @@ import {
   ListCategoryTransactionsModule,
   EditCategoryTransactionModule,
   DeleteCategoryTransactionModule,
+  ListTotalTransactionsModule,
 } from './transaction';
 import {
   CreateFixedGainModule,
@@ -52,6 +53,7 @@ import {
     ListBudgetWithCategoryTransactionsModule,
     DeleteBudgetWithCategoryTransactionModule,
     EditBudgetWithCategoryTransactionModule,
+    ListTotalTransactionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
