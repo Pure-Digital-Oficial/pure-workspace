@@ -24,6 +24,10 @@ export class ListTotalTransactions
     @Inject('ListTotalTransactionsRepository')
     private listTotalTransactionsRepository: ListTotalTransactionsRepository
   ) {}
+  private isValidDate(date: Date): boolean {
+    return date instanceof Date && !isNaN(date.getTime());
+  }
+
   async execute(
     input: ListTotalTransactionsDto
   ): Promise<Either<EntityNotEmpty, TotalTransactionsResponseDto[]>> {
@@ -33,11 +37,11 @@ export class ListTotalTransactions
       return left(new EntityNotEmpty('user ID'));
     }
 
-    if (Object.keys(finalDate).length < 1) {
+    if (this.isValidDate(finalDate) === false) {
       return left(new EntityNotEmpty('final date'));
     }
 
-    if (Object.keys(initialDate).length < 1) {
+    if (this.isValidDate(initialDate) === false) {
       return left(new EntityNotEmpty('initial date'));
     }
 
