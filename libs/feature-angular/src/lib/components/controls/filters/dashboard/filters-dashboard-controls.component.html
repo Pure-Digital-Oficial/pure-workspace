@@ -1,0 +1,24 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="inputs-form">
+  <mat-form-field class="dashboard-date">
+    <mat-label>Selecione ao menos uma data</mat-label>
+    <mat-date-range-input [rangePicker]="rangePicker">
+      <input
+        formControlName="initialDate"
+        matStartDate
+        placeholder="Start date"
+      />
+      <input formControlName="finalDate" matEndDate placeholder="End date" />
+    </mat-date-range-input>
+    <mat-datepicker-toggle
+      matIconSuffix
+      [for]="rangePicker"
+    ></mat-datepicker-toggle>
+    <mat-date-range-picker #rangePicker>
+      <mat-date-range-picker-actions>
+        <button mat-button matDateRangePickerCancel>Cancelar</button>
+        <button mat-raised-button matDateRangePickerApply>Aplicar</button>
+      </mat-date-range-picker-actions>
+    </mat-date-range-picker>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Filtrar</button>
+</form>

@@ -1,6 +1,6 @@
 <div class="value-card">
-  <span class="card-title">{{ title() }}</span>
+  <span class="card-title">{{ ajustedTitle() }}</span>
   <span class="card-value"
-    ><strong>R$: {{ value() }}</strong></span
+    ><strong>R$: {{ value() | currency : 'BRL' }}</strong></span
   >
 </div>

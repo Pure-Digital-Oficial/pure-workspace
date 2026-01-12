@@ -1,7 +1,11 @@
 <lib-default-layout [title]="title" [menuItems]="menuItems">
   <section class="dashboard-container">
+    <section class="filters-section">
+      <lib-filters-dashboard-controls class="filters-section" />
+    </section>
+    <!-- -->
     <section class="cards-section">
-      @for (total of totals; track total.title) {
+      @for (total of totals( ); track total.title) {
       <lib-value-card [title]="total.title" [value]="total.total" />
       }
     </section>
