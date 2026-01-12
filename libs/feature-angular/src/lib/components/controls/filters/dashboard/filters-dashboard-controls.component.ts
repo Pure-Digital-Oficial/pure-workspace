@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { DashboardForm } from '../../../../models';
 import { getFormValidationErrors } from '../../../../utils';
 import { MatButtonModule } from '@angular/material/button';
+import { TodayService, TotalTransactionsService } from '../../../../services';
 
 @Component({
   selector: 'lib-filters-dashboard-controls',
@@ -29,13 +30,17 @@ import { MatButtonModule } from '@angular/material/button';
   providers: [provideNativeDateAdapter()],
 })
 export class FiltersDashboardControlsComponent {
+  private todayService = inject(TodayService);
+  private totalTransactionsService = inject(TotalTransactionsService);
   form!: FormGroup<DashboardForm>;
   @Output() submitForm = new EventEmitter<void>();
 
   constructor() {
     this.form = new FormGroup({
-      initialDate: new FormControl('', [Validators.required]),
-      finalDate: new FormControl('', [
+      initialDate: new FormControl(this.todayService.showTodayDate(), [
+        Validators.required,
+      ]),
+      finalDate: new FormControl(this.todayService.getPlus30Days(), [
         Validators.required,
         Validators.minLength(6),
       ]),
@@ -47,9 +52,13 @@ export class FiltersDashboardControlsComponent {
     const errors = getFormValidationErrors(this.form);
 
     if (errors.length === 0) {
-      console.log(
-        this.form.value.finalDate + ' --- ' + this.form.value.initialDate
-      );
+      const value = this.form.value;
+      this.totalTransactionsService
+        .listTotalTransactions({
+          initialDate: value.initialDate ?? '',
+          finalDate: value.finalDate ?? '',
+        })
+        .subscribe();
     }
   }
 }

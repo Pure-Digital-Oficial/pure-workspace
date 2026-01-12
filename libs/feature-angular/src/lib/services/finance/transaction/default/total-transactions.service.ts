@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { catchError, of, switchMap, tap, throwError } from 'rxjs';
+import { catchError, switchMap, tap, throwError } from 'rxjs';
 import {
   ListTotalTransactionsDto,
   TotalTransactionsResponseDto,
@@ -32,13 +32,7 @@ export class TotalTransactionsService {
   }
 
   listTotalTransactions(input: Omit<ListTotalTransactionsDto, 'loggedUserId'>) {
-    const cached = this.__totalTransactions();
-
-    if (cached.length === 0) {
-      return this.fetchTotalTransactions(input);
-    }
-
-    return of(cached);
+    return this.fetchTotalTransactions(input);
   }
 
   private fetchTotalTransactions(
