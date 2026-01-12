@@ -13,7 +13,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { DashboardForm } from '../../../../models';
 import { getFormValidationErrors } from '../../../../utils';
 import { MatButtonModule } from '@angular/material/button';
-import { TodayService, TotalTransactionsService } from '../../../../services';
+import {
+  TodayService,
+  TotalTransactionsService,
+  TransactionsService,
+} from '../../../../services';
 
 @Component({
   selector: 'lib-filters-dashboard-controls',
@@ -32,6 +36,7 @@ import { TodayService, TotalTransactionsService } from '../../../../services';
 export class FiltersDashboardControlsComponent {
   private todayService = inject(TodayService);
   private totalTransactionsService = inject(TotalTransactionsService);
+  private transactionsService = inject(TransactionsService);
   form!: FormGroup<DashboardForm>;
   @Output() submitForm = new EventEmitter<void>();
 
@@ -55,6 +60,12 @@ export class FiltersDashboardControlsComponent {
       const value = this.form.value;
       this.totalTransactionsService
         .listTotalTransactions({
+          initialDate: value.initialDate ?? '',
+          finalDate: value.finalDate ?? '',
+        })
+        .subscribe();
+      this.transactionsService
+        .findTransactionByFilter({
           initialDate: value.initialDate ?? '',
           finalDate: value.finalDate ?? '',
         })

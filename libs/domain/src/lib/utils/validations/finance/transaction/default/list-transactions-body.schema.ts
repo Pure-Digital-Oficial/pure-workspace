@@ -5,6 +5,8 @@ export const listTransactionsBodySchema = z
     filters: z
       .object({
         name: z.string().optional(),
+        initialDate: z.coerce.date().optional(),
+        finalDate: z.coerce.date().optional(),
       })
       .optional(),
     take: z.coerce.number().optional(),

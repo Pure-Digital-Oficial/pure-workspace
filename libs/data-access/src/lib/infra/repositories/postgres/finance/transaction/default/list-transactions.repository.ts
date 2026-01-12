@@ -36,6 +36,14 @@ export class ListTransactionsRepositoryImpl
               },
             },
           }),
+      ...(input.filters?.initialDate != null && input.filters?.finalDate != null
+        ? {
+            created_at: {
+              gte: input.filters?.initialDate,
+              lt: input.filters?.finalDate,
+            },
+          }
+        : {}),
     };
 
     const [transactions, filteredTotal, total] = await this.prismaService[

@@ -19,17 +19,12 @@ import {
   TransactionsService,
 } from '../../services';
 import {
-  FormControl,
-  FormGroup,
   ReactiveFormsModule,
-  Validators,
   ɵInternalFormsSharedModule,
 } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { DashboardForm } from '../../models';
-import { getFormValidationErrors } from '../../utils';
 
 @Component({
   selector: 'lib-dashboard-container',
@@ -73,40 +68,26 @@ export class DashboardContainerComponent implements OnInit {
     }));
   });
   brTitles = ['SALDO', 'DEPOSITOS', 'SAQUES'];
-  form!: FormGroup<DashboardForm>;
 
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data) => {
       this.menuItems = data['menuItems'] || [];
       this.title = data['title'] || '';
     });
-    this.form = new FormGroup({
-      initialDate: new FormControl('', [Validators.required]),
-      finalDate: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
-    });
   }
 
   ngOnInit(): void {
-    this.transactionsService.listTransactions().subscribe();
-    this.totalTransactionsService
-      .listTotalTransactions({
-        finalDate: this.todayService.getPlus30Days(),
+    this.transactionsService
+      .findTransactionByFilter({
         initialDate: this.todayService.showTodayDate(),
+        finalDate: this.todayService.getPlus30Days(),
       })
       .subscribe();
-  }
-
-  onSubmit() {
-    this.form.markAllAsTouched();
-    const errors = getFormValidationErrors(this.form);
-
-    if (errors.length === 0) {
-      console.log(
-        this.form.value.finalDate + ' --- ' + this.form.value.initialDate
-      );
-    }
+    this.totalTransactionsService
+      .listTotalTransactions({
+        initialDate: this.todayService.showTodayDate(),
+        finalDate: this.todayService.getPlus30Days(),
+      })
+      .subscribe();
   }
 }
