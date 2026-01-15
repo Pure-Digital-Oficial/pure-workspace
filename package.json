@@ -111,6 +111,7 @@
     "@nestjs/platform-socket.io": "^11.1.2",
     "@nestjs/websockets": "^11.1.2",
     "@prisma/client": "^6.5.0",
+    "ag-charts-angular": "^13.0.0",
     "audit": "^0.0.6",
     "axios": "^1.6.0",
     "bcrypt": "^5.1.1",
