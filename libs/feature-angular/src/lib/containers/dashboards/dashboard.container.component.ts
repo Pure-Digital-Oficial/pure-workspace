@@ -5,19 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { MatList } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { SidenavItem } from '@pure-workspace/domain';
-import {
-  DefaultLayoutComponent,
-  ListItemTransactionHomeControlsComponent,
-  ValueCardComponent,
-  GraphCardComponent,
-  FiltersDashboardControlsComponent,
-} from '../../components';
-import {
-  TodayService,
-  TotalTransactionsService,
-  TransactionsService,
-} from '../../services';
 import {
   ReactiveFormsModule,
   ɵInternalFormsSharedModule,
@@ -25,25 +12,46 @@ import {
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { SidenavItem } from '@pure-workspace/domain';
+import {
+  DefaultLayoutComponent,
+  ListItemTransactionHomeControlsComponent,
+  ValueCardComponent,
+  GraphCardComponent,
+  FiltersDashboardControlsComponent,
+  DefaultButtonIconComponent,
+  CreateTransactionModalComponent,
+} from '../../components';
+import {
+  TodayService,
+  TotalTransactionsService,
+  TransactionsService,
+} from '../../services';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'lib-dashboard-container',
   imports: [
     CommonModule,
-    DefaultLayoutComponent,
     MatButtonModule,
     MatChipsModule,
-    ListItemTransactionHomeControlsComponent,
     MatList,
-    ValueCardComponent,
-    GraphCardComponent,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
     MatButtonModule,
     ɵInternalFormsSharedModule,
+    MatMenuModule,
+    DefaultButtonIconComponent,
+    DefaultLayoutComponent,
+    ValueCardComponent,
+    GraphCardComponent,
+    ListItemTransactionHomeControlsComponent,
     FiltersDashboardControlsComponent,
+    MatIcon,
   ],
   templateUrl: './dashboard.container.component.html',
   styleUrl: './dashboard.container.component.scss',
@@ -53,6 +61,7 @@ export class DashboardContainerComponent implements OnInit {
   private transactionsService = inject(TransactionsService);
   private totalTransactionsService = inject(TotalTransactionsService);
   private todayService = inject(TodayService);
+  private dialogService = inject(MatDialog);
   @Input() title = '';
   @Input() menuItems: SidenavItem[] = [];
   transactions = computed(
@@ -79,15 +88,19 @@ export class DashboardContainerComponent implements OnInit {
   ngOnInit(): void {
     this.transactionsService
       .findTransactionByFilter({
-        initialDate: this.todayService.showTodayDate(),
-        finalDate: this.todayService.getPlus30Days(),
+        initialDate: this.todayService.getLess30Days(),
+        finalDate: this.todayService.showTodayDate(),
       })
       .subscribe();
     this.totalTransactionsService
       .listTotalTransactions({
-        initialDate: this.todayService.showTodayDate(),
-        finalDate: this.todayService.getPlus30Days(),
+        initialDate: this.todayService.getLess30Days(),
+        finalDate: this.todayService.showTodayDate(),
       })
       .subscribe();
+  }
+
+  createTransactionAction() {
+    this.dialogService.open(CreateTransactionModalComponent);
   }
 }

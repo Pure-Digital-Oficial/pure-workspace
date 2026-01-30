@@ -42,10 +42,10 @@ export class FiltersDashboardControlsComponent {
 
   constructor() {
     this.form = new FormGroup({
-      initialDate: new FormControl(this.todayService.showTodayDate(), [
+      initialDate: new FormControl(this.todayService.getLess30Days(), [
         Validators.required,
       ]),
-      finalDate: new FormControl(this.todayService.getPlus30Days(), [
+      finalDate: new FormControl(this.todayService.showTodayDate(), [
         Validators.required,
         Validators.minLength(6),
       ]),

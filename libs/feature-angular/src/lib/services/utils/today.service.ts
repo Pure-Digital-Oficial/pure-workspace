@@ -19,8 +19,8 @@ export class TodayService {
     return date;
   }
 
-  getPlus30Days(): Date {
-    const date = this.addDays(30);
+  getLess30Days(): Date {
+    const date = this.addDays(-30);
     return date;
   }
 }

@@ -10,7 +10,24 @@
     </section>
     <section class="main-container">
       <section class="transactions-container">
-        <span>Todas movimentações</span>
+        <div class="transactions-title-container">
+          <mat-icon>account_balance</mat-icon>
+          <span>Todas movimentações</span>
+          <lib-default-button-icon
+            [ariaLabel]="'Icone de opções'"
+            [icon]="'more_horiz'"
+            [description]="'Opções'"
+            [matMenuTriggerFor]="menu"
+            class="transaction-options"
+          />
+          <mat-menu #menu="matMenu">
+            <button (click)="createTransactionAction()" mat-menu-item>
+              <mat-icon>create</mat-icon>
+              <span>Criar</span>
+            </button>
+          </mat-menu>
+        </div>
+
         <mat-list class="transactions-list">
           @for (transaction of transactions(); track transaction.id) {
           <lib-list-item-transaction-home-controls
