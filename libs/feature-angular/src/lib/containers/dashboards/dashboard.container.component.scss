@@ -32,7 +32,10 @@
     justify-content: space-between;
     width: 80%;
     max-width: 992px;
-    min-height: 630px;
+    height: 500px;
+    @media (min-width: 1450px) {
+      height: 600px;
+    }
 
     .transactions-container {
       width: 50%;
