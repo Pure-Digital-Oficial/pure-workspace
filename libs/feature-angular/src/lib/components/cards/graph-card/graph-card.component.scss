@@ -3,14 +3,14 @@
   border-radius: 10px;
   padding: 10px;
   margin-bottom: 10px;
-  height: 140px;
+  height: 225px;
   max-width: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   @media (min-width: 1450px) {
-    height: 173px;
+    height: 275px;
   }
 
   .graph-card-title {

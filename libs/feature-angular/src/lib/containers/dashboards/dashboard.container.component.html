@@ -37,9 +37,15 @@
         </mat-list>
       </section>
       <section class="cards-container">
-        <lib-graph-card [title]="'Title Card 1'" />
+        <lib-graph-card [title]="'Title Card 1'">
+          <div
+            highchartsChart
+            [constructorType]="chartConstructor"
+            [options]="chartOptions"
+            class="chart"
+          ></div>
+        </lib-graph-card>
         <lib-graph-card [title]="'Title Card 2'" />
-        <lib-graph-card [title]="'Title Card 3'" />
       </section>
     </section>
   </section>

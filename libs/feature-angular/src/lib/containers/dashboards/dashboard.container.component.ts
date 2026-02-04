@@ -30,6 +30,11 @@ import {
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
+import {
+  ChartConstructorType,
+  HighchartsChartDirective,
+} from 'highcharts-angular';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'lib-dashboard-container',
@@ -52,6 +57,8 @@ import { MatDialog } from '@angular/material/dialog';
     ListItemTransactionHomeControlsComponent,
     FiltersDashboardControlsComponent,
     MatIcon,
+    HighchartsChartDirective,
+    A11yModule,
   ],
   templateUrl: './dashboard.container.component.html',
   styleUrl: './dashboard.container.component.scss',
@@ -77,6 +84,28 @@ export class DashboardContainerComponent implements OnInit {
     }));
   });
   brTitles = ['SALDO', 'DEPOSITOS', 'SAQUES'];
+  chartOptions: Highcharts.Options = {
+    title: { text: '' },
+    accessibility: { enabled: false },
+    chart: { type: 'column' },
+    xAxis: {
+      type: 'category',
+    },
+    scrollbar: { enabled: true },
+    series: [
+      {
+        name: 'Internet Explorer',
+        id: 'Internet Explorer',
+        data: [
+          ['v11.0', 6.2],
+          ['v10.0', 0.29],
+          ['v9.0', 0.27],
+          ['v8.0', 0.47],
+        ],
+      },
+    ],
+  };
+  chartConstructor: ChartConstructorType = 'chart';
 
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data) => {
