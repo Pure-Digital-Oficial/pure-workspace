@@ -1,6 +1,6 @@
 interface CategoryValue {
   category: string;
-  value: string;
+  value: number;
 }
 
 export interface ListTransactionsForGraphsResponseDto {
