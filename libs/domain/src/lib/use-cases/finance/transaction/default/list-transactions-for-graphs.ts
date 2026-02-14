@@ -16,7 +16,7 @@ export class ListTransactionsForGraphs
   implements
     UseCase<
       ListTransactionsForGraphsDto,
-      Either<EntityNotEmpty, ListTransactionsForGraphsResponseDto>
+      Either<EntityNotEmpty, ListTransactionsForGraphsResponseDto[]>
     >
 {
   constructor(
@@ -32,7 +32,7 @@ export class ListTransactionsForGraphs
 
   async execute(
     input: ListTotalTransactionsDto
-  ): Promise<Either<EntityNotEmpty, ListTransactionsForGraphsResponseDto>> {
+  ): Promise<Either<EntityNotEmpty, ListTransactionsForGraphsResponseDto[]>> {
     const { finalDate, initialDate, loggedUserId } = input;
 
     if (Object.keys(loggedUserId).length < 1) {

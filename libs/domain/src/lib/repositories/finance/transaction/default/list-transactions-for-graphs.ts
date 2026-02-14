@@ -6,5 +6,5 @@ import {
 export interface ListTransactionsForGraphsRepository {
   list(
     input: ListTransactionsForGraphsDto
-  ): Promise<ListTransactionsForGraphsResponseDto>;
+  ): Promise<ListTransactionsForGraphsResponseDto[]>;
 }
