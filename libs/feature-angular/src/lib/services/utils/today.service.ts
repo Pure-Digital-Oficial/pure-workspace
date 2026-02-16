@@ -23,4 +23,9 @@ export class TodayService {
     const date = this.addDays(-30);
     return date;
   }
+
+  getLess1Year(): Date {
+    const date = this.addDays(-365);
+    return date;
+  }
 }

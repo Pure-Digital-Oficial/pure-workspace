@@ -50,7 +50,7 @@ describe('ListTransactionsForGraphs', () => {
 
     expect(result.isRight()).toBeTruthy();
     expect(result.isLeft()).toBeFalsy();
-    expect(result.value).toStrictEqual(ListTransactionsForGraphsMock);
+    expect(result.value).toStrictEqual([ListTransactionsForGraphsMock]);
   });
 
   it('should return EntityNotEmpty when pass empty loggedUserId in listTransactionsForGraphsDto object', async () => {

@@ -10,12 +10,13 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { DashboardForm } from '../../../../models';
 import { getFormValidationErrors } from '../../../../utils';
-import { MatButtonModule } from '@angular/material/button';
 import {
   TodayService,
   TotalTransactionsService,
+  TransactionsForGraphsService,
   TransactionsService,
 } from '../../../../services';
 
@@ -37,6 +38,7 @@ export class FiltersDashboardControlsComponent {
   private todayService = inject(TodayService);
   private totalTransactionsService = inject(TotalTransactionsService);
   private transactionsService = inject(TransactionsService);
+  private transactionsForGraphsService = inject(TransactionsForGraphsService);
   form!: FormGroup<DashboardForm>;
   @Output() submitForm = new EventEmitter<void>();
 
@@ -66,6 +68,12 @@ export class FiltersDashboardControlsComponent {
         .subscribe();
       this.transactionsService
         .findTransactionByFilter({
+          initialDate: value.initialDate ?? '',
+          finalDate: value.finalDate ?? '',
+        })
+        .subscribe();
+      this.transactionsForGraphsService
+        .listTransactions({
           initialDate: value.initialDate ?? '',
           finalDate: value.finalDate ?? '',
         })

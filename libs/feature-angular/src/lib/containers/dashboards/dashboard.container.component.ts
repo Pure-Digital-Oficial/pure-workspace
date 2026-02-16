@@ -25,6 +25,7 @@ import {
 import {
   TodayService,
   TotalTransactionsService,
+  TransactionsForGraphsService,
   TransactionsService,
 } from '../../services';
 import { MatMenuModule } from '@angular/material/menu';
@@ -67,12 +68,20 @@ import { A11yModule } from '@angular/cdk/a11y';
 export class DashboardContainerComponent implements OnInit {
   private transactionsService = inject(TransactionsService);
   private totalTransactionsService = inject(TotalTransactionsService);
+  private transactionsForGraphsService = inject(TransactionsForGraphsService);
   private todayService = inject(TodayService);
   private dialogService = inject(MatDialog);
   @Input() title = '';
   @Input() menuItems: SidenavItem[] = [];
   transactions = computed(
     () => this.transactionsService.transactions().transactions
+  );
+
+  transactionsForGraphs = computed(() =>
+    this.transactionsForGraphsService.transactions().map((transaction) => ({
+      name: transaction.category,
+      y: transaction.value,
+    }))
   );
 
   totals = computed(() => {
@@ -84,27 +93,26 @@ export class DashboardContainerComponent implements OnInit {
     }));
   });
   brTitles = ['SALDO', 'DEPOSITOS', 'SAQUES'];
-  chartOptions: Highcharts.Options = {
+  chartOptions = computed<Highcharts.Options>(() => ({
     title: { text: '' },
     accessibility: { enabled: false },
     chart: { type: 'column' },
     xAxis: {
       type: 'category',
     },
+    yAxis: {
+      title: { text: '' },
+    },
     scrollbar: { enabled: true },
     series: [
       {
-        name: 'Internet Explorer',
-        id: 'Internet Explorer',
-        data: [
-          ['v11.0', 6.2],
-          ['v10.0', 0.29],
-          ['v9.0', 0.27],
-          ['v8.0', 0.47],
-        ],
+        name: 'Categorias',
+        id: 'Categorias',
+        type: 'column',
+        data: this.transactionsForGraphs(),
       },
     ],
-  };
+  }));
   chartConstructor: ChartConstructorType = 'chart';
 
   constructor(private route: ActivatedRoute) {
@@ -123,6 +131,12 @@ export class DashboardContainerComponent implements OnInit {
       .subscribe();
     this.totalTransactionsService
       .listTotalTransactions({
+        initialDate: this.todayService.getLess30Days(),
+        finalDate: this.todayService.showTodayDate(),
+      })
+      .subscribe();
+    this.transactionsForGraphsService
+      .listTransactions({
         initialDate: this.todayService.getLess30Days(),
         finalDate: this.todayService.showTodayDate(),
       })
