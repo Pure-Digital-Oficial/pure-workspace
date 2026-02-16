@@ -4,11 +4,6 @@ import { ListTransactionsForGraphsResponseDto } from '../../../../../index';
 export const ListTransactionsForGraphsMock: ListTransactionsForGraphsResponseDto =
   {
     id: faker.string.uuid(),
-    name: faker.string.sample(),
-    data: [
-      {
-        category: faker.string.sample(),
-        value: faker.number.float(),
-      },
-    ],
+    category: faker.string.uuid(),
+    value: faker.number.float({ min: 0, max: 1000 }),
   };

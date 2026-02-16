@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const listTotalTransactionsBodySchema = z
+export const listTransactionsForGraphsBodySchema = z
   .object({
     initialDate: z.coerce.date(),
     finalDate: z.coerce.date(),

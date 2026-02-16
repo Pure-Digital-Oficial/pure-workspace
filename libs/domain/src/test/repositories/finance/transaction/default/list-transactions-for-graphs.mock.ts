@@ -11,8 +11,8 @@ export class ListTransactionsForGraphsRepositoryMock
   inputMock = {} as ListTransactionsForGraphsDto;
   async list(
     input: ListTransactionsForGraphsDto
-  ): Promise<ListTransactionsForGraphsResponseDto> {
+  ): Promise<ListTransactionsForGraphsResponseDto[]> {
     this.inputMock = input;
-    return ListTransactionsForGraphsMock;
+    return [ListTransactionsForGraphsMock];
   }
 }
