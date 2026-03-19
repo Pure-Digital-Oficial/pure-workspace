@@ -5,6 +5,7 @@ import {
   EntityAlreadyExists,
   EntityNotCreated,
   EntityNotEmpty,
+  EntityNotExists,
 } from '../../../errors';
 import {
   CreateCustomerRepository,
@@ -17,7 +18,7 @@ export class CreateCustomer
   implements
     UseCase<
       CreateCustomerDto,
-      Either<EntityNotEmpty | EntityAlreadyExists, string>
+      Either<EntityNotEmpty | EntityNotExists | EntityAlreadyExists, string>
     >
 {
   constructor(
@@ -31,8 +32,10 @@ export class CreateCustomer
 
   async execute(
     input: CreateCustomerDto
-  ): Promise<Either<EntityNotEmpty | EntityAlreadyExists, string>> {
-    const { loggedUserId, name, externalId, languege } = input;
+  ): Promise<
+    Either<EntityNotEmpty | EntityNotExists | EntityAlreadyExists, string>
+  > {
+    const { loggedUserId, name, externalId } = input;
 
     if (Object.keys(loggedUserId).length < 1) {
       return left(new EntityNotEmpty('User ID'));
@@ -44,10 +47,6 @@ export class CreateCustomer
 
     if (Object.keys(externalId).length < 1) {
       return left(new EntityNotEmpty('External ID'));
-    }
-
-    if (Object.keys(languege).length < 1) {
-      return left(new EntityNotEmpty('Language'));
     }
 
     const userVerification = await UserVerificationId(
