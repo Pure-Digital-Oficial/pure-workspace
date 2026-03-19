@@ -7,7 +7,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_GENERAL_URL")
-  schemas  = ["pure_general", "pure_marketing", "pure-finance", "pure_c"]
+  schemas  = ["pure_general", "pure_marketing", "pure_finance", "pure_c"]
 }
 
 model application {
@@ -244,7 +244,7 @@ model fixed_gain {
 
   user user @relation(fields: [user_id], references: [id])
 
-  @@schema("pure-finance")
+  @@schema("pure_finance")
 }
 
 model transaction {
@@ -265,7 +265,7 @@ model transaction {
   user     user                 @relation(fields: [user_id], references: [id])
   category category_transaction @relation(fields: [category_id], references: [id])
 
-  @@schema("pure-finance")
+  @@schema("pure_finance")
 }
 
 model category_transaction {
@@ -283,7 +283,7 @@ model category_transaction {
   transactions      transaction[]
   category_x_budget category_x_budget[]
 
-  @@schema("pure-finance")
+  @@schema("pure_finance")
 }
 
 model category_x_budget {
@@ -298,7 +298,7 @@ model category_x_budget {
   budget   budget               @relation(fields: [budget_id], references: [id])
 
   @@id([category_id, budget_id])
-  @@schema("pure-finance")
+  @@schema("pure_finance")
 }
 
 model budget {
@@ -316,7 +316,7 @@ model budget {
   user              user                @relation(fields: [user_id], references: [id])
   category_x_budget category_x_budget[]
 
-  @@schema("pure-finance")
+  @@schema("pure_finance")
 }
 
 model access_history {
@@ -391,7 +391,7 @@ model client {
   external_id      String    @unique
   language   String
   client_status StatusClient @default(STARTED)
-  frequency_payment  Frequency
+  frequency_payment  Frequency?
 
   status     Status    @default(ACTIVE)
   created_at DateTime  @default(now())
@@ -527,12 +527,12 @@ enum Frequency {
   MONTHLY
   YEARLY
 
-  @@schema("pure-finance")
+  @@schema("pure_general")
 }
 
 enum TransactionType {
   WITHDRAW
   DEPOSIT
 
-  @@schema("pure-finance")
+  @@schema("pure_finance")
 }
