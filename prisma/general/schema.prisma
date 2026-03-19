@@ -7,7 +7,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_GENERAL_URL")
-  schemas  = ["pure_general", "pure_marketing", "pure-finance"]
+  schemas  = ["pure_general", "pure_marketing", "pure-finance", "pure_c"]
 }
 
 model application {
@@ -317,6 +317,165 @@ model budget {
   category_x_budget category_x_budget[]
 
   @@schema("pure-finance")
+}
+
+model access_history {
+  id         String    @id @default(uuid())
+  client_id  String
+  action    String
+
+  created_at DateTime  @default(now())
+  client client @relation(fields: [client_id], references: [id])
+
+  @@schema("pure_c")
+}
+
+model payment_history {
+  id         String    @id @default(uuid())
+  client_id  String
+  amount     Float
+  character_id String
+  plan_id String
+
+  created_at DateTime  @default(now())
+
+  client client @relation(fields: [client_id], references: [id])
+  plan plan @relation(fields: [plan_id], references: [id])
+  character character @relation(fields: [character_id], references: [id])
+
+  @@schema("pure_c")
+}
+
+model plan_x_payment_method {
+  plan_id           String
+  payment_method_id String
+
+  created_at DateTime @default(now())
+
+  plan           plan           @relation(fields: [plan_id], references: [id])
+  payment_method payment_method @relation(fields: [payment_method_id], references: [id])
+
+  @@id([plan_id, payment_method_id])
+  @@schema("pure_c")
+}
+
+model payment_plataform_x_payment_method {
+  plataform_id      String
+  payment_method_id String
+
+  created_at DateTime @default(now())
+
+  plataform      payment_plataform @relation(fields: [plataform_id], references: [id])
+  payment_method payment_method     @relation(fields: [payment_method_id], references: [id])
+
+  @@id([plataform_id, payment_method_id])
+  @@schema("pure_c")
+}
+
+model character_x_plan {
+  character_id String
+  plan_id      String
+
+  created_at DateTime @default(now())
+
+  character character @relation(fields: [character_id], references: [id])
+  plan      plan      @relation(fields: [plan_id], references: [id])
+
+  @@id([character_id, plan_id])
+  @@schema("pure_c")
+}
+
+model client {
+  id         String    @id @default(uuid())
+  name       String
+  external_id      String    @unique
+  language   String
+  client_status StatusClient @default(STARTED)
+  frequency_payment  Frequency
+
+  status     Status    @default(ACTIVE)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  access_histories access_history[]
+  payment_histories payment_history[]
+
+  @@schema("pure_c")
+}
+
+model plan {
+  id         String    @id @default(uuid())
+  title     String
+  description String
+  amount     Float
+  frequency  Frequency
+
+  status     Status    @default(ACTIVE)
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  payment_histories payment_history[]
+  plan_x_payment_method plan_x_payment_method[]
+  character_x_plans character_x_plan[]
+
+  @@schema("pure_c")
+}
+
+model character {
+  id         String    @id @default(uuid())
+  name       String
+  description String
+
+  status     Status    @default(ACTIVE)
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  payment_histories payment_history[]
+  character_x_plans character_x_plan[]
+
+  @@schema("pure_c")
+}
+
+model payment_method {
+  id         String    @id @default(uuid())
+  title       String
+  description String
+
+  status     Status    @default(ACTIVE)
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  plan_x_payment_method plan_x_payment_method[]
+  payment_plataform_x_payment_method payment_plataform_x_payment_method[]
+
+  @@schema("pure_c")
+}
+
+model payment_plataform {
+  id         String    @id @default(uuid())
+  title       String
+  description String
+  nationality   String
+  key          String
+  secret_key     String
+
+  status     Status    @default(ACTIVE)
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  payment_plataform_x_payment_method payment_plataform_x_payment_method[]
+
+  @@schema("pure_c")
+}
+
+enum StatusClient {
+  PAID
+  STARTED
+  VIEWED
+  TALKED
+
+  @@schema("pure_c")
 }
 
 enum Status {
