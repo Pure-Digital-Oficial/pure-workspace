@@ -18,6 +18,7 @@
     "start:server-pure-general": "nx run server-pure-general:serve",
     "start:server-pure-finance": "nx run server-pure-finance:serve",
     "start:server-pure-runner": "nx run server-pure-runner:serve",
+    "start:server-pure-c": "nx run server-pure-c:serve",
     "start:web-pure-digital": "nx dev web-pure-digital",
     "start:a-web-pure-digital": "nx serve a-web-pure-digital",
     "build:a-web-pure-digital": "nx build a-web-pure-digital --prod"

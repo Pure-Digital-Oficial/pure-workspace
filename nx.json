@@ -41,7 +41,8 @@
       "exclude": [
         "apps/server/server-pure-general-e2e/**/*",
         "apps/server/server-pure-runner-e2e/**/*",
-        "apps/server/server-pure-finance-e2e/**/*"
+        "apps/server/server-pure-finance-e2e/**/*",
+        "apps/server/server-pure-c-e2e/**/*"
       ]
     },
     {

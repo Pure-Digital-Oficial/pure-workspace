@@ -1,0 +1,46 @@
+import { Inject } from '@nestjs/common';
+import { PrismaService } from 'nestjs-prisma';
+import {
+  CustomerResponseDto,
+  FindCustomerByExternalIdRepository,
+} from '@pure-workspace/domain';
+
+export class FindCustomerByExternalIdRepositoryImpl
+  implements FindCustomerByExternalIdRepository
+{
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
+  async find(externalId: string): Promise<CustomerResponseDto> {
+    const findedCustomer = await this.prismaService['customer'].findFirst({
+      where: {
+        external_id: externalId,
+      },
+      select: {
+        id: true,
+        external_id: true,
+        name: true,
+        language: true,
+        frequency_payment: true,
+        user: {
+          select: {
+            nickname: true,
+          },
+        },
+        status: true,
+        updated_at: true,
+        created_at: true,
+      },
+    });
+
+    return {
+      id: findedCustomer?.id ?? '',
+      externalId: findedCustomer?.external_id ?? '',
+      name: findedCustomer?.name ?? '',
+      language: findedCustomer?.language ?? '',
+      status: findedCustomer?.status ?? '',
+      updatedAt: findedCustomer?.updated_at ?? new Date(),
+      createdAt: findedCustomer?.created_at ?? new Date(),
+      createdBy: findedCustomer?.user.nickname ?? '',
+      frequencyPayment: findedCustomer?.frequency_payment ?? '',
+    };
+  }
+}

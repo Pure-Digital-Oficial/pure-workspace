@@ -7,7 +7,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_GENERAL_URL")
-  schemas  = ["pure_general", "pure_marketing", "pure-finance"]
+  schemas  = ["pure_general", "pure_marketing", "pure_finance", "pure_c"]
 }
 
 model application {
@@ -75,6 +75,9 @@ model user {
   budgets               budget[]
   transactions          transaction[]
   category_x_budgets    category_x_budget[]
+  customers              customer[]
+  characters               character[]
+  plans                  plan[]
 
   @@schema("pure_general")
 }
@@ -244,7 +247,7 @@ model fixed_gain {
 
   user user @relation(fields: [user_id], references: [id])
 
-  @@schema("pure-finance")
+  @@schema("pure_finance")
 }
 
 model transaction {
@@ -265,7 +268,7 @@ model transaction {
   user     user                 @relation(fields: [user_id], references: [id])
   category category_transaction @relation(fields: [category_id], references: [id])
 
-  @@schema("pure-finance")
+  @@schema("pure_finance")
 }
 
 model category_transaction {
@@ -283,7 +286,7 @@ model category_transaction {
   transactions      transaction[]
   category_x_budget category_x_budget[]
 
-  @@schema("pure-finance")
+  @@schema("pure_finance")
 }
 
 model category_x_budget {
@@ -298,7 +301,7 @@ model category_x_budget {
   budget   budget               @relation(fields: [budget_id], references: [id])
 
   @@id([category_id, budget_id])
-  @@schema("pure-finance")
+  @@schema("pure_finance")
 }
 
 model budget {
@@ -316,7 +319,175 @@ model budget {
   user              user                @relation(fields: [user_id], references: [id])
   category_x_budget category_x_budget[]
 
-  @@schema("pure-finance")
+  @@schema("pure_finance")
+}
+
+model access_history {
+  id         String    @id @default(uuid())
+  customer_id  String
+  action    String
+
+  created_at DateTime  @default(now())
+  customer customer @relation(fields: [customer_id], references: [id])
+
+  @@schema("pure_c")
+}
+
+model payment_history {
+  id         String    @id @default(uuid())
+  customer_id  String
+  amount     Float
+  character_id String
+  plan_id String
+
+  created_at DateTime  @default(now())
+
+  customer customer @relation(fields: [customer_id], references: [id])
+  plan plan @relation(fields: [plan_id], references: [id])
+  character character @relation(fields: [character_id], references: [id])
+
+  @@schema("pure_c")
+}
+
+model plan_x_payment_method {
+  plan_id           String
+  payment_method_id String
+
+  created_at DateTime @default(now())
+
+  plan           plan           @relation(fields: [plan_id], references: [id])
+  payment_method payment_method @relation(fields: [payment_method_id], references: [id])
+
+  @@id([plan_id, payment_method_id])
+  @@schema("pure_c")
+}
+
+model payment_plataform_x_payment_method {
+  plataform_id      String
+  payment_method_id String
+
+  created_at DateTime @default(now())
+
+  plataform      payment_plataform @relation(fields: [plataform_id], references: [id])
+  payment_method payment_method     @relation(fields: [payment_method_id], references: [id])
+
+  @@id([plataform_id, payment_method_id])
+  @@schema("pure_c")
+}
+
+model character_x_plan {
+  character_id String
+  plan_id      String
+
+  created_at DateTime @default(now())
+
+  character character @relation(fields: [character_id], references: [id])
+  plan      plan      @relation(fields: [plan_id], references: [id])
+
+  @@id([character_id, plan_id])
+  @@schema("pure_c")
+}
+
+model customer {
+  id         String    @id @default(uuid())
+  name       String
+  external_id      String    @unique
+  user_id    String
+  language   String
+  customer_status StatusCustomer @default(STARTED)
+  frequency_payment  Frequency?
+
+  status     Status    @default(ACTIVE)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  user      user      @relation(fields: [user_id], references: [id])
+
+  access_histories access_history[]
+  payment_histories payment_history[]
+
+  @@schema("pure_c")
+}
+
+model plan {
+  id         String    @id @default(uuid())
+  title     String
+  description String
+  amount     Float
+  frequency  Frequency
+  user_id String
+
+  status     Status    @default(ACTIVE)
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  user      user      @relation(fields: [user_id], references: [id])
+
+  payment_histories payment_history[]
+  plan_x_payment_method plan_x_payment_method[]
+  character_x_plans character_x_plan[]
+
+  @@schema("pure_c")
+}
+
+model character {
+  id         String    @id @default(uuid())
+  name       String
+  description String
+  user_id String
+
+  status     Status    @default(ACTIVE)
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  payment_histories payment_history[]
+  character_x_plans character_x_plan[]
+
+  user      user      @relation(fields: [user_id], references: [id])
+
+  @@schema("pure_c")
+}
+
+model payment_method {
+  id         String    @id @default(uuid())
+  title       String
+  description String
+
+  status     Status    @default(ACTIVE)
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  plan_x_payment_method plan_x_payment_method[]
+  payment_plataform_x_payment_method payment_plataform_x_payment_method[]
+
+  @@schema("pure_c")
+}
+
+model payment_plataform {
+  id         String    @id @default(uuid())
+  title       String
+  description String
+  nationality   String
+  key          String
+  secret_key     String
+
+  status     Status    @default(ACTIVE)
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  payment_plataform_x_payment_method payment_plataform_x_payment_method[]
+
+  @@schema("pure_c")
+}
+
+enum StatusCustomer {
+  PAID
+  STARTED
+  VIEWED
+  TALKED
+
+  @@schema("pure_c")
 }
 
 enum Status {
@@ -368,12 +539,12 @@ enum Frequency {
   MONTHLY
   YEARLY
 
-  @@schema("pure-finance")
+  @@schema("pure_general")
 }
 
 enum TransactionType {
   WITHDRAW
   DEPOSIT
 
-  @@schema("pure-finance")
+  @@schema("pure_finance")
 }

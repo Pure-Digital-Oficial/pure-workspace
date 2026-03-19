@@ -67,7 +67,7 @@ const makeSut = (): SutTypes => {
   };
 };
 
-describe('EditTransaction', () => {
+describe('EditFixedGain', () => {
   it('should return fixed gain ID when pass correct editFixedGainDto object', async () => {
     const { editFixedGainDto, sut } = makeSut();
 
