@@ -12,4 +12,8 @@ export const CustomerMock: CustomerResponseDto = {
     'MONTHLY',
     'YEARLY',
   ]),
+  createdBy: faker.string.uuid(),
+  createdAt: faker.date.past(),
+  updatedAt: faker.date.recent(),
+  status: faker.helpers.arrayElement(['ACTIVE', 'INACTIVE']),
 };

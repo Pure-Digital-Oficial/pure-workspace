@@ -35,7 +35,7 @@ export class CreateCustomer
   ): Promise<
     Either<EntityNotEmpty | EntityNotExists | EntityAlreadyExists, string>
   > {
-    const { loggedUserId, name, externalId } = input;
+    const { loggedUserId, name, externalId, language } = input;
 
     if (Object.keys(loggedUserId).length < 1) {
       return left(new EntityNotEmpty('User ID'));
@@ -47,6 +47,10 @@ export class CreateCustomer
 
     if (Object.keys(externalId).length < 1) {
       return left(new EntityNotEmpty('External ID'));
+    }
+
+    if (Object.keys(language).length < 1) {
+      return left(new EntityNotEmpty('Language'));
     }
 
     const userVerification = await UserVerificationId(

@@ -4,4 +4,8 @@ export interface CustomerResponseDto {
   externalId: string;
   language: string;
   frequencyPayment: string;
+  createdBy: string;
+  createdAt: Date;
+  updatedAt: Date;
+  status: string;
 }

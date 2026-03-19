@@ -39,6 +39,7 @@ const makeSut = (): sutTypes => {
     loggedUserId: UserMock.id,
     name: CustomerMock.name,
     externalId: CustomerMock.externalId,
+    language: CustomerMock.language,
   };
 
   const sut = new CreateCustomer(
@@ -90,6 +91,16 @@ describe('CreateCustomer', () => {
   it('should return EntityNotEmpty when pass empty name in createCustomerDto object', async () => {
     const { createCustomerDto, sut } = makeSut();
     createCustomerDto.name = '';
+    const result = await sut.execute(createCustomerDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityNotEmpty);
+  });
+
+  it('should return EntityNotEmpty when pass empty language in createCustomerDto object', async () => {
+    const { createCustomerDto, sut } = makeSut();
+    createCustomerDto.language = '';
     const result = await sut.execute(createCustomerDto);
 
     expect(result.isLeft()).toBeTruthy();
