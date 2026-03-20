@@ -1,7 +1,11 @@
 import { Inject } from '@nestjs/common';
 import { Either, left, right, UseCase } from '../../../bases';
 import { EditCustomerStatusDto } from '../../../dtos';
-import { EntityNotEmpty, EntityNotExists } from '../../../errors';
+import {
+  EntityNotEdited,
+  EntityNotEmpty,
+  EntityNotExists,
+} from '../../../errors';
 import {
   EditCustomerStatusRepository,
   FindCustomerByIdRepository,
@@ -59,7 +63,7 @@ export class EditCustomerStatus
     );
 
     if (Object.keys(editedCustomerStatus).length < 1) {
-      return left(new EntityNotExists('Customer'));
+      return left(new EntityNotEdited('Customer'));
     }
 
     return right(editedCustomerStatus);

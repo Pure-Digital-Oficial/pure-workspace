@@ -63,8 +63,8 @@ describe('CreateCustomer', () => {
 
     const result = await sut.execute(createCustomerDto);
 
-    expect(result.isRight()).toBe(true);
-    expect(result.isLeft()).toBe(false);
+    expect(result.isLeft()).toBeFalsy();
+    expect(result.isRight()).toBeTruthy();
     expect(result.value).toBe(CustomerMock.id);
   });
 
