@@ -78,6 +78,7 @@ model user {
   customers              customer[]
   characters               character[]
   plans                  plan[]
+  payment_methods  payment_method[]
 
   @@schema("pure_general")
 }
@@ -455,11 +456,14 @@ model payment_method {
   id         String    @id @default(uuid())
   title       String
   description String
+  user_id String
 
   status     Status    @default(ACTIVE)
   created_at DateTime  @default(now())
   updated_at DateTime  @default(now())
   deleted_at DateTime?
+
+  user      user      @relation(fields: [user_id], references: [id])
 
   plan_x_payment_method plan_x_payment_method[]
   payment_plataform_x_payment_method payment_plataform_x_payment_method[]
