@@ -420,6 +420,7 @@ model plan {
 
   status     Status    @default(ACTIVE)
   created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
   deleted_at DateTime?
 
   user      user      @relation(fields: [user_id], references: [id])
@@ -439,6 +440,7 @@ model character {
 
   status     Status    @default(ACTIVE)
   created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
   deleted_at DateTime?
 
   payment_histories payment_history[]
@@ -456,6 +458,7 @@ model payment_method {
 
   status     Status    @default(ACTIVE)
   created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
   deleted_at DateTime?
 
   plan_x_payment_method plan_x_payment_method[]
@@ -474,6 +477,7 @@ model payment_plataform {
 
   status     Status    @default(ACTIVE)
   created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
   deleted_at DateTime?
 
   payment_plataform_x_payment_method payment_plataform_x_payment_method[]

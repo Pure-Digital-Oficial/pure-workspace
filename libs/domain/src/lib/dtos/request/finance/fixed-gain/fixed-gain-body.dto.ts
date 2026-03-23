@@ -1,9 +1,9 @@
-import { FixedGainType } from '../../../../types';
+import { GeneralFrequencyType } from '../../../../types';
 
 export interface FixedGainBodyDto {
   name: string;
   value: number;
   dayOfReceipt: number;
-  frequency: FixedGainType;
+  frequency: GeneralFrequencyType;
   loggedUserId: string;
 }

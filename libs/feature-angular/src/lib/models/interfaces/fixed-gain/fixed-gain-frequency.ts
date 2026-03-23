@@ -1,6 +1,6 @@
-import { FixedGainType } from '@pure-workspace/domain';
+import { GeneralFrequencyType } from '@pure-workspace/domain';
 
 export interface FixedGainFrequency {
-  id: FixedGainType;
+  id: GeneralFrequencyType;
   title: string;
 }

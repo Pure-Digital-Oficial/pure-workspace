@@ -1,4 +1,4 @@
-export type FixedGainType =
+export type GeneralFrequencyType =
   | 'DAILY'
   | 'WEEKLY'
   | 'BIWEEKLY'

@@ -1,4 +1,4 @@
-import { FixedGainType, GeneralStatus } from '../../../../types';
+import { GeneralFrequencyType, GeneralStatus } from '../../../../types';
 
 export interface FixedGainPrismaResponseDto {
   id: string;
@@ -6,7 +6,7 @@ export interface FixedGainPrismaResponseDto {
   value: number;
   status: GeneralStatus;
   day_of_receipt: number;
-  frequency: FixedGainType;
+  frequency: GeneralFrequencyType;
   created_at: Date;
   updated_at: Date;
   user: {
