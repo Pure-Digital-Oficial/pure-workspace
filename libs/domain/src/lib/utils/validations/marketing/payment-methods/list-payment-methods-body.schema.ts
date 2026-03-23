@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const listPlansBodySchema = z
+export const listPaymentMethodsBodySchema = z
   .object({
     filters: z
       .object({

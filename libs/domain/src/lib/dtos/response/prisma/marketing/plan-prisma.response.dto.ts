@@ -1,4 +1,4 @@
-import { GeneralFrequencyType, GeneralStatus } from '../../../types';
+import { GeneralFrequencyType, GeneralStatus } from '../../../../types';
 
 export interface PlanPrismaResponseDto {
   id: string;
