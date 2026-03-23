@@ -16,7 +16,7 @@ import {
   FindFixedGainByNameAndValueRepositoryMock,
   FindUserByIdRepositoryMock,
 } from '@/test/repositories';
-import { FixedGainType } from '@/types';
+import { GeneralFrequencyType } from '@/types';
 import { CreateFixedGain } from '@/use-cases';
 
 interface SutTypes {
@@ -36,7 +36,7 @@ const makeSut = (): SutTypes => {
   const createFixedGainDto: CreateFixedGainDto = {
     name: FixedGainMock.name,
     dayOfReceipt: FixedGainMock.dayOfReceipt,
-    frequency: FixedGainMock.frequency as FixedGainType,
+    frequency: FixedGainMock.frequency as GeneralFrequencyType,
     loggedUserId: UserMock.id,
     value: FixedGainMock.value,
   };
@@ -109,7 +109,7 @@ describe('CreateFixedGain', () => {
 
   it('should return EntityNotEmpty when pass incorrect frequency in createFixedGainDto object', async () => {
     const { createFixedGainDto, sut } = makeSut();
-    createFixedGainDto.frequency = '' as FixedGainType;
+    createFixedGainDto.frequency = '' as GeneralFrequencyType;
     const result = await sut.execute(createFixedGainDto);
 
     expect(result.isLeft()).toBeTruthy();
