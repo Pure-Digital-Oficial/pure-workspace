@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker/.';
+import { faker } from '@faker-js/faker';
 import { CustomerResponseDto } from '../../../../index';
 
 export const CustomerMock: CustomerResponseDto = {
