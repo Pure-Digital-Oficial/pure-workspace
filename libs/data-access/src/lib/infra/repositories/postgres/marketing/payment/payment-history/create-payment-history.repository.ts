@@ -10,7 +10,14 @@ export class CreatePaymentHistoryRepositoryImpl
 {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async create(input: CreatePaymentHistoryDto): Promise<string> {
-    const { characterId, customerId, externalId, planId, amount } = input;
+    const {
+      characterId,
+      customerId,
+      externalId,
+      planId,
+      amount,
+      loggedUserId,
+    } = input;
 
     const createdPaymentHistory = await this.prismaService[
       'payment_history'
@@ -21,6 +28,7 @@ export class CreatePaymentHistoryRepositoryImpl
         customer_id: customerId,
         plan_id: planId,
         external_id: externalId,
+        user_id: loggedUserId,
       },
     });
 

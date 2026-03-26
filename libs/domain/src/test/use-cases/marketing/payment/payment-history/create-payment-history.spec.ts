@@ -6,7 +6,12 @@ import {
   PlanResponseDto,
   UserResponseDto,
 } from '@/dtos';
-import { EntityNotCreated, EntityNotEmpty, EntityNotExists } from '@/errors';
+import {
+  EntityAlreadyExists,
+  EntityNotCreated,
+  EntityNotEmpty,
+  EntityNotExists,
+} from '@/errors';
 import {
   CreatePaymentHistoryRepository,
   FindCharacterByIdRepository,
@@ -20,7 +25,6 @@ import {
   CreatePaymentHistoryRepositoryMock,
   FindCharacterByIdRepositoryMock,
   FindCustomerByIdRepositoryMock,
-  FindPaymentHistoryByExternalIdRepositoryMock,
   FindPlanByIdRepositoryMock,
   FindUserByIdRepositoryMock,
 } from '@/test/repositories';
@@ -38,11 +42,14 @@ interface SutTypes {
 }
 
 const makeSut = (): SutTypes => {
+  const emptyMock = {};
   const findUserByIdRepository = new FindUserByIdRepositoryMock();
   const findCharacterByIdRepository = new FindCharacterByIdRepositoryMock();
   const findCustomerByIdRepository = new FindCustomerByIdRepositoryMock();
-  const findPaymenHistoryByExternalIdRepository =
-    new FindPaymentHistoryByExternalIdRepositoryMock();
+  const findPaymenHistoryByExternalIdRepository: FindPaymentHistoryByExternalIdRepository =
+    {
+      find: jest.fn(async () => emptyMock as PaymentHistoryResponseDto),
+    };
   const findPlanByIdRepository = new FindPlanByIdRepositoryMock();
   const createPaymentHistoryRepository =
     new CreatePaymentHistoryRepositoryMock();
@@ -201,16 +208,16 @@ describe('CreatePaymentHistory', () => {
     expect(result.value).toBeInstanceOf(EntityNotExists);
   });
 
-  it('should return EntityNotExists when pass incorrect externalId in createPaymentHistoryDto object', async () => {
+  it('should return EntityAlreadyExists when exists externalId in the database', async () => {
     const { createPaymentHistoryDto, sut } = makeSut();
     jest
       .spyOn(sut['findPaymenHistoryByExternalIdRepository'], 'find')
-      .mockResolvedValueOnce({} as PaymentHistoryResponseDto);
+      .mockResolvedValueOnce(PaymentHistoryMock);
     const result = await sut.execute(createPaymentHistoryDto);
 
     expect(result.isLeft()).toBeTruthy();
     expect(result.isRight()).toBeFalsy();
-    expect(result.value).toBeInstanceOf(EntityNotExists);
+    expect(result.value).toBeInstanceOf(EntityAlreadyExists);
   });
 
   it('should return EntityNotCreated when not created payment history in the database', async () => {

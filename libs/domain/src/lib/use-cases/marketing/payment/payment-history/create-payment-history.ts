@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { CreatePaymentHistoryDto } from '../../../../dtos';
 import { Either, left, right, UseCase } from '../../../../bases';
 import {
+  EntityAlreadyExists,
   EntityNotCreated,
   EntityNotEmpty,
   EntityNotExists,
@@ -104,9 +105,9 @@ export class CreatePaymentHistory
       await this.findPaymenHistoryByExternalIdRepository.find(externalId);
 
     if (
-      Object.keys(findedPaymentHistory?.id ?? findedPaymentHistory).length < 1
+      Object.keys(findedPaymentHistory?.id ?? findedPaymentHistory).length > 0
     ) {
-      return left(new EntityNotExists('Payment History'));
+      return left(new EntityAlreadyExists('Payment History'));
     }
 
     const createdPaymentHistory =
