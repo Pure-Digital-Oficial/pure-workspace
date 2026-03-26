@@ -3,7 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CreateCustomerModule, EditCustomerStatusModule } from './customer';
 import { ListPlansModule } from './plan';
-import { ListPaymentMethodsModule, GeneratePaymentModule } from './payment';
+import {
+  ListPaymentMethodsModule,
+  GeneratePaymentModule,
+  CreatePaymentHistoryModule,
+} from './payment';
 
 @Module({
   imports: [
@@ -12,6 +16,7 @@ import { ListPaymentMethodsModule, GeneratePaymentModule } from './payment';
     ListPlansModule,
     ListPaymentMethodsModule,
     GeneratePaymentModule,
+    CreatePaymentHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
