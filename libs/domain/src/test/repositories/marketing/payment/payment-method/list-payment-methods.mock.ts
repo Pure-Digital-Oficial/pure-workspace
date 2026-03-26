@@ -2,8 +2,8 @@ import {
   ListPaymentMethodsDto,
   ListPaymentMethodsRepository,
   ListPaymentMethodsResponseDto,
-} from '../../../../index';
-import { ListPaymentMethodsMock } from '../../../entities';
+} from '../../../../../index';
+import { ListPaymentMethodsMock } from '../../../../entities';
 
 export class ListPaymentMethodsRepositoryMock
   implements ListPaymentMethodsRepository

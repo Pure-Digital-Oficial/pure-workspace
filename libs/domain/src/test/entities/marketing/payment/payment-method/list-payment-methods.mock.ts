@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { ListPaymentMethodsResponseDto } from '../../../../index';
+import { ListPaymentMethodsResponseDto } from '../../../../../index';
 import { PaymentMethodMock } from './payment-method.mock';
 
 export const ListPaymentMethodsMock: ListPaymentMethodsResponseDto = {

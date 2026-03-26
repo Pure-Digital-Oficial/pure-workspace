@@ -1,0 +1,4 @@
+export * from './payment-method';
+export * from './payment-plataform';
+export * from './playment-method-with-plataform';
+export * from './generate-payment.mock';

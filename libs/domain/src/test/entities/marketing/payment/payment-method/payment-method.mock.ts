@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { PaymentMethodResponseDto } from '../../../../index';
+import { PaymentMethodResponseDto } from '../../../../../index';
 
 export const PaymentMethodMock: PaymentMethodResponseDto = {
   id: faker.string.uuid(),
@@ -9,4 +9,5 @@ export const PaymentMethodMock: PaymentMethodResponseDto = {
   createdAt: faker.date.past(),
   updatedAt: faker.date.recent(),
   createdBy: faker.string.uuid(),
+  value: faker.string.alpha(3),
 };
