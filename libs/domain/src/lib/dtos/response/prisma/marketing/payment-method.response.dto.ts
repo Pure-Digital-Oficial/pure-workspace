@@ -10,4 +10,5 @@ export interface PaymentMethodPrismaReponseDto {
   user: {
     nickname: string;
   };
+  value: string;
 }

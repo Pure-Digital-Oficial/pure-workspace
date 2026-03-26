@@ -79,6 +79,8 @@ model user {
   characters               character[]
   plans                  plan[]
   payment_methods  payment_method[]
+  payment_plataforms payment_plataform[]
+  payment_histories payment_history[]
 
   @@schema("pure_general")
 }
@@ -340,9 +342,14 @@ model payment_history {
   amount     Float
   character_id String
   plan_id String
+  external_id  Float
+  user_id String
 
   created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+  status      Status @default(PENDING)
 
+  user              user                @relation(fields: [user_id], references: [id])
   customer customer @relation(fields: [customer_id], references: [id])
   plan plan @relation(fields: [plan_id], references: [id])
   character character @relation(fields: [character_id], references: [id])
@@ -457,6 +464,7 @@ model payment_method {
   title       String
   description String
   user_id String
+  value String
 
   status     Status    @default(ACTIVE)
   created_at DateTime  @default(now())
@@ -478,6 +486,7 @@ model payment_plataform {
   nationality   String
   key          String
   secret_key     String
+  user_id String
 
   status     Status    @default(ACTIVE)
   created_at DateTime  @default(now())
@@ -485,6 +494,7 @@ model payment_plataform {
   deleted_at DateTime?
 
   payment_plataform_x_payment_method payment_plataform_x_payment_method[]
+  user      user      @relation(fields: [user_id], references: [id])
 
   @@schema("pure_c")
 }
