@@ -58,6 +58,7 @@ export class ListPaymentMethodsRepositoryImpl
           status: true,
           created_at: true,
           updated_at: true,
+          value: true,
           user: {
             select: {
               nickname: true,
@@ -85,6 +86,7 @@ export class ListPaymentMethodsRepositoryImpl
           updatedAt: paymentMethod?.updated_at ?? new Date(),
           createdBy: paymentMethod?.user.nickname ?? '',
           status: paymentMethod?.status ?? '',
+          value: paymentMethod?.value ?? '',
         };
       }
     );
