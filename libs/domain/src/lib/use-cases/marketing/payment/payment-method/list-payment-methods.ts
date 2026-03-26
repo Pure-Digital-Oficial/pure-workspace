@@ -1,15 +1,15 @@
 import { Inject } from '@nestjs/common';
-import { Either, left, right, UseCase } from '../../../bases';
+import { Either, left, right, UseCase } from '../../../../bases';
 import {
   ListPaymentMethodsDto,
   ListPaymentMethodsResponseDto,
-} from '../../../dtos';
-import { EntityNotEmpty } from '../../../errors';
+} from '../../../../dtos';
+import { EntityNotEmpty } from '../../../../errors';
 import {
   FindUserByIdRepository,
   ListPaymentMethodsRepository,
-} from '../../../repositories';
-import { UserVerificationId } from '../../../utils';
+} from '../../../../repositories';
+import { UserVerificationId } from '../../../../utils';
 
 export class ListPaymentMethods
   implements

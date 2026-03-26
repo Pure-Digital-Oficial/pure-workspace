@@ -1,7 +1,7 @@
 import {
   ListPaymentMethodsDto,
   ListPaymentMethodsResponseDto,
-} from '../../../dtos';
+} from '../../../../dtos';
 
 export interface ListPaymentMethodsRepository {
   list(input: ListPaymentMethodsDto): Promise<ListPaymentMethodsResponseDto>;
