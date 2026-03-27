@@ -10,7 +10,7 @@ import {
 import { UserVerificationId } from '../../../utils';
 
 export class ConfirmManualPayment
-  implements UseCase<ConfirmManualPaymentDto, Either<EntityNotEmpty, string>>
+  implements UseCase<ConfirmManualPaymentDto, Either<EntityNotEmpty | EntityNotExists | EntityNotConfirmed, string>>
 {
   constructor(
     @Inject('FindUserByIdRepository')
@@ -22,7 +22,7 @@ export class ConfirmManualPayment
   ) {}
   async execute(
     input: ConfirmManualPaymentDto
-  ): Promise<Either<EntityNotEmpty, string>> {
+  ): Promise<Either<EntityNotEmpty | EntityNotExists | EntityNotConfirmed, string>> {
     const { customerId, loggedUserId } = input;
 
     if (Object.keys(loggedUserId).length < 1) {
