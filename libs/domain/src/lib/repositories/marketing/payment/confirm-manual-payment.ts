@@ -1,5 +1,5 @@
-import { ConfirmManualPaymentDto } from "../../../dtos";
+import { ConfirmManualPaymentForRepositoryDto } from '../../../dtos';
 
 export interface ConfirmManualPaymentRepository {
-  confirm(input: ConfirmManualPaymentDto): Promise<string>;
+  confirm(input: ConfirmManualPaymentForRepositoryDto): Promise<string>;
 }
