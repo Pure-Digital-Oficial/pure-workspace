@@ -7,6 +7,7 @@ import {
   ListPaymentMethodsModule,
   GeneratePaymentModule,
   CreatePaymentHistoryModule,
+  ConfirmManualPaymentModule,
 } from './payment';
 
 @Module({
@@ -17,6 +18,7 @@ import {
     ListPaymentMethodsModule,
     GeneratePaymentModule,
     CreatePaymentHistoryModule,
+    ConfirmManualPaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

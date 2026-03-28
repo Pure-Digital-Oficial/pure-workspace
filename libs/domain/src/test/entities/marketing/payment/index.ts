@@ -1,4 +1,5 @@
 export * from './payment-history';
 export * from './payment-method';
 export * from './payment-plataform';
+export * from './confirm-manual-payment.mock';
 export * from './generate-payment.mock';
