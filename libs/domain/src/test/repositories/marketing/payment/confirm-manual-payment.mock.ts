@@ -1,10 +1,15 @@
-import { ConfirmManualPaymentDto, ConfirmManualPaymentRepository } from "../../../../index";
-import { ConfirmManualPaymentMock } from "../../../entities";
+import {
+  ConfirmManualPaymentForRepositoryDto,
+  ConfirmManualPaymentRepository,
+} from '../../../../index';
+import { ConfirmManualPaymentMock } from '../../../entities';
 
-export class ConfirmManualPaymentRepositoryMock implements ConfirmManualPaymentRepository {
-inputMock = {} as ConfirmManualPaymentDto;
-  async confirm(input: ConfirmManualPaymentDto): Promise<string> {
-  this.inputMock = input;
-  return ConfirmManualPaymentMock.id
-}
+export class ConfirmManualPaymentRepositoryMock
+  implements ConfirmManualPaymentRepository
+{
+  inputMock = {} as ConfirmManualPaymentForRepositoryDto;
+  async confirm(input: ConfirmManualPaymentForRepositoryDto): Promise<string> {
+    this.inputMock = input;
+    return ConfirmManualPaymentMock.id;
+  }
 }

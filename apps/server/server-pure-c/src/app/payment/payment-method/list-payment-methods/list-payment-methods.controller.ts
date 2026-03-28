@@ -16,7 +16,7 @@ import {
 import { ZodValidationPipe } from '../../../pipes';
 import { ListPaymentMethodsService } from './list-payment-methods.service';
 
-@Controller('payment-method/list-payment-methods')
+@Controller('payment/list-payment-methods')
 export class ListPaymentMethodsController {
   constructor(private listPaymentMethodsService: ListPaymentMethodsService) {}
 

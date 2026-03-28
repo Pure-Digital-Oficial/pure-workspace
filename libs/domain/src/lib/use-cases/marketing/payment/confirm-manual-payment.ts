@@ -10,6 +10,7 @@ import {
   ConfirmManualPaymentRepository,
   FindCustomerByIdRepository,
   FindPaymentHistoryByCustomerIdRepository,
+  FindPaymentPlataformByIdRepository,
   FindUserByIdRepository,
 } from '../../../repositories';
 import { UserVerificationId } from '../../../utils';
@@ -28,6 +29,8 @@ export class ConfirmManualPayment
     private findCustomerByIdRepository: FindCustomerByIdRepository,
     @Inject('FindPaymentHistoryByCustomerIdRepository')
     private findPaymentHistoryByCustomerIdRepository: FindPaymentHistoryByCustomerIdRepository,
+    @Inject('FindPaymentPlataformByIdRepository')
+    private findPaymentPlataformByIdRepository: FindPaymentPlataformByIdRepository,
     @Inject('ConfirmManualPaymentRepository')
     private confirmManualPaymentRepository: ConfirmManualPaymentRepository
   ) {}
@@ -36,7 +39,7 @@ export class ConfirmManualPayment
   ): Promise<
     Either<EntityNotEmpty | EntityNotExists | EntityNotConfirmed, string>
   > {
-    const { customerId, loggedUserId } = input;
+    const { customerId, loggedUserId, paymentPlataformId } = input;
 
     if (Object.keys(loggedUserId).length < 1) {
       return left(new EntityNotEmpty('User ID'));
@@ -72,8 +75,19 @@ export class ConfirmManualPayment
       return left(new EntityNotExists('Payment History'));
     }
 
+    const findedPaymentPlataform =
+      await this.findPaymentPlataformByIdRepository.find(paymentPlataformId);
+
+    if (
+      Object.keys(findedPaymentPlataform?.id ?? findedPaymentPlataform).length <
+      1
+    ) {
+      return left(new EntityNotExists('Payment Plataform'));
+    }
+
     const confirmPayment = await this.confirmManualPaymentRepository.confirm({
       externalId: findedPaymentHistory.externalId,
+      secretKey: findedPaymentPlataform.secretKey,
     });
 
     if (Object.keys(confirmPayment).length < 1) {

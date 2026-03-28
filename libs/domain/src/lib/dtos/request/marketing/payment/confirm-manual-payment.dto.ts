@@ -1,5 +1,6 @@
-import { BaseEntityInputDto } from "../../utils";
+import { BaseEntityInputDto } from '../../utils';
 
-export interface ConfirmManualPaymentDto extends BaseEntityInputDto{
+export interface ConfirmManualPaymentDto extends BaseEntityInputDto {
   customerId: string;
+  paymentPlataformId: string;
 }

@@ -16,7 +16,7 @@ import { JwtAuthGuard } from '@pure-workspace/data-access';
 import { ZodValidationPipe } from '../../pipes';
 import { GeneratePaymentService } from './generate-payment.service';
 
-@Controller('generate/generate-payment')
+@Controller('payment/generate-payment')
 export class GeneratePaymentController {
   constructor(private generatePaymentService: GeneratePaymentService) {}
 

@@ -15,6 +15,7 @@ export class FindPaymentHistoryByCustomerIdRepositoryImpl
     ].findFirst({
       where: {
         customer_id: customerId,
+        status: 'PENDING',
       },
       select: {
         id: true,

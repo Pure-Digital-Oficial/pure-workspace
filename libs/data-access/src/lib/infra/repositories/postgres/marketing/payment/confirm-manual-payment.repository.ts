@@ -8,10 +8,10 @@ export class ConfirmManualPaymentRepositoryImpl
   implements ConfirmManualPaymentRepository
 {
   async confirm(input: ConfirmManualPaymentForRepositoryDto): Promise<string> {
-    const { externalId } = input;
+    const { externalId, secretKey } = input;
 
     const client = new MercadoPagoConfig({
-      accessToken: 'SEU_ACCESS_TOKEN',
+      accessToken: secretKey,
     });
 
     const payment = new Payment(client);
