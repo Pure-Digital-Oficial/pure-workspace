@@ -10,5 +10,4 @@ export const listTransactionsBodySchema = z
     take: z.coerce.number().optional(),
     skip: z.coerce.number().optional(),
   })
-  .strict()
   .optional();
