@@ -15,6 +15,7 @@
     "docker:postgres": "docker compose -f docker-compose-postgres.yaml up",
     "build:server-pure-general": "nx build server-pure-general",
     "build:web-pure-digital": "nx build web-pure-digital",
+    "build:server-pure-c": "nx build server-pure-c",
     "start:server-pure-general": "nx run server-pure-general:serve",
     "start:server-pure-finance": "nx run server-pure-finance:serve",
     "start:server-pure-runner": "nx run server-pure-runner:serve",
