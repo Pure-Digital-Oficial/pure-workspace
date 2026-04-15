@@ -13,22 +13,27 @@ export class CreateSystemUserRepositoryImpl
     appId,
     body: { name, nickname },
   }: CreateSystemUserDto): Promise<string> {
-    const systemUserCreated = await this.prismaService['user'].create({
-      data: {
-        name,
-        nickname,
-        picture: null,
-        type: 'SYSTEM',
-      },
-    });
+    try {
+      const systemUserCreated = await this.prismaService['user'].create({
+        data: {
+          name,
+          nickname,
+          picture: null,
+          type: 'SYSTEM',
+        },
+      });
 
-    await this.prismaService['application_x_user'].create({
-      data: {
-        app_id: appId,
-        user_id: systemUserCreated.id,
-      },
-    });
+      await this.prismaService['application_x_user'].create({
+        data: {
+          app_id: appId,
+          user_id: systemUserCreated.id,
+        },
+      });
 
-    return systemUserCreated?.id ?? '';
+      return systemUserCreated?.id ?? '';
+    } catch (error) {
+      console.error('Error creating system user:', error);
+      return '';
+    }
   }
 }

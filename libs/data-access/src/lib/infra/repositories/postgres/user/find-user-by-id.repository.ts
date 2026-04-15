@@ -8,47 +8,65 @@ import {
 export class FindUserByIdRepositoryImpl implements FindUserByIdRepository {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async find(id: string): Promise<UserResponseDto> {
-    const filteredUser = await this.prismaService['user'].findFirst({
-      where: {
-        id,
-        status: 'ACTIVE',
-      },
-      select: {
-        id: true,
-        name: true,
-        nickname: true,
-        picture: true,
-        created_at: true,
-        updated_at: true,
-        type: true,
-        status: true,
-        data: {
-          select: {
-            birth_date: true,
+    try {
+      const filteredUser = await this.prismaService['user'].findFirst({
+        where: {
+          id,
+          status: 'ACTIVE',
+        },
+        select: {
+          id: true,
+          name: true,
+          nickname: true,
+          picture: true,
+          created_at: true,
+          updated_at: true,
+          type: true,
+          status: true,
+          data: {
+            select: {
+              birth_date: true,
+            },
+          },
+          auth: {
+            select: {
+              id: true,
+              email: true,
+              password: true,
+            },
           },
         },
-        auth: {
-          select: {
-            id: true,
-            email: true,
-            password: true,
-          },
-        },
-      },
-    });
+      });
 
-    return {
-      id: filteredUser?.id ?? '',
-      name: filteredUser?.name ?? '',
-      nickname: filteredUser?.nickname ?? '',
-      birthDate: filteredUser?.data[0]?.birth_date ?? new Date(),
-      type: filteredUser?.type ?? '',
-      picture: filteredUser?.picture ?? '',
-      auth: {
-        email: filteredUser?.auth[0]?.email ?? '',
-        id: filteredUser?.auth[0]?.id ?? '',
-        password: filteredUser?.auth[0]?.password ?? '',
-      },
-    };
+      return {
+        id: filteredUser?.id ?? '',
+        name: filteredUser?.name ?? '',
+        nickname: filteredUser?.nickname ?? '',
+        birthDate: filteredUser?.data[0]?.birth_date ?? new Date(),
+        type: filteredUser?.type ?? '',
+        picture: filteredUser?.picture ?? '',
+        auth: {
+          email: filteredUser?.auth[0]?.email ?? '',
+          id: filteredUser?.auth[0]?.id ?? '',
+          password: filteredUser?.auth[0]?.password ?? '',
+        },
+      };
+    } catch (error) {
+      console.error('Error find user by id:', error);
+
+      return {
+        id: '',
+        name: '',
+        nickname: '',
+        birthDate: new Date(),
+        type: '',
+        picture: '',
+        auth: {
+          email: '',
+          id: '',
+          password: '',
+        },
+      };
+    }
   }
 }

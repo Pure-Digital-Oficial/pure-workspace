@@ -10,32 +10,38 @@ export class EditUserProfileRepositoryImpl
 {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async edit(input: EditUserProfileDto): Promise<string> {
-    const { id, name, birthDate, picture, email } = input;
+    try {
+      const { id, name, birthDate, picture, email } = input;
 
-    const editedUser = await this.prismaService['user'].update({
-      where: {
-        id,
-      },
-      data: {
-        name,
-        ...(Object.keys({ birthDate }).length > 1
-          ? { birth_date: birthDate }
-          : {}),
-        ...(picture !== null ? { picture } : {}),
-        auth: {
-          update: {
-            where: {
-              user_id: id,
-            },
-            data: {
-              email,
+      const editedUser = await this.prismaService['user'].update({
+        where: {
+          id,
+        },
+        data: {
+          name,
+          ...(Object.keys({ birthDate }).length > 1
+            ? { birth_date: birthDate }
+            : {}),
+          ...(picture !== null ? { picture } : {}),
+          auth: {
+            update: {
+              where: {
+                user_id: id,
+              },
+              data: {
+                email,
+              },
             },
           },
+          updated_at: new Date(),
         },
-        updated_at: new Date(),
-      },
-    });
+      });
 
-    return editedUser.id;
+      return editedUser.id;
+    } catch (error) {
+      console.error('Error edit user profile:', error);
+
+      return '';
+    }
   }
 }

@@ -8,21 +8,26 @@ export class CreateUserRepositoryImpl implements CreateUserRepository {
     appId,
     body: { name, nickname, picture },
   }: CreateUserDto): Promise<string> {
-    const userCreated = await this.prismaService['user'].create({
-      data: {
-        name,
-        nickname,
-        picture,
-      },
-    });
+    try {
+      const userCreated = await this.prismaService['user'].create({
+        data: {
+          name,
+          nickname,
+          picture,
+        },
+      });
 
-    await this.prismaService['application_x_user'].create({
-      data: {
-        app_id: appId,
-        user_id: userCreated.id,
-      },
-    });
+      await this.prismaService['application_x_user'].create({
+        data: {
+          app_id: appId,
+          user_id: userCreated.id,
+        },
+      });
 
-    return userCreated?.id ?? '';
+      return userCreated?.id ?? '';
+    } catch (error) {
+      console.error('Error creating user:', error);
+      return '';
+    }
   }
 }
