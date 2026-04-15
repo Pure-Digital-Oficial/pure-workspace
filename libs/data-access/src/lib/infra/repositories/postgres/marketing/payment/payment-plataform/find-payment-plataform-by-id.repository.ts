@@ -10,41 +10,57 @@ export class FindPaymentPlataformByIdRepositoryImpl
 {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async find(id: string): Promise<PaymentPlataformResponseDto> {
-    const findedPaymentPlataform = await this.prismaService[
-      'payment_plataform'
-    ].findUnique({
-      where: {
-        id,
-      },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        key: true,
-        secret_key: true,
-        nationality: true,
-        user: {
-          select: {
-            nickname: true,
-          },
+    try {
+      const findedPaymentPlataform = await this.prismaService[
+        'payment_plataform'
+      ].findUnique({
+        where: {
+          id,
         },
-        status: true,
-        updated_at: true,
-        created_at: true,
-      },
-    });
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          key: true,
+          secret_key: true,
+          nationality: true,
+          user: {
+            select: {
+              nickname: true,
+            },
+          },
+          status: true,
+          updated_at: true,
+          created_at: true,
+        },
+      });
 
-    return {
-      id: findedPaymentPlataform?.id ?? '',
-      title: findedPaymentPlataform?.title ?? '',
-      description: findedPaymentPlataform?.description ?? '',
-      key: findedPaymentPlataform?.key ?? '',
-      secretKey: findedPaymentPlataform?.secret_key ?? '',
-      nationality: findedPaymentPlataform?.nationality ?? '',
-      status: findedPaymentPlataform?.status ?? '',
-      createdBy: findedPaymentPlataform?.user.nickname ?? '',
-      createdAt: findedPaymentPlataform?.created_at ?? new Date(),
-      updatedAt: findedPaymentPlataform?.updated_at ?? new Date(),
-    };
+      return {
+        id: findedPaymentPlataform?.id ?? '',
+        title: findedPaymentPlataform?.title ?? '',
+        description: findedPaymentPlataform?.description ?? '',
+        key: findedPaymentPlataform?.key ?? '',
+        secretKey: findedPaymentPlataform?.secret_key ?? '',
+        nationality: findedPaymentPlataform?.nationality ?? '',
+        status: findedPaymentPlataform?.status ?? '',
+        createdBy: findedPaymentPlataform?.user.nickname ?? '',
+        createdAt: findedPaymentPlataform?.created_at ?? new Date(),
+        updatedAt: findedPaymentPlataform?.updated_at ?? new Date(),
+      };
+    } catch (error) {
+      console.error('Error finding payment plataform by id:', error);
+      return {
+        id: '',
+        title: '',
+        description: '',
+        key: '',
+        secretKey: '',
+        nationality: '',
+        status: '',
+        createdBy: '',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+    }
   }
 }

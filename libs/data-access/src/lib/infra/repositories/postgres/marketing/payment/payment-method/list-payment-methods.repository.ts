@@ -16,86 +16,95 @@ export class ListPaymentMethodsRepositoryImpl
   async list(
     input: ListPaymentMethodsDto
   ): Promise<ListPaymentMethodsResponseDto> {
-    const { filters } = input;
+    try {
+      const { filters } = input;
 
-    const skip = input?.skip || 0;
-    const take = input?.take || 6;
+      const skip = input?.skip || 0;
+      const take = input?.take || 6;
 
-    const whereClause = {
-      ...(filters?.title != null
-        ? {
-            title: {
-              contains: filters.title.trim(),
-              mode: 'insensitive' as const,
-            },
-          }
-        : {}),
-      ...(filters?.status != null
-        ? {
-            status: {
-              equals: filters.status as GeneralStatus,
-            },
-          }
-        : {
-            status: {
-              equals: 'ACTIVE' as GeneralStatus,
-            },
-          }),
-    };
+      const whereClause = {
+        ...(filters?.title != null
+          ? {
+              title: {
+                contains: filters.title.trim(),
+                mode: 'insensitive' as const,
+              },
+            }
+          : {}),
+        ...(filters?.status != null
+          ? {
+              status: {
+                equals: filters.status as GeneralStatus,
+              },
+            }
+          : {
+              status: {
+                equals: 'ACTIVE' as GeneralStatus,
+              },
+            }),
+      };
 
-    const [paymentMethods, filteredTotal, total] = await this.prismaService[
-      '$transaction'
-    ]([
-      this.prismaService['payment_method'].findMany({
-        where: whereClause,
-        orderBy: {
-          title: 'asc',
-        },
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          status: true,
-          created_at: true,
-          updated_at: true,
-          value: true,
-          user: {
-            select: {
-              nickname: true,
+      const [paymentMethods, filteredTotal, total] = await this.prismaService[
+        '$transaction'
+      ]([
+        this.prismaService['payment_method'].findMany({
+          where: whereClause,
+          orderBy: {
+            title: 'asc',
+          },
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            status: true,
+            created_at: true,
+            updated_at: true,
+            value: true,
+            user: {
+              select: {
+                nickname: true,
+              },
             },
           },
-        },
-        skip: parseInt(skip.toString()),
-        take: parseInt(take.toString()),
-      }),
-      this.prismaService['payment_method'].count({
-        where: whereClause,
-      }),
-      this.prismaService['payment_method'].count(),
-    ]);
+          skip: parseInt(skip.toString()),
+          take: parseInt(take.toString()),
+        }),
+        this.prismaService['payment_method'].count({
+          where: whereClause,
+        }),
+        this.prismaService['payment_method'].count(),
+      ]);
 
-    const totalPages = Math.ceil(filteredTotal / take);
+      const totalPages = Math.ceil(filteredTotal / take);
 
-    const mappedPaymentMethods: PaymentMethodResponseDto[] = paymentMethods.map(
-      (paymentMethod: PaymentMethodPrismaReponseDto) => {
-        return {
-          id: paymentMethod?.id ?? '',
-          title: paymentMethod?.title ?? '',
-          description: paymentMethod?.description ?? '',
-          createdAt: paymentMethod?.created_at ?? new Date(),
-          updatedAt: paymentMethod?.updated_at ?? new Date(),
-          createdBy: paymentMethod?.user.nickname ?? '',
-          status: paymentMethod?.status ?? '',
-          value: paymentMethod?.value ?? '',
-        };
-      }
-    );
+      const mappedPaymentMethods: PaymentMethodResponseDto[] =
+        paymentMethods.map((paymentMethod: PaymentMethodPrismaReponseDto) => {
+          return {
+            id: paymentMethod?.id ?? '',
+            title: paymentMethod?.title ?? '',
+            description: paymentMethod?.description ?? '',
+            createdAt: paymentMethod?.created_at ?? new Date(),
+            updatedAt: paymentMethod?.updated_at ?? new Date(),
+            createdBy: paymentMethod?.user.nickname ?? '',
+            status: paymentMethod?.status ?? '',
+            value: paymentMethod?.value ?? '',
+          };
+        });
 
-    return {
-      total,
-      filteredTotal,
-      totalPages,
-      paymentMethods: mappedPaymentMethods,
-    };
+      return {
+        total,
+        filteredTotal,
+        totalPages,
+        paymentMethods: mappedPaymentMethods,
+      };
+    } catch (error) {
+      console.error('Error listing payment methods:', error);
+      return {
+        total: 0,
+        filteredTotal: 0,
+        totalPages: 0,
+        paymentMethods: [],
+      };
+    }
   }
 }

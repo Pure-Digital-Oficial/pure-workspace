@@ -8,18 +8,23 @@ export class ConfirmManualPaymentRepositoryImpl
   implements ConfirmManualPaymentRepository
 {
   async confirm(input: ConfirmManualPaymentForRepositoryDto): Promise<string> {
-    const { externalId, secretKey } = input;
+    try {
+      const { externalId, secretKey } = input;
 
-    const client = new MercadoPagoConfig({
-      accessToken: secretKey,
-    });
+      const client = new MercadoPagoConfig({
+        accessToken: secretKey,
+      });
 
-    const payment = new Payment(client);
+      const payment = new Payment(client);
 
-    const result = await payment.get({
-      id: externalId,
-    });
+      const result = await payment.get({
+        id: externalId,
+      });
 
-    return result.status ?? '';
+      return result.status ?? '';
+    } catch (error) {
+      console.error('Error confirming manual payment:', error);
+      return '';
+    }
   }
 }

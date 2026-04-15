@@ -37,7 +37,7 @@ export class GeneratePaymentController {
       loggedUserId: query?.userId ?? '',
     });
 
-    if (result.isRight()) return { customer_id: result.value };
+    if (result.isRight()) return result.value;
     else
       return await ErrorMessageResult(result.value.name, result.value.message);
   }
