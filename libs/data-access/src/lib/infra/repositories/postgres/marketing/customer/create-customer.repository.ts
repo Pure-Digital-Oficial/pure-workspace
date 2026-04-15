@@ -8,16 +8,21 @@ import {
 export class CreateCustomerRepositoryImpl implements CreateCustomerRepository {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async create(input: CreateCustomerDto): Promise<string> {
-    const { externalId, loggedUserId, name, language } = input;
+    try {
+      const { externalId, loggedUserId, name, language } = input;
 
-    const createdCustomer = await this.prismaService['customer'].create({
-      data: {
-        external_id: externalId,
-        user_id: loggedUserId,
-        name,
-        language,
-      },
-    });
-    return createdCustomer.id;
+      const createdCustomer = await this.prismaService['customer'].create({
+        data: {
+          external_id: externalId,
+          user_id: loggedUserId,
+          name,
+          language,
+        },
+      });
+      return createdCustomer.id;
+    } catch (error) {
+      console.error('Error creating customer:', error);
+      return '';
+    }
   }
 }

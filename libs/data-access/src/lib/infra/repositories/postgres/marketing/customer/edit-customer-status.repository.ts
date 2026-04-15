@@ -13,17 +13,22 @@ export class EditCustomerStatusRepositoryImpl
     @Inject('PrismaService') private prismaService: PrismaGeneralService
   ) {}
   async edit(input: EditCustomerStatusDto): Promise<string> {
-    const { id, status } = input;
+    try {
+      const { id, status } = input;
 
-    const editedCustomer = await this.prismaService['customer'].update({
-      where: {
-        id,
-      },
-      data: {
-        customer_status: status as CustomerStatus,
-      },
-    });
+      const editedCustomer = await this.prismaService['customer'].update({
+        where: {
+          id,
+        },
+        data: {
+          customer_status: status as CustomerStatus,
+        },
+      });
 
-    return editedCustomer.id;
+      return editedCustomer.id;
+    } catch (error) {
+      console.error('Error editing customer status:', error);
+      return '';
+    }
   }
 }
