@@ -10,7 +10,8 @@ import {
 import {
   CreatePaymentHistoryRepository,
   FindCharacterByIdRepository,
-  FindCustomerByIdRepository,
+  FindCustomerByExternalIdRepository,
+  // FindCustomerByIdRepository,
   FindPaymentHistoryByExternalIdRepository,
   FindPlanByIdRepository,
   FindUserByIdRepository,
@@ -25,8 +26,8 @@ export class CreatePaymentHistory
     private findUserByIdRepository: FindUserByIdRepository,
     @Inject('FindCharacterByIdRepository')
     private findCharacterByIdRepository: FindCharacterByIdRepository,
-    @Inject('FindCustomerByIdRepository')
-    private findCustomerByIdRepository: FindCustomerByIdRepository,
+    @Inject('FindCustomerByExternalIdRepository')
+    private findCustomerByExternalIdRepository: FindCustomerByExternalIdRepository,
     @Inject('FindPlanByIdRepository')
     private findPlanByIdRepository: FindPlanByIdRepository,
     @Inject('FindPaymentHistoryByExternalIdRepository')
@@ -37,14 +38,7 @@ export class CreatePaymentHistory
   async execute(
     input: CreatePaymentHistoryDto
   ): Promise<Either<EntityNotEmpty, string>> {
-    const {
-      amount,
-      characterId,
-      customerId,
-      externalId,
-      loggedUserId,
-      planId,
-    } = input;
+    const { characterId, externalId, loggedUserId, planId } = input;
 
     if (Object.keys(loggedUserId).length < 1) {
       return left(new EntityNotEmpty('User ID'));
@@ -54,20 +48,12 @@ export class CreatePaymentHistory
       return left(new EntityNotEmpty('Character ID'));
     }
 
-    if (Object.keys(customerId).length < 1) {
-      return left(new EntityNotEmpty('Customer ID'));
-    }
-
     if (externalId < 1) {
       return left(new EntityNotEmpty('External ID'));
     }
 
     if (Object.keys(planId).length < 1) {
       return left(new EntityNotEmpty('Plan ID'));
-    }
-
-    if (amount < 1) {
-      return left(new EntityNotEmpty('Amount'));
     }
 
     const userVerification = await UserVerificationId(
@@ -87,8 +73,8 @@ export class CreatePaymentHistory
       return left(new EntityNotExists('Character'));
     }
 
-    const findedCustomer = await this.findCustomerByIdRepository.find(
-      customerId
+    const findedCustomer = await this.findCustomerByExternalIdRepository.find(
+      `${externalId}`
     );
 
     if (Object.keys(findedCustomer?.id ?? findedCustomer).length < 1) {
@@ -111,7 +97,11 @@ export class CreatePaymentHistory
     }
 
     const createdPaymentHistory =
-      await this.createPaymentHistoryRepository.create(input);
+      await this.createPaymentHistoryRepository.create({
+        ...input,
+        customerId: findedCustomer.id,
+        amount: findedPlan.amount,
+      });
 
     if (Object.keys(createdPaymentHistory).length < 1) {
       return left(new EntityNotCreated('Payment History'));

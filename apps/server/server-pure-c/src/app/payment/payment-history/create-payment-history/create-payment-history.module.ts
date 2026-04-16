@@ -7,9 +7,9 @@ import {
   JwtAdminGuard,
   CreatePaymentHistoryRepositoryImpl,
   FindCharacterByIdRepositoryImpl,
-  FindCustomerByIdRepositoryImpl,
   FindPlanByIdRepositoryImpl,
   FindPaymentHistoryByExternalIdRepositoryImpl,
+  FindCustomerByExternalIdRepositoryImpl,
 } from '@pure-workspace/data-access';
 import {
   CreatePaymentHistory,
@@ -55,8 +55,8 @@ import { CreatePaymentHistoryController } from './create-payment-history.control
       useClass: FindCharacterByIdRepositoryImpl,
     },
     {
-      provide: 'FindCustomerByIdRepository',
-      useClass: FindCustomerByIdRepositoryImpl,
+      provide: 'FindCustomerByExternalIdRepository',
+      useClass: FindCustomerByExternalIdRepositoryImpl,
     },
     {
       provide: 'FindPlanByIdRepository',

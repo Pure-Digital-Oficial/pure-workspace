@@ -36,6 +36,7 @@ export class CreatePaymentHistoryController {
   ) {
     const result = await this.createPaymentHistoryService.create({
       ...input,
+      externalId: parseInt(`${input.externalId}`),
       loggedUserId: query?.userId ?? '',
     });
 

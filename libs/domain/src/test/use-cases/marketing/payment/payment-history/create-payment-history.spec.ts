@@ -15,7 +15,7 @@ import {
 import {
   CreatePaymentHistoryRepository,
   FindCharacterByIdRepository,
-  FindCustomerByIdRepository,
+  FindCustomerByExternalIdRepository,
   FindPaymentHistoryByExternalIdRepository,
   FindPlanByIdRepository,
   FindUserByIdRepository,
@@ -24,7 +24,7 @@ import { PaymentHistoryMock, UserMock } from '@/test/entities';
 import {
   CreatePaymentHistoryRepositoryMock,
   FindCharacterByIdRepositoryMock,
-  FindCustomerByIdRepositoryMock,
+  FindCustomerByExternalIdRepositoryMock,
   FindPlanByIdRepositoryMock,
   FindUserByIdRepositoryMock,
 } from '@/test/repositories';
@@ -35,7 +35,7 @@ interface SutTypes {
   createPaymentHistoryDto: CreatePaymentHistoryDto;
   findUserByIdRepository: FindUserByIdRepository;
   findCharacterByIdRepository: FindCharacterByIdRepository;
-  findCustomerByIdRepository: FindCustomerByIdRepository;
+  findCustomerByExternalIdRepository: FindCustomerByExternalIdRepository;
   findPlanByIdRepository: FindPlanByIdRepository;
   findPaymenHistoryByExternalIdRepository: FindPaymentHistoryByExternalIdRepository;
   createPaymentHistoryRepository: CreatePaymentHistoryRepository;
@@ -45,7 +45,8 @@ const makeSut = (): SutTypes => {
   const emptyMock = {};
   const findUserByIdRepository = new FindUserByIdRepositoryMock();
   const findCharacterByIdRepository = new FindCharacterByIdRepositoryMock();
-  const findCustomerByIdRepository = new FindCustomerByIdRepositoryMock();
+  const findCustomerByExternalIdRepository =
+    new FindCustomerByExternalIdRepositoryMock();
   const findPaymenHistoryByExternalIdRepository: FindPaymentHistoryByExternalIdRepository =
     {
       find: jest.fn(async () => emptyMock as PaymentHistoryResponseDto),
@@ -56,17 +57,15 @@ const makeSut = (): SutTypes => {
 
   const createPaymentHistoryDto: CreatePaymentHistoryDto = {
     loggedUserId: UserMock.id,
-    customerId: PaymentHistoryMock.customerId,
     characterId: PaymentHistoryMock.characterId,
     externalId: PaymentHistoryMock.externalId,
-    amount: PaymentHistoryMock.amount,
     planId: PaymentHistoryMock.planId,
   };
 
   const sut = new CreatePaymentHistory(
     findUserByIdRepository,
     findCharacterByIdRepository,
-    findCustomerByIdRepository,
+    findCustomerByExternalIdRepository,
     findPlanByIdRepository,
     findPaymenHistoryByExternalIdRepository,
     createPaymentHistoryRepository
@@ -77,7 +76,7 @@ const makeSut = (): SutTypes => {
     createPaymentHistoryDto,
     findUserByIdRepository,
     findCharacterByIdRepository,
-    findCustomerByIdRepository,
+    findCustomerByExternalIdRepository,
     findPlanByIdRepository,
     findPaymenHistoryByExternalIdRepository,
     createPaymentHistoryRepository,
@@ -127,31 +126,9 @@ describe('CreatePaymentHistory', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass incorrect customerId in createPaymentHistoryDto', async () => {
-    const { sut, createPaymentHistoryDto } = makeSut();
-    createPaymentHistoryDto.customerId = '';
-
-    const result = await sut.execute(createPaymentHistoryDto);
-
-    expect(result.isLeft()).toBeTruthy();
-    expect(result.isRight()).toBeFalsy();
-    expect(result.value).toBeInstanceOf(EntityNotEmpty);
-  });
-
   it('should return EntityNotEmpty when pass incorrect externalId in createPaymentHistoryDto', async () => {
     const { sut, createPaymentHistoryDto } = makeSut();
     createPaymentHistoryDto.externalId = 0;
-
-    const result = await sut.execute(createPaymentHistoryDto);
-
-    expect(result.isLeft()).toBeTruthy();
-    expect(result.isRight()).toBeFalsy();
-    expect(result.value).toBeInstanceOf(EntityNotEmpty);
-  });
-
-  it('should return EntityNotEmpty when pass incorrect amount in createPaymentHistoryDto', async () => {
-    const { sut, createPaymentHistoryDto } = makeSut();
-    createPaymentHistoryDto.amount = 0;
 
     const result = await sut.execute(createPaymentHistoryDto);
 
@@ -199,7 +176,7 @@ describe('CreatePaymentHistory', () => {
   it('should return EntityNotExists when pass incorrect customerId in createPaymentHistoryDto object', async () => {
     const { createPaymentHistoryDto, sut } = makeSut();
     jest
-      .spyOn(sut['findCustomerByIdRepository'], 'find')
+      .spyOn(sut['findCustomerByExternalIdRepository'], 'find')
       .mockResolvedValueOnce({} as CustomerResponseDto);
     const result = await sut.execute(createPaymentHistoryDto);
 

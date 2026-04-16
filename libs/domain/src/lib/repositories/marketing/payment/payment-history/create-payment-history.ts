@@ -1,5 +1,5 @@
-import { CreatePaymentHistoryDto } from '../../../../dtos';
+import { CreatePaymentHistoryForRepositoryDto } from '../../../../dtos';
 
 export interface CreatePaymentHistoryRepository {
-  create(input: CreatePaymentHistoryDto): Promise<string>;
+  create(input: CreatePaymentHistoryForRepositoryDto): Promise<string>;
 }

@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import {
-  CreatePaymentHistoryDto,
+  CreatePaymentHistoryForRepositoryDto,
   CreatePaymentHistoryRepository,
 } from '@pure-workspace/domain';
 
@@ -9,15 +9,15 @@ export class CreatePaymentHistoryRepositoryImpl
   implements CreatePaymentHistoryRepository
 {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
-  async create(input: CreatePaymentHistoryDto): Promise<string> {
+  async create(input: CreatePaymentHistoryForRepositoryDto): Promise<string> {
     try {
       const {
         characterId,
-        customerId,
         externalId,
         planId,
         amount,
         loggedUserId,
+        customerId,
       } = input;
 
       const createdPaymentHistory = await this.prismaService[
