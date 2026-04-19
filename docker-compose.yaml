@@ -24,12 +24,24 @@ services:
   #     - shared_network
   #   env_file:
   #     - .env
-  server-pure-c:
+  # server-pure-c:
+  #   build:
+  #     context: .
+  #     dockerfile: ./configs/docker/Dockerfile.server-pure-c
+  #   ports:
+  #     - '${SERVER_PURE_C_PORT}:${SERVER_PURE_C_PORT}'
+  #   environment:
+  #     - NODE_ENV=production
+  #   networks:
+  #     - shared_network
+  #   env_file:
+  #     - .env
+  server-mercadopago-integration:
     build:
       context: .
-      dockerfile: ./configs/docker/Dockerfile.server-pure-c
+      dockerfile: ./configs/docker/Dockerfile.server-mercadopago-integration
     ports:
-      - '${SERVER_PURE_C_PORT}:${SERVER_PURE_C_PORT}'
+      - '${SERVER_MERCADOPAGO_INTEGRATION_PORT}:${SERVER_MERCADOPAGO_INTEGRATION_PORT}'
     environment:
       - NODE_ENV=production
     networks:
