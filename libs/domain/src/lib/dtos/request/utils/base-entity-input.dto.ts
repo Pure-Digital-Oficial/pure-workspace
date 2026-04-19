@@ -1,3 +1,3 @@
 export interface BaseEntityInputDto {
-  loggedUserId: string
+  loggedUserId: string;
 }
