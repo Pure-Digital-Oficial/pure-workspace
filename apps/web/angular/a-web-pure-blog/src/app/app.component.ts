@@ -1,13 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { SessionService } from '@pure-workspace/feature-angular';
+import { SnackbarStackControlsComponent } from '@pure-workspace/feature-angular';
 
 @Component({
-  imports: [NxWelcomeComponent, RouterModule],
+  imports: [RouterModule, SnackbarStackControlsComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'a-web-pure-blog';
+  private session = inject(SessionService);
+  title = 'Pure Blog';
+
+  constructor() {
+    this.session.updateSession({
+      loggedAppId: '1',
+    });
+  }
 }

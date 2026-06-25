@@ -22,6 +22,7 @@
     "start:server-pure-c": "nx run server-pure-c:serve",
     "start:web-pure-digital": "nx dev web-pure-digital",
     "start:a-web-pure-digital": "nx serve a-web-pure-digital",
+    "start:a-web-pure-blog": "nx serve a-web-pure-blog",
     "build:a-web-pure-digital": "nx build a-web-pure-digital --prod"
   },
   "private": true,
