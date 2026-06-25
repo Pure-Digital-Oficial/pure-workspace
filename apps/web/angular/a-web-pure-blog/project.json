@@ -1,0 +1,89 @@
+{
+  "name": "a-web-pure-blog",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/web/angular/a-web-pure-blog/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/web/angular/a-web-pure-blog",
+        "index": "apps/web/angular/a-web-pure-blog/src/index.html",
+        "browser": "apps/web/angular/a-web-pure-blog/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/web/angular/a-web-pure-blog/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/web/angular/a-web-pure-blog/public"
+          }
+        ],
+        "styles": ["apps/web/angular/a-web-pure-blog/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "a-web-pure-blog:build:production"
+        },
+        "development": {
+          "buildTarget": "a-web-pure-blog:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "a-web-pure-blog:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/web/angular/a-web-pure-blog/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "a-web-pure-blog:build",
+        "staticFilePath": "dist/apps/web/angular/a-web-pure-blog/browser",
+        "spa": true
+      }
+    }
+  }
+}
