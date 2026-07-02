@@ -1,0 +1,55 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 2rem;
+
+  height: 70px;
+
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.header__left {
+  flex: 1;
+}
+
+.header__left img {
+  height: 40px;
+}
+
+.header__center {
+  flex: 2;
+
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.header__center button {
+  border: none;
+  background: transparent;
+  color: #000;
+}
+
+.header__center button,
+.header__right button {
+  cursor: pointer;
+
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.header__center button:hover,
+.header__right button:hover {
+  background: #f2f2f2;
+}
+
+.header__right {
+  flex: 1;
+
+  display: flex;
+  justify-content: flex-end;
+}

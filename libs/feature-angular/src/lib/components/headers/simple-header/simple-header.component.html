@@ -1,0 +1,23 @@
+<header class="header">
+  <div class="header__left">
+    <img [src]="logo" alt="Logo" />
+  </div>
+  <nav class="header__center">
+    <button
+      *ngFor="let itemButton of menuButtons"
+      [routerLink]="itemButton.route"
+      [disabled]="itemButton.disabled"
+    >
+      {{ itemButton.label }}
+    </button>
+  </nav>
+  <div class="header__right">
+    <button
+      matButton="filled"
+      *ngIf="rightButton"
+      [routerLink]="rightButton.route"
+    >
+      {{ rightButton.label }}
+    </button>
+  </div>
+</header>
