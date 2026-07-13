@@ -1,7 +1,7 @@
 .theme-controls-section {
   display: flex;
   align-items: center;
-  flex-direction: column;
+  gap: 1rem;
 
   .theme-colors-select {
     width: 130px;
@@ -11,8 +11,14 @@
     box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
   }
 
-  .theme-button {
+  .theme-button,
+  .theme-button-solo {
     background-color: transparent;
-    margin-bottom: 1rem;
+  }
+
+  .theme-button-solo {
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
   }
 }

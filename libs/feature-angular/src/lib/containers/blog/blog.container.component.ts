@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { SimpleHeaderComponent } from '../../components';
+import { SimpleHeaderComponent, BlogLayoutComponent } from '../../components';
 import { ThemeService } from '../../services';
 import { HeaderButton } from '../../models';
 
 @Component({
   selector: 'lib-blog-container',
-  imports: [SimpleHeaderComponent],
+  imports: [BlogLayoutComponent],
   templateUrl: './blog.container.component.html',
   styleUrl: './blog.container.component.scss',
 })

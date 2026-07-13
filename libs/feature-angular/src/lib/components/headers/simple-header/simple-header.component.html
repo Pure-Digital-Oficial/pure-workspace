@@ -12,8 +12,13 @@
     </button>
   </nav>
   <div class="header__right">
+    <lib-theme-color-controls
+      class="theme-control"
+      [flexDirection]="'row'"
+      [buttonText]="false"
+    />
     <button
-      matButton="filled"
+      mat-flat-button
       *ngIf="rightButton"
       [routerLink]="rightButton.route"
     >

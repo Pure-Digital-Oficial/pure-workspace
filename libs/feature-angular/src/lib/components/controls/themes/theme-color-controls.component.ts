@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,6 +20,8 @@ import { ThemeService } from '../../../services';
   styleUrl: './theme-color-controls.component.scss',
 })
 export class ThemeColorControlsComponent {
+  @Input() flexDirection = 'column';
+  @Input() buttonText = true;
   themeService = inject(ThemeService);
 
   onThemeSelected(event: MatSelectChange) {

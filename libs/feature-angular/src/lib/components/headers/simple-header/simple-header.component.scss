@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 .header {
   display: flex;
   align-items: center;
@@ -6,9 +8,6 @@
   padding: 0 2rem;
 
   height: 70px;
-
-  background: #ffffff;
-  border-bottom: 1px solid #ddd;
 }
 
 .header__left {
@@ -16,7 +15,7 @@
 }
 
 .header__left img {
-  height: 40px;
+  height: 50px;
 }
 
 .header__center {
@@ -30,7 +29,6 @@
 .header__center button {
   border: none;
   background: transparent;
-  color: #000;
 }
 
 .header__center button,
@@ -52,4 +50,6 @@
 
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
 }

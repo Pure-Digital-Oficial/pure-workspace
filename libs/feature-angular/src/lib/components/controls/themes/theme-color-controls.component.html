@@ -1,10 +1,18 @@
-<section class="theme-controls-section">
+<section class="theme-controls-section" [style.flex-direction]="flexDirection">
+  @if (buttonText) {
   <button class="theme-button" mat-fab extended (click)="onModeChanged()">
     <mat-icon>
       {{ themeService.darkMode() ? 'dark_mode' : 'light_mode' }}
     </mat-icon>
     {{ themeService.darkMode() ? 'Escuro' : 'Claro' }}
   </button>
+  } @else {
+  <button class="theme-button-solo" mat-mini-fab (click)="onModeChanged()">
+    <mat-icon>
+      {{ themeService.darkMode() ? 'dark_mode' : 'light_mode' }}
+    </mat-icon>
+  </button>
+  }
   <mat-select
     [value]="themeService.selectedTheme()"
     class="theme-colors-select"

@@ -5,6 +5,7 @@ import { RouterLinkWithHref } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { ThemeColorControlsComponent } from '../../controls';
 
 @Component({
   selector: 'lib-simple-header',
@@ -14,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     MatButtonModule,
     MatIconModule,
+    ThemeColorControlsComponent,
   ],
   templateUrl: './simple-header.component.html',
   styleUrl: './simple-header.component.scss',

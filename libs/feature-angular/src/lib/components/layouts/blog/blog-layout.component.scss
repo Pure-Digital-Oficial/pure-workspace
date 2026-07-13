@@ -1,0 +1,13 @@
+.blog-main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  .blog-layout-section {
+    width: 80%;
+    margin: 0 auto;
+  }
+  mat-divider {
+    align-self: stretch;
+    border-top-color: #ddd !important;
+  }
+}
