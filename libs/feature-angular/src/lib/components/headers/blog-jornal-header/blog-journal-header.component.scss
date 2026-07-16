@@ -140,4 +140,14 @@
   .p-masthead h1 {
     font-size: 52px;
   }
+  .p-sections-toolbar {
+    .p-section-link:nth-child(n + 5) {
+      display: none;
+    }
+  }
+
+  .p-dateline {
+    font-size: x-small;
+    max-width: 150px;
+  }
 }
