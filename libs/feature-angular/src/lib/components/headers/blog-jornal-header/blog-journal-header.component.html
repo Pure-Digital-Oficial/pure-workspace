@@ -1,0 +1,39 @@
+<div class="p-utility-bar">
+  <div class="p-wrap">
+    <span class="p-dateline">{{ editionLabel }}</span>
+    <div class="p-utility-actions">
+      <button mat-button class="p-utility-link">Entrar</button>
+      <button mat-flat-button color="accent" class="p-utility-subscribe">
+        Assinar
+      </button>
+    </div>
+  </div>
+</div>
+
+<header class="p-masthead">
+  <p class="p-kicker">
+    Fundado em 2026 · <span>Cidades, ideias e tecnologia</span>
+  </p>
+  <h1>PURE BLOG</h1>
+  <p class="p-tagline">Um blog para quem lê o presente com atenção</p>
+</header>
+
+<mat-toolbar class="p-sections-toolbar">
+  <div class="p-wrap p-sections-wrap">
+    @for (section of sections; track section.label) {
+    <button mat-button class="p-section-link" [class.current]="section.active">
+      {{ section.label }}
+    </button>
+    }
+  </div>
+</mat-toolbar>
+
+<div class="p-ticker-band" role="marquee" aria-label="Últimas notícias">
+  <div class="p-ticker-track">
+    @for (item of tickerItems; track item; let i = $index) {
+    <span>{{ item }}</span>
+    } @for (item of tickerItems; track item; let i = $index) {
+    <span aria-hidden="true">{{ item }}</span>
+    }
+  </div>
+</div>

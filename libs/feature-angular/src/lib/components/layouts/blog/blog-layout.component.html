@@ -1,4 +1,4 @@
-<section class="blog-main">
+<!-- <section class="blog-main">
   <section class="blog-layout-section">
     <lib-simple-header
       [logo]="'svg/Logo.svg'"
@@ -6,5 +6,115 @@
       [rightButton]="rightButton"
     />
   </section>
-  <mat-divider class="blog-divider" />
+  <mat-divider />
+  <lib-blog-home-controls />
+</section> -->
+<lib-blog-journal-header />
+
+<!-- <main class="wrap">
+  <section class="lead">
+    <div class="lead-grid">
+      <article class="lead-story">
+        <span class="eyebrow">{{ leadStory.eyebrow }}</span>
+        <h2>{{ leadStory.title }}</h2>
+        <div class="lead-figure">Imagem de capa — 1600×900</div>
+        <p class="dek">{{ leadStory.dek }}</p>
+        <p class="lede">
+          No início não passava de um teste de fim de semana: cones plásticos, uma faixa pintada
+          às pressas e um grupo de vizinhos decidido a provar que aquele quarteirão podia ser
+          outra coisa. Hoje, a Rua Aimorés é referência nacional em urbanismo tático, citada em
+          congressos e visitada por delegações de outras cidades — mas a história começou muito
+          antes de qualquer prêmio, numa reunião de condomínio que quase ninguém quis marcar
+          presença.
+        </p>
+        <div class="byline">
+          <span>Por {{ leadStory.author }}</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span>{{ leadStory.readTime }}</span>
+        </div>
+      </article>
+
+      <mat-divider [vertical]="true" class="lead-divider"></mat-divider>
+
+      <div class="secondary-list">
+        @for (story of secondaryStories; track story.title; let last = $last) {
+          <article class="secondary-story">
+            <span class="eyebrow">{{ story.eyebrow }}</span>
+            <h3>{{ story.title }}</h3>
+            <div class="byline">
+              <span>Por {{ story.author }}</span>
+              <span class="dot" aria-hidden="true"></span>
+              <span>{{ story.readTime }}</span>
+            </div>
+          </article>
+          @if (!last) {
+            <mat-divider></mat-divider>
+          }
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="grid-section">
+    <div class="grid-heading">
+      <h2>Mais recentes</h2>
+      <button mat-button class="see-all">
+        Ver todas
+        <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+      </button>
+    </div>
+
+    <div class="article-grid">
+      @for (article of articles; track article.title) {
+        <mat-card appearance="outlined" class="article-card">
+          <div class="thumb" [class.accent-mustard]="article.accent === 'mustard'">
+            <mat-chip class="tag-chip">{{ article.tag }}</mat-chip>
+          </div>
+          <mat-card-content>
+            <h3>{{ article.title }}</h3>
+            <p>{{ article.excerpt }}</p>
+          </mat-card-content>
+          <mat-card-footer class="byline">
+            <span>Por {{ article.author }}</span>
+            <span class="dot" aria-hidden="true"></span>
+            <span>{{ article.readTime }}</span>
+          </mat-card-footer>
+        </mat-card>
+      }
+    </div>
+  </section>
+</main>
+
+<section class="newsletter">
+  <div class="wrap newsletter-wrap">
+    <div>
+      <h2>A edição de amanhã, antes de todo mundo</h2>
+      <p>Um resumo curto, sem alarde, enviado toda manhã de dia útil. Cancele quando quiser.</p>
+    </div>
+    <form class="newsletter-form" (ngSubmit)="subscribe()">
+      <mat-form-field appearance="fill" class="newsletter-field">
+        <mat-label>Seu e-mail</mat-label>
+        <input matInput type="email" [formControl]="emailControl" placeholder="seu@email.com" />
+        @if (emailControl.hasError('email') && !emailControl.hasError('required')) {
+          <mat-error>Digite um e-mail válido</mat-error>
+        }
+      </mat-form-field>
+      <button mat-flat-button color="accent" type="submit" class="subscribe-btn">
+        Assinar
+        <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+      </button>
+    </form>
+  </div>
 </section>
+
+<footer class="site-footer">
+  <div class="wrap footer-wrap">
+    <span>© 2026 Meridiano — Todos os direitos reservados</span>
+    <nav>
+      <a href="#">Sobre</a>
+      <a href="#">Anuncie</a>
+      <a href="#">Ética editorial</a>
+      <a href="#">Contato</a>
+    </nav>
+  </div>
+</footer> -->
