@@ -4,16 +4,11 @@
       <article class="lead-story">
         <span class="eyebrow">{{ leadStory.eyebrow }}</span>
         <h2>{{ leadStory.title }}</h2>
+        <!-- configurar a imagem quando tiver elas -->
         <div class="lead-figure">Imagem de capa — 1600×900</div>
         <p class="dek">{{ leadStory.dek }}</p>
         <p class="lede">
-          No início não passava de um teste de fim de semana: cones plásticos,
-          uma faixa pintada às pressas e um grupo de vizinhos decidido a provar
-          que aquele quarteirão podia ser outra coisa. Hoje, a Rua Aimorés é
-          referência nacional em urbanismo tático, citada em congressos e
-          visitada por delegações de outras cidades — mas a história começou
-          muito antes de qualquer prêmio, numa reunião de condomínio que quase
-          ninguém quis marcar presença.
+          {{ description }}
         </p>
         <div class="byline">
           <span>Por {{ leadStory.author }}</span>
@@ -44,9 +39,9 @@
 
   <section class="grid-section">
     <div class="grid-heading">
-      <h2>Mais recentes</h2>
+      <h2>{{ gridTitle }}</h2>
       <button mat-button class="see-all">
-        Ver todas
+        {{ gridButton }}
         <mat-icon iconPositionEnd>arrow_forward</mat-icon>
       </button>
     </div>

@@ -53,6 +53,12 @@ export class BodyBlogJournalComponent {
     },
   ];
 
+  readonly description =
+    'No início não passava de um teste de fim de semana: cones plásticos, uma faixa pintada às pressas e um grupo de vizinhos decidido a provarque aquele quarteirão podia ser outra coisa. Hoje, a Rua Aimorés éreferência nacional em urbanismo tático, citada em congressos evisitada por delegações de outras cidades — mas a história começoumuito antes de qualquer prêmio, numa reunião de condomínio que quaseninguém quis marcar presença.';
+
+  readonly gridTitle = 'Mais recentes';
+  readonly gridButton = 'Ver todas';
+
   readonly articles: ArticleCardBlogInterface[] = [
     {
       tag: 'Cultura',
