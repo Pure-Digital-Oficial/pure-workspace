@@ -11,30 +11,8 @@
 </section> -->
 <lib-blog-journal-header />
 <lib-body-blog-journal />
-
+<lib-newsletter-controls />
 <!--
-<section class="newsletter">
-  <div class="wrap newsletter-wrap">
-    <div>
-      <h2>A edição de amanhã, antes de todo mundo</h2>
-      <p>Um resumo curto, sem alarde, enviado toda manhã de dia útil. Cancele quando quiser.</p>
-    </div>
-    <form class="newsletter-form" (ngSubmit)="subscribe()">
-      <mat-form-field appearance="fill" class="newsletter-field">
-        <mat-label>Seu e-mail</mat-label>
-        <input matInput type="email" [formControl]="emailControl" placeholder="seu@email.com" />
-        @if (emailControl.hasError('email') && !emailControl.hasError('required')) {
-          <mat-error>Digite um e-mail válido</mat-error>
-        }
-      </mat-form-field>
-      <button mat-flat-button color="accent" type="submit" class="subscribe-btn">
-        Assinar
-        <mat-icon iconPositionEnd>arrow_forward</mat-icon>
-      </button>
-    </form>
-  </div>
-</section>
-
 <footer class="site-footer">
   <div class="wrap footer-wrap">
     <span>© 2026 Meridiano — Todos os direitos reservados</span>

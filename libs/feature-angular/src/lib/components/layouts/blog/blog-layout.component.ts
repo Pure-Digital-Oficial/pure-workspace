@@ -12,7 +12,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BlogJournalComponent } from '../../headers';
-import { BodyBlogJournalComponent } from '../../controls';
+import {
+  BodyBlogJournalComponent,
+  NewsletterControlsComponent,
+} from '../../controls';
 
 @Component({
   selector: 'lib-blog-layout',
@@ -30,26 +33,17 @@ import { BodyBlogJournalComponent } from '../../controls';
     MatSnackBarModule,
     BlogJournalComponent,
     BodyBlogJournalComponent,
+    NewsletterControlsComponent,
   ],
   templateUrl: './blog-layout.component.html',
   styleUrl: './blog-layout.component.scss',
 })
 export class BlogLayoutComponent {
-  readonly emailControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-
   constructor(private readonly snackBar: MatSnackBar) {}
 
   subscribe(): void {
-    if (this.emailControl.invalid) {
-      this.emailControl.markAsTouched();
-      return;
-    }
     this.snackBar.open('Inscrição confirmada. Até amanhã de manhã.', 'Fechar', {
       duration: 3500,
     });
-    this.emailControl.reset();
   }
 }

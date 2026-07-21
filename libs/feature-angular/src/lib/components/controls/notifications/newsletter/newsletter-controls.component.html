@@ -1,0 +1,32 @@
+<section class="newsletter">
+  <div class="wrap newsletter-wrap">
+    <div>
+      <h2>{{ newsletterTitle }}</h2>
+      <p>{{ newsletterSubTitle }}</p>
+    </div>
+    <form class="newsletter-form" (ngSubmit)="subscribe()">
+      <mat-form-field appearance="fill" class="newsletter-field">
+        <mat-label>{{ newsletterFieldLabel }}</mat-label>
+        <input
+          matInput
+          type="email"
+          [formControl]="emailControl"
+          placeholder="seu@email.com"
+        />
+        @if (emailControl.hasError('email') &&
+        !emailControl.hasError('required')) {
+        <mat-error>{{ newsletterFieldError }}</mat-error>
+        }
+      </mat-form-field>
+      <button
+        mat-flat-button
+        color="accent"
+        type="submit"
+        class="subscribe-btn"
+      >
+        Assinar
+        <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+      </button>
+    </form>
+  </div>
+</section>
