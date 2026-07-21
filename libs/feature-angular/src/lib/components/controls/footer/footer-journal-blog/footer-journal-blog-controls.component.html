@@ -1,0 +1,13 @@
+<footer class="site-footer">
+  <div class="wrap footer-wrap">
+    <span>{{ copyrightText }}</span>
+    <nav>
+      @for (footerButton of listFooterButtons; track footerButton.title; let
+      last = $last) {
+      <a [ariaLabel]="footerButton.altTitle" [href]="footerButton.to">{{
+        footerButton.title
+      }}</a>
+      }
+    </nav>
+  </div>
+</footer>

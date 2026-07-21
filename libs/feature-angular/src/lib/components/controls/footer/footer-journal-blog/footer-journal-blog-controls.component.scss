@@ -1,0 +1,37 @@
+/* ---------- footer ---------- */
+.site-footer {
+  padding: 28px 0 40px;
+
+  .footer-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-top: 1px solid var(--rule);
+    padding-top: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+
+    nav {
+      display: flex;
+      gap: 20px;
+
+      a {
+        color: var(--ink-soft);
+        text-decoration: none;
+
+        &:hover {
+          color: var(--indigo);
+        }
+      }
+    }
+  }
+}
+
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 28px;
+}

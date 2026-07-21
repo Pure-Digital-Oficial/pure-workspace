@@ -6,3 +6,4 @@ export * from './snackbar';
 export * from './lists';
 export * from './body';
 export * from './notifications';
+export * from './footer';

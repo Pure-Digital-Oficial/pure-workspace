@@ -15,6 +15,7 @@ import { BlogJournalComponent } from '../../headers';
 import {
   BodyBlogJournalComponent,
   NewsletterControlsComponent,
+  FooterJournalBlogControlComponent,
 } from '../../controls';
 
 @Component({
@@ -34,6 +35,7 @@ import {
     BlogJournalComponent,
     BodyBlogJournalComponent,
     NewsletterControlsComponent,
+    FooterJournalBlogControlComponent,
   ],
   templateUrl: './blog-layout.component.html',
   styleUrl: './blog-layout.component.scss',
