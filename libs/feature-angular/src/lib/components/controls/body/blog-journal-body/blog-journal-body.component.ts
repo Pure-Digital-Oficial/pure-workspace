@@ -11,7 +11,7 @@ import {
 } from 'libs/feature-angular/src/lib/models';
 
 @Component({
-  selector: 'lib-body-blog-journal',
+  selector: 'lib-blog-journal-body',
   imports: [
     CommonModule,
     MatIconModule,
@@ -20,10 +20,10 @@ import {
     MatChipsModule,
     MatButtonModule,
   ],
-  templateUrl: './body-blog-journal.component.html',
-  styleUrl: './body-blog-journal.component.scss',
+  templateUrl: './blog-journal-body.component.html',
+  styleUrl: './blog-journal-body.component.scss',
 })
-export class BodyBlogJournalComponent {
+export class BlogJournalBodyComponent {
   readonly leadStory: StoryBlogInterface = {
     eyebrow: 'Reportagem especial',
     title: 'A rua que virou praça: como um bairro reconquistou seu asfalto',

@@ -1,1 +1,1 @@
-export * from './body-blog-journal/body-blog-journal.component';
+export * from './blog-journal-body/blog-journal-body.component';

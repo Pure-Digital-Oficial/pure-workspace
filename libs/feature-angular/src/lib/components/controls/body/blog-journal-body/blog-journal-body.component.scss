@@ -19,6 +19,9 @@
 .lead-divider {
   --mat-divider-color: var(--rule);
 }
+.lead-divider-mobile {
+  display: none;
+}
 
 .eyebrow {
   font-family: 'IBM Plex Mono', monospace;
@@ -213,5 +216,35 @@
     margin-top: auto;
     font-size: 10.5px;
     padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .meu-item {
+    display: none;
+  }
+
+  .lead-grid {
+    gap: 0;
+    grid-template-columns: none;
+  }
+  .article-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .lead-divider-mobile {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .lead {
+    width: 100%;
+    .lead-story {
+      width: 100%;
+    }
+    .lead-divider {
+      display: none;
+    }
   }
 }

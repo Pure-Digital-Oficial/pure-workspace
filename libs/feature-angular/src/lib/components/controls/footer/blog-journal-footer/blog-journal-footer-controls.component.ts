@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { ButtonNavigationInterface } from '../../../../models';
 
 @Component({
-  selector: 'lib-footer-journal-blog-controls ',
+  selector: 'lib-blog-journal-footer',
   imports: [],
-  templateUrl: './footer-journal-blog-controls.component.html',
-  styleUrl: './footer-journal-blog-controls.component.scss',
+  templateUrl: './blog-journal-footer-controls.component.html',
+  styleUrl: './blog-journal-footer-controls.component.scss',
 })
-export class FooterJournalBlogControlComponent {
+export class BlogJournalFooterControlComponent {
   readonly copyrightText = '© 2026 Pure Blog — Todos os direitos reservados';
   readonly listFooterButtons: ButtonNavigationInterface[] = [
     {

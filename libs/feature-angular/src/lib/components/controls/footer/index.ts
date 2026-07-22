@@ -1,1 +1,1 @@
-export * from './footer-journal-blog/footer-journal-blog-controls.component';
+export * from './blog-journal-footer/blog-journal-footer-controls.component';

@@ -13,9 +13,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BlogJournalComponent } from '../../headers';
 import {
-  BodyBlogJournalComponent,
+  BlogJournalBodyComponent,
   NewsletterControlsComponent,
-  FooterJournalBlogControlComponent,
+  BlogJournalFooterControlComponent,
 } from '../../controls';
 
 @Component({
@@ -33,9 +33,9 @@ import {
     MatInputModule,
     MatSnackBarModule,
     BlogJournalComponent,
-    BodyBlogJournalComponent,
+    BlogJournalBodyComponent,
     NewsletterControlsComponent,
-    FooterJournalBlogControlComponent,
+    BlogJournalFooterControlComponent,
   ],
   templateUrl: './blog-layout.component.html',
   styleUrl: './blog-layout.component.scss',
