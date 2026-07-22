@@ -47,14 +47,31 @@
   }
 }
 
-@media (max-width: 860px) {
-  .newsletter-wrap {
-    grid-template-columns: 1fr;
-  }
-}
-
 .wrap {
   max-width: 1180px;
   margin: 0 auto;
   padding: 0 28px;
+}
+
+@media (max-width: 768px) {
+  .newsletter {
+    .newsletter-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+
+      .newsletter-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .newsletter-header {
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+    }
+  }
 }

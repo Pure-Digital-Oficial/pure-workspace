@@ -28,6 +28,7 @@ export class NewsletterControlsComponent {
     'Um resumo curto, sem alarde, enviado toda manhã de dia útil. Cancele quando quiser.';
   readonly newsletterFieldLabel = 'Seu e-mail';
   readonly newsletterFieldError = 'Digite um e-mail válido';
+  readonly buttonTitle = 'Assinar';
 
   subscribe(): void {
     if (this.emailControl.invalid) {
